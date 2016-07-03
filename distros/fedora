@@ -1,19 +1,27 @@
 Admin {{{1
 
-adduser is link to useradd
+useradd [-G group] name
+	Create new user + home dir
 
-Groups:
+usermod -aG group user
+	Add existing user to group
+
+Other util:
     groupadd, groupmod 
     adduser -g wheel -m andmalc
-    usermod -aG group user
     gpasswd -a sammy wheel
+
+adduser is link to useradd
 
 Setup {{{1
 
-Set locale
+Locale
     localectl 
        list-locales 
        set-locale LANG=locale
+
+Date/time
+	timedatectl
 
 
 Packages {{{2
@@ -111,6 +119,10 @@ dnf repo management
         list enabled [all] repos
     fedora-release-rawhide
     fedora-updates-testing 
+
+config-manager 
+	--set-enabled repo
+	--set-disabled repo
 
 
 Install OS tree {{{1

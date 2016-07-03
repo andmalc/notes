@@ -29,8 +29,8 @@ Windows/ui/Interface {{{1
 Windows 
 
 Opening
-    sv      vertical split
-    vs      horizontal split
+    vs      vertical split
+    sv      horizontal split
     sb      split buffer
 
 

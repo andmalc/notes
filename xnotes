@@ -1,4 +1,12 @@
 
+xrandr	shows X state, driver info
+
+xinput list 
+	connected device info
+xinput list-props <device #>
+	e.g.  xinput set-prop 12 "libinput Scroll Method Enabled" 0, 1, 0
+
+
 X copy paste
 	terms
 		primary selection
