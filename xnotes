@@ -16,6 +16,10 @@ X copy paste
 			added by an explicit copy command
 			xlipboard will add after each copy
 	utilities
+        xsel - recommended
+            Tmux buffer => clipboard
+                 tmux show-buffer | xsel -ib
+            
         xclip
             -o > file   #paste clipboard to file
             xclip -o | tee <file>   #paste clipboard
@@ -26,7 +30,15 @@ X copy paste
 		Middle-click in Mozilla - loads a URL in the X Primary
 
 
-Startup Process
+Authorize user connections
+	xhost +
+	xhost -
+		insecure method, but can use temporarily
+	export DISPLAY=:0.0; xauth -merge ~<xserver-user>/.Xauthority
+
+Old {{{1
+
+Startup Process {{{2
 
 Xsession man page: http://www.wlug.org.nz/Xsession%285%29
 
@@ -82,7 +94,16 @@ Xsession.options
 			if file not executable.
 			- default is no
 
-XServer Config
+
+Run 2nd X session under different user
+	switch to console Ctrl+Alt+F1
+	login as other user
+	startx -- :1
+	switch to Ctrl+Alt+F8
+	or under gnome 2.4, 'new login' under application/system tools
+
+XServer Config {{{2
+
 	xorg.conf file (cf XF86config - older config utility)
 		Options: case insensitive, values must be quoted, no value = "on"
 	xf86cfg     newer graphical configuration
@@ -94,13 +115,8 @@ xset
 	'xset q' - display all setttings
 
 
-Authorize user connections
-	xhost +
-	xhost -
-		insecure method, but can use temporarily
-	export DISPLAY=:0.0; xauth -merge ~<xserver-user>/.Xauthority
+X11 Fonts {{{2
 
-X11 Fonts
 	X servers can obtain fonts from directories in file system (local to server), font servers (from network location), or both.
 	standard location for fonts: /usr/share/fonts
 	standard renderer is freetype2
@@ -113,13 +129,5 @@ X11 Fonts
 
 	outline vs. bitmapped fonts
 		outline preferred, size is scalable
-
-
-Run 2nd X session under different user
-	switch to console Ctrl+Alt+F1
-	login as other user
-	startx -- :1
-	switch to Ctrl+Alt+F8
-	or under gnome 2.4, 'new login' under application/system tools
 
 

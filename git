@@ -1,8 +1,39 @@
 Fugitive
 http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
 
-Repos {{{1
+Terms {{{1
 
+Repo is set of commits
+Commit:
+    pointer to a tree obj which is snapshot of all files & dirs
+    author & commiter info
+    commit message
+    except for first 'root' commit, stores zero or more pointers to parent commits
+
+Refs
+    Simple - points to commit ID
+    Symbolic - points to another ref
+
+Branch
+    movable pointer (simple ref) to tip (newest) commit 
+    branch moved forward on each commit
+
+HEAD 
+    usually symbolic ref - 
+    refers to tip of current local branch.  
+    Detatched if is simple ref.
+    Checking out branch moves this pointer.  
+
+Index 
+    includes snapshot of all files, not just staged.
+    new blob created for added/modified files 
+    is the new commit.
+
+
+Merge commits  multiple parents
+
+
+Repos {{{1
 Create new repo with remote at BB
 	git init <dir>
 	git add . 
@@ -65,9 +96,6 @@ ls-files
 
 Add & Commit {{{1
 
-Index includes snapshot of all files, not just staged.
-Tip commit      most recent commit on a branch
-Merge commits  multiple parents
 
 add <path spec>
     -i  interactive
@@ -117,6 +145,7 @@ HEAD            Normally symbolic ref to /refs/heads/<branch name>
 checkout -b <name>	create new branch <name> and switch to it
 
 branch 
+    -v  show all branches,  most recent commit
     -r	show remote tracking branches
     -a	show local and remote tracking branches
     -d  delete <branch>
@@ -145,9 +174,16 @@ Submodules
 		if path given, logical name is tail unless --name specified
 		if no local name given, repo cloned into cwd/<final part of repo path>
 	Delete
-		submodule deinit
-		git rm -f <dir>
-		rm -rf .git/modules/<repo name>
+		mv asubmodule asubmodule_tmp
+		git submodule deinit asubmodule    
+		git rm asubmodule
+		# Note: asubmodule (no trailing slash)
+		# or, if you want to leave it in your working tree
+		git rm --cached asubmodule
+		mv asubmodule_tmp asubmodule
+		rm -rf .git/modules/asubmodule
+		edit .gitmodules - remove section (?)
+
 	Cloning - don't need to be in submodule dir
 		submodule init / submodule update
 	Updating
@@ -188,6 +224,20 @@ Buffer names
 	1	change
 	2	target
 	3	merge branch
+
+gitdiff with vim:
+    config:
+        git config merge.tool vimdiff
+        git config merge.conflictstyle diff3
+        git config mergetool.prompt false
+    commands
+        diffget
+        diffput
+    buffers
+        LO  local
+        BA  base
+        RE  remote
+        ME  merged
 
 Fugitive
 http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/

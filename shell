@@ -1,7 +1,6 @@
+Docs
+	http://www.gnu.org/software/bash/manual/html_node/index.html#SEC_Contents
 
-Shell Options
-	shopt	        set shell options command ie 'shopt -s histreedit'
-	cdable_vars	    cd to non-dir assumed to be value of a variable
 
 Quick write to file
     tee myfile <<< blahblah
@@ -17,108 +16,61 @@ xargs
         autoload -U zargs
         zargs **/*~ -- rm
 
+Quoting {{{1
+
+Never quote a glob or regular expression
+	for x in "~/*"; do
+  # This loop will run once with $x set to "~/*" rather than once
+  # for every file and directory under $HOME, as was intended
+	done
+
+	case "$var" in                                                                                                          	'this|that')                                                                                                          
+			# This will only hit if $var is exactly "this|that"                                                                 ;;                                                                                                                  
+		# This will only hit if $var is exactly "*"                                                                         
+		;;                                                                                                                  
+	esac   
+
+Looping {{{1
 
 
 
-Key Binding {{{1
+Conditions {{{1
 
-Notation:
-	^k = \C=k = control key + k
-	M-k = Meta (usually Alt) key + k
-	ek = Escape + k
+https://robots.thoughtbot.com/the-unix-shells-humble-if
 
-Line Editor Key Bindings
-	Default bindings
-		^l	clear screen
-		char
-			^f	move one char forward
-			^b	move one char back
-			^d	delete char to right (also: list completions, log out)
-			BS	delete to left
-		word
-			M-f	word forward
-			M-b	word back
-			^w/M-BS delete word to left
-			M-D	delete word to right
+if command ; then
+  expressions
+elif command ; then  # optionally
+  expressions
+else                 # optionally
+  expressions
+fi
 
-		line
-			^a	beginning of line
-			^e	end of line
-			^u	kill line 
-			^k   kill line to right
-			^U Delete line
-			^Y Yank line back (ie restore)
+command
+	if returns 0 is true, else is false
+	if pipeline, uses exit status of last command	
+	! before inverts
 
-	Changing
-		Modify in .inputrc
-		Reread .inputrc with C-X C-R
+POSIX test statement
+	also rep as [ ]
+	-z 	0 length string
+		if test -z "$Var"
+	-f	is regular file
+	= or != string comparisons
+		if "$Var" = "blah"
 
-		Emacs (and maybe other environments) uses identical Meta and Escape bindings.  
-		bindkey -m option: when binding an escape sequence like \eb, also bind b to Meta.
-
-		bindkey 
-		-v  vi mode
-		-e  emacs mode
-		-m  bind Meta - enabling Alt key bindings
-		'^V+<key>' <cmd>    Show character code (will show ^[ escape first)
-
-		More on binding function keys in zle:
-			http://zsh.sunsite.dk/Guide/zshguide04.html#l76
-
-Zsh-like completion in bash
-	 bind '\C-i:menu-complete'
-
-Zsh setup wizard
-	autoload -U compinstall
-	compinstall
-
-Docs
-	Some neat shell things (mostly zsh)
-		http://adamspiers.org/computing/shells/#myconfig
-	Eterm FAQ entry on how shells start:
-		http://zsh.sunsite.dk/Doc/Release/zsh_toc.html#SEC_Contents
+Bash & Zsh advanced test [[ ]] (( ))
+	http://mywiki.wooledge.org/BashFAQ/031
+	advantages vs. test command
+		Use familiar ==, >=, and <= operators
+		Check a string against a regular expression with =~
+		Check a string against a glob with ==
+		Less strict about quoting and escaping
+	[[ ]] for strings
+	(( )) for numeric
 
 
-Prompts & Xterm Titles
-	PROMPT='%<control char><rest of prompt>'
-	# if privilaged, otherwise %  %#
-	\e      escape sequence for escape (ESC)
-	\a      escape sequence for bell (BEL)
-	%n      expands to $USERNAME
-	%m      expands to hostname up to first '.'
-	%/	cwd
-	%~      expands to cwd, replacing $HOME with '~'
 
-Prompts with color
-	[3<0-9>m sets color where <0-9> is color number
-	Ctrl+v+<Esc> enters an escape in a string but prints as '^['
-	PROMPT='^[[3<color #>m zsh%% ^[[30m' gives a colored prompt of 'zsh%' 
-
-Recommended prompt:
-	PROMPT=$(echo '%{\033[31m%}%m>%{\033[30m%}')
-	RPROMPT=$(echo '%{\033[32m%}%~%{\033[30m%}')
-
-Prompt to show a '+' when in a subshell
-	PS1='%(2L.+.)%# '
-
-Title print:
-	Basic pattern:
-		* ESC]0;stringBEL -- Set icon name and window title to string
-		* ESC]1;stringBEL -- Set icon name to string
-		* ESC]2;stringBEL -- Set window title to string
-
-	So, if \e is escape and \a is Bell
-	Under zsh, -P enables % sequences above, or use variables like ${USER}
-	without the -P.
-		print -Pn "\e]0;Thing\a"
-		print -n "\e]0;${USER}@${HOST}\a"
-
-	See zsh notes on precmd & preexec for adding job info.
-
-	Title Docs
-		IBM Dev Work articles
-		http://www-106.ibm.com/developerworks/linux/library/l-tip-prompt/
-		Xterm-Title Howto for shell title setting
 
 File Descriptors & Redirection {{{1
 
@@ -349,3 +301,89 @@ Command History {{{1
 
 
 vim sw=4 foldmethod=marker
+Key Binding {{{1
+
+Notation:
+	^k = \C=k = control key + k
+	M-k = Meta (usually Alt) key + k
+	ek = Escape + k
+
+Line Editor Key Bindings
+	Default bindings
+		^l	clear screen
+		char
+			^f	move one char forward
+			^b	move one char back
+			^d	delete char to right (also: list completions, log out)
+			BS	delete to left
+		word
+			M-f	word forward
+			M-b	word back
+			^w/M-BS delete word to left
+			M-D	delete word to right
+
+		line
+			^a	beginning of line
+			^e	end of line
+			^u	kill line 
+			^k   kill line to right
+			^U Delete line
+			^Y Yank line back (ie restore)
+
+	Changing
+		Modify in .inputrc
+		Reread .inputrc with C-X C-R
+
+		Emacs (and maybe other environments) uses identical Meta and Escape bindings.  
+		bindkey -m option: when binding an escape sequence like \eb, also bind b to Meta.
+
+		bindkey 
+		-v  vi mode
+		-e  emacs mode
+		-m  bind Meta - enabling Alt key bindings
+		'^V+<key>' <cmd>    Show character code (will show ^[ escape first)
+
+		More on binding function keys in zle:
+			http://zsh.sunsite.dk/Guide/zshguide04.html#l76
+
+
+
+
+Prompts & Xterm Titles {{{1
+
+	PROMPT='%<control char><rest of prompt>'
+	# if privilaged, otherwise %  %#
+	\e      escape sequence for escape (ESC)
+	\a      escape sequence for bell (BEL)
+	%n      expands to $USERNAME
+	%m      expands to hostname up to first '.'
+	%/	cwd
+	%~      expands to cwd, replacing $HOME with '~'
+
+Prompts with color
+	[3<0-9>m sets color where <0-9> is color number
+	Ctrl+v+<Esc> enters an escape in a string but prints as '^['
+	PROMPT='^[[3<color #>m zsh%% ^[[30m' gives a colored prompt of 'zsh%' 
+
+Recommended prompt:
+	PROMPT=$(echo '%{\033[31m%}%m>%{\033[30m%}')
+	RPROMPT=$(echo '%{\033[32m%}%~%{\033[30m%}')
+
+Prompt to show a '+' when in a subshell
+	PS1='%(2L.+.)%# '
+
+Title print:
+	Basic pattern:
+		* ESC]0;stringBEL -- Set icon name and window title to string
+		* ESC]1;stringBEL -- Set icon name to string
+		* ESC]2;stringBEL -- Set window title to string
+
+	So, if \e is escape and \a is Bell
+	Under zsh, -P enables % sequences above, or use variables like ${USER}
+	without the -P.
+		print -Pn "\e]0;Thing\a"
+		print -n "\e]0;${USER}@${HOST}\a"
+
+	See zsh notes on precmd & preexec for adding job info.
+
+

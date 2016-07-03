@@ -1,4 +1,10 @@
 
+Repeat change on multi lines (e.g. commenting all)
+1. Visual block mode (,q) and select lines
+2. Shift+i
+3. Make change
+4. Esc
+
 Startup & Settings {{{1
 ----------------------
 
@@ -192,7 +198,7 @@ registers
 	let @a=" ... " - assign to a register (help 'let-@')
 
 Selecting Text
-	v				start Visual mode per character
+	v				start Vndmalc@gmail.comisual mode per character
 	V				.. by line
 	^V				.. by block
 	^o^v	blockwise, from insert mode

@@ -1,4 +1,8 @@
-containers
+
+
+
+
+containers {{{1
 	Matroska/MKV 
 		preferred, open source
 		not supported on some playback devices
@@ -8,7 +12,7 @@ containers
     ogg
 	WebM (based on Matroska)
 
-video codecs
+video codecs {{{1
 	H.264
 		high quality but moderate file size
 	FFmpeg
@@ -28,7 +32,7 @@ video codecs
     Xvid
         create mpeg-4
 
-audio codecs 
+audio codecs {{{1
 	AAC
 		faac- not recommended but better than MP3
 		Core Audio - Mac version - better than faac 
@@ -45,42 +49,17 @@ Sound Bitrates - recommended
     wma - best for very low rates, e.g. < 64 for speech
 
 
-Play videos from a web page - convert from cam format & which HTML tags
-	good article
-	https://support.mayfirst.org/wiki/add_video
 
-legal mp3 encoders/decoders
-        - encoders when in a commercial product must pay a fee to BMG Music
-        - for playback/decoding, owner of patent could decide to charge for
-          this and so cannot be guaranteed to be forever redistrictutable
+libraries/infracture {{{1
 
-libraries/infracture
     gstreamer - Gnome media playing framework
     faad Freeware Advanced Audio Decoder
         plays MPEG4 (aka mp4, m4a)
         gstreamer plug-in for this
 
-Apps
-    media players
-		console players
-			cplay/splay/cmus (recomended)
-        AVView
-            av player with Gatos/ATI support
-            - watch TV
-            - capture video in from TV card or USB
 
         see also Ubuntu list of apps:
             http://ubuntuguide.org/#add-onapplications
-        amarok
-            gstreamer-based KDE app
-            debs in testing
-            deb http://people.debian.org/~adeodato/packages amarok-sarge/
-        totem-gstreamer - simple gnome media player
-        kaffeine
-            KDE front end to Xine
-        noatun
-            default KDE player
-            avoid this
         mplayer 
 			media player
 			see Debian wiki page http://wiki.debian.org/MPlayer
@@ -93,20 +72,14 @@ Apps
 			ful screen console:
 				mplayer -vo fbdev -fs -zoom -aspect 1.3333 -sws 3 -vf scale=1000:700 movie.avi (as root?)
 				also maybe -vo aa or -vo caca
-        ogg123 in vorbit-tools package
-            also, comment editor and encoder
         rhythmbox
             gstreamer-based
         sox - sound file format conversion
         vlc	& wxvlc audio & video player & moz plugin
             Windows version too
         gnome-audio - for sound files
-        xmms
-			obsolete, Audacious is recommened replacement
-        xawtv
-            av player for tv card support
-            lightweight widgets
-    audio encoding
+    
+audio encoding
         lame
             non-free as encodes to mp3
         vorbis
@@ -114,59 +87,28 @@ Apps
 		oggenc
 			like vorbis?
 
-    video encoding
-        mencoder (part of Mplayer project)
-            creates avi or ogm (?) files using lavc or XdiV codecs
-            http://gentoo-wiki.com/HOWTO_Mencoder_Introduction_Guide#Introduction
+video encoding
+    mencoder (part of Mplayer project)
+        creates avi or ogm (?) files using lavc or XdiV codecs
+        http://gentoo-wiki.com/HOWTO_Mencoder_Introduction_Guide#Introduction
 
-                shrinkta - gtk2 program for backing up DVDs
-				thoggen - similar
-				DVDShrink under Crossover or Wine
-		ffmpeg2theora
-			encode video formats to Theora
-			convert DVD VOB files 
+            shrinkta - gtk2 program for backing up DVDs
+            thoggen - similar
+            DVDShrink under Crossover or Wine
+    ffmpeg2theora
+        encode video formats to Theora
+        convert DVD VOB files 
 
-    video editors
-        kino
-            mainstream/entry level
-            debs in unstable
-        PiTiVi
-            python-based, uses GStreamer
-            debs at pitivi.org
-        Cinelerra
-            http://www.ftconsult.com/twiki/bin/view/Cinelerra/WebHome
-            debs: http://www.ftconsult.com/twiki/bin/view/Cinelerra/Debian
 
-    av streaming
-        Fluendo gstreamer-based streaming server 
-            free & commercial versions
+    playback DVD movies 
+        CSS (content scrambling system) support (from VLC project)
+            deb http://download.videolan.org/pub/videolan/debian sid main
+            deb-src http://download.videolan.org/pub/videolan/debian sid main
+            apt-get install vlc libdvdcss2 
 
-Firefox/Mozilla Plugin
-
-	Package mozilla-mplayer - need 'contrib' in sources and win32codecs from a debian-multimedia source like deb http://trmb.ca/debian-multimedia/ testing main
-
-	Supported file types
-		Window Media  	wmv, avi, asf, wav and asx
-		QuickTime 	mov and smil
-		MPEG Video and Audio 	mpeg and mp3
-		Ogg Vorbis 	ogg
-		Vivo 	vivo
-		Real Player 	ram and rm
-
-Restricted format support
-        wma,wmv - Windows Media 9 - Win32 Codecs
-            http://www2.mplayerhq.hu/homepage/design7/dload.html
-            install w32codecs package - extracts to /usr/lib/win32
-
-        playback DVD movies 
-            CSS (content scrambling system) support (from VLC project)
-                deb http://download.videolan.org/pub/videolan/debian sid main
-                deb-src http://download.videolan.org/pub/videolan/debian sid main
-                apt-get install vlc libdvdcss2 
-
-        encode encod music to MP4/AAC
-            Faac
-                deb http://apt.cerkinfo.be unstable main contrib non-free
+    encode encod music to MP4/AAC
+        Faac
+            deb http://apt.cerkinfo.be unstable main contrib non-free
 
 
     Convert wmv to avi
@@ -194,9 +136,5 @@ Tasks
         also: 
             dvdbackup
             dvdrip with transcode backend
-
-
-Video4Linux
-	with kernel 2.6, most v4l1 tools compatible with v4l2 incl. xawtv & bttv
 
 
