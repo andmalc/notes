@@ -1,11 +1,16 @@
-Install gems:
+
+Rubygems setup
     install ruby
     download tgz from https://rubygems.org/pages/download
     ruby setup.rb --destdir = (root of /usr/bin).  
     gem executable in <dest dir>/usr/bin.  Move to ~/bin
     gem install <gem name>.  Gem executable in ~/.bin
 
+Install gems:
+gem install --user-dir -V tumuxinator
 
+Uninstall all 
+sudo gem uninstall -i /usr/local/share/gems --all
 
 statement modifiers
 	puts 'Somethign' if condition == true

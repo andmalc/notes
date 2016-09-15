@@ -54,6 +54,9 @@ Packages - can use globbing in pkg name
             list all available and installed [just installed | avail & not installed]
 
     install, reinstall, remove, downgrade
+    provide <fn>
+        which packge contains <fn>
+
     options:
         --exclude <pkg or pat>  exclude from install, remove, list etc.
         --enablerepo <repo>     install pkg from a repo

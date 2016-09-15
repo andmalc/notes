@@ -340,7 +340,6 @@ Info
 pvresize - resize vg on a device
 
 
-<<<<<<< HEAD
 VG/volume group {{{2
 
 composed of 1 or more PV's, optionally already initialized with pvcreate

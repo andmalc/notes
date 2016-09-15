@@ -37,6 +37,7 @@ Looping {{{1
 Conditions {{{1
 
 https://robots.thoughtbot.com/the-unix-shells-humble-if
+http://mywiki.wooledge.org/BashGuide
 
 if command ; then
   expressions
@@ -51,10 +52,10 @@ command
 	if pipeline, uses exit status of last command	
 	! before inverts
 
-POSIX test statement
-	also rep as [ ]
-	-z 	0 length string
+POSIX test statement -  [ ]
+	-z	0 length string
 		if test -z "$Var"
+	-n	non-empty
 	-f	is regular file
 	= or != string comparisons
 		if "$Var" = "blah"

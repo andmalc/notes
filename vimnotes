@@ -368,24 +368,21 @@ Indenting
 	C-T/C-D	Insert/delete 1 shiftwidth
 
 Tabs
+    expandtab               insert spaces instead of tabs
 	'smarttab', 'sta'		use 'shiftwidth' when inserting <Tab>
 	'softtabstop', 'sts'	number of spaces that <Tab> uses while editing
-	ret[ab]!							Recalc tabs in a buffer
 	:s/^ \+/^I				(not \w, which means blanks or tabs)
 		If the 'shiftround' option is on, the indent is rounded to a multiple of
 		'shiftwidth'.
 
-Using retab
-:se noet
-:se ts=2
-:retab!
-:se ts=3 If you really want spaces, follow this by
-:se et
-:retab!
-
-Retab 
+ret[ab]!    Recalc tabs in a buffer
 	line retab!
 	file %retab!
+
+Convert tabs to spaces
+    ts=4
+    se expandtab
+	%retab!
 
 Marks {{{1 
 ma				set mark with alpha char
@@ -454,11 +451,6 @@ Python file settings {{{1
 		autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 Formating {{{1
-		debuging
-				use list mode to show
-						tabs CTRL-I
-						end of line $
-						see listchars
 		commands
 				gq[motion]		
 						Format lines motion moves over.  Textwidth option controls the length
@@ -504,6 +496,22 @@ g/pat/p			   print all lines in file matching pat
 		Regex atoms
 				\<		start of word
 
+debuging 
+        set list - shows tabs & line endings
+                tabs CTRL-I
+                end of line $
+                see listchars
+
+Find tabs & spaces
+    " Show all tabs:
+    /\t
+    " Show trailing whitespace:
+    /\s\+$
+    " Show trailing whitespace only after some text (ignores blank lines):
+    /\S\zs\s\+$
+    " Show spaces before a tab:
+    / \+\ze\t
+
 Ex Mode {{{1
 
 Syntax: line address/pattern/command
@@ -514,7 +522,7 @@ Command Line
 				Ctrl U			Delete line to left
 		@:		repeat last ex command
 
-Display Line Numbers
+Show/Display Line Numbers
   set number/nu, nonumber/nonu	show,hide line numbers
   n,n#	temporarily show numbers on lines n,n
   .=	show current line number

@@ -45,7 +45,8 @@ Export key
         gpg --output <fn> --export <ID>
     ASCII Armor format
         Allows gpg format message to be copied/pasted in plain text
-        gpg --armor --export <ID>
+        gpg --armor --export <ID or email> > filename.asc
+
 
 
 Sign documents
