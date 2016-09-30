@@ -1,6 +1,0 @@
-Change source path for Win installation (.cab) files:
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\SourcePath
-
-
-
-

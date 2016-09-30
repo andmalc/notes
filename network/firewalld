@@ -20,6 +20,7 @@ Manage interfaces
 Manage zones                    
     Apply to current zone or specify with --zone=<zone>
     Changes temporary unless 1st arg is --permanent
+
     --get-services                  Show available services
     --list-services                 List enabled service in current zone or spec with --zone=
     --add-service=<service>

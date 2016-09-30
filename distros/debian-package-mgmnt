@@ -120,6 +120,9 @@ dpkg {{{1
 		---status,--get-selections  
 			Full list of selections (install, remove etc.)
 		
+resume aborted configure
+    dpkg --configure -a
+
 Source Format {{{1
 Steps to create deb from sources {{{2
 

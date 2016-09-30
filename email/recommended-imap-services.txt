@@ -1,5 +1,0 @@
-fastmail.fm
-runbox.com (filtering said to be good)
-pobox.com
-s-mail.com (secure gpg, IE only)
-myrealbox.com (Novell, nice interface, calendaring)

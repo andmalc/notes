@@ -1,29 +1,12 @@
-Fonts Config
-	Debian
-		Overview c 10/15/03
-			defoma aka "Debian Font Manager"  	
-		When you install a new font, it handles setting up symlinks and such so that you can just point X at /var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType, and leave it alone.  Without defoma, you'd have to point X at wherever fonts installed themselves, and update the various fonts.* files that live next to the fonts.  The only really neccessary step seems to be adding that one line to XF86Config-4.  fontconfig seems to come setup correctly out of the box, X will put Type1 done the bottom all by itself, and the unscaled thing doesn't seem to have any effect anymore.  
-		Woody upgrade:
-			Install defoma, x-ttcidfont-conf, fontconfig
-		Docs
-			Reference:
-				: http://www.debian.org/doc/manuals/reference/ch-tune.en.html#s-xfs-tt
-		Packages
-			msttcorefonts
-			recommended: ttf-bitstream-vera
-		Utilities
-			x-ttcidfont - what does this do?
-			fontconfig, used by xft2, seems to come pre-configured to use defoma's tt fonts.
-			xfontsel
-				view available fonts
+Debian Packages
+    msttcorefonts
+    recommended: ttf-bitstream-vera
+Utilities
+    x-ttcidfont - what does this do?
+    fontconfig, used by xft2, seems to come pre-configured to use defoma's tt fonts.
+    xfontsel
+        view available fonts
 
-Improve quality
-    move /usr/lib/X11/fonts/Type1/ to end of XF86Config
-Improve rendering
-    Xft2 (mozilla-xft in side 5/03) said to make big improvement
-
-Mozilla & other Gnmome/Gtk progs fonts configured by fontconfig (list 
-with fc-list).  Installation path must be in /etc/fonts/fonts.conf
 
 utilities
 	fontconfig

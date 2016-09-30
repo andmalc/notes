@@ -13,13 +13,13 @@ Info {{{2
 
 https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
-
 lsblk -f	tree of disks, parts, labels, UUIDs, mount points
             no partlabel
 blkid		shows UUID's and types
 
 sfdisk - partition table reporting
-	-s  [<device - partition or disk>]    show disk/partition size
+	-s  [<device - partition or disk>]    
+		show disk/partition size
 	-l [options] <dev>
 	-D  DOS compatibility - free 512 free at part beginning
 	-L  ignore irrelevant to Linux
@@ -141,16 +141,20 @@ du
     -hs * | sort -h - sort by human readable size
     -schx /*	shows disk space used by subdirs
 
-ncdu
-    curses disk usage
-
+<<<<<<< HEAD
 Labels {{{2
 
 e2label / e2fsprogs		for extX
 btrfs filesystem label /dev/XXX <label> 
 swaplabel -L <label> /dev/XXX
 
+=======
+ncdu
+    curses disk usage
 
+
+Filesystems {{{1
+>>>>>>> 19186485eb534735938ebfabf20257fb881c9ab5
 Attributes {{{2	
 change times
 	atime
@@ -340,6 +344,7 @@ Info
 pvresize - resize vg on a device
 
 
+<<<<<<< HEAD
 VG/volume group {{{2
 
 composed of 1 or more PV's, optionally already initialized with pvcreate
@@ -461,5 +466,4 @@ allow umounting
 	recommended options
 		/		defaults,relatime,errors=remount-ro
 		/home	nodev,nosuid,relatime
-
 

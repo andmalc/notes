@@ -1,6 +1,9 @@
 Web-based command line
 	http://code.google.com/p/shellinabox/
 
+https://stribika.github.io/2015/01/04/secure-secure-shell.html
+https://blog.g3rt.nl/upgrade-your-ssh-keys.html
+
 command {{{1
 
 ssh user@host [-p port] -L<port#>:localhost:<port#>
@@ -42,7 +45,10 @@ Convert public key to MD5 fingerprint:
     Echo <content of public key> | base64 -d | md5sum
 
 Export to PEM
-	ssh-keygen -e -m pem 
+    public key
+        ssh-keygen -e -m pem -f .ss/keyfile
+    private key
+        openssl rsa -in ~/.ssh/id_rsa -outform pem > id_rsa.pem
 
 
 escapes {{{1

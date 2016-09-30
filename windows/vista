@@ -1,6 +1,0 @@
-
-Account management - for auto-login:
-	run netplwiz
-	highlight account to auto-login and remove 'users must ...' checkmark
-
-

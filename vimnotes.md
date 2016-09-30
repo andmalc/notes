@@ -1,26 +1,10 @@
-NEW TIPS {{{1
--------
 
-:b#	edit last buffer
+Repeat change on multi lines (e.g. commenting all)
+1. Visual block mode (,q) and select lines
+2. Shift+i
+3. Make change
+4. Esc
 
-Using retab
-:se noet
-:se ts=2
-:retab!
-:se ts=3 If you really want spaces, follow this by
-:se et
-:retab!
-
-Retab file
-        1,$retab!
-
-Insert contents of register
-        C-R 
-                see help c_CTRL-R* for more
-
-Elevate permission to root while editing
-	:w !sudo tee %
-	
 Startup & Settings {{{1
 ----------------------
 
@@ -34,132 +18,122 @@ runtimepath
 $VIMRUNTIME + ~/.vim, $VIM/vimfiles etc.
 
 Debian standard for 3rd party plugins is /usr/share/vim/addons
-                
+				
 modelines
-        modeline must be set and modelines => 0 to be enabled
-        syntax
-                [text<white>]{vi:|vim:|ex:}[white]{options}
-                WS before vim is required if text before.
-        options
-                list of option settings separated with ws or ':'
-                ex.   
-                      /* vim: ai tw=75 */
-                        " vim:ts=4 sw=4
-                      " vim:set ai et sts=2 sw=2 tw=80:
+		modeline must be set and modelines => 0 to be enabled
+		syntax
+				[text<white>]{vi:|vim:|ex:}[white]{options}
+				WS before vim is required if text before.
+		options
+				list of option settings separated with ws or ':'
+				ex.   
+					  /* vim: ai tw=75 */
+						" vim:ts=4 sw=4
+					  " vim:set ai et sts=2 sw=2 tw=80:
 
 Windows/ui/Interface {{{1
 Windows 
 
 Opening
-		[n]sp[lit] [+cmd] [fn]  ^ws             
-				Split window into two parts with current file open in both.  New window is n high.  Run cmd after file is loaded.
-		[N]new		Split horiz, windows hight N, edit new file
-		[N]vne[w]	Split window vertically N wide, edit empty file
-		vne[w]		vertical split new
-		C-W		n - new win horiz. / s - existing file horiz
-		s/v         
-				Split current window horizentally/vertically
-				edit current file.
+    sv      vertical split
+    vs      horizontal split
+    sb      split buffer
 
 
 Moving Between
 		C-W +
-		w               Move to window below (wrap)
-		W               Move to window above (wrap)
-		j               Move to window below
-		k               Move to window above
-		b                       to bottom buffer
-		t                       to top buffer
+		w				Move to window below (wrap)
+		W				Move to window above (wrap)
+		j				Move to window below
+		k				Move to window above
+		b						to bottom buffer
+		t						to top buffer
 
 Window Sizing
-		horizontal, height
-				=                       make equal height
-				N +,-       Increase, reduce window height
-				N >,<       Increase, reduce window width
-				res[ize] +-n | n        Resize window
-				z{height}<CR>           Resize window height
-		vertical
-				vertical res[size] 
-				Ctrl W N |      vertical resize to N
+	Height
+		C-W N_				height = N
+		C-W =					make equal height
+		C-W +,- N			increase/decrease height * n
+		z{height}<CR>		resize window height
+		res[ize] +-n | n
+	Width
+		C-W N|			width = N
+		C-W N >,<      increase/reduce with * n
 
 Window Closing
-		c, :close       Hide buffer - edit next window
-		q (or :q ?)     Quit editing & close window
+		c, :close		Hide buffer - edit next window
+		q (or :q ?)		Quit editing & close window
 
 Shifting
-		r/R             rotate windows downwards/upwards
-		K/J/H/L         move current to top/bottom/left/right, full width
+		r/R				rotate windows downwards/upwards
+		K/J/H/L			move current to top/bottom/left/right, full width
 
 Scrolling 
-		C-F/B           scroll forward/back by screen
-		C-E,D           down 1 line, 1/2 screen down
-		C-Y,U           up      "
+		C-F/B			scroll forward/back by screen
+		C-E,D			down 1 line, 1/2 screen down
+		C-Y,U			up		"
 		z commands - scroll according to cursor position
-				z<CR>           current line to top
+				z<CR>			current line to top
 				zz | z. current line to centre
 layout
 		mkview [n], loadview [n]   - saves window options including folds
-        
+		
 status line
-create      ls=2
+create		ls=2
 set
 	set statusline=%f\ %P col %v  
 		format
 	see statusline help for printf flags
 
-show status     Ctrl+G
+show status		Ctrl+G
 
-cmdheight       
-                # of screen lines in command output
+cmdheight		
+				# of screen lines in command output
 titlestring 
-        set titlestring=New\ Title
-                        set titlestring=%{&statusline}\ %F
+		set titlestring=New\ Title
+						set titlestring=%{&statusline}\ %F
 
 
 Files {{{1
 
 Opening, Closing, & Saving
-cd -    cd to previous directory
-%:h     make current dir dir of current file
+cd -	cd to previous directory
+%:h		make current dir dir of current file
 e +/pat open at pat
-e +     open at end
+e +		open at end
 r		read in file
 
 bro[wse] {command} [dir name] for commands including :e & :w, open a file browser.
-vertical split \~  split window and open a file explorer
-
-g/pat/p            print all lines in file matching pat
 
 
 
 
 buffer list
-	&       current
-	#       alternate
-	+       indicates modified
+	&		current
+	#		alternate
+	+		indicates modified
 
 BUFFER LIST COMMANDS
-	nC-^                    switch to last or buf n
-	:buffer [n]             to buf n
-	:bnext/bNext [n]        to nth next/previous buffer
-	:N,Mbdelete [n]         delete buffers N-M incl. from file list
-	:bdelete x y z          delete buffers x,y,&z
-	:b[bn | fn]     edit buffer # or file_name. Use :sb for split & edit in same way.
-	:bad[d] fn      add fn to file list
-	:bm, :sbm       Edit/ split window & edit next modified buffer.
-	:x[it]  Write file if changed and exit.  Hides current buffer if more windows(?)
-	:q!     Quits but does not abandon changed hidden buffers (use :quall! for this)
-	:[range]wq[!] [file]    write & quit, but only write the lines in [range].
+	nC-^					switch to last or buf n
+	:buffer [n]				to buf n
+	:bnext/bNext [n]		to nth next/previous buffer
+	:N,Mbdelete [n]			delete buffers N-M incl. from file list
+	:bdelete x y z			delete buffers x,y,&z
+	:b[bn | fn]		edit buffer # or file_name. Use :sb for split & edit in same way.
+	:bad[d] fn		add fn to file list
+	:x[it]	Write file if changed and exit.  Hides current buffer if more windows(?)
+	:q!		Quits but does not abandon changed hidden buffers (use :quall! for this)
+	:[range]wq[!] [file]	write & quit, but only write the lines in [range].
 	copy file and open original in other window
 		:w foobar | sp #
 		like: C-W, C-^ (split, edit alternate)kk
 
 Buffer types:
-	active: file loaded and displayed.  In ls as ' '
+	active: file loaded and displayed.	In ls as ' '
 	hidden: 
-		file loaded but not displayed.  In ls as 'h'
+		file loaded but not displayed.	In ls as 'h'
 		unset to not retain abandoned buffers
-	inactive:       not loaded.  Options for buffer will be remembered.  In ls as '-'
+	inactive:		not loaded.  Options for buffer will be remembered.  In ls as '-'
 	hidden 
 		to enable hidden buffers.
 		'q!' will fail if there are changed, hidden buffers.  
@@ -180,68 +154,68 @@ eol styles
 		also: cygwin/utils u2d & d2u
 
 Folding {{{1
-        Option to include fold markers within a comment
-                e.g. set cms=..\ %s   'docutils comment format
-        Foldlevel: higher foldlevel = more branches open
-                zm      - fold more - subtracts 1 from fl. (less shown)
-                zr      - fold less - adds 1 to fl. (more shown)
-                zR      - open all
-                zM      - fold all
-        Opening
-                Nzo     Open N fold levels under cursor
-                zO      Open all folds under cursor
-                zc to close a fold
-                zC to close it all the way
-                zo to open it
-                zO to open it all the way
-                zr/R    reduce 1/reduce all folding
+		Option to include fold markers within a comment
+				e.g. set cms=..\ %s   'docutils comment format
+		Foldlevel: higher foldlevel = more branches open
+				zm		- fold more - subtracts 1 from fl. (less shown)
+				zr		- fold less - adds 1 to fl. (more shown)
+				zR		- open all
+				zM		- fold all
+		Opening
+				Nzo		Open N fold levels under cursor
+				zO		Open all folds under cursor
+				zc to close a fold
+				zC to close it all the way
+				zo to open it
+				zO to open it all the way
+				zr/R	reduce 1/reduce all folding
 Edit Modes {{{1
 
 Entering Insert mode
-	i               Insert- enter text before cursor
-	I               insert text before first non-blank in line
-	a,A             Append, as for i 
-	o               Open line below
-	O               Open line above
-	gI              insert text at column 1
+	i				Insert- enter text before cursor
+	I				insert text before first non-blank in line
+	a,A				Append, as for i 
+	o				Open line below
+	O				Open line above
+	gI				insert text at column 1
 
 Insert mode keys
 	go to normal mode
-		c-[, c-c     
-	C-w     delete word left
-	C-T,D   Insert, delete 1 shiftwidth indent
-	End             go to cursor after last char in line
-	Home    go to cursor to first char in line
-	0 CTRL-D          delete all indent in the current line
-	^ CTRL-D          delete all indent in the current line, restore in next line
+		c-[, c-c	 
+	C-w		delete word left
+	C-T,D	Insert, delete 1 shiftwidth indent
+	End				go to cursor after last char in line
+	Home	go to cursor to first char in line
+	0 CTRL-D		  delete all indent in the current line
+	^ CTRL-D		  delete all indent in the current line, restore in next line
 	C-V    Insert next non-digit literally
-	C-O     Next one keystroke in normal mode
+	C-O		Next one keystroke in normal mode
 
 registers
 	Insert (paste) register n
 		C-R"n
-		C-R C-A/C-W             insert word/Word under cursor
+		C-R C-A/C-W				insert word/Word under cursor
 	let @a=" ... " - assign to a register (help 'let-@')
 
 Selecting Text
-	v               start Visual mode per character
-	V               .. by line
-	^V              .. by block
-	^o^v    blockwise, from insert mode
+	v				start Vndmalc@gmail.comisual mode per character
+	V				.. by line
+	^V				.. by block
+	^o^v	blockwise, from insert mode
 
 Special Inserts:
-	:[n]r[ead] fn   insert file to line n or at current line
-	:r! cmd         insert so from cmd below
+	:[n]r[ead] fn	insert file to line n or at current line
+	:r! cmd			insert so from cmd below
 
 Replace mode:
-	Overwrites characters.  Virtual Replace ('gR') also replaces blank areas.
-	r               replace character under
-	R               Enter Replace mode
-	Restore characters with <BS>
+	gR			replaces blank areas.
+	r        replace character under
+	R        Enter Replace mode
+
 
 Run commands in other modes
 	Single Command mode
-		Ctrl-O  Enter a command and return to insert mode.
+		Ctrl-O	Enter a command and return to insert mode.
 	To run normal or command mode commands from Insert Mode, enter: 
 		ctrl+v[Escape key]:command
 
@@ -250,10 +224,10 @@ Lookups & Word Completion {{{1
 :help ins-completion
 
 Insert Mode Completion.  Enter with 'Ctrl-X'
-	^N, ^P  Complete word from forward/backward in current buffer
-	^X^]    Complete word form tag file
-	C-X,I   Replace from files
-	C-X C-L, C-N    Search backwards/forwards for line starting with same
+	^N, ^P	Complete word from forward/backward in current buffer
+	^X^]	Complete word form tag file
+	C-X,I	Replace from files
+	C-X C-L, C-N	Search backwards/forwards for line starting with same
 		characters before cursor
 Enabling word completion with ^N & ^P
 	complete (cpt) options control how completion works.  File(s) to search
@@ -261,96 +235,117 @@ Enabling word completion with ^N & ^P
 	cpt defaults include search current buffers and tags files.  Search of
 		dict files not on by default. 
 
+Text objects {{{1
 
-Text object motions {{{1
+i<marker>
+	Edit within markers
+	Marker = ([{<"
+	When used with edit commands, affects text within marker pairs
+t<marker>
+	Edit until marker
 
-w/W     beginning of next word/blank separated words, 
-	same for other motions (incl. gE for blank sep ge.
-space   move right
-b       move to beginning of current word
-e       move to end of current word
-ge,E    back to end of word
-n j,k   move n lines down or up
-n +,-   move n lines on non blank in column 1
-)(      sentences forward, backward
-}{      paragraphs forward, backward
-]],[[   sections, forward, backward, start of sect
-][,[]           ""              , end of sect
-{,}     move by sentences or blocks
 
-gi	jump to last edit
-`|'<mk>	jump to mark, beginning of line with mark
 
-f/F<char> 
-	move to next/prev char in line.  ; to repeat
-t/T	same but exclusive
-	eg: ct) - change within 
- 
-*/#	to next/prev word under cursor
+Motions {{{1
+
+w/W		beginning of next word/blank separated words, same for other motions incl. gE for blank sep ge.
+space	move right
+b		move to beginning of current word
+e		move to end of current word
+ge,E	back to end of word
+n +,-	move n lines on non blank in column 1
+)(		sentences forward, backward
+}{		paragraphs forward, backward
+]],[[	sections, forward, backward, start of sect
+][,[]			""				, end of sect
+{,}		move by sentences or blocks
+
+[n]f/F<char> 
+	move to nth next/prev char in line.  ; to repeat
+[n]t/T	same but exclusive
+	eg: c2t) - change within 2nd bracket
+
+
 		
 Tags & Jumps
-	^I/^O   go to newer/older position in jump list
+	^o/^i	jump back to last edit / forward
+	^I/^O	go to newer/older position in jump list
 			Can use to move between two files or within a 
-			file.                                                           
-	:ts /pat    tag select arg is a regex
+			file.															
+	:ts /pat	tag select arg is a regex
+
+	gi	jump to last edit
+	`|'<mk>	jump to mark, beginning of line with mark
+	*/#	to next/prev word under cursor
+
 
 Editing {{{1
-
+Normal mode {{{2
 Deleting
-    [x]x        Delete [x] characters under and after the cursor
-    [x]X        Delete [x] characters before the cursor
-    nD, d$      Delete to end 
-    dd          Delete whole line       
-    J           join lines (ie delete EOLs)
-    J/:j        Join n lines of text, add spaces in place of removed EOLs.  
-                        If joinspaces is on, insert two spaces after .,!, or ?  
-    de          delete to end of word, leave space
-    db          delete word previous
-    gp          put, leave cursor after
-    "n...       With deletion commands (d,c,s) remove text into buffer n.
-                        With paste/put command, put from buffer n
-    [dc][/?]text        
-            Delete/change from current position search to text
-            Use text object specifiers with delete:
-    daw/W       Deletes whole words, before & after cursor
+	[x]x		Delete [x] characters under and after the cursor
+	[x]X		Delete [x] characters before the cursor
+	nD, d$		Delete to end 
+	dd			Delete whole line		
+	J			join lines (ie delete EOLs)
+	J/:j		Join n lines of text, add spaces in place of removed EOLs.	
+						If joinspaces is on, insert two spaces after .,!, or ?	
+	de			delete to end of word, leave space
+	db			delete word previous
+	gp			put, leave cursor after
+	"n...		With deletion commands (d,c,s) remove text into buffer n.
+						With paste/put command, put from buffer n
+	[dc][/?]text		
+			Delete/change from current position search to text
+			Use text object specifiers with delete:
+	daw/W		Deletes whole words, before & after cursor
 	C-H		Delete char left
 	C-W		Delete word left
 	C-U		Delete line left
 
 Changing
-       cw      change word 
-       S       change whole line
-		 c$, C       change to end of line, enter insert mode
-        C & D change & delete from cursor to end of line plus n more complete lines.
-        s is a synonym for cl
-        S is a synonym for cc
-        cc      change whole line
-        movement:
-        c0      change to beginning of line
-        c$      change to end of line
-        bce/bcw change word
-        c2j     change current and two lines down
-        ~       toggle case
-        gU/u/~{motion}  make Nmove text uppercase/lowercase/swap case.
-        gU<motion>      Make motion text upper case
-        guu/gUU         Make line lower/upper case
+	   cw	   change word 
+	   S	   change whole line
+		 c$, C		 change to end of line, enter insert mode
+		C & D change & delete from cursor to end of line plus n more complete lines.
+		s is a synonym for cl
+		S is a synonym for cc
+		cc		change whole line
+		movement:
+		c0		change to beginning of line
+		c$		change to end of line
+		bce/bcw change word
+		c2j		change current and two lines down
+		~		toggle case
+		gU/u/~{motion}	make Nmove text uppercase/lowercase/swap case.
+		gU<motion>		Make motion text upper case
+		guu/gUU			Make line lower/upper case
 
 Copying and Moving
-        syntax: reg/visual block, y or d, motion
-        yy, Y           yank whole line
-        p, P            put a register after/before the cursor position 
-        ]p              like p, but adjust indent to current line
-        [p              like P, but adjust indent to current line
-        gp              like p, but leave cursor after the new text
+		syntax: reg/visual block, y or d, motion
+		yy, Y			yank whole line
+		p, P			put a register after/before the cursor position 
+		]p				like p, but adjust indent to current line
+		[p				like P, but adjust indent to current line
+		gp				like p, but leave cursor after the new text
+
+Elevate permission to root while editing
+	:w !sudo tee %
+
+Command mode {{{2
+
+:substitute
+    example
+        :%s/\s\+$//e
+        :%s to run :substitute over the range %, which is the entire buffer.
+        \s t match all whitespace characters.
+        \+ to repeat them 1 or more times.
+        $ to anchor at the end of the line.
+        The e flag to not give an error if there is no match (i.e. the file is already without trailing whitespace).
 
 Inserting {{{1
 
 C-@		insert previously inserted text and go to normal
 C-A		insert previously inserted text (= C-R.)
-
-thing
-thing
-thing
 
 Foolproof paste
 	:r! cat 
@@ -360,329 +355,367 @@ Foolproof paste
 
 
 Line Wrappping/Breaks, Indenting and Tabs {{{1
-        Wrapping
-                wrap and insert EOL's
-                - Static Wrapping: Wrapping (and insertion of EOL) ocurrs when tw is
-                  reached or, if tw=0, value of wrapmargin number of characters from
-                  right side of window.
-                - wrapmargin, wm - Number of characters from the right window border
-                  where wrapping starts.  When typing text beyond this limit, an <EOL>
-                  will be inserted and inserting continues on the next line.  When
-                  'textwidth' is non-zero, this option is not used. wm and tw both
-                  insert line breaks.
-        Dynamic Wrapping: 
-                linebreak, lbr 
-                        Lines will wrap at a character in 'breakat' rather than at last character in screen. 
-                        Unlike 'wrapmargin' and 'textwidth', does not insert EOLs.
+
+Wrapping
+	wrap and insert EOL's
+	- Static Wrapping: Wrapping (and insertion of EOL) ocurrs when tw is
+	  reached or, if tw=0, value of wrapmargin number of characters from
+	  right side of window.
+	- wrapmargin, wm - Number of characters from the right window border
+	  where wrapping starts.  When typing text beyond this limit, an <EOL>
+	  will be inserted and inserting continues on the next line.  When
+	  'textwidth' is non-zero, this option is not used. wm and tw both
+	  insert line breaks.
+Dynamic Wrapping: 
+	linebreak, lbr 
+			Lines will wrap at a character in 'breakat' rather than at last character in screen. 
+			Unlike 'wrapmargin' and 'textwidth', does not insert EOLs.
 Indenting
-        smartindent ('si')
-                Use this when coding in Python.  ai should be on as well.
-        Indent by text object
-                >ap     Indent current paragraph (by motion)
-                n>>     same, by count (>>n ?)
-		C-T/C-D	Insert/delete 1 shiftwidth
+	smartindent ('si')
+			Use this when coding in Python.  ai should be on as well.
+	Indent by text object
+		>ap		Indent current paragraph (by motion)
+		n>>		same, by count (>>n ?)
+	C-T/C-D	Insert/delete 1 shiftwidth
 
 Tabs
-        'smarttab', 'sta'       use 'shiftwidth' when inserting <Tab>
-        'softtabstop', 'sts'    number of spaces that <Tab> uses while editing
-        ret[ab]                         Recalc tabs in a buffer
-        :s/^ \+/^I              (not \w, which means blanks or tabs)
-        If the 'shiftround' option is on, the indent is rounded to a multiple of
-        'shiftwidth'.
+    expandtab               insert spaces instead of tabs
+	'smarttab', 'sta'		use 'shiftwidth' when inserting <Tab>
+	'softtabstop', 'sts'	number of spaces that <Tab> uses while editing
+	:s/^ \+/^I				(not \w, which means blanks or tabs)
+		If the 'shiftround' option is on, the indent is rounded to a multiple of
+		'shiftwidth'.
 
-Marks & Registers {{{1
+ret[ab]!    Recalc tabs in a buffer
+	line retab!
+	file %retab!
 
-ma              set mark with alpha char
-'a      go to mark
-'ma             go to beginning of line with mark       
+Convert tabs to spaces
+    ts=4
+    se expandtab
+	%retab!
+
+Marks {{{1 
+ma				set mark with alpha char
+'a		go to mark
+'ma				go to beginning of line with mark		
+
+Registers {{{1
+
+names
+	register name prefix: "
+	"       current contents of 'unnamed register' - use for ex commands?
+	*       X-Primary register, stores current selection (CUT BUFFER0 of 8)
+			use for transfer to/from xterm
+	+       clipboard.  
+			Used by modern apps for cut/copy/paste ops selection behavior.
+			Use this to paste text from vim to mozilla
+			main paste register.  Not used by xterms
+	:       last executed cmd
+
+show
+		:reg
+
+execute contents of register
+		@<reg name>
+
+copy/paste to/from reg
+		"<reg>y/Y
+				yank selected text/lines
+		"<reg>p/P 
+
+				paste reg contents after/before cursor
+		"<reg>gp/gP 
+				as above, cursor left after text
+
+edit register
+		"ap
+		<edit lines>
+		"ad
+
 
 Normal mode syntax for using register as target of y or d or as source
 		{Visual}"n[ydp]{motion}
-				y`a             copy text from mark a to line before current line
-				"ayy    copy line into register a
-				"ad`a   cut text from mark a to current position into register a
-				"aA             Append text to buffer a
+				y`a				copy text from mark a to line before current line
+				"ayy	copy line into register a
+				"ad`a	cut text from mark a to current position into register a
+				"aA				Append text to buffer a
 
 Cmd mode register
 		:'a,'bs/thing/ThinG/
 
-registers
-	names
-		register name prefix: "
-		"       current contents of 'unnamed register' - use for ex commands?
-		*       X-Primary register, stores current selection (CUT BUFFER0 of 8)
-				use for transfer to/from xterm
-		+       clipboard.  
-				Used by modern apps for cut/copy/paste ops selection behavior.
-				Use this to paste text from vim to mozilla
-				main paste register.  Not used by xterms
-		:       last executed cmd
-
-	using
-			show
-					:reg
-			execute contents of register
-					@<reg name>
-			copy/paste to/from reg
-					"<reg>y/Y
-							yank selected text/lines
-					"<reg>p/P 
-
-							paste reg contents after/before cursor
-					"<reg>gp/gP 
-							as above, cursor left after text
-			edit register
-					"ap
-					<edit lines>
-					"ad
+	Insert (paste) register n
+		C-R"n
+		C-R C-A/C-W             insert word/Word under cursor
+	let @a=" ... " - assign to a register (help 'let-@')
 
 insert text from buffer or register into cmd or search
-          ^R commands
+		  ^R commands
 
 Python file settings {{{1
-        http://www.vex.net/~x/python_and_vim.html
-        set ts=4
-        set sw=4
-        set expandtab
-        set softtabstop=4
-        set autoindent
-        autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+		http://www.vex.net/~x/python_and_vim.html
+		set ts=4
+		set sw=4
+		set expandtab
+		set softtabstop=4
+		set autoindent
+		autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 Formating {{{1
-        debuging
-                use list mode to show
-                        tabs CTRL-I
-                        end of line $
-                        see listchars
-        commands
-                gq[motion]      
-                        Format lines motion moves over.  Textwidth option controls the length
-                        of each formatted line.  If textwidth is 0, the formatted ine length
-                        is the screen width (max 79) minus the value of any wrapmargin
-                        setting.
-                gqq             Format current line
-                gqj     Format current and next line
-                gq}     Format till end of paragraph
-        joinspaces      Insert 2 spaces after join command
-        Formating Email Messages
-                These should be formated to break at 78 characters.
-        formatoptions (fo)
-                now crnqo
-                comment options - croq
-                        c - restrict auto-formatting to comments
-                auto formatting - tw must be > 0
-                        a - turn on auto-formatting
-                        t - auto-wrap by tw 
-                        c - auto-wrap comments
-                w - lines w/o a trailing ' ' not formatted (e.g. wrapped prose text
-                will get rewrapped, list lines ended by CR's not)
-                
-                        
+		commands
+				gq[motion]		
+						Format lines motion moves over.  Textwidth option controls the length
+						of each formatted line.  If textwidth is 0, the formatted ine length
+						is the screen width (max 79) minus the value of any wrapmargin
+						setting.
+				gqq				Format current line
+				gqj		Format current and next line
+				gq}		Format till end of paragraph
+		joinspaces		Insert 2 spaces after join command
+		Formating Email Messages
+				These should be formated to break at 78 characters.
+		formatoptions (fo)
+				now crnqo
+				comment options - croq
+						c - restrict auto-formatting to comments
+				auto formatting - tw must be > 0
+						a - turn on auto-formatting
+						t - auto-wrap by tw 
+						c - auto-wrap comments
+				w - lines w/o a trailing ' ' not formatted (e.g. wrapped prose text
+				will get rewrapped, list lines ended by CR's not)
+				
+						
 Search & Replace {{{1
-        / ?             Search forward/backward
-        /CR             Repeat search, forward
-        ?CR             Repeat search, backward 
-        ;               1  repeat latest f, t, F or T N times
-        [I              show lines matching word under cursor
-        More examples of editing with search in 'pattern.txt' line 150
-        *, g*   search forward for whole word, word under cursor
-        #, g#   as above, backward
-        smartcase       (scs)   
-                no ignore case when pattern has uppercase
-                ignorcase must be on.  
-                Used for the commands "/", "?", "n", "N", ":g" and ":s".  
-        magic   Enables extended regular expressions (eg \s)
-        %s/$/thing              Append 'thing' to every line
-        Regex atoms
-                \<      start of word
+
+g/pat/p			   print all lines in file matching pat
+
+		/ ?				Search forward/backward
+		/CR				Repeat search, forward
+		?CR				Repeat search, backward 
+		;				1  repeat latest f, t, F or T N times
+		[I				show lines matching word under cursor
+		More examples of editing with search in 'pattern.txt' line 150
+		*, g*	search forward for whole word, word under cursor
+		#, g#	as above, backward
+		smartcase		(scs)	
+				no ignore case when pattern has uppercase
+				ignorcase must be on.  
+				Used for the commands "/", "?", "n", "N", ":g" and ":s".  
+		magic	Enables extended regular expressions (eg \s)
+		%s/$/thing				Append 'thing' to every line
+		Regex atoms
+				\<		start of word
+
+debuging 
+        set list - shows tabs & line endings
+                tabs CTRL-I
+                end of line $
+                see listchars
+
+Find tabs & spaces
+    " Show all tabs:
+    /\t
+    " Show trailing whitespace:
+    /\s\+$
+    " Show trailing whitespace only after some text (ignores blank lines):
+    /\S\zs\s\+$
+    " Show spaces before a tab:
+    / \+\ze\t
 
 Ex Mode {{{1
 
 Syntax: line address/pattern/command
 Command Line 
-        Accelerator keys
-                Ctrl B          Line beginning
-                Ctrl E          Line ending
-                Ctrl U          Delete line to left
-        @:      repeat last ex command
-Display Line Numbers
-  set number/nu, nonumber/nonu  show,hide line numbers
-  n,n#  temporarily show numbers on lines n,n
-  .=    show current line number
+		Accelerator keys
+				Ctrl B			Line beginning
+				Ctrl E			Line ending
+				Ctrl U			Delete line to left
+		@:		repeat last ex command
+
+Show/Display Line Numbers
+  set number/nu, nonumber/nonu	show,hide line numbers
+  n,n#	temporarily show numbers on lines n,n
+  .=	show current line number
 
 q:	display Ex history, can edit and reexecute
 
 Line Addressing {{{2
 
-{count}:        
-       start entering an Ex command with range from current line to N
-       lines down
-:n,n+o  Line address range with offset.  Extends match range.
+{count}:		
+	   start entering an Ex command with range from current line to N
+	   lines down
+:n,n+o	Line address range with offset.  Extends match range.
 Substition chars:
- .     current line
- $     last line
- %     all lines - shorthand for 1,$
-/pat/n  line before/after pat
+ .	   current line
+ $	   last line
+ %	   all lines - shorthand for 1,$
+/pat/n	line before/after pat
 /pat/en nth char from the end of a match
 n,/pat/ From line n to pat after cursor line (might be before line n)
 n;/pat/ From line n to pat after line n.  
-/pat1//pat2/    Line matching pat2 after pat1
-.+3             three lines below cursor
+/pat1//pat2/	Line matching pat2 after pat1
+.+3				three lines below cursor
 
 Ex Text Movement Commands {{{2
 
-:[range]y[ank] [x]      Yank [range] lines [into register x].
+:[range]y[ank] [x]		Yank [range] lines [into register x].
 :[range]y[ank] [x] {count}
-                  Yank {count} lines, starting with last line number
-                  in [range] (default: current line [into register x].
-:[range]co[py] {address}        
-       Copy the lines given by [range] to below the line given by {address}.  
-:t              Synonym for copy.
-:[range]m[ove] {address}        
-       Move the lines given by [range] to below the line given by {address}.
-:[range]d [x]           Delete range lines into register x
-:c                      Change text on line.  Type . to stop replacing
-:[line]pu[t] [x]        
-       Put the text [from register x] after [line] (default current line).
-[n]:d x [n]     delete [n] lines [from current line] into register x.
-                                  Specifier for n can be in before or after position.
+				  Yank {count} lines, starting with last line number
+				  in [range] (default: current line [into register x].
+:[range]co[py] {address}		
+	   Copy the lines given by [range] to below the line given by {address}.  
+:t				Synonym for copy.
+:[range]m[ove] {address}		
+	   Move the lines given by [range] to below the line given by {address}.
+:[range]d [x]			Delete range lines into register x
+:c						Change text on line.  Type . to stop replacing
+:[line]pu[t] [x]		
+	   Put the text [from register x] after [line] (default current line).
+[n]:d x [n]		delete [n] lines [from current line] into register x.
+								  Specifier for n can be in before or after position.
 
 Global Command {{{2
 
 big doc: http://www.vim.org/tips/tip.php?tip_id=227
 [address]g/pattern/[commands]
-&       repeat last substitution
-g,g! (or v)/pat/p               
-       global search: print lines that contain, don't contain pattern (:g = :%s). 
-       g after search & replace means replace every instance in line.
-:g/thing/s/&/thingie/g  '&' matches or inserts first matched term.
-:g/.*/<p>&<\/p>                 
-       Surround line with tags cmds with following count
+&		repeat last substitution
+g,g! (or v)/pat/p				
+	   global search: print lines that contain, don't contain pattern (:g = :%s). 
+	   g after search & replace means replace every instance in line.
+:g/thing/s/&/thingie/g	'&' matches or inserts first matched term.
+:g/.*/<p>&<\/p>					
+	   Surround line with tags cmds with following count
 
 Counts {{{2
 
-Some commands allow for a count after the command.  This count is used as
+Some commands allow for a count after the command.	This count is used as
 the number of lines to be used, starting with the line given in the last
 line specifier (the default is the cursor line).  The commands that accept
 a count are the ones that use a range but do not have a file name argument
 (because a file name can also be a number).
-        Examples:
-                :s/x/X/g 5      substitute 'x' by 'X' in the current line and four following
-                lines 
-                :23d 4          delete lines 23, 24, 25 and 26
-        count before entering ":" 
-                this is translated into:
-                        :.,.+(count - 1) In words: The 'count' lines at and after the cursor.
-                        Example: To delete three lines:
-                        3:d<CR> is
-                        translated into: .,.+2d<CR>
+		Examples:
+				:s/x/X/g 5		substitute 'x' by 'X' in the current line and four following
+				lines 
+				:23d 4			delete lines 23, 24, 25 and 26
+		count before entering ":" 
+				this is translated into:
+						:.,.+(count - 1) In words: The 'count' lines at and after the cursor.
+						Example: To delete three lines:
+						3:d<CR> is
+						translated into: .,.+2d<CR>
 
-Programming Vim {{{1
+Programming/functions {{{1
 
 See introductory info on control statements, functions and
 autocommands in 'starting.txt.'
-Path separator is '/' on all OS's.  Path strings are therefore not quoted.
+Path separator is '/' on all OS's.	Path strings are therefore not quoted.
 
 macro
-    record 
-       qq      record to q (to label macro as 'q')
-       enter commands
-       q
-    play	nqq		play n times 
+	record 
+	   qq	   record to q (to label macro as 'q')
+	   enter commands
+	   q
+	play	nqq		play n times 
 
  
 let -
   assigns value to internal variable
   environment vars (incl '~') not expanded
   prefixes:
-     g:    global variables
-     b:    local buffer variables
-     w:    local window variables
-     t:    local tab page variables
-     s:    script-local variables
-     l:    local function variables
-     v:    Vim variables.
+	 g:    global variables
+	 b:    local buffer variables
+	 w:    local window variables
+	 t:    local tab page variables
+	 s:    script-local variables
+	 l:    local function variables
+	 v:    Vim variables.
 
 variables
    let var-name = exp
-       set internal var
+	   set internal var
    let $env = exp
-       set environment var
+	   set environment var
    let @reg-name = exp
-       set register to exp
+	   set register to exp
    let &option-name = exp
-       set option local & global 
+	   set option local & global 
 
 set - 
 sets options
 
 expressions
    e ? e : e
-       if, then, else
+	   if, then, else
    ||, &&, ==
-       OR, AND, equal
+	   OR, AND, equal
 
+Examples {{{2
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+And then use it like:
+
+:call TrimWhitespace()
 
 Markup Editing (XML, HTML) {{{1
 
 map shortcuts to apply markup to selected text
-       examples:
-               :vmap sb "zdi<b><C-R>z</b><ESC>
-                       map visual mode 'sb' to markup selected tag with bold tag
-%       match bracket (braket?) or tag
+	   examples:
+			   :vmap sb "zdi<b><C-R>z</b><ESC>
+					   map visual mode 'sb' to markup selected tag with bold tag
+%		match bracket (braket?) or tag
 Vim as an XML editor manual
-       http://tritarget.com/vim/xml-plugin/doc/xml-plugin.txt
-       set foldmethod=syntax
+	   http://tritarget.com/vim/xml-plugin/doc/xml-plugin.txt
+	   set foldmethod=syntax
 search for matching element names
-       /^R^A   inserts name under cursor incl brackets
-       /^R^W   inserts name under cursor       
+	   /^R^A   inserts name under cursor incl brackets
+	   /^R^W   inserts name under cursor	   
 
 Mapping {{{1
 
 http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
+http://learnvimscriptthehardway.stevelosh.com/chapters/03.html
 Finding keys: help map-which-keys
+
 Show current maps: map
+Types: map (normal + visual), nmap, vmap, imap (normal, visual, insert modes)
 
+Special keys:
+	Escape		<Esc>
+	Return		<CR>
+	Control		<c-X>
 
-Line terminator is needed for a mapping.  Use <CR> for this.
-Enterin escape char in mappings 
-        cpo incl. 'B' (default)
-                Enter Esc as \^[  (simulates Ctr+V escape key)
-        cpo - no 'B'
-                Must enter Esc as <Esc>
-May include a '|' (chain commands) in a mapping as '\|' or '<Bar>' (no 'b'
-or '<' in cpo, respectively (defaults)), or as '^V|' (always works).
-        eg:     map tt :echo 'a' \| echo 'b' <CR>
-For Visual mode mappings, < and > stand for beginning and end of
-last/current selection.
-        '<>' notation (eg <ESC>, <CR>, <Bar>) only recognised in mappings
-Autocommands
-        From autocmd.txt
-                au * {pat}      List all events for a given path/file pattern
-                au! etc.        Remove previous au cmd's for this event & pat and add new
+Chain commands	\| or <Bar>
+
+imap example:
+	:imap <c+d>	<esc>ddi	(i at end returns to insert mode)
 
 Shell {{{1
 
-:![Unix Command]        Run a single command in shell
-:r!             Insert output from command into buffer
-:sh     Go to shell.  "Exit" to return.
-view (in shell)         Open a file in vi in read only mode
-:x,y!command    execute external command on lines x - y
-:```a``,.!command       
-       execute external command on lines from beginning of line for mark a to
-       current line. 
-:r[ead] !{cmd}          
-       Execute {cmd} and insert its standard output below the cursor.
+:![Unix Command]		Run a single command in shell
+:r!				Insert output from command into buffer
+:sh		Go to shell.  "Exit" to return.
+view (in shell)			Open a file in vi in read only mode
+:x,y!command	execute external command on lines x - y
+:```a``,.!command		
+	   execute external command on lines from beginning of line for mark a to
+	   current line. 
+:r[ead] !{cmd}			
+	   Execute {cmd} and insert its standard output below the cursor.
 Execute cmd with range lines (or whole buffer if not specified) as stdin
-       :[range]w !cmd
+	   :[range]w !cmd
 Insert Output of a Command
-       :r !{cmd}
-       Also redirect stderr with 'shellredir'
+	   :r !{cmd}
+	   Also redirect stderr with 'shellredir'
 
 TASKS {{{1
 
 Discards duplicate lines
-       Filter lines through 'uniq'
+	   Filter lines through 'uniq'
 
 
 
@@ -690,14 +723,14 @@ Debugging Vim {{{1
 
 Display: 
   plugin loading at startup
-    vim -V2
+	vim -V2
   vimtimescripts sourced
-    scriptnames
+	scriptnames
   functions called
-        functions
+		functions
   where setting set or key mapped
-    verbose ...
-    
+	verbose ...
+	
 
 
 

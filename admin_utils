@@ -1,4 +1,0 @@
-Deployment
-	system-imager - recommended on debian.user for larger scale deployments of
-	identical clients on similar machines.
-		http://www.systemimager.org/

@@ -53,8 +53,8 @@ origin      default name of remote branch
 remote 
     show origin  
     add         <remote add <name> <url>
-    clone		create new local repo, remote tracking branch is auto-created
     fetch		pull remote changes to remote tracking branch
+    clone		create new local repo, remote tracking branch is auto-created
     pull		pull remote changes to remote tracking branch 
                     and start merge = fetch+merge
     push <repo> upload changes to remote.  Default repo is origin
@@ -142,55 +142,68 @@ HEAD            Normally symbolic ref to /refs/heads/<branch name>
                 Then in detached HEAD mode, not on branch
 
 
-checkout -b <name>	create new branch <name> and switch to it
-
 branch 
     -v  show all branches,  most recent commit
     -r	show remote tracking branches
     -a	show local and remote tracking branches
     -d  delete <branch>
     -rd delete remote <remote>/<branch>
-<name>	create new branch but don't switch to it	    	   
+
+    <name>	create new branch but don't switch to it	    	   
+
+Set upstream branch
+    branch -b <branchname> --track origin/<remote b name>
+    push --set-upstream origin gh-pages
+
+show-branch show all changes in branch
 
 
 Checkout:
     Change the HEAD symref to point to the new  branch 
     Reset the index to match the tip of the new branch 
-    Update the working tree to match the index
+    If branch given, modified files in working dir retained
+    If no branch name, update the working tree to match the index
+
+create new branch <name> and switch to it
+    checkout -b <name>	
+
+create new branch tracking remote and switch to it
+    checkout -b <name> origin/name
 
 git symbolic-ref HEAD
 
 
-Set upstream branch
-    push --set-upstream origin gh-pages
+Submodules & Subtrees {{{1
 
-show-branch show all changes in branch
+Repo independent of parent, harder to merge parent with child.  
+Tracked in .gitmodules file.  Composed from a gitlink tree entry in main repo that points to particular commit 
 
-Submodules
-	Repo independent of parent, harder to merge parent with child.  
-	Tracked in .gitmodules file.  Composed from a gitlink tree entry in main repo that points to particular commit 
-	Add
-		submodule add [--name name] <repo URL> [relative path in parent repo]
-		if path given, logical name is tail unless --name specified
-		if no local name given, repo cloned into cwd/<final part of repo path>
-	Delete
-		mv asubmodule asubmodule_tmp
-		git submodule deinit asubmodule    
-		git rm asubmodule
-		# Note: asubmodule (no trailing slash)
-		# or, if you want to leave it in your working tree
-		git rm --cached asubmodule
-		mv asubmodule_tmp asubmodule
-		rm -rf .git/modules/asubmodule
-		edit .gitmodules - remove section (?)
+Add
+    submodule add [--name name] <repo URL> [relative path in parent repo]
+    if path given, logical name is tail unless --name specified
+    if no local name given, repo cloned into cwd/<final part of repo path>
 
-	Cloning - don't need to be in submodule dir
-		submodule init / submodule update
-	Updating
-		cd into module dir and git fetch / git merge origin/master
-	Info
-		submodule status
-		git status ?
+Delete
+    mv asubmodule asubmodule_tmp
+    git submodule deinit asubmodule    
+    git rm asubmodule
+    # Note: asubmodule (no trailing slash)
+    # or, if you want to leave it in your working tree
+    git rm --cached asubmodule
+    mv asubmodule_tmp asubmodule
+    rm -rf .git/modules/asubmodule
+    edit .gitmodules - remove section (?)
+
+New clone of repo
+    submodule init (creates .gitmodules) / submodule update
+    don't need to be in submodule dir
+
+Updating
+    cd into module dir and git fetch
+
+Info
+    submodule status
+    git status ?
 
 
 Subtrees

@@ -23,6 +23,12 @@ UnofficialRepositories
 Debian Multimedia
 deb http://www.deb-multimedia.org testing main
 
+Installation sizes
+	debootstrip lenny 
+		before kernel - 171 M
+		after locale & purge 175M
+		after install kernel from packge +80M 257M
+
 
 
 
@@ -42,6 +48,53 @@ netselect-apt,sshfs, htop,
 
 	debian-goodies for checkrestart
 	sux
+
+general
+    sudo, zsh zsh-static, ssh, vim, rsync, samba/fusesmb, screen, less, rcconf, tree
+    netselect-apt,sshfs, htop, ntp, sudo, locales
+
+admin
+    multitail
+    saidar
+    debian-goodies for checkrestart
+
+    network
+        wicd - wireless config
+        network-manager 
+
+ssh
+    In /etc/fstab
+        sshfs#USERNAME@REMOTE_HOST:REMOTE_PATH MOUNT_POINT fuse SSHFS_OPTIONS 0 0
+
+console
+    twin - windowing environment
+    rtorrent
+    audio
+        cplay
+        abcde - multi format CD ripping
+        mpd with mpc client - audio daemon with playlists - esp for remote playing
+    rss
+        raggle or newsbeuter
+    chat
+        finch (from pidgin)
+        BitlBee - multi-protocol IM thr. an irc client
+        mcabber, centerim - chat
+    video
+        mplayer -vo vesa or -vo fbdev
+
+X-win
+    x-window-system-core
+        basic X-tstream-vera
+        Window
+        install ttf-bitstream-vera
+    gdm
+        for basic Gnome w/o apps
+    window/session managers
+        xfce
+        gnome - installs apps too
+    rerun X config, e.g. after changing video card
+        dpkg-reconfigure xserver-xfree86
+
 
 config {{{2
 
