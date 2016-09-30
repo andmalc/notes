@@ -1,6 +1,0 @@
-grep -i "$1" <<+
-Dad 6/25
-Carolyn 7/5
-Lisa    9/12
-Mum 10/25
-+

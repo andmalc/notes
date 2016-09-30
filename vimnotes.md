@@ -280,7 +280,7 @@ Tags & Jumps
 
 
 Editing {{{1
-
+Normal mode {{{2
 Deleting
 	[x]x		Delete [x] characters under and after the cursor
 	[x]X		Delete [x] characters before the cursor
@@ -330,7 +330,18 @@ Copying and Moving
 
 Elevate permission to root while editing
 	:w !sudo tee %
-	
+
+Command mode {{{2
+
+:substitute
+    example
+        :%s/\s\+$//e
+        :%s to run :substitute over the range %, which is the entire buffer.
+        \s t match all whitespace characters.
+        \+ to repeat them 1 or more times.
+        $ to anchor at the end of the line.
+        The e flag to not give an error if there is no match (i.e. the file is already without trailing whitespace).
+
 Inserting {{{1
 
 C-@		insert previously inserted text and go to normal
@@ -594,7 +605,7 @@ a count are the ones that use a range but do not have a file name argument
 						3:d<CR> is
 						translated into: .,.+2d<CR>
 
-Programming Vim {{{1
+Programming/functions {{{1
 
 See introductory info on control statements, functions and
 autocommands in 'starting.txt.'
@@ -639,6 +650,16 @@ expressions
    ||, &&, ==
 	   OR, AND, equal
 
+Examples {{{2
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+And then use it like:
+
+:call TrimWhitespace()
 
 Markup Editing (XML, HTML) {{{1
 

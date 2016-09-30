@@ -1,6 +1,9 @@
 Web-based command line
 	http://code.google.com/p/shellinabox/
 
+https://stribika.github.io/2015/01/04/secure-secure-shell.html
+https://blog.g3rt.nl/upgrade-your-ssh-keys.html
+
 command {{{1
 
 ssh user@host [-p port] -L<port#>:localhost:<port#>
