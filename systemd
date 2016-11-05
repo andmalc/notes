@@ -15,14 +15,17 @@ unit commands
         switch immmediately to other target
         stop all other processes
 
-    show (properties)
+	show (properties)
+	show-environment 
+
+	    Lists units pulled in by a given target.
+		systemctl show -p "Wants" multi-user.target 
+
+	    Show dependent services & other targets
+		 systemctl show -p "After" sshd.service     
+
     kill <name>
 
-    Lists units pulled in by a given target.
-        systemctl show -p "Wants" multi-user.target 
-
-    Show dependent services & other targets
-         systemctl show -p "After" sshd.service     
 
     Lists the targets that will include the service
          ls /etc/systemd/system/*.wants/sshd.service
@@ -54,16 +57,13 @@ hostnamectl
 
 
 logind 
+	list-sessions/users/seats
 
     etc/systemd/logind.conf
         Configure sleep/hibernate timeout and which buttons activate
     etc/systemd/sleep.conf
         [Sleep]
         SuspendState=freeze
-
-machinectl
-    login, reboot, poweroff, status <container>
-    bind <machinename> <source path> [<dest path in cont>]
 
 
 networkctl 	
@@ -81,6 +81,9 @@ Stop/Start GDM
 systemctl isolate multi-user.target (or just init 3)
 systemctl isolate graphical.target (or default.target or init 5)
 
+systemd-inhibit <cmd>
+	prevent sleep while cmd runs
+
 systemd-nspawn {{{1 
 
 -D <dir>  use <dir> as fs root
@@ -91,6 +94,21 @@ systemd-nspawn {{{1
  --template=<dir>
     use fs in dir as template 
 
+Networking:
+--port=<host #>:<cont #>
+	map port in cont. to host
+--network-interface=
+	assign inf. on host to container.  Host cannot use.
+--network-veth
+	virtual interface 
+--network-bridge
+	virtual interface, bridged
+
+machinectl
+    container must have dbus installed
+    login, reboot, poweroff, status <container>
+    bind <machinename> <source path> [<dest path in cont>]
+
 examples:
     -xb -D /  #ephemeral snap of root
      -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
@@ -99,6 +117,9 @@ examples:
 Container as service - must be in /var/lib/machines
 systemctl start systemd-nspawn@mycontainer.service
 
+Run container under SELinux
+	semanage fcontext -a -t svirt_sandbox_file_t "/path/to/container(/.*)?"
+	restorecon -R /path/to/container/
 
 xhost +local:
 echo $DISPLAY

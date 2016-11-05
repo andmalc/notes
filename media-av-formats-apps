@@ -3,14 +3,17 @@
 
 
 containers {{{1
-	Matroska/MKV 
+	WebM (based on Matroska)
 		preferred, open source
+		convert using ffmeg
+			https://trac.ffmpeg.org/wiki/Encode/VP8
+			ffmpeg -i input.mp4 -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis output.webm
+
+
+	Matroska/MKV 
 		not supported on some playback devices
 	MP4 - promoted by Apple
     avi (A-V Interweave)
-	ASF
-    ogg
-	WebM (based on Matroska)
 
 video codecs {{{1
 	H.264
@@ -33,6 +36,9 @@ video codecs {{{1
         create mpeg-4
 
 audio codecs {{{1
+    Opus 
+        preferred free format
+        better quality at lesser bitrates => smaller files
 	AAC
 		faac- not recommended but better than MP3
 		Core Audio - Mac version - better than faac 
@@ -45,6 +51,7 @@ audio codecs {{{1
 
 
 Sound Bitrates - recommended
+    Opus    very good at 96Kbs but OK at 64
     OGG - avoid lower than 160
     wma - best for very low rates, e.g. < 64 for speech
 
