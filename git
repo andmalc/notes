@@ -57,8 +57,12 @@ remote
     clone		create new local repo, remote tracking branch is auto-created
     pull		pull remote changes to remote tracking branch 
                     and start merge = fetch+merge
+    set-url <name> <new URL>
     push <repo> upload changes to remote.  Default repo is origin
                 <local branch name>:<remote name>
+
+Set new remote
+     remote add upstream https://github.com/octocat/Spoon-Knife.git
 
 
 Info {{{1
@@ -224,7 +228,11 @@ Subtrees
 Merging {{{1
 
 Merge conficts
-https://rtcamp.com/tutorials/git/git-resolve-merge-conflicts/
+    Edited files
+        https://rtcamp.com/tutorials/git/git-resolve-merge-conflicts/
+    Files deleted/renamed
+        Maintain deleted: readd and redelete
+        Maintain 
 
 	merge --abort	abandon merge - what happens to uncommited changes?
 	merge -Xignore-all-space or -Xignore-space-change - ignore ws changes

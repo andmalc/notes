@@ -17,6 +17,11 @@ Set locale
 
 
 Packages {{{2
+
+Atom editor
+    sudo dnf copr enable mosquito/atom 
+    sudo dnf install atom
+
 Console {{{3
 
 visudo

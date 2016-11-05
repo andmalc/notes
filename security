@@ -1,12 +1,16 @@
-Docs
-	Securing Debian Manual - includes annotated list of recommended security 
-	docs.
-	
-	Securing a new Linux install - 3 part series - Good!
-	http://docs.linux.com/article.pl?sid=04/04/15/1913248&tid=2
+Docs {{{1
 
 
-User Access
+
+Tools {{{1
+
+
+User Access {{{1
+
+Dealing with automated SSH password-guessing
+https://lwn.net/Articles/704089/
+
+
 	login restrictions
 		in /etc/pam.d/
 			su 
@@ -46,6 +50,16 @@ Groups
 		could give access to /usr/local
 
 
+Network Security {{{1
+
+
+Port scanning
+    nmap <IP address pattern>
+        check open ports
+            nmap -sT -PT your.external.ip.address	
+        what program listening on port?
+            lsof -i tcp:<port>
+
 firewall policies (from Securing Debian)
 	* incoming connections are allowed only to local services by allowed machines.
 	* outgoing connections are only allowed to services used by your system (DNS, web browsing, pop, email....) [33]
@@ -55,52 +69,35 @@ firewall policies (from Securing Debian)
 	ports to open
 		80, 443 (secure web, imap etc.)
 
-Network Security
-    Port scanning
-        nmap <IP address pattern>
-			check open ports
-				nmap -sT -PT your.external.ip.address	
-			what program listening on port?
-				lsof -i tcp:<port>
-	Disabling daemons
-		remove links in /etc/rc.d and scripts in /etc/init.d
-	inetd
-		not much used here
-		uncomment services in inetd.conf or update-inetd
-		inetd vulnerable to DOS - consider xinetd instead
-	tripwire
-		policies - twpol.txt
-			determine which directories to snapshot and rules for identifying
-			violations
-		tripwire
-			--init	create snapshot
-			--check 
-		edit config and policies
-			generate config files
-				twadmin --print-cfgfile > twcfg.txt
-				twadmin --print-polfile > twpol.txt
-		edit, and resign pol and cfg
-			twadmin --create-cfgfile --cfgfile /etc/tripwire/tw.cfg \ 
-			  --site-keyfile site_key etc/tripwire/twcfg.txt
-			twadmin --create-polfile --cfgfile /etc/tripwire/tw.cfg \
-			  --site-keyfile /etc/tripwire/site_key /etc/tripwire/twpol.txt
 
-identity/authorization
-	docs
-		PKI, x509, web services
-			http://webservices.xml.com/pub/a/ws/2004/05/26/trust.html	
+OpenSSL  {{{1
+
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/sec-Using_OpenSSL.html
 
 
-VPN
-	k2.6 doc
-		http://www.ipsec-howto.org/x247.html	
-	FreeSwan/IPsec
-		http://www.natecarlson.com/linux/ipsec-x509.php
-	CIPE
-		said easier than IPsec, Windows clients
+Security Scan/Auditing {{{1
 
-	TLUG post on vpn:
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/chap-system_auditing.html
 
 
+Security Auditing
+    https://linux-audit.com/lynis/
 
+OpenVAS
+http://www.openvas.org/
 
+Tripwire 
+    policies - twpol.txt determine which directories to snapshot and rules for identifying
+        violations
+    tripwire
+        --init	create snapshot
+        --check 
+    edit config and policies
+        generate config files
+            twadmin --print-cfgfile > twcfg.txt
+            twadmin --print-polfile > twpol.txt
+    edit, and resign pol and cfg
+        twadmin --create-cfgfile --cfgfile /etc/tripwire/tw.cfg \ 
+          --site-keyfile site_key etc/tripwire/twcfg.txt
+        twadmin --create-polfile --cfgfile /etc/tripwire/tw.cfg \
+          --site-keyfile /etc/tripwire/site_key /etc/tripwire/twpol.txt
