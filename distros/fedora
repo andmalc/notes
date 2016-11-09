@@ -1,22 +1,35 @@
 Admin {{{1
 
-adduser is link to useradd
+useradd [-G group] name
+	Create new user + home dir
 
-Groups:
+usermod -aG group user
+	Add existing user to group
+
+Other util:
     groupadd, groupmod 
     adduser -g wheel -m andmalc
-    usermod -aG group user
     gpasswd -a sammy wheel
+
+adduser is link to useradd
 
 Setup {{{1
 
-Set locale
+Locale
     localectl 
        list-locales 
        set-locale LANG=locale
 
+Date/time
+	timedatectl
+
 
 Packages {{{2
+
+Atom editor
+    sudo dnf copr enable mosquito/atom 
+    sudo dnf install atom
+
 Console {{{3
 
 visudo
@@ -100,6 +113,8 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
 Repos {{{1
 
 Repo files in /etc/yum.d
+    fedora-release-rawhide
+    fedora-updates-testing 
 
 Install from specific release: 
     $releasever variable is number: 22, 23
@@ -107,14 +122,19 @@ Install from specific release:
     Enabled = 0
     dnf --enablerepo=fedora-23 update systemd
 
-
+dnf system-upgrade download --refresh --releasever=24 --allowerasing
 
 dnf repo management
     repolist [all]
         list enabled [all] repos
-    fedora-release-rawhide
-    fedora-updates-testing 
 
+config-manager 
+	--set-enabled repo
+	--set-disabled repo
+
+Return to stable:
+    disable testing/rawhide repos
+    dnf distro-sync
 
 Install OS tree {{{1
 
@@ -139,6 +159,8 @@ ls -Z
 Show map of login names to SE Linux users
     semanage login -l
 
+Add port for service
+    semanage port -a -t ssh_port_t -p tcp 2292
 
 
 

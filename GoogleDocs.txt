@@ -1,0 +1,22 @@
+
+Sheets {{{1
+
+Syntax
+Range with tab name   ‘tab name’!A2:E
+Absolute cell ref     $A$1
+
+Text
+Concatenate strings   concat(str1,str2) - 2 args only
+& operator
+Count non-blank text values   counta
+Split text            split(<str>,”<sep>”)
+
+Data
+VLookup
+  vlookup(key-column, source rng, index of cols to return, is first col of source sorted?)
+  Multi columns index format {1,2,3,4}
+  Make sure source range is sorted!
+
+Filtering
+httpsabazroberts.wordpress.com/2016/10/26/google-sheets-functions-filter/#gafe
+
