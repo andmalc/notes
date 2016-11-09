@@ -409,7 +409,6 @@ names
 			use for transfer to/from xterm
 	+       clipboard.  
 			Used by modern apps for cut/copy/paste ops selection behavior.
-			Use this to paste text from vim to mozilla
 			main paste register.  Not used by xterms
 	:       last executed cmd
 
@@ -419,12 +418,14 @@ show
 execute contents of register
 		@<reg name>
 
+paste last ex command
+    ":p
+
 copy/paste to/from reg
 		"<reg>y/Y
 				yank selected text/lines
 		"<reg>p/P 
-
-				paste reg contents after/before cursor
+				paste reg contents before/after cursor
 		"<reg>gp/gP 
 				as above, cursor left after text
 
