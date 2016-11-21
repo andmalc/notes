@@ -35,8 +35,8 @@ Windows/ui/Interface {{{1
 Windows 
 
 Opening
-    vs      vertical split
-    sv      horizontal split
+    sv      vertical split
+    vs      horizontal split
     sb      split buffer
 
 
@@ -280,7 +280,7 @@ Tags & Jumps
 
 
 Editing {{{1
-
+Normal mode {{{2
 Deleting
 	[x]x		Delete [x] characters under and after the cursor
 	[x]X		Delete [x] characters before the cursor
@@ -330,7 +330,18 @@ Copying and Moving
 
 Elevate permission to root while editing
 	:w !sudo tee %
-	
+
+Command mode {{{2
+
+:substitute
+    example
+        :%s/\s\+$//e
+        :%s to run :substitute over the range %, which is the entire buffer.
+        \s t match all whitespace characters.
+        \+ to repeat them 1 or more times.
+        $ to anchor at the end of the line.
+        The e flag to not give an error if there is no match (i.e. the file is already without trailing whitespace).
+
 Inserting {{{1
 
 C-@		insert previously inserted text and go to normal
@@ -368,24 +379,21 @@ Indenting
 	C-T/C-D	Insert/delete 1 shiftwidth
 
 Tabs
+    expandtab               insert spaces instead of tabs
 	'smarttab', 'sta'		use 'shiftwidth' when inserting <Tab>
 	'softtabstop', 'sts'	number of spaces that <Tab> uses while editing
-	ret[ab]!							Recalc tabs in a buffer
 	:s/^ \+/^I				(not \w, which means blanks or tabs)
 		If the 'shiftround' option is on, the indent is rounded to a multiple of
 		'shiftwidth'.
 
-Using retab
-:se noet
-:se ts=2
-:retab!
-:se ts=3 If you really want spaces, follow this by
-:se et
-:retab!
-
-Retab 
+ret[ab]!    Recalc tabs in a buffer
 	line retab!
 	file %retab!
+
+Convert tabs to spaces
+    ts=4
+    se expandtab
+	%retab!
 
 Marks {{{1 
 ma				set mark with alpha char
@@ -401,7 +409,6 @@ names
 			use for transfer to/from xterm
 	+       clipboard.  
 			Used by modern apps for cut/copy/paste ops selection behavior.
-			Use this to paste text from vim to mozilla
 			main paste register.  Not used by xterms
 	:       last executed cmd
 
@@ -411,12 +418,14 @@ show
 execute contents of register
 		@<reg name>
 
+paste last ex command
+    ":p
+
 copy/paste to/from reg
 		"<reg>y/Y
 				yank selected text/lines
 		"<reg>p/P 
-
-				paste reg contents after/before cursor
+				paste reg contents before/after cursor
 		"<reg>gp/gP 
 				as above, cursor left after text
 
@@ -454,11 +463,6 @@ Python file settings {{{1
 		autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 Formating {{{1
-		debuging
-				use list mode to show
-						tabs CTRL-I
-						end of line $
-						see listchars
 		commands
 				gq[motion]		
 						Format lines motion moves over.  Textwidth option controls the length
@@ -504,6 +508,22 @@ g/pat/p			   print all lines in file matching pat
 		Regex atoms
 				\<		start of word
 
+debuging 
+        set list - shows tabs & line endings
+                tabs CTRL-I
+                end of line $
+                see listchars
+
+Find tabs & spaces
+    " Show all tabs:
+    /\t
+    " Show trailing whitespace:
+    /\s\+$
+    " Show trailing whitespace only after some text (ignores blank lines):
+    /\S\zs\s\+$
+    " Show spaces before a tab:
+    / \+\ze\t
+
 Ex Mode {{{1
 
 Syntax: line address/pattern/command
@@ -514,7 +534,7 @@ Command Line
 				Ctrl U			Delete line to left
 		@:		repeat last ex command
 
-Display Line Numbers
+Show/Display Line Numbers
   set number/nu, nonumber/nonu	show,hide line numbers
   n,n#	temporarily show numbers on lines n,n
   .=	show current line number
@@ -586,7 +606,7 @@ a count are the ones that use a range but do not have a file name argument
 						3:d<CR> is
 						translated into: .,.+2d<CR>
 
-Programming Vim {{{1
+Programming/functions {{{1
 
 See introductory info on control statements, functions and
 autocommands in 'starting.txt.'
@@ -631,6 +651,16 @@ expressions
    ||, &&, ==
 	   OR, AND, equal
 
+Examples {{{2
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+And then use it like:
+
+:call TrimWhitespace()
 
 Markup Editing (XML, HTML) {{{1
 
