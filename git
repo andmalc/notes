@@ -91,11 +91,17 @@ Log - shows commit history
 	 --grep			matching string
 	 --stat			short summary of files and changes
 	 --decorate --graph --oneline --all
+     --grep
 	 <path>			show commits with this file
 
 ls-files
     Show tracked files in working tree & index.  
+    Ignores according to .gitignore
     --abbrv --stage     Show index (includes all files)
+
+grep
+    Ignores according to .gitignore
+
 
 
 Add & Commit {{{1
@@ -293,6 +299,7 @@ update by fetching changes, checking out master then merging upstream/master
 
 
 Utilities {{{1
+
 
 vcsh	manage multiple repos
 		http://goo.gl/t2xCne

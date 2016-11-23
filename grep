@@ -12,6 +12,25 @@ options
     -A# after context
 	-v  exclude match
 
+Matching
+    ^/$   beginning/end of line (anchors)
+
+Bracket expressions
+    [abc]  match if any character 
+    [^abc]  don't match if any 
+
+Character classes
+    [:upper:]
+
+Repitition
+    *   zero or more times
+    extended 
+        +       one or more 
+        {n}     num of repititions
+        {n,n}   range
+
+Grouping
+    ()  Enclose group.  Escape if not extended
 
 excluding files under zsh
 	grep -irl thing (*~*html)(.)
