@@ -2,6 +2,10 @@
 Show monitored services, sorted by system, client slices
     systemctl status
 
+Failed services
+    systemctl --failed
+    systemctl reset-failed
+
 Top for systemd slices
     systemd-cgtop
 
