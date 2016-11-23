@@ -1,3 +1,7 @@
+Save current line in buffer stack
+    ESC q
+
+
 http://www.rayninfo.co.uk/tips/zshtips.html
 Man page shortcut: Esc+H
 
@@ -278,7 +282,11 @@ Dynamic Prompt {{{1
 
 autoload -U promptinit
 promptinit
-prompt bart
+prompt 
+    -c  current
+    -l  list
+    -s  save
+
 
 The print builtin works like echo, but gives us access to the % prompt escapes.
 print -Pn ...   print, performing Prompt expansion & dont print newline
