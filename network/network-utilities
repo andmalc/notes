@@ -21,17 +21,23 @@ netstat
 		netstat -untap  
 	shows running daemons
 		netstat --tcp --udp --listening --program --numeric (ntpl)
-		netstat -ltp
+        netstat -pan -A inet,inet6 | grep -v ESTABLISHED    
+        netstat -tlnwp  server sockets with prog names	
 	options
 		ant		show programs bound to ports for TCP address family
 		i		interfaces
 		r		kernel routing tables
 		M		masqueraded connections
+        n       show port numbers instead of program names
 		p		show name of program
 		c		continuous display
 		t		tcp
 		l		listening servers only
 		a		show all
+
+ss - socket statistics
+    like netstat but more info
+    ss -tlw
 
 darkstat
 	Easy monitoring of bandwidth
