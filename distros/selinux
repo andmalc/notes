@@ -1,0 +1,17 @@
+
+
+https://wiki.centos.org/HowTos/SELinux
+https://fedoraproject.org/wiki/SELinux_FAQ
+
+Enable
+setenforce 1
+
+Ports
+
+List ports
+    semanage port -l 
+
+Add port for ssh
+semanage port -a -t ssh_port_t -p tcp 2292
+
+

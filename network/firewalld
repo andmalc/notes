@@ -26,6 +26,10 @@ firewall-cmd CLI {{{1
 
 firewall-cmd --reload
 
+Show service status
+    --list-all
+
+
 Manage zones
     --list-all-zones
     --list-all [--zone=<zone>]      List enabled features of default zone or =zone

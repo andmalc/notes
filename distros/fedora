@@ -15,6 +15,103 @@ adduser is link to useradd
 
 Setup {{{1
 
+
+SSH files at Dropbox, Backup SD, Galaxy S3 Documents 
+
+git clone git@github.com:andmalc/config.git
+
+Repos {{{2
+
+Desktop Repos:
+dnf copr enable heliocastro/hack-fonts
+dnf copr enable dacr/brackets
+
+telegram-desktop
+dnf copr enable rommon/telegram
+
+Atom editor
+dnf copr enable mosquito/atom
+dnf install atom
+
+Chrome:
+https://www.google.com/linuxrepositories/
+Chrome repo in /etc/yum.repos.d/google-chrome.repo:
+[google-chrome]
+name=google-chrome
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+
+Packages {{{2
+
+Install
+git zsh tmux mlocate ncdu, stow
+
+
+Users {{{2
+
+usermod -a -G grp username
+adm for journalctl 
+
+Home Dir {{{2
+
+SSH dir
+- mod 700
+- authorized_keys file
+
+
+Pull Notes, Config, Work
+git clone --recursive config # populates submodules
+git clone --recursive work
+git clone notes
+
+Or:
+submodule init / submodule update
+
+mkdir 
+Envs
+.config
+
+Use Stow
+/usr/bin/stow -t ~ -d config/dotfiles vim
+
+cd config/dotfiles
+for p in *; do stow -t ~ $p ; done;
+
+or symlinks
+ln -s 
+config/prog/Envs/postactivate Envs
+config/prog/Envs/postdeactivate Envs
+
+Vim:
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+BundleInstall
+
+Tmux
+While running, Leader + I to install plugins
+
+Pip
+wget https://bootstrap.pypa.io/get-pip.py
+python ./get-pip.py --user
+pip install --user powerline-status virtualenvwrapper
+ptpython or ipython
+
+
+Development Env:
+build-essential or 
+dnf groupinstall 'C Development Tools and Libraries'
+
+Android tools
+android-tools package
+
+Install libraries to allow 32 bit programs to run on 64 bit
+libstdc++.i686 ncurses-libs.i686 zlib.i686
+
+
+
+System config {{{2
+
 Locale
     localectl 
        list-locales 
@@ -22,6 +119,39 @@ Locale
 
 Date/time
 	timedatectl
+
+
+/etc/gdm/custom.conf
+AutomaticLoginEnable=True
+AutomaticLogin=andmalc
+
+/etc/systemd/journald.conf
+SystemMaxUse=   max disk usage
+
+
+Hardware config {{{2
+
+tuned - power management
+Add to profile conf
+[disk]
+alpm=min-power
+
+
+Input devices: keyboard, mouse, touchpad via Libinput
+https://www.mankier.com/4/libinput#Note
+Hotplug or manual config in /etc/X/xorg.d/
+
+
+Touchpad / Clickpad troubleshooting
+xinput --list
+xinput list-props <device #>
+gsettings list-recursively  | grep touchpad
+
+
+Desktop tweaks {{{2
+
+Arc GTK theme 
+numix icons 
 
 
 Packages {{{2
