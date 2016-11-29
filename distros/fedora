@@ -109,6 +109,9 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
 
     repoquery <key word>
         search repos for packages
+        -l <pkg name>   list files in package
+
+
 
 Repos {{{1
 

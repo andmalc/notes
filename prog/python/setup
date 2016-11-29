@@ -4,9 +4,9 @@ http://www.doughellmann.com/projects/virtualenvwrapper/
 file:///usr/share/doc/virtualenvwrapper/en/html/install.html#workon-home
 http://www.pip-installer.org/en/latest/
 
-General Install
+General Install {{{1
 
-1. Pip
+Pip {{{2 
 
 * Recommended by python-guide.org
 easy_install3.4 pip
@@ -27,7 +27,8 @@ Run pip install with python3 to get pip3
 
 Includes setuptools
 
-2. Virtualenv
+Virtualenv  {{{2
+
 sudo pip install virtualenv #system wide
 pip install --user virtualenv #local to .local/bin
 Virtualenv installed with pip3 will default to python3 or virtualenv --python=/usr/bin/python3 --no-site-packages
@@ -35,5 +36,13 @@ Virtualenv installed with pip3 will default to python3 or virtualenv --python=/u
 3. Virtualenvwrapper
 Must install to same location as virtualenv
 During install will look for first python and virtualenv on PATH
+
+Editor & Prompt {{{1
+
+pyvim
+    https://github.com/jonathanslenders/pyvim
+
+ptpython
+    https://github.com/jonathanslenders/ptpython
 
 
