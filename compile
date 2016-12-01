@@ -1,0 +1,11 @@
+
+Autotools
+    ./configure generates Makefile
+    if Makefile already present in source is not autotools
+
+    Install prefix 
+    ./configure --prefix=/usr/local
+
+If no configure
+autoreconf -i
+

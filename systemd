@@ -51,6 +51,9 @@ list-machines
 
 Other {{{1
 
+lsns
+    list namespaces
+
 hostnamectl
     -M containername
     set-hostname 'name'

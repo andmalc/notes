@@ -31,6 +31,8 @@ Connection
         c mod <id>
          c edit id <ssid>
 
+    Change DNS
+        con mod 'System eth0' ipv4.dns "8.8.8.8 8.8.4.4"
 
 
 ip - iproute {{{1

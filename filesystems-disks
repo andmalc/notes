@@ -8,6 +8,24 @@ General {{{1
     GPT GUID Partition Table
         Stores partition info as GUID's (= UUID in Linux) instead of by order
 
+block sizes
+    https://wiki.archlinux.org/index.php/Advanced_Format
+
+    Old 512 bytes, New 4096 / 4kb
+
+    Show:
+        fdisk -l /dev/sda
+        or
+        cat /sys/class/block/sdb/queue/physical_block_size 
+        cat /sys/class/block/sdb/queue/logical_block_size 
+
+    New disks show 512 byte logical for compatibility
+    Use parted align-check to confirm alignment
+    
+    gpt - always use to create parts
+    make 4k fs
+        mkfs.ext4 -F -b 4096 
+
 Block devices, Disks, Partitions {{{1
 Info {{{2
 
@@ -19,6 +37,7 @@ lsblk -f	tree of disks, parts, labels, UUIDs, mount points
 blkid		shows UUID's and types
 
 sfdisk - partition table reporting
+    by default uses sectors, not obsolete cylinder etc.
 	-s  [<device - partition or disk>]    show disk/partition size
 	-l [options] <dev>
 	-D  DOS compatibility - free 512 free at part beginning
@@ -32,16 +51,10 @@ gpart
 
 Utilities {{{2 
 
-compatibility
-    dd - bs=2048 for compatibility with desktop disk utilities like Gnome Disks
-
-partition writable by users
-	fstab options: rw - no need for uid option in fs types that preserve ownership
-	create directory in partition writable by user
-
 dd
     http://www.noah.org/wiki/Dd_-_Destroyer_of_Disks 
 	exact copy of entire partition including MBR
+    dd - bs=2048 for compatibility with desktop disk utilities like Gnome Disks
 		dd bs=2048 if=/dev/part of=/dev/anotherpart
         bs=4M said faster
 
@@ -51,18 +64,15 @@ dd
    
         dc3dd if=/dev/sda of=/dev/sdb
 
-
+util-linux: sfdisk, cfdisk, fdisk
+    http://karelzak.blogspot.ca/
+    share some commands like --wipe
 
 cfdisk
 	said (by the fdisk man page) to be reliable and better
 	than fdisk
 	'maximize' option creates incompatibility with Windows?
 	print/sector command shows partitions in hd order
-
-parted (qtparted and nparted on Knoppix)
-	can resize ext2 & 3 partitions but start point can't move.
-	gparted can move start point
-	has lost partition rescue feature
 	
 
 sfdisk - partition table reporting
@@ -71,6 +81,14 @@ sfdisk - partition table reporting
 	-l [options] <dev>
 	-D  DOS compatibility - free 512 free at part beginning
 	-L  ignore irrelevant to Linux
+    --wipe-partitions always|never|auto
+
+udevadm info -n /dev/sdb -q all
+
+parted (qtparted and nparted on Knoppix)
+	can resize ext2 & 3 partitions but start point can't move.
+	gparted can move start point
+	has lost partition rescue feature
 
 testdisk
 	haven't tried yet
@@ -88,13 +106,13 @@ partx -v -a <disk>
     show paritions with sector info
     tell kernel about partitions
 
-sfdisk -l
-udevadm info -n /dev/sdb -q all
-
 Lost partition recovery
 gpart
 testdisk
     http://www.cgsecurity.org/wiki/TestDisk_Step_By_Step
+
+Wipe device
+    wipefs -a
 
 
 Loopback files, images {{{2
@@ -136,6 +154,7 @@ findmnt     show mounted filesystems
     --target/-T <dir>   show only for mount dir
     -l          list format output
     e.g. -s -D  list mounted by fstab, show space used
+    --verify 
 
 du 
     -hs * | sort -h - sort by human readable size
