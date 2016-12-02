@@ -1,6 +1,7 @@
-add: pcmcia 16-bit support => y (default?)
 
-package names {{{1
+kernel source {{{1
+
+Debian 
 	http://kernel-handbook.alioth.debian.org/ch-packaging.html
 	linux-image-2.6.26-2-686 - binary
 	linux-headers-2.6.26-686
@@ -12,12 +13,11 @@ package names {{{1
 
 	apt-get source linux-source-2.6.29 
 		installs control files + src into 'linux-2.6-2.6.29'
-
-
-acquiring source {{{1
 	aptitude install linux-source-2.6.32 
 
 patching {{{1
+
+Debian
 	install linux-patch-debian-2.6.xx (however, description for linux-source pkg indicates patches applied)
 	then when compiling (e.g. for xen ):
 		make-kpkg --added-patches xen clean
@@ -25,12 +25,17 @@ patching {{{1
 		make-kpkg --added-patches xen kernel-image
 
 kernel headers {{{1
-	Install with 'module-assistant prepare'
-	/usr/src/linux/include/linux
-		should be version.h if kernel has been built	
-	/usr/include/linux
-		libc headers - not for running kernel
+
+Install with 'module-assistant prepare'
+/usr/src/linux/include/linux
+    should be version.h if kernel has been built	
+/usr/include/linux
+    libc headers - not for running kernel
+
+
 kernel compile gen {{{1
+
+Debian
 	requirements
 		make-kpkg utility from kernel-package package
 		change /etc/kernel-img.conf to example in docs.
@@ -57,27 +62,19 @@ kernel compile gen {{{1
 		update-initramfs -c -k '2.6.18-3.686'
 
 
-utilities {{{1
-	distcc
-		compile on different computer
-	lskpatch
-		display info on installed patches
+Boot  {{{1
 
-2.6  {{{1
 
 Initramfs
-	required for 2.6
-	initrd if used copied into this
+	replaced initrd in kernel 2.6
+    not needed if /usr/ and /etc on same disk as kernel
 
-Storage, e.g. IDE, SATA
-	see hardware/storage
+https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
+
 
 concepts {{{1
-initrd {{{2
 
-http://www.kernel.org/doc/man-pages/online/pages/man4/initrd.4.html
-
-Mount namespaces {{{2
+Process namespaces {{{2
 	http://www.kernel.org/doc/man-pages/online/pages/man2/mount.2.html
 	
 	set of file system mounts that are visible to a process
