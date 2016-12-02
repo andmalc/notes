@@ -1,0 +1,11 @@
+
+
+Enable CR (testing)
+    install yum-utils
+    yum-config-manager --enable cr
+
+
+Install DNF
+Vhttp://dnf.baseurl.org/2016/07/01/fresh-dnf-for-rhel-7-and-centos-7/
+
+
