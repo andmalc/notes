@@ -1,3 +1,6 @@
+Start with no rc files
+    zsh -d -f
+
 Save current line in buffer stack
     ESC q
 
