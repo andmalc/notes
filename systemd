@@ -7,43 +7,49 @@ options:
 
 Subcommands
 
-unit commands
-    list-units --type=[target | unit type]  #this is default command
-    start, restart, stop, restart, reload, status <runtime> [service | socket]
-    
-    isolate <target name>   
-        switch immmediately to other target
-        stop all other processes
+unit commands {{{2
 
-	show (properties)
-	show-environment 
+list-units --type=[target | unit type]  #this is default command
+start, restart, stop, restart, reload, status <runtime> [service | socket]
 
-	    Lists units pulled in by a given target.
-		systemctl show -p "Wants" multi-user.target 
+isolate <target name>   
+    switch immmediately to other target
+    stop all other processes
 
-	    Show dependent services & other targets
-		 systemctl show -p "After" sshd.service     
+show (properties)
+show-environment 
 
-    kill <name>
+    Lists units pulled in by a given target.
+    systemctl show -p "Wants" multi-user.target 
+
+    Show dependent services & other targets
+     systemctl show -p "After" sshd.service     
+
+kill <name>
 
 
-    Lists the targets that will include the service
-         ls /etc/systemd/system/*.wants/sshd.service
+Lists the targets that will include the service
+     ls /etc/systemd/system/*.wants/sshd.service
 
-    List running services & their status
-        systemctl list-units -t service --all 
+List running services & their status
+    systemctl list-units -t service --all 
 
-unit fle commands
-    edit <unit>
-        creates 'override.conf' in /etc/systemd/system/<unit name>
-        reloads unit when done
-    edit --full <unit>
-        edit unit file
+unit fle commands {{{2
 
-system commands
-    suspend, hibernate, reboot, halt
-    switch-root 
-    set/get-default  <target name>
+systemctl-delta
+    shows all overrides
+
+edit <unit>
+    creates 'override.conf' in /etc/systemd/system/<unit name>
+    reloads unit when done
+edit --full <unit>
+    edit unit file
+
+system commands {{{2
+
+suspend, hibernate, reboot, halt
+switch-root 
+set/get-default  <target name>
 
 
 list-machines
