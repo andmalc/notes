@@ -46,7 +46,8 @@ gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 Packages {{{2
 
 Install
-git zsh tmux mlocate ncdu, stow
+git vim-enhanced zsh tmux mlocate ncdu stow ranger
+
 
 
 Users {{{2

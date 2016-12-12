@@ -1,3 +1,12 @@
+
+http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
+
+
+Start zsh with no configuration
+zsh -f -d
+source alternativefile.rc
+
+
 Save current line in buffer stack
     ESC q
 
@@ -165,7 +174,7 @@ file types
     .	files
     /	dirs
     *	exec
-    %	slinks
+    @	slinks
 permissions:
     by ownership (u:<owner>)
         *(u0) - owned by root
