@@ -1,0 +1,31 @@
+
+
+Console {{{1
+
+Ranger console file manager
+http://ranger.nongnu.org/
+
+
+fzf - command-line fuzzy finder written in Go
+https://github.com/junegunn/fzf
+
+ripgrep - Rust grep
+https://github.com/BurntSushi/ripgrep
+
+
+Vim {{{1
+
+Plugin Managers {{{2
+
+Vim-plug
+https://github.com/junegunn/vim-plug
+
+
+Plugins {{{2
+
+vim-AutoClose       closes brackets
+Closetag            closes HTML tags
+Vim-MatchIt         jump between matching HTML tags
+emmet.vim           expands HTML tag abrieviations 
+
+
