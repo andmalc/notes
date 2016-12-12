@@ -211,6 +211,8 @@ New clone of repo
 
 Updating
     cd into module dir and git fetch
+    git pull && git submodule update --init --recursive
+
 
 Info
     submodule status
