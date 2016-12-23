@@ -205,8 +205,14 @@ btrfs {{{2
 
 Make fs
 	/sbin/mkfs.btrfs - in btrfs-tools
-Make subvolume
-	btrfsctl -S NewSubVol /mnt/test
+
+btrfs subvolume
+    create <path>
+    list <path>
+    set-default <ID> <path>
+    show <path>
+    snapshot <source> <dest>[/<name>
+
 Mount subvolume
 	mount -t btrfs -o subvol=subvolname /dev/sda2 /mnt/new_subvol 
 	mount -t btrfs -o subvolid=### /dev/sda2 /mnt/new_subvol 
@@ -219,26 +225,20 @@ btrfs balance - distribute data after new vol added
 btrfs device
     add <dev> <dev> | <mount point of existing fs e.g. '/'>
 
-btrfs subvolume 
-    list <path>
-
 btrfs filesystem 
     label /dev/XXX <label> 
-
-        
-
     df
         usage info
-
     resize
         resize <size> | max <mounted fs>
-
     show
         shows usage info maybe more accurate than df
 
 Repair - fs umounted
-	btrfs check --repair
+btrfs check --repair
 
+fstab entry
+	LABEL=testbtrfs  /btrfs defaults,subvolid=269 0 0
 
 
 Mounting & Permissions (edit needed) {{{2

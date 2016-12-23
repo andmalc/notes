@@ -283,36 +283,13 @@ Startup Files {{{1
 
 Dynamic Prompt {{{1
 
-autoload -U promptinit
-promptinit
-prompt 
-    -c  current
-    -l  list
-    -s  save
+Built in prompt feature:
+    autoload -U promptinit
+    promptinit
+    prompt 
+        -c  current
+        -l  list
+        -s  save
 
-
-The print builtin works like echo, but gives us access to the % prompt escapes.
-print -Pn ...   print, performing Prompt expansion & dont print newline
-
-precmd ()   a function which is executed just before each prompt
-chpwd ()    a function which is executed whenever the directory is changed
-	Using chpwd() instead of precmd(). See zshmisc man page
-preexec ()  
-	executed just after command read and about to be executed.
-	Arguments to preexec ($*, $1,$2,$3) are forms of cmd.
-
-set xterm title to "username@hostname: directory":
-	case $TERM in
-		xterm*)
-			precmd () {print -Pn "\e]0n@%m: %~\a"}
-			;
-	esac
-
-Good one: From http://www.princeton.edu/~kmccarty/zsh.html 
-	case $TERM in (xterm*|rxvt)
-		precmd () { print -Pn "\e]0;%n@%m: %~\a" }
-		preexec () { print -Pn "\e]0;%n@%m: $1\a" }
-		;;
-	esac
 
 
