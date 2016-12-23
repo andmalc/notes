@@ -1,3 +1,38 @@
+
+Docs {{{1
+
+https://fedoramagazine.org/what-is-an-init-system/
+
+Design
+    uses unit files to configure system resources such as processes and file system
+    starts then monitors services via 'service units'
+
+    Service units 
+        own processes as shown by systemctl status
+        processes started in cgroups which allow systemd to manage associated proceses together
+
+    Target Units
+        used to link other units together to describe a system state
+        units may be services or other targets
+        AllowIsolate =yes option indicates is boot target
+        .wants directory - contains units started with target
+            e.g. /usr/lib/systemd/system/multi-user.target.wants
+
+
+Unit files 
+    locations
+        /etc/systemd/system|user
+        /run/systemd/system|user
+        /user/lib/systemd/system|user
+        ~/.local/share/systemd/user/ - for packages installed in home dir
+        ~/.config/systemd/user  
+
+    Sections [xxx]
+        Unit & Install sections - only common Options
+        Other sections according to unit type, e.g. [Service] for .service type
+
+        
+
 systemctl {{{1
 lists running units
 options:
