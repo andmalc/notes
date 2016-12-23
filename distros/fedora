@@ -6,6 +6,9 @@ useradd [-G group] name
 usermod -aG group user
 	Add existing user to group
 
+usermod -s <shell path>
+    change shell
+
 Other util:
     groupadd, groupmod 
     adduser -g wheel -m andmalc
@@ -185,8 +188,18 @@ Dnf {{{1
 
 http://dnf.readthedocs.org/en/latest/command_ref.html
 
+Dnf <options> <command> <args eg. package spec>
 
-Packages - can use globbing in pkg name
+Package spec
+    can use globbing in pkg name
+
+Options:
+    --exclude <pkg or pat>  exclude from install, remove, list etc.
+    --enablerepo <repo>     install pkg from a repo
+    --disable <repo>
+    --releasever 23
+
+Commands
     search  shows & searches by name, description
     info    shows details
     list [<pkg>]
@@ -198,14 +211,7 @@ Packages - can use globbing in pkg name
             list all available and installed [just installed | avail & not installed]
 
     install, reinstall, remove, downgrade
-    provide <fn>
-        which packge contains <fn>
 
-    options:
-        --exclude <pkg or pat>  exclude from install, remove, list etc.
-        --enablerepo <repo>     install pkg from a repo
-        --disable <repo>
-        --releasever 23
 
 Package Groups
     group info, list, install 
@@ -235,10 +241,11 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
     config-manager
         --set-enabled updates-testing
 
-    provides <fn>
-        shows which packages a file was installed by
+    provides <path to fn>
+        shows which packages provide a file 
+        can use glob instead of exact path
 
-    repoquery <key word>
+    repoquery <pkg name | key word>
         search repos for packages
         -l <pkg name>   list files in package
 
@@ -281,20 +288,5 @@ setenforce 0
 systemctl-nspawn -D <path to container>
 Change root password
 systemctl-nspawn -bD <path to container>
-
-
-Selinux {{{1
-
-setenforce/getenforce
-
-Context: user:role:type:level
-ls -Z
-
-Show map of login names to SE Linux users
-    semanage login -l
-
-Add port for service
-    semanage port -a -t ssh_port_t -p tcp 2292
-
 
 

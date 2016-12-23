@@ -1,4 +1,20 @@
 
+Boot  {{{1
+
+
+Initramfs
+	replaced initrd in kernel 2.6
+    not needed if /usr/ and /etc on same disk as kernel
+
+https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
+
+Init system
+    first process started by kernel
+    starts all daemons etc. required by OS
+    Later starts user services 
+
+
+
 kernel source {{{1
 
 Debian 
@@ -60,16 +76,6 @@ Debian
 		install initramfs-tools
 		update-initramfs -c -k <kernel version>
 		update-initramfs -c -k '2.6.18-3.686'
-
-
-Boot  {{{1
-
-
-Initramfs
-	replaced initrd in kernel 2.6
-    not needed if /usr/ and /etc on same disk as kernel
-
-https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
 
 
 concepts {{{1

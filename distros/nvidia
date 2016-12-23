@@ -1,0 +1,9 @@
+
+Cleanup manually installed driver
+– Remove stuff from /etc/default/grub
+– Remove stuff from /etc/{modprobe.d,depmod.d}
+– Remove stuff from grub configuration files
+– Remove all packages and manually installed files from Nvidia
+– Remove all Nvidia kernel module source code in /usr/src
+– Reinstall packages providing libGL.*
+– Reboot with Nouveau and standard Fedora setup

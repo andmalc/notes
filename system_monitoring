@@ -20,6 +20,8 @@ journalctl {{{1
 -e          open at end/most recent entries of log
 --no-pager  don't pipe to pager
 
+Filtering {{{2
+
 filters:
 -b / -b -1		this boot only / last boot
 -k          kernel output
@@ -32,15 +34,6 @@ filter by date/time
 --since "1 hour ago" | today 
 --until "2015-01-11 03:00"
 
-manage logs:
---disk-usage    show size
---vacuum-size=1G
---vacuum-time=1year
-
-config: /etc/systemd/journald.conf
-SystemMaxUse=   max disk usage
-
-
 Filtering on field 
 <field name>=<val> [ <field name>=<val> ]
 Same field name specified more than once = OR
@@ -50,6 +43,20 @@ journalctl _UID=70 (AND) _SYSTEMD_UNIT=avahi-daemon.service (OR) _SYSTEMD_UNIT=c
 PRIORITY=3
 _UID=1000
 _SYSTEMD_UNIT
+
+Manage {{{2
+
+log
+--disk-usage    show size
+--vacuum-size=1G
+--vacuum-time=1year
+
+Config {{{2
+
+/etc/systemd/journald.conf
+SystemMaxUse=   max disk usage
+
+
 
 
 Utilites {{{1
