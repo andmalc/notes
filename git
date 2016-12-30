@@ -171,7 +171,7 @@ show-branch show all changes in branch
 Checkout:
     Change the HEAD symref to point to the new  branch 
     Reset the index to match the tip of the new branch 
-    If branch given, modified files in working dir retained
+    If branch given, modified files in working dir retained unless forced -f 
     If no branch name, update the working tree to match the index
 
 create new branch <name> and switch to it
@@ -205,12 +205,20 @@ Delete
     rm -rf .git/modules/asubmodule
     edit .gitmodules - remove section (?)
 
+Delete - version 2
+    git submodule deinit vim/pack/shapeshed/start/vim-airline
+    git rm vim/pack/shapeshed/start/vim-airline
+    rm -Rf .git/modules/vim/pack/shapeshed/start/vim-airline
+    git commit
+
 New clone of repo
     submodule init (creates .gitmodules) / submodule update
     don't need to be in submodule dir
 
 Updating
     cd into module dir and git fetch
+    git pull && git submodule update --init --recursive
+
 
 Info
     submodule status

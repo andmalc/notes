@@ -119,7 +119,7 @@ command
 POSIX test statement -  [ ]
 	-z	0 length string
 		if test -z "$Var"
-	-n	non-empty
+	-n	string is non-empty/non-null
 	-f	is regular file
 	= or != string comparisons
 		if "$Var" = "blah"

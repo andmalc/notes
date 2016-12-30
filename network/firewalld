@@ -10,11 +10,12 @@ Zones
     applied per interface.  Can set in Network Manager 
     set according to level of trust in traffic on interaces
 
-    block       only outgoing connections
-    public      other computers on local network not trusted
+    drop        only outgoing connections, incoming rejected, no message
+    block       only outgoing connections, incoming rejected with message
     trusted     all connections accepted
 
     Zones accepting only selected incoming connections 
+    public      other computers not trusted, some incoming accepted
     external    like public with masquerading
     work        computers on local network trusted
     home        diff with work?
@@ -27,6 +28,7 @@ firewall-cmd CLI {{{1
 firewall-cmd --reload
 
 Show service status
+    --state     shows if running
     --list-all
 
 
@@ -35,7 +37,7 @@ Manage zones
     --list-all [--zone=<zone>]      List enabled features of default zone or =zone
     --get-default-zone
     --set-default-zone=<zone>       
-    --get-active-zones              List interfaces & their zones
+    --get-active-zones              List zones and their interfaces
    
 Manage interfaces
     Apply to default zone or spec with --zone= 

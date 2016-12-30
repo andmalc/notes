@@ -101,6 +101,9 @@ gdisk, cgdisk
     like parted/cfdisk for gpt disks
     change partition labels
     no lvm info
+    Wipe all partitions
+	gdisk <dev>
+	x, z
 
 partx -v -a <disk>
     show paritions with sector info
