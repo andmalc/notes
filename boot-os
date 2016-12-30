@@ -1,6 +1,17 @@
 
-Boot  {{{1
+Firmware {{{1
 
+Coreboot {{{2
+
+coreboot is the part of the firmware that initializes the hardware
+Payload boots OS
+
+Payloads:
+    Chromebook stock payload is depthcharge
+    payload that implements a Legacy BIOS bootloader is SeaBIOS
+    SeaBIOS installed in section of the firmware normally reserved for booting an OS in Legacy mode (called RW_LEGACY)
+
+Boot  {{{1
 
 Initramfs
 	replaced initrd in kernel 2.6
@@ -14,8 +25,8 @@ Init system
     Later starts user services 
 
 
-
-kernel source {{{1
+kernel {{{1
+source {{{2
 
 Debian 
 	http://kernel-handbook.alioth.debian.org/ch-packaging.html
@@ -31,7 +42,7 @@ Debian
 		installs control files + src into 'linux-2.6-2.6.29'
 	aptitude install linux-source-2.6.32 
 
-patching {{{1
+patching {{{2
 
 Debian
 	install linux-patch-debian-2.6.xx (however, description for linux-source pkg indicates patches applied)
@@ -40,7 +51,7 @@ Debian
 		make menuconfig
 		make-kpkg --added-patches xen kernel-image
 
-kernel headers {{{1
+headers {{{2
 
 Install with 'module-assistant prepare'
 /usr/src/linux/include/linux
@@ -49,7 +60,7 @@ Install with 'module-assistant prepare'
     libc headers - not for running kernel
 
 
-kernel compile gen {{{1
+kernel compile gen {{{2
 
 Debian
 	requirements
@@ -78,7 +89,7 @@ Debian
 		update-initramfs -c -k '2.6.18-3.686'
 
 
-concepts {{{1
+OS concepts {{{1
 
 Process namespaces {{{2
 	http://www.kernel.org/doc/man-pages/online/pages/man2/mount.2.html
@@ -90,7 +101,7 @@ Process namespaces {{{2
 	after fork, child process shares parent's namespace
 	after clone, child gets private copy
 
-interfaces {{{1
+system filesystems {{{1
 
 sysfs {{{2
 	Not needed in distros > 2006
@@ -140,7 +151,7 @@ Files can be read and given permissions but do not exist on disk
 Files usually read-only
 Kernel config: Filesystems = Pseudo Filesystems = /proc file system support
 
-sysctl command {{{2
+sysfs/sysctl {{{2
 originally mounted at /proc/sys
 installed with procps package
 Kernel config: General Setup = Sysctl support
