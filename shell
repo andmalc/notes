@@ -30,9 +30,73 @@ Never quote a glob or regular expression
 		;;                                                                                                                  
 	esac   
 
+Command Lines
+	Single quoted string enloses literals whereas a double quoted string is
+	evaluated for shell variables or backslash escaping.
+	'xxx'	strong quotes 
+            * no expansion or metacharacters
+	""xxx"	weak quotes 
+            * $, `, and \ not disabled
+            * shell & envir. variablex expanded
+	\       At end of line - special case: removes new line char.
+	`		command - executed before rest of line.
+
+
+
 Looping {{{1
 
 
+
+Completion & Expansion {{{1
+
+Std Output of command
+    $(cmd)
+    `cmd` - obsolete format
+
+
+	${VAR}		Value of a shell variable name - curly brackets just used for clarity.
+
+
+Shell Wildcards
+	*	zero or more characters
+	?	any one character
+	~+	current working directory
+	~-	last working directory
+
+	[ab]	a or b
+	[a-b]	from a to b, inclusive
+
+	Note matched: Initial '.' in filename is not matched by wildcards
+        e.g.    ls .*rc
+
+brace expansion
+	used to generate filenames
+		cp filename{,-old}
+		cp filename{-old,}
+		cp filename{-v1,-v2}
+		touch a{1,2,3}b
+
+Completion vs. expansion: expansion of variables, filenames (via globbing), & history done first or after a <Tab>
+
+C-d 	List possible completions
+<pat>M-p  Recall last command beginning with pat
+cmd <pat>M-/ Recall last word beginning with pat.  M-/ again to get next match (good for completing long words like paths, zsh only)
+C-r<pat> Interactive history word search
+C-xu    Undo last completion
+
+
+
+
+Rename files
+	rename command
+
+	or
+		for file in <pat>; do
+			mv $file ${<pat>}
+		done
+	${<pat>} is a shell variable alteration/substitution/expansion  pattern
+	e.g.
+		echo ${foo#*.} removes file name extention from $foo
 
 Conditions {{{1
 
@@ -187,63 +251,6 @@ Running Commands
 		...
 		done
 
-
-Completion & Expansion {{{1
-
-Command Lines
-	Single quoted string enloses literals whereas a double quoted string is
-	evaluated for shell variables or backslash escaping.
-	'xxx'	strong quotes 
-            * no expansion or metacharacters
-	""xxx"	weak quotes 
-            * $, `, and \ not disabled
-            * shell & envir. variablex expanded
-	\       At end of line - special case: removes new line char.
-	`		command - executed before rest of line.
-
-	${VAR}		Value of a shell variable name - curly brackets just used for clarity.
-
-
-Shell Wildcards
-	*	zero or more characters
-	?	any one character
-	~+	current working directory
-	~-	last working directory
-
-	[ab]	a or b
-	[a-b]	from a to b, inclusive
-
-	Note matched: Initial '.' in filename is not matched by wildcards
-        e.g.    ls .*rc
-
-brace expansion
-	used to generate filenames
-		cp filename{,-old}
-		cp filename{-old,}
-		cp filename{-v1,-v2}
-		touch a{1,2,3}b
-
-Completion vs. expansion: expansion of variables, filenames (via globbing), & history done first or after a <Tab>
-
-C-d 	List possible completions
-<pat>M-p  Recall last command beginning with pat
-cmd <pat>M-/ Recall last word beginning with pat.  M-/ again to get next match (good for completing long words like paths, zsh only)
-C-r<pat> Interactive history word search
-C-xu    Undo last completion
-
-
-
-
-Rename files
-	rename command
-
-	or
-		for file in <pat>; do
-			mv $file ${<pat>}
-		done
-	${<pat>} is a shell variable alteration/substitution/expansion  pattern
-	e.g.
-		echo ${foo#*.} removes file name extention from $foo
 
 Command History {{{1
 
