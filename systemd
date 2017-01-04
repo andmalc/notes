@@ -38,7 +38,8 @@ lists running units
 options:
     -H <host> (uses SSH)
     -M <container>
-     --failed
+    --user
+    --failed
 
 Subcommands
 
@@ -51,9 +52,10 @@ isolate <target name>
     switch immmediately to other target
     stop all other processes
 
-show (properties)
-show-environment 
+show-environment [--user]
+    environment variables
 
+show (properties)
     Lists units pulled in by a given target.
     systemctl show -p "Wants" multi-user.target 
 

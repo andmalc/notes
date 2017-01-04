@@ -57,6 +57,7 @@ top         show processes running in cont.
 port <cid> <port#>  show host port for cont. port
 
 
+
 Examples {{{1
 
 Interactive 
@@ -73,6 +74,16 @@ Remove all containers
     drm -f $(docker ps -aq)
 
 Dockerfile {{{1
+
+run vs. cmd vs. entrypoint
+run     execute immediately & commits the result
+cmd     does nothing during build, provides execution default for container
+        one only per Dockerfile
+
+cmd
+    [executable, param, ...]
+    w/o brackets runs cmd in shell
+ 
 
 
 Networking {{{1

@@ -41,6 +41,11 @@ semanage
         Add port for ssh
         port     semanage port -a -t ssh_port_t -p tcp 2292
 
+    fcontext    
+        file management
+        run restrecon [-R] after to apply to existing
+        -a -t <type> "/home/dir(/.*)?"
+
 
 setsebool
     change boolean
@@ -55,6 +60,7 @@ chcon
 
 restorecon
     apply default context
+    run after changing policy with semanage to apply to existing files
 
 sealert -b 
     launch Alert browser

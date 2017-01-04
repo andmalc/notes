@@ -1,14 +1,7 @@
 
+Docs {{{1
+
 http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
-
-
-Start zsh with no configuration
-zsh -f -d
-source alternativefile.rc
-
-
-Save current line in buffer stack
-    ESC q
 
 
 http://www.rayninfo.co.uk/tips/zshtips.html
@@ -18,13 +11,20 @@ http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-sh
 
 Builtins {{{1
 
+vared
+    edit environment variables
 
+
+Configuration {{{1
+
+
+Builtins
 Display options in/not in effect:
     setopt
     unsetopt
 
-vared
-    edit environment variables
+Keyboard bindings {{{2
+
 
 bindkey
 	noarg	print existing bindings
@@ -32,57 +32,27 @@ bindkey
 	-m		if binding ESC also bind Alt
 	-l/L	list short/long form
 
-Command Line Editing {{{1
 
-(Meta = Alt, ^ = Ctrl+ \e = Escape) 
-
-Move one word forward/back  Mf/Mb
-
-Delete char left/right
-	^h/^d	(^d also lists in menu completion)
-
-Delete word to 
-	left:       ^w or \e+backspace
-	right:      Md or \ed
-
-^k      delete to end of line   
-M-.	    last argument - repeat to cycle backwards      
-
-fc:
-	fc <pat>    edit most recent command starting with <pat>
-	fc -l <pat> display, dont edit
-
-shortcuts
-	M-.			last argument - repeat to cycle backwards
-	
-    <cmd> M-p / M-n	
-		search hist for cmds starting with <cmd>
-
-
-Navigation {{{1
-
-cd to dir with one word different in path (two variations):
-    cd <old> <new>
-    cd ${PWD/3.4/2.7} 
-
-Configuration {{{1
 Startup Files {{{2
-	zprofile: 
-		only run by login shells (called with -l) or su -.  Use for env vars used by
-		applications, e.g. MAI
-	zshenv: 
-		only startup that is always run.  Best place for environment
-	variables
-	zshrc
-	zlogin: 
-		runs after zshrc.  Purpose really just equivalent of Bourne-type
-		shells /etc/profile and csh login (?).
 
-CD stack
-	cp file ~1 - copy file to first dir in stack 
+zprofile: 
+    only run by login shells (called with -l) or su -.  Use for env vars used by
+    applications, e.g. MAI
+zshenv: 
+    only startup that is always run.  Best place for environment
+variables
+zshrc
+zlogin: 
+    runs after zshrc.  Purpose really just equivalent of Bourne-type
+    shells /etc/profile and csh login (?).
 
 
-Parameters {{{1  
+Start zsh with no configuration
+zsh -f -d
+source alternativefile.rc
+
+
+Parameters {{{2
 
 set by:
     parameter_name=value - No space before or after '='
@@ -108,6 +78,39 @@ event selection:
 	!str        last command starting with str
 	!?str[?]    last command containing str
 
+
+Command Line Editing {{{1
+
+(Meta = Alt, ^ = Ctrl+ \e = Escape) 
+
+Move 
+    word
+        forward/back  Mf/Mb
+
+
+Delete 
+    delete to end of line   ^k    
+    char 
+        left/right ^h/^d	(^d also lists in menu completion)
+    word 
+        left:       ^w or \e+backspace
+        right:      Md or \ed
+
+Save current line in buffer stack
+    ESC q
+
+Commands & arguments {{{1
+
+\e. or M-.	    last argument - repeat to cycle backwards      
+
+fc:
+	fc <pat>    edit most recent command starting with <pat>
+	fc -l <pat> display, dont edit
+
+	
+[<cmd>] M-p / M-n	
+    prev/next command or search for <cmd> if entered
+
 word selection: 
     number	- 0 is cmd
     * - all args
@@ -115,6 +118,16 @@ word selection:
     x-  Arguments from #x to $ (last arg)
         ex. !!0-  Command + all args except last 
 
+
+Filesystem {{{1
+
+CD stack
+	cp file ~1 - copy file to first dir in stack 
+
+Navigation 
+    cd to dir with one word different in path (two variations):
+        cd <old> <new>
+        cd ${PWD/3.4/2.7} 
 
 
 modifiers {{{1

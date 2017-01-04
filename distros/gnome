@@ -1,5 +1,4 @@
-Shortcuts
-
+Shortcuts {{{1
 
 Move to other desktop
     Super + PageUp/Down
@@ -17,16 +16,18 @@ Resize
     Shift while dragging to snap to edge & other windows
 
 
-Configuration
+Confg Tools {{{1
 
 https://developer.gnome.org/dconf/unstable/dconf-overview.html
 https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Desktop_Migration_and_Administration_Guide/gsettings-dconf.html
 
-Gconf: old, obsolute
-
 GSettings - command line 
-Dconf - backend storage of settings, edit dconf command line util or with dconf-editor
-Run all as normal user, not as admin
+
+Dconf 
+    backend storage of settings
+    edit with dconf command line or graphical dconf-editor
+
+Gconf: old, obsolute
 
 Dconf profiles (db format):
 .confg/dconf/user
@@ -45,7 +46,31 @@ Int Values must be flaged as unsigned or GSettings will not recognize
 Run 'dconf update' after changes
 
 
-Gnome power settings
+Configuration {{{1
+
+Mouse & window behavior in org.gnome.desktop.wm.preferences 
+
+
+Environment
+     /etc/environment (simple ENVVAR=val format)
+     /etc/profile.d/ - sourced by /etc/zshrc
+
+     gnome-terminal only
+        add vars to .zlogin and make terminal login
+
+Autostart
+    .config/autostart
+
+
+
+Desktop folders {{{2
+
+.config/user-dirs.dirs
+  edit to set desktop folders
+  run  xdg-user-dirs-update
+
+
+Gnome power settings {{{2
 
 gsettings set org.gnome.settings-daemon.plugins.power
 gsettings set org.gnome.desktop.session idle-delay 100
@@ -61,11 +86,5 @@ sleep-inactive-ac-timeout=uint32 2400
 sleep-inactive-battery-timeout=uint32 0
 sleep-inactive-ac-type=suspend
 
-
-Desktop folders:
-
-.config/user-dirs.dirs
-  edit to set desktop folders
-  run  xdg-user-dirs-update
 
 

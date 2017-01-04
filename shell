@@ -1,3 +1,26 @@
+
+Shell types
+    Login shell
+        force: su - andmalc
+        test: echo $0 - if result is -<shell name> is login
+
+    interactive, login
+        login at text console, SSH, or with su -
+    non-interactive login 
+        is rare
+        Only if window manager reads /etc/profile or .profile
+    interactive, non-login
+        start a shell in terminal or start a shell inside another
+        rc config files are read
+    non-interactive, non-login
+        common
+        when programs run another with a script
+        .env config files read
+
+Graphical login: 
+    does not create a login shell
+    controlled by session or window manager
+
 Docs
 	http://www.gnu.org/software/bash/manual/html_node/index.html#SEC_Contents
 
@@ -117,6 +140,7 @@ command
 	! before inverts
 
 POSIX test statement -  [ ]
+    if [ "$foo" = "$bar" ]
 	-z	0 length string
 		if test -z "$Var"
 	-n	string is non-empty/non-null
