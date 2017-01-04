@@ -80,10 +80,14 @@ Diff - shows changes to working tree
     HEAD            staged vs. current commit
 
 	<branch> <remote name>/<branch>
-	-- <file>		working tree vs. commit
 	HEAD\^ HEAD		show diffs between last two commits
 					prefix noglob in zsh for no ^ escape needed
 	difftool			show diff in vim etc.
+
+    origin/master:./ -- <filename>
+    A1234B:./ -- <filename>
+                    diff for single file
+
 
 Log - shows commit history
 	-#				number of commits to show
