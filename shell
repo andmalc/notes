@@ -39,6 +39,19 @@ xargs
         autoload -U zargs
         zargs **/*~ -- rm
 
+Braces, Parentheses, Brackets {{{1
+
+Parentheses ()
+Executes contents - like ``
+
+Braces {}
+For variable expansion  
+STR="hello"
+STR2="${STR} world"
+
+Brackets []
+Expands text as output from command
+
 Quoting {{{1
 
 Never quote a glob or regular expression

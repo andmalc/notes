@@ -14,7 +14,7 @@ nmap
     -sn     ping scan
     -sP      
 
-netstat - deprecated
+netstat - deprecated, use ip -s, ss, ip route
 		Reports on listening daemons
 		debian package net-tools
 	show all running sessions and daemons

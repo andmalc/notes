@@ -43,3 +43,9 @@ Geany http://www.geany.org/
 Minimal GTK 3 editor
 Install with DNF
 
+Utilities {{{1
+
+Nativefier - web app => electron app
+https://github.com/jiahaog/nativefier
+
+
