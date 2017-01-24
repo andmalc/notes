@@ -61,10 +61,12 @@ adm for journalctl
 
 Home Dir {{{2
 
-SSH dir
+gnupg & ssh dirs
 - mod 700
-- authorized_keys file
 
+mkdir 
+Envs
+.config
 
 Pull Notes, Config, Work
 git clone --recursive config # populates submodules
@@ -74,9 +76,6 @@ git clone notes
 Or:
 submodule init / submodule update
 
-mkdir 
-Envs
-.config
 
 Use Stow
 /usr/bin/stow -t ~ -d config/dotfiles vim
@@ -113,6 +112,15 @@ android-tools package
 Install libraries to allow 32 bit programs to run on 64 bit
 libstdc++.i686 ncurses-libs.i686 zlib.i686
 
+SSH config {{{3
+
+SSH dir
+- mod 700
+- authorized_keys file
+
+
+ssh-agent + ed25519 keys:
+https://eklitzke.org/using-ssh-agent-and-ed25519-keys-on-gnome
 
 
 System config {{{2

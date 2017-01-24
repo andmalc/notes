@@ -6,12 +6,33 @@ Install on fedora android-tools pkg
 	pull/push
 		adb pull /storage/sdcard0/Movies/ .
 
+Unlock bootloader
+http://www.howtogeek.com/239798/how-to-unlock-your-android-phones-bootloader-the-official-way/
+
+adb reboot bootloader
+fastboot oem unlock
+fastboot flashing unlock
+
+Non-nexus devices:
+    fastboot oem get_unlock_data
+    Visit manufacturer site for unlock code
+
+
+Install ROM
 
 https://wiki.cyanogenmod.org/w/Install_CM_for_peregrine
 adb reboot bootloader
-## Device in bootloader menu
-#fastboot devices - verify shown
-#fastboot flash recovery <img>
-## Device shows Cyanogen recovery menu
-#fastboot reboot recovery
 
+Copy image if not already saved
+adb push <image.zip> /sdcard
+
+# Device in bootloader menu
+fastboot devices - verify shown
+fastboot flash recovery <img>
+# Device shows Cyanogen recovery menu
+fastboot reboot recovery
+
+
+Troubleshooting
+
+fastboot format userdata

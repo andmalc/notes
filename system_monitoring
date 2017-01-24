@@ -12,6 +12,9 @@ Top for systemd slices
 Show contents of cgroups
     systemd-cgls
 
+Boot speed stats
+    systemd-analyze
+
 journalctl {{{1
 
 -f			follow
@@ -65,36 +68,23 @@ journal-brief
     http://cyberelk.net/tim/2015/10/19/journal-brief/
 
 
-
-Old {{{1
-
-
-
-Monitor a log fail:
+Monitor log 
 	tail -f		Monitor growth of a log file
 	tailf		same, but wait for log activity to write to the file (avoids disk spin up on laptops)
 
+Display System Info: 
+    uname - processor type, kernel type etc
 
-Display System Info: uname - processor type, kernel type etc
 
+Prints kernel boot messages
+    dmesg	
 
-dmesg	Prints kernel boot messages
-
-Virtual Memory
-    Memory space for programs to run created by kernel from real memory + swap.
-    swapon command activates 
-    view all memory usage with 'cat /proc/meminfo'
-
-ps list
+ps  process snapshot 
     Processes in [[ ]] have been swaped out due to inactivity
     Status Codes: S - sleeping, R - running
 
-Boot speed stats
-    systemd-analyze
+    -ef     flat output for greping
 
-Top for systemd slices
-    systemd-cgtop
-
-Show contents of cgroups
-    systemd-cgls
+Virtual Memory
+    view all memory usage with 'cat /proc/meminfo'
 

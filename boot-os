@@ -91,6 +91,10 @@ Debian
 
 OS concepts {{{1
 
+Processes
+    all have environments - set of key/value mappings
+    normally a new process is forked from parent and inherits environment
+
 Process namespaces {{{2
 	http://www.kernel.org/doc/man-pages/online/pages/man2/mount.2.html
 	

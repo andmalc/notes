@@ -131,3 +131,14 @@ virt-viewer --connect qemu+ssh://root@play.malcolmson.ca/system demo2
 	suspend
 	resume
 
+Share host files with guest {{{1
+
+https://ask.fedoraproject.org/en/question/79010/qemu-user-session-shared-filesystem/
+https://eklitzke.org/fedora-qemu-and-9p-filesystem-passthrough
+
+sudo semanage fcontext -a -t virt_content_t "/home/vagrant/test(/.*)?"
+sudo restorecon -R /home/vagrant/test
+
+Guest fstab
+shared  /home/andmalc/mnt      9p      defaults,noauto
+

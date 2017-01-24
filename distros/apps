@@ -32,3 +32,20 @@ Vim-MatchIt         jump between matching HTML tags
 emmet.vim           expands HTML tag abrieviations 
 
 
+Other editors {{{1
+
+Atom
+Developed by GitHub
+Based on Electron
+Packages: remote-edit2, nitrogen
+
+Geany http://www.geany.org/
+Minimal GTK 3 editor
+Install with DNF
+
+Utilities {{{1
+
+Nativefier - web app => electron app
+https://github.com/jiahaog/nativefier
+
+
