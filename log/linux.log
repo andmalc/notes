@@ -1,6 +1,20 @@
 
+TP T530 {{{1
 
-Centos at CAC
+1/12
+
+Home Dir
+    checkvist and Enpass
+        move to /opt
+        updated desktop file
+        works
+
+    npm reinstall -g to /usr/lib/node_modules
+    change prefix with npm config edit
+        apps
+            nativefier
+
+Centos at CAC {{{1
 
 12/19
 

@@ -1,7 +1,12 @@
 
 ADB
-Install on fedora android-tools pkg
-	shell
+Install 
+    on fedora android-tools pkg
+
+    Direct download
+    https://developer.android.com/studio/releases/platform-tools.html
+
+shell
 	backup -all
 	pull/push
 		adb pull /storage/sdcard0/Movies/ .

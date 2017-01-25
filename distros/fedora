@@ -1,5 +1,3 @@
-Admin {{{1
-
 useradd [-G group] name
 	Create new user + home dir
 
@@ -37,6 +35,8 @@ dnf copr enable mosquito/atom
 dnf install atom
 
 Chrome:
+Depends on redhat-lsb libXScrnSaver
+
 https://www.google.com/linuxrepositories/
 Chrome repo in /etc/yum.repos.d/google-chrome.repo:
 [google-chrome]
@@ -100,6 +100,7 @@ python ./get-pip.py --user
 pip install --user powerline-status virtualenvwrapper
 ptpython or ipython
 
+pipenv
 
 Development Env:
 build-essential or 

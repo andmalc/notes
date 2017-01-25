@@ -50,6 +50,8 @@ Configuration {{{1
 
 Mouse & window behavior in org.gnome.desktop.wm.preferences 
 
+Desktop files
+    .local/share/applications 
 
 Environment
      /etc/environment (simple ENVVAR=val format)
