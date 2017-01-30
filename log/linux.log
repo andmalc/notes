@@ -1,4 +1,21 @@
 
+1/27
+
+SSh to new CAC server
+Copying id_
+No ECDSA host key is known for 64.137.182.62 and you have requested strict checking.
+=> probably server does not support ed25519
+
+
+
+1/23
+
+Fedora reinstall
+    Error installing bootloader
+        PC BIOS in legacy mode
+        Fedora installer not able to setup disk in uefi mode
+    had to delete boot and uefi system partions
+
 
 Centos at CAC
 

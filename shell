@@ -182,9 +182,17 @@ http://en.wikipedia.org/wiki/Redirection_(Unix)
 Stdin, stdout, and stderr are by convention numbered 0, 1, and 2.  
 Stdout is default
 
-Redirecting standard output, stderr prints to scree
+
+Redirect to/from files
+    to standard output, stderr prints to scree, existing file clobbered
 	program-name > out.txt
 	e.g. ls > directorylisting.txt
+
+    use >> to append to file
+    
+    run command1 with file1 as input
+        command1 < file1
+
 
 To specify the file with a number, place the number before the >
 	program-name 1> out.txt

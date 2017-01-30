@@ -4,6 +4,7 @@ http://www.doughellmann.com/projects/virtualenvwrapper/
 file:///usr/share/doc/virtualenvwrapper/en/html/install.html#workon-home
 http://www.pip-installer.org/en/latest/
 
+
 General Install {{{1
 
 Pip {{{2 
@@ -45,4 +46,9 @@ pyvim
 ptpython
     https://github.com/jonathanslenders/ptpython
 
+
+https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14#.qyc28z7h
+
+Py + Vim
+https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
 

@@ -14,6 +14,14 @@ nmap
     -sn     ping scan
     -sP      
 
+ss  socket statistics
+    like netstat but more info
+    ss -tlw
+
+    check for listening socket
+        ss -tnlp | grep ssh
+
+
 netstat - deprecated, use ip -s, ss, ip route
 		Reports on listening daemons
 		debian package net-tools
@@ -34,10 +42,6 @@ netstat - deprecated, use ip -s, ss, ip route
 		t		tcp
 		l		listening servers only
 		a		show all
-
-ss - socket statistics
-    like netstat but more info
-    ss -tlw
 
 darkstat
 	Easy monitoring of bandwidth

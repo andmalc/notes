@@ -13,6 +13,9 @@ Change port on Fedora/Centos
     firewall-cmd --zone=public --permantent --add-port=2292/tcp
 
 
+OpenSSH key format + convert to PEM
+http://blog.oddbit.com/2011/05/08/converting-openssh-public-keys/
+
 
 command {{{1
 

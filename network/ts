@@ -1,8 +1,0 @@
-
-Join net:
-Set interface to use
-w/l: set essid if not roaming
-Get IP, netmask,gw
-assert default route is thr. used if
-
-iprange="10.0.1.0/24"

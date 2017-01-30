@@ -1,0 +1,30 @@
+
+Terms
+Refresh - reinstall Windows, keep person settings, Windows Store apps, built-in apps
+Reset - reinstall Windows, keeps built in apps
+Restore - undo recent system changes
+
+
+Recovery utilities
+
+Windows 8 start up disk
+Create with Recovery Media Creator - (built into Win 8?).  Search for recovery
+size about 10G
+    System Restore
+    System Image Recovery
+    Startup Repair
+    Command Prompt
+
+
+
+EaseUS emergency disk
+size < 1G
+    Disk/partition/file backup
+    Clone partition
+    Tools
+        Wipe data
+        Check partition/image
+        Fix MBR
+        Win shell command
+
+
