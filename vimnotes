@@ -6,7 +6,6 @@ Repeat change on multi lines (e.g. commenting all)
 4. Esc
 
 Startup & Settings {{{1
-----------------------
 
 -u vimrc
 - Start vim initializing with vimrc (no other vimrc is used)
@@ -20,16 +19,14 @@ $VIMRUNTIME + ~/.vim, $VIM/vimfiles etc.
 Debian standard for 3rd party plugins is /usr/share/vim/addons
 				
 modelines
-		modeline must be set and modelines => 0 to be enabled
-		syntax
-				[text<white>]{vi:|vim:|ex:}[white]{options}
-				WS before vim is required if text before.
-		options
-				list of option settings separated with ws or ':'
-				ex.   
-					  /* vim: ai tw=75 */
-						" vim:ts=4 sw=4
-					  " vim:set ai et sts=2 sw=2 tw=80:
+    modeline must be set and modelines => 0 to be enabled
+    syntax
+            [text<white>]{vi:|vim:|ex:}[white]{options}
+            WS before vim is required if text before.
+    options
+            list of option settings separated with ws or ':'
+            " vim:ts=4 sw=4
+            /* vim:set ai et sts=2 sw=2 tw=80: */   #this format when comment needs closing 
 
 Windows/ui/Interface {{{1
 Windows 
@@ -463,28 +460,30 @@ Python file settings {{{1
 		autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 Formating {{{1
-		commands
-				gq[motion]		
-						Format lines motion moves over.  Textwidth option controls the length
-						of each formatted line.  If textwidth is 0, the formatted ine length
-						is the screen width (max 79) minus the value of any wrapmargin
-						setting.
-				gqq				Format current line
-				gqj		Format current and next line
-				gq}		Format till end of paragraph
-		joinspaces		Insert 2 spaces after join command
-		Formating Email Messages
-				These should be formated to break at 78 characters.
-		formatoptions (fo)
-				now crnqo
-				comment options - croq
-						c - restrict auto-formatting to comments
-				auto formatting - tw must be > 0
-						a - turn on auto-formatting
-						t - auto-wrap by tw 
-						c - auto-wrap comments
-				w - lines w/o a trailing ' ' not formatted (e.g. wrapped prose text
-				will get rewrapped, list lines ended by CR's not)
+
+commands
+        gq[motion]		
+                Format lines motion moves over.  Textwidth option controls the length
+                of each formatted line.  If textwidth is 0, the formatted ine length
+                is the screen width (max 79) minus the value of any wrapmargin
+                setting.
+        gqq				Format current line
+        gqj		Format current and next line
+        gq}		Format till end of paragraph
+joinspaces		Insert 2 spaces after join command
+Formating Email Messages
+        These should be formated to break at 78 characters.
+
+formatoptions (fo)
+        now crnqo
+        comment options - croq
+                c - restrict auto-formatting to comments
+        auto formatting - tw must be > 0
+                a - turn on auto-formatting
+                t - auto-wrap by tw 
+                c - auto-wrap comments
+        w - lines w/o a trailing ' ' not formatted (e.g. wrapped prose text
+        will get rewrapped, list lines ended by CR's not)
 				
 						
 Search & Replace {{{1

@@ -9,11 +9,13 @@ configure script
     If no configure autoreconf -i
     
 Autotools
-    ./configure generates Makefile
-    if Makefile already present in source is not autotools
+Tutorial: https://eklitzke.org/how-to-autotools
 
-    Install prefix 
-    ./configure --prefix=/usr/local
+./configure generates Makefile
+if Makefile already present in source is not autotools
+
+Install prefix 
+./configure --prefix=/usr/local
 
 cmake
     alternative build-tool
