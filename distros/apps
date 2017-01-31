@@ -10,7 +10,16 @@ fzf - command-line fuzzy finder written in Go
 https://github.com/junegunn/fzf
 
 ripgrep - Rust grep
-https://github.com/BurntSushi/ripgrep
+    https://github.com/BurntSushi/ripgrep
+    dnf copr enable carlgeorge/ripgrep
+    dnf install ripgrep
+
+    -i  ignore case
+    -v  invert 
+    -w  force matches between word boundaries
+    -g <glob>   restrict to matching files
+    -l  list matching filenames
+
 
 geeknote - cli Evernote
 https://github.com/pipakin/geeknote
@@ -47,5 +56,13 @@ Utilities {{{1
 
 Nativefier - web app => electron app
 https://github.com/jiahaog/nativefier
+npm install nativefier [-g]
+    w/o -g installs into current dir 
+
+Desktop {{{1
+
+PDF Viewers
+    qpdfview - tabbed, annnotations
+    MuPDF
 
 

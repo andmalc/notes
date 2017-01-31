@@ -1,6 +1,9 @@
 
+
+
 1/27
 
+Dell 11
 SSh to new CAC server
 Copying id_
 No ECDSA host key is known for 64.137.182.62 and you have requested strict checking.
@@ -17,7 +20,21 @@ Fedora reinstall
     had to delete boot and uefi system partions
 
 
-Centos at CAC
+1/12
+
+TP T530 
+Home Dir
+    checkvist and Enpass
+        move to /opt
+        updated desktop file
+        works
+
+    npm reinstall -g to /usr/lib/node_modules
+    change prefix with npm config edit
+        apps
+            nativefier
+
+Centos at CAC {{{1
 
 12/19
 
