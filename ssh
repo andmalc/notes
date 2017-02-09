@@ -13,9 +13,6 @@ Change port on Fedora/Centos
     firewall-cmd --zone=public --permantent --add-port=2292/tcp
 
 
-OpenSSH key format + convert to PEM
-http://blog.oddbit.com/2011/05/08/converting-openssh-public-keys/
-
 
 command {{{1
 
@@ -57,7 +54,9 @@ SHA 40 bit  2048 SHA256:gfno3KCYssX6XgdaJki/VbDcQpgiUM9+Qzgn+uJsbI8
 Convert public key to MD5 fingerprint:
     Echo <content of public key> | base64 -d | md5sum
 
-Export to PEM
+OpenSSH key format + convert to PEM
+http://blog.oddbit.com/2011/05/08/converting-openssh-public-keys/
+
     public key
         ssh-keygen -e -m pem -f .ss/keyfile
     private key

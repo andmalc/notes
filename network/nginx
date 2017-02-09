@@ -1,0 +1,10 @@
+
+
+Debugging
+
+Log to journalctl
+    access_log syslog:server=unix:/dev/log;
+    error_log syslog:server=unix:/dev/log;
+
+curl -i http://localhost/empty.test
+sudo truncate -s 1M /usr/share/nginx/html/1mb.test

@@ -1,6 +1,13 @@
 
 
-Enable CR (testing)
+Repos:
+
+EPEL - extra packages
+    package list
+        https://dl.fedoraproject.org/pub/epel/7/x86_64/
+    sudo yum install epel-release
+
+CR (testing)
     install yum-utils
     yum-config-manager --enable cr
 
