@@ -75,7 +75,7 @@ https://www.asus.com/ZenWatch/ASUS_ZenWatch_2_WI501Q/HelpDesk/
 
 Asus RT-N66U hw v B1
 
-**TP-Link TD-W8968 v3 ADSL+ modem/router**  
+### TP-Link TD-W8968 v3 ADSL+ modem/router  
 At Carolyn’s, replacement at Andrew’s
 Purchase 5/20/15 - from PC Canada - two year warranty
 Firmware last 5/15, up to date as of 8/16
@@ -102,11 +102,12 @@ TP-Link modem/router (Andrew, moved to Carolyn’s)
 TD-W8961ND V 3.1
 Purchase Spring 15 from Canada Computers
 
-# Bennie
+## Bennie
 
-**Sharp TV LC-32D44U**
+### Sharp TV LC-32D44U
 [Manual](http://www.radioshack.com/graphics/uc/rsk/Support/ProductManuals/55027570_PM_EN.pdf) 
-Bushnell Tour v3 golf range finder
+
+### Bushnell Tour v3 golf range finder
 Golf Town 6/2/16  
 Receipt in my files
 
