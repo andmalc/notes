@@ -2,6 +2,7 @@
 ADB
 Install 
     on fedora android-tools pkg
+    Debian android-tools-adb
 
     Direct download
     https://developer.android.com/studio/releases/platform-tools.html
@@ -37,6 +38,7 @@ fastboot flash recovery <img>
 # Device shows Cyanogen recovery menu
 fastboot reboot recovery
 
+OpenGapps - 64 bit version on Nexus 5
 
 Troubleshooting
 
