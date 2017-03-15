@@ -380,6 +380,7 @@ Change
         vgremove  
 
 Info
+    vgs
     vgdisplay
     
 
