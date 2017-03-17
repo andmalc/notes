@@ -15,6 +15,9 @@ CR (testing)
 Install DNF
 Vhttp://dnf.baseurl.org/2016/07/01/fresh-dnf-for-rhel-7-and-centos-7/
 
+Enable EPEL and install Python3
+https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-centos-7
+
 
 Systemd 231
 https://maciej.lasyk.info/2016/Dec/16/systemd-231-latest-in-centos-7-thx-to-facebook/

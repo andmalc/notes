@@ -3,6 +3,8 @@ Docs {{{1
 
 https://wiki.centos.org/HowTos/SELinux
 https://fedoraproject.org/wiki/SELinux_FAQ
+http://linuxtechlab.com/beginners-guide-to-selinux/
+
 
 Labeling
     user:role:type:level defines context 
