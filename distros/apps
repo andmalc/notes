@@ -24,6 +24,18 @@ ripgrep - Rust grep
 geeknote - cli Evernote
 https://github.com/pipakin/geeknote
 
+Tmux {{{1
+
+Plugins via Tmux Plugin Manager
+https://github.com/tmux-plugins/tpm
+Clone to ~/.tmux/plugins/tpm, linked to submodule in term 
+/home/andmalc/config/term/tpm
+Fetch & source plugins listed in .tmux.conf with Prefix + I
+
+Tmux Yank
+    copy to cliboard
+    https://github.com/tmux-plugins/tmux-yank
+
 
 Vim {{{1
 
@@ -41,7 +53,7 @@ Vim-MatchIt         jump between matching HTML tags
 emmet.vim           expands HTML tag abrieviations 
 
 
-Other editors {{{1
+Graphical editors {{{1
 
 Atom
 Developed by GitHub
@@ -52,12 +64,6 @@ Geany http://www.geany.org/
 Minimal GTK 3 editor
 Install with DNF
 
-Utilities {{{1
-
-Nativefier - web app => electron app
-https://github.com/jiahaog/nativefier
-npm install nativefier [-g]
-    w/o -g installs into current dir 
 
 Desktop {{{1
 
@@ -65,4 +71,9 @@ PDF Viewers
     qpdfview - tabbed, annnotations
     MuPDF
 
+
+Nativefier - web app => electron app
+https://github.com/jiahaog/nativefier
+npm install nativefier [-g]
+    w/o -g installs into current dir 
 
