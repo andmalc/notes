@@ -1,26 +1,45 @@
-Docs
-	adduser man page
 
 Modify user and groups 
-	Debian: 
-		adduser
-		adduser <username> <groupname>
-			add user to group <groupname>
-		addgroup
-	Fedora:
-		usermod
-			<username> -aG <comma sep list of groupnames>	append group to existing
-		useradd 
-		groupmod
-		userdel
-		groupdel
 
-		gpasswd
-			-a <username> <groupname>  
+adduser {{{1
 
-Display & Change Groups
-	id [user] - see info page
-		id -nG  = print user's groups with names (no ids) - same as groups cmd.
+high level tool, depends on perl
+package shadow-utils
+
+adduser -g wheel -m andmalc
+
+adduser <username> <groupname>
+	add user to group <groupname>
+addgroup
+
+
+user* {{{1
+
+useradd, usermod, userdel, groupdel
+	low level, more control
+
+useradd [-G group] name
+	Create new user + home dir
+
+usermod -aG <comma sep groupnames> user
+	append group to existing
+
+usermod -s <shell path>
+    change shell
+
+Other utils {{{1
+
+groupadd, groupmod 
+
+gpasswd
+	-a <username> <groupname>  
+	-a sammy wheel
+
+
+Display & Change Groups {{{1
+
+id [user] - see info page
+	id -nG  = print user's groups with names (no ids) - same as groups cmd.
 	newgrp, sg
 		change effect group ID.  Should be member of group to change to.
 		See man pages for differences
