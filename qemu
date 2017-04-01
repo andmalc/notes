@@ -7,8 +7,8 @@ Create img/qcow
 guestfish shell - from libguestfstools
 
 Create raw format image file
-	no size needed
-	use base image option to get only differences saved
+    size is virtual, file will be sparse
+	use base image option to get only differences saved, no size needed
 
 	qemu-img create xp.raw 3G
 

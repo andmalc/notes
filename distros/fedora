@@ -44,6 +44,8 @@ Packages {{{2
 Install
 git vim-enhanced zsh tmux mlocate ncdu stow ranger
 
+Yubikey/U2F support
+pam-2uf
 
 
 Users {{{2
@@ -193,37 +195,37 @@ http://dnf.readthedocs.org/en/latest/command_ref.html
 
 Dnf <options> <command> <args eg. package spec>
 
-Package spec
-    can use globbing in pkg name
+    Options:
+        --exclude <pkg or pat>  exclude from install, remove, list etc.
+        --enablerepo <repo>     install pkg from a repo
+        --disable <repo>
+        --releasever 23
 
-Options:
-    --exclude <pkg or pat>  exclude from install, remove, list etc.
-    --enablerepo <repo>     install pkg from a repo
-    --disable <repo>
-    --releasever 23
+    Commands
+        search  shows & searches by name, description
+        info    shows details
+        list [<pkg>]
+                show pkg version, repo, if installed or available
+                if no arg, lists installed then avail packages
+                does not sync metadata
+                see also repoquery plugin
+        list [installed | available]
+                list all available and installed [just installed | avail & not installed]
 
-Commands
-    search  shows & searches by name, description
-    info    shows details
-    list [<pkg>]
-            show pkg version, repo, if installed or available
-            if no arg, lists installed then avail packages
-            does not sync metadata
-            see also repoquery plugin
-    list [installed | available]
-            list all available and installed [just installed | avail & not installed]
+        install, reinstall, remove, downgrade
 
-    install, reinstall, remove, downgrade
+    Package spec
+        can use globbing in pkg name
 
 
-Package Groups
-    group info, list, install 
-    group name
-        case insensitive
-        format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
+    Package Groups
+        group info, list, install 
+        group name
+            case insensitive
+            format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
 
-    Show packages in a group
-        group info 'Basic Desktop'
+        Show packages in a group
+            group info 'Basic Desktop'
 
 
 History
