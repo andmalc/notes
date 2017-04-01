@@ -1,10 +1,15 @@
+2/3
+
+CAC
+    nginx
+    For journalctl logging
+     access_log syslog:server=unix:/dev/log;
 
 1/31
 
 Powertop 
     USB mouse suspend freezing 
     Installed tlp instead
-
 
 
 1/27

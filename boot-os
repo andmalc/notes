@@ -41,6 +41,8 @@ Linux Boot  {{{1
 Initramfs
 	replaced initrd in kernel 2.6
     not needed if /usr/ and /etc on same disk as kernel
+    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
+
 
 https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
 

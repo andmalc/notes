@@ -54,3 +54,8 @@ Manage zones
      --remove-service=<service>
      --add-port=<port>[-<port>]/<protocol>
      --add-masquerade
+
+Examples
+sudo firewall-cmd --permanent --zone=public --add-service=http 
+sudo firewall-cmd --permanent --zone=public --add-service=https
+sudo firewall-cmd --reload

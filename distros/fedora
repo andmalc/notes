@@ -18,7 +18,14 @@ Setup {{{1
 
 https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
-SSH files at Dropbox, Backup SD, Galaxy S3 Documents 
+
+Minimal Desktop install
+install minimal 
+sudo dnf group install gnome-desktop base-x hardware-support (for wireless)
+systemctl enable gdm.service
+systemctl set-default graphical.target
+
+
 
 git clone git@github.com:andmalc/config.git
 
