@@ -63,8 +63,6 @@ Environment
 Autostart
     .config/autostart
 
-
-
 Desktop folders {{{2
 
 .config/user-dirs.dirs

@@ -1,6 +1,5 @@
 
-Firmware {{{1
-
+Boot Firmware {{{1
 Coreboot {{{2
 
 coreboot is the part of the firmware that initializes the hardware
@@ -11,11 +10,39 @@ Payloads:
     payload that implements a Legacy BIOS bootloader is SeaBIOS
     SeaBIOS installed in section of the firmware normally reserved for booting an OS in Legacy mode (called RW_LEGACY)
 
-Boot  {{{1
+UEFI {{{1
+
+ESP EFI System Partition
+    does not have to be FAT but this is most compatible
+
+Searches through boot order entries in order for a Device Path + File match
+If fails starts Default Boot Behavior process:
+    searches removable devices then fixed devices for an ESP (as found in GPT) containing \EFI\BOOT\BOOTX64.efi & executes it
+    BOOTX64 looks for file fallback.efi in same directory & executes it
+    fallback.efi looks for files *.csv in directories other than BOOT, uses content to create new Boot entires pointing to same disk as fallback.efi was lauched from.
+
+
+
+efibootmgr
+    Entries with ID Boot[hex] - leading 0's not needed i.e. 0004 = 4
+    Asterick indicates active 
+    -o  set boot order ID,ID etc.
+    -n  set boot order or next boot only
+    -b  modify item 
+    -v  show UUIDs etc.
+    
+    Delete items
+        first reset order without item to be deleted
+        delete it
+            -b ID -B
+
+Linux Boot  {{{1
 
 Initramfs
 	replaced initrd in kernel 2.6
     not needed if /usr/ and /etc on same disk as kernel
+    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
+
 
 https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
 
@@ -23,6 +50,7 @@ Init system
     first process started by kernel
     starts all daemons etc. required by OS
     Later starts user services 
+
 
 
 kernel {{{1
@@ -94,6 +122,9 @@ OS concepts {{{1
 Processes
     all have environments - set of key/value mappings
     normally a new process is forked from parent and inherits environment
+
+Sockets
+    Socket is the API's abstraction for a IP-port pair. It handles the network and transfer layer of communication. It can be thought of as a application's interface to the network.
 
 Process namespaces {{{2
 	http://www.kernel.org/doc/man-pages/online/pages/man2/mount.2.html

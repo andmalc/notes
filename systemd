@@ -45,31 +45,36 @@ Subcommands
 
 unit commands {{{2
 
-list-units --type=[target | unit type]  #this is default command
 start, restart, stop, restart, reload, status <runtime> [service | socket]
+
 
 isolate <target name>   
     switch immmediately to other target
     stop all other processes
 
-show-environment [--user]
-    environment variables
+list-units --type=[target | unit type]  #this is default command
+    List running services & their status
+        systemctl list-units -t service --all 
 
-show (properties)
+list-sockets --show-types
+
+kill <name>
+
+show [--property=]
+    no arg 
+        shows systemd version, vars
+
     Lists units pulled in by a given target.
     systemctl show -p "Wants" multi-user.target 
 
     Show dependent services & other targets
      systemctl show -p "After" sshd.service     
 
-kill <name>
+    systemctl show --property=Environment docker
 
+show-environment [--user]
+    environment variables
 
-Lists the targets that will include the service
-     ls /etc/systemd/system/*.wants/sshd.service
-
-List running services & their status
-    systemctl list-units -t service --all 
 
 unit fle commands {{{2
 
@@ -96,6 +101,9 @@ Other {{{1
 
 lsns
     list namespaces
+
+Lists the targets that will include the service
+     ls /etc/systemd/system/*.wants/sshd.service
 
 hostnamectl
     -M containername

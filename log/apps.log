@@ -1,0 +1,22 @@
+
+
+4/1/17
+Gnome Extensions chrome support
+Installed Chrome app 
+https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
+native connector from source
+https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation
+
+- Installing: /etc/chromium/native-messaging-hosts/org.gnome.chrome_gnome_shell.json
+-- Installing: /etc/opt/chrome/native-messaging-hosts/org.gnome.chrome_gnome_shell.json
+-- Installing: /usr/local/lib64/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json
+-- Installing: /etc/opt/chrome/policies/managed/chrome-gnome-shell.json
+-- Installing: /etc/chromium/policies/managed/chrome-gnome-shell.json
+-- Installing: /usr/local/share/applications/org.gnome.ChromeGnomeShell.desktop
+-- Installing: /usr/local/share/dbus-1/services/org.gnome.ChromeGnomeShell.service
+-- Installing: /usr/local/share/icons/gnome/16x16/apps/org.gnome.ChromeGnomeShell.png
+-- Installing: /usr/local/share/icons/gnome/48x48/apps/org.gnome.ChromeGnomeShell.png
+-- Installing: /usr/local/share/icons/gnome/128x128/apps/org.gnome.ChromeGnomeShell.png
+
+
+

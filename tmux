@@ -76,3 +76,9 @@ $   rename
 s   choose from list
 
 
+Session Managers {{{1
+
+tmuxp
+http://tmuxp.git-pull.com
+
+

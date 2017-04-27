@@ -29,8 +29,11 @@ Run pip install with python3 to get pip3
 Includes setuptools
 
 
-pipenv
+pipenv {{{2
 https://www.kennethreitz.org/essays/announcing-pipenv
+
+pip install pipenv
+
 
 Virtualenv  {{{2
 
@@ -55,4 +58,12 @@ https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-works
 
 Py + Vim
 https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
+
+Virtual envs {{{1
+
+Pipenv
+http://docs.pipenv.org/en/latest/index.html
+
+pipenv shell to invoke environment
+
 
