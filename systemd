@@ -148,26 +148,6 @@ systemd-nspawn {{{1
  --template=<dir>
     use fs in dir as template 
 
-Networking:
---port=<host #>:<cont #>
-	map port in cont. to host
---network-interface=
-	assign inf. on host to container.  Host cannot use.
---network-veth
-	virtual interface 
---network-bridge
-	virtual interface, bridged
-
-machinectl
-    container must have dbus installed
-    login, reboot, poweroff, status <container>
-    bind <machinename> <source path> [<dest path in cont>]
-
-examples:
-    -xb -D /  #ephemeral snap of root
-     -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
-    --template=/    #use host root dir as template 
-
 Container as service - must be in /var/lib/machines
 systemctl start systemd-nspawn@mycontainer.service
 
@@ -178,3 +158,27 @@ Run container under SELinux
 xhost +local:
 echo $DISPLAY
 export DISPLAY=:0
+
+
+machinectl
+    container must have dbus installed
+    login, reboot, poweroff, status <container>
+    bind <machinename> <source path> [<dest path in cont>]
+
+Networking {{{2
+
+--port=<host #>:<cont #>
+	map port in cont. to host
+--network-interface=
+	assign inf. on host to container.  Host cannot use.
+--network-veth
+	virtual interface 
+--network-bridge
+	virtual interface, bridged
+
+examples {{{2
+
+-xb -D /  #ephemeral snap of root
+ -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
+--template=/    #use host root dir as template 
+

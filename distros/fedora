@@ -3,6 +3,9 @@ Setup {{{1
 
 https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
+boot parition must be extX formatted and not in LVM
+efi partition may be shared, mount at /boot/efi
+
 
 Minimal Desktop install
 install minimal 

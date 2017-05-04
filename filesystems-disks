@@ -1,12 +1,24 @@
 
 General {{{1
-    MBR
-        512 bytes long, stored at sector 0
-        contains boot loader e.g Grub and partition table (primary & extended but not logical)
-        limitation of 4 primary partitions & 2TB disk
 
-    GPT GUID Partition Table
-        Stores partition info as GUID's (= UUID in Linux) instead of by order
+All modern disks use LBA addressing vs. cylinder-head-sector
+
+legacy MBR
+    512 bytes long, stored at LBA 0
+    contains boot loader e.g Grub and partition table (primary & extended but not logical)
+    limitation of 4 primary partitions & 2TB disk
+
+Protective MBR
+    Feature of GPT disks
+    Occupies space of legacy MBR by writing a special partition type EEh
+    Prevents legacy utilities from overwriting GPT table
+    Indicates to new utilities that disk is GPT.
+
+
+GPT GUID Partition Table
+    Stores partition info as GUID's (= UUID in Linux) instead of by order
+    GPT header is in LBA 1
+    GPT header has a pointer to the partition table, or Partition Entry Array, typically LBA 2
 
 block sizes
     https://wiki.archlinux.org/index.php/Advanced_Format
@@ -32,9 +44,12 @@ Info {{{2
 https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 
-lsblk -f	tree of disks, parts, labels, UUIDs, mount points
+lsblk -f	tree of disks, parts, labels, filesystem UUIDs, mount points
             no partlabel
-blkid		shows UUID's and types
+blkid		shows partition UUID's and types
+
+gdisk       GPT version of fdisk
+cgdisk      GPT version of cfdisk
 
 sfdisk - partition table reporting
     by default uses sectors, not obsolete cylinder etc.
@@ -68,7 +83,15 @@ util-linux: sfdisk, cfdisk, fdisk
     http://karelzak.blogspot.ca/
     share some commands like --wipe
 
-cfdisk
+gdisk, cgdisk
+    like parted/cfdisk for gpt disks
+    change partition labels
+    no lvm info
+    Wipe all partitions
+	gdisk <dev>
+	x, z
+
+cfdisk (obsolete)
 	said (by the fdisk man page) to be reliable and better
 	than fdisk
 	'maximize' option creates incompatibility with Windows?
@@ -85,10 +108,13 @@ sfdisk - partition table reporting
 
 udevadm info -n /dev/sdb -q all
 
-parted (qtparted and nparted on Knoppix)
+parted/gparted
 	can resize ext2 & 3 partitions but start point can't move.
 	gparted can move start point
 	has lost partition rescue feature
+    less reliable than gdisk/cgdisk but is filesystem-aware
+    better to use this only for resizing etc.
+
 
 testdisk
 	haven't tried yet
@@ -97,13 +123,6 @@ testdisk
 blkid		shows UUID's and types
     -po udev <dev>  show partition details
 
-gdisk, cgdisk
-    like parted/cfdisk for gpt disks
-    change partition labels
-    no lvm info
-    Wipe all partitions
-	gdisk <dev>
-	x, z
 
 partx -v -a <disk>
     show paritions with sector info
@@ -160,6 +179,8 @@ findmnt     show mounted filesystems
     --verify 
 
 du 
+    tutorial
+        https://www.rootusers.com/13-du-disk-usage-command-examples-in-linux/
     -hs * | sort -h - sort by human readable size
     -schx /*	shows disk space used by subdirs
 
@@ -171,6 +192,10 @@ Labels {{{2
 e2label / e2fsprogs		for extX
 btrfs filesystem label /dev/XXX <label> 
 swaplabel -L <label> /dev/XXX
+
+In fstab:
+    Get Partition unique GUID with gdisk
+    PARTUUID=8C208C30-4E8F-4096-ACF9-858959BABBAA /data ext4 user,defaults 0 0
 
 
 Attributes {{{2	
@@ -406,6 +431,8 @@ Create
 
 Info
     lvs
+    lvdisplay 
+    lsblk -f    shows tree of vg and lv's
 
 Resize  
     lvextend
@@ -446,7 +473,7 @@ Free space after files in vol deleted
     fstrim -v <mount point>
 
 
-Info / utilities {{{2
+Utilities {{{2
 
 Access LVM on disk from rescue disk
 	vgscan
