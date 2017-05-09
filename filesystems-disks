@@ -79,6 +79,9 @@ dd
    
         dc3dd if=/dev/sda of=/dev/sdb
 
+dd alternatives
+    cat image.iso | pv >/dev/sdb
+
 util-linux: sfdisk, cfdisk, fdisk
     http://karelzak.blogspot.ca/
     share some commands like --wipe
@@ -145,6 +148,10 @@ file for use as loop devices - img
 		qemu-img
 		dd if=/dev/zero of=/home/you/cryptfile bs=1M count=500
         truncate -s 10G lvm.img
+    
+	create file using head
+        head -c 100MB /dev/zero >image.iso
+
 
 	create a device from file
 		losetup <dev> <file>
