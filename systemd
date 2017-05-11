@@ -3,6 +3,9 @@ Docs {{{1
 
 https://fedoramagazine.org/what-is-an-init-system/
 
+Troubleshooting
+https://freedesktop.org/wiki/Software/systemd/Debugging/
+
 Unit Files {{{1
 
 configure system resources such as processes and file system
@@ -51,6 +54,9 @@ start, restart, stop, restart, reload, status <runtime> [service | socket]
 isolate <target name>   
     switch immmediately to other target
     stop all other processes
+
+list-jobs
+    check for stuck jobs 
 
 list-units --type=[target | unit type]  #this is default command
     List running services & their status
@@ -147,29 +153,35 @@ systemd-inhibit <cmd>
 systemd-nspawn {{{1 
 
 -D <dir>  use <dir> as fs root
--M <machine>  boot machine
+-M <machine>  user defined container name
 -b boot
  --ephemeral, -x 
     create snapshot, remove after done
  --template=<dir>
     use fs in dir as template 
 
-Container as service - must be in /var/lib/machines
-systemctl start systemd-nspawn@mycontainer.service
 
-Run container under SELinux
-	semanage fcontext -a -t svirt_sandbox_file_t "/path/to/container(/.*)?"
-	restorecon -R /path/to/container/
+Manage machines {{{2
 
-xhost +local:
-echo $DISPLAY
-export DISPLAY=:0
+Kill within session: Ctrl+ 3*]
 
 
 machinectl
     container must have dbus installed
     login, reboot, poweroff, status <container>
     bind <machinename> <source path> [<dest path in cont>]
+
+Run container under SELinux
+	semanage fcontext -a -t svirt_sandbox_file_t "/path/to/container(/.*)?"
+	restorecon -R /path/to/container/
+
+Containers as services {{{2
+
+https://blog.selectel.com/systemd-containers-introduction-systemd-nspawn/
+
+Container as service - must be in /var/lib/machines
+systemctl start systemd-nspawn@mycontainer.service
+
 
 Networking {{{2
 
