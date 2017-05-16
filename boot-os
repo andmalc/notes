@@ -36,6 +36,11 @@ efibootmgr
         delete it
             -b ID -B
 
+
+Grub with UEFI
+https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
+
+
 Linux Boot  {{{1
 
 Initramfs

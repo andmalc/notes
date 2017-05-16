@@ -3,34 +3,37 @@ Docs {{{1
 
 https://fedoramagazine.org/what-is-an-init-system/
 
-Design
-    uses unit files to configure system resources such as processes and file system
-    starts then monitors services via 'service units'
+Troubleshooting
+https://freedesktop.org/wiki/Software/systemd/Debugging/
 
-    Service units 
-        own processes as shown by systemctl status
-        processes started in cgroups which allow systemd to manage associated proceses together
+Unit Files {{{1
 
-    Target Units
-        used to link other units together to describe a system state
-        units may be services or other targets
-        AllowIsolate =yes option indicates is boot target
-        .wants directory - contains units started with target
-            e.g. /usr/lib/systemd/system/multi-user.target.wants
+configure system resources such as processes and file system
+    
+locations
+    /etc/systemd/system|user
+    /run/systemd/system|user
+    /user/lib/systemd/system|user
+    ~/.local/share/systemd/user/ - for packages installed in home dir
+    ~/.config/systemd/user  
+
+Sections [xxx]
+    Unit & Install sections - only common Options
+    Other sections according to unit type, e.g. [Service] for .service type
 
 
-Unit files 
-    locations
-        /etc/systemd/system|user
-        /run/systemd/system|user
-        /user/lib/systemd/system|user
-        ~/.local/share/systemd/user/ - for packages installed in home dir
-        ~/.config/systemd/user  
+Target Units
+    used to link other units together to describe a system state
+    units may be services or other targets
+    AllowIsolate =yes option indicates is boot target
+    .wants directory - contains units started with target
+        e.g. /usr/lib/systemd/system/multi-user.target.wants
 
-    Sections [xxx]
-        Unit & Install sections - only common Options
-        Other sections according to unit type, e.g. [Service] for .service type
+starts then monitors services via 'service units'
 
+Service units 
+    own processes as shown by systemctl status
+    processes started in cgroups which allow systemd to manage associated proceses together
         
 
 systemctl {{{1
@@ -51,6 +54,9 @@ start, restart, stop, restart, reload, status <runtime> [service | socket]
 isolate <target name>   
     switch immmediately to other target
     stop all other processes
+
+list-jobs
+    check for stuck jobs 
 
 list-units --type=[target | unit type]  #this is default command
     List running services & their status
@@ -84,8 +90,14 @@ systemctl-delta
 edit <unit>
     creates 'override.conf' in /etc/systemd/system/<unit name>
     reloads unit when done
-edit --full <unit>
-    edit unit file
+
+    --full <unit>
+        edits entire unit file
+    --runtime
+        temporary edits lost on reboot
+
+list-unit-files
+
 
 system commands {{{2
 
@@ -141,14 +153,38 @@ systemd-inhibit <cmd>
 systemd-nspawn {{{1 
 
 -D <dir>  use <dir> as fs root
--M <machine>  boot machine
+-M <machine>  user defined container name
 -b boot
  --ephemeral, -x 
     create snapshot, remove after done
  --template=<dir>
     use fs in dir as template 
 
-Networking:
+
+Manage machines {{{2
+
+Kill within session: Ctrl+ 3*]
+
+
+machinectl
+    container must have dbus installed
+    login, reboot, poweroff, status <container>
+    bind <machinename> <source path> [<dest path in cont>]
+
+Run container under SELinux
+	semanage fcontext -a -t svirt_sandbox_file_t "/path/to/container(/.*)?"
+	restorecon -R /path/to/container/
+
+Containers as services {{{2
+
+https://blog.selectel.com/systemd-containers-introduction-systemd-nspawn/
+
+Container as service - must be in /var/lib/machines
+systemctl start systemd-nspawn@mycontainer.service
+
+
+Networking {{{2
+
 --port=<host #>:<cont #>
 	map port in cont. to host
 --network-interface=
@@ -158,23 +194,9 @@ Networking:
 --network-bridge
 	virtual interface, bridged
 
-machinectl
-    container must have dbus installed
-    login, reboot, poweroff, status <container>
-    bind <machinename> <source path> [<dest path in cont>]
+examples {{{2
 
-examples:
-    -xb -D /  #ephemeral snap of root
-     -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
-    --template=/    #use host root dir as template 
+-xb -D /  #ephemeral snap of root
+ -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
+--template=/    #use host root dir as template 
 
-Container as service - must be in /var/lib/machines
-systemctl start systemd-nspawn@mycontainer.service
-
-Run container under SELinux
-	semanage fcontext -a -t svirt_sandbox_file_t "/path/to/container(/.*)?"
-	restorecon -R /path/to/container/
-
-xhost +local:
-echo $DISPLAY
-export DISPLAY=:0
