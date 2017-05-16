@@ -202,8 +202,9 @@ Dnf <options> <command> <args eg. package spec>
         --releasever 23
 
     Commands
-        search  shows & searches by name, description
-        info    shows details
+        autoclean   remove orphans
+        search      shows & searches by name, description
+        info        shows details
         list [<pkg>]
                 show pkg version, repo, if installed or available
                 if no arg, lists installed then avail packages
@@ -253,6 +254,7 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
     repoquery <pkg name | key word>
         search repos for packages
         -l <pkg name>   list files in package
+        --requires <pkg>    show package dependencies
 
 
 
