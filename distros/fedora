@@ -48,7 +48,8 @@ Install
 git vim-enhanced zsh tmux mlocate ncdu stow ranger
 
 Yubikey/U2F support
-pam-2uf
+pam-2uf u2f-hidraw-policy
+
 
 
 Users {{{2

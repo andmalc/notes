@@ -45,8 +45,13 @@ https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 
 lsblk -f	tree of disks, parts, labels, filesystem UUIDs, mount points
-            no partlabel
+            no partlabel, part UUID
+            tree display for lvm lv's
+            run as regular user
+            part of util-linux
+            
 blkid		shows partition UUID's and types
+			preferred for showing contents of block devices
 
 gdisk       GPT version of fdisk
 cgdisk      GPT version of cfdisk
@@ -118,6 +123,7 @@ parted/gparted
     less reliable than gdisk/cgdisk but is filesystem-aware
     better to use this only for resizing etc.
 
+    wipe partition table: mklablel msdos | gpt
 
 testdisk
 	haven't tried yet
@@ -139,44 +145,21 @@ testdisk
 Wipe device
     wipefs -a
 
+Partition types {{{2
 
-Loopback files, images {{{2
+EF00	ESP
+8300	Linux filesystem
+8E00	LVM
 
-
-file for use as loop devices - img
-	create file 
-		qemu-img
-		dd if=/dev/zero of=/home/you/cryptfile bs=1M count=500
-        truncate -s 10G lvm.img
-    
-	create file using head
-        head -c 100MB /dev/zero >image.iso
-
-
-	create a device from file
-		losetup <dev> <file>
-        losetup -f --show lvm.img
-
-
-	mount a partition
-        kpartx  - create device mapper entries for partitions in a device file
-
-		print partition table
-			 fdisk -l -u file.img
-		multiply starting cyclinder number * 512, e.g. 63 * 512 = 32256
-		mount -o loop,offset=32256 image.img mnt	
-
-    create lvm vg in file
-        pvcreate /dev/loop0
-        vgcreate lxc /dev/loop0
-
+   
 
 Filesystems {{{1
 FS Info {{{2
 
 df
 
-findmnt     show mounted filesystems
+findmnt     	show mounted filesystems
+				lsblk -f also shows
     --df/-D     show space used
     --fstab/-s  show only from fstab
     -S <dev>    show on device
@@ -276,7 +259,7 @@ fstab entry
 	LABEL=testbtrfs  /btrfs defaults,subvolid=269 0 0
 
 
-Mounting & Permissions (edit needed) {{{2
+Mounting & Permissions (edit needed) {{{1
 
 mount
 	attaches a filesystem on a device to a point in unix filesystem tree.
@@ -342,6 +325,38 @@ Changing volumes
 		ext2resize - resize offline ext2 fs.
 	LVM
 		pvresize - resize vg on a device
+
+
+
+Mounting & Permissions  {{{1
+
+setfacl -m 'u:andmalc:rwx' /var/lib/machines 
+
+mount
+	attaches a filesystem on a device to a point in unix filesystem tree.
+
+	mount as writable by a user
+		 -o user,dmask=022,fmask=011
+
+allow umounting
+	Running 'exec /bin/sh' eliminates last processes.
+	fuser: show what processes are using which files.
+	cat /proc/mounts
+
+/etc/fstab settings
+	defaults options 
+		rw, suid, dev, exec, auto, nouser, async
+	ownership
+		user & users imply noexec, nosuid, & nodev unless subsequently
+		overriden 
+			e.g. -o user[s],exec,suid
+		"auto, uid=500, gid=100" 
+			take all ownership of files in mounted partition.
+
+	recommended options
+		/		defaults,relatime,errors=remount-ro
+		/home	nodev,nosuid,relatime
+
 
 
 LVM {{{1
@@ -489,34 +504,33 @@ Access LVM on disk from rescue disk
 
 
 
+Loopback files, images {{{1
 
-Mounting & Permissions  {{{1
 
-setfacl -m 'u:andmalc:rwx' /var/lib/machines 
+file for use as loop devices - img
+	create file 
+		qemu-img
+		dd if=/dev/zero of=/home/you/cryptfile bs=1M count=500
+        truncate -s 10G lvm.img
+    
+	create file using head
+        head -c 100MB /dev/zero >image.iso
 
-mount
-	attaches a filesystem on a device to a point in unix filesystem tree.
 
-	mount as writable by a user
-		 -o user,dmask=022,fmask=011
+	create a device from file
+		losetup <dev> <file>
+        losetup -f --show lvm.img
 
-allow umounting
-	Running 'exec /bin/sh' eliminates last processes.
-	fuser: show what processes are using which files.
-	cat /proc/mounts
 
-/etc/fstab settings
-	defaults options 
-		rw, suid, dev, exec, auto, nouser, async
-	ownership
-		user & users imply noexec, nosuid, & nodev unless subsequently
-		overriden 
-			e.g. -o user[s],exec,suid
-		"auto, uid=500, gid=100" 
-			take all ownership of files in mounted partition.
+	mount a partition
+        kpartx  - create device mapper entries for partitions in a device file
 
-	recommended options
-		/		defaults,relatime,errors=remount-ro
-		/home	nodev,nosuid,relatime
+		print partition table
+			 fdisk -l -u file.img
+		multiply starting cyclinder number * 512, e.g. 63 * 512 = 32256
+		mount -o loop,offset=32256 image.img mnt	
 
+    create lvm vg in file
+        pvcreate /dev/loop0
+        vgcreate lxc /dev/loop0
 
