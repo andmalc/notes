@@ -29,3 +29,12 @@ SELinux to permissive mode
 https://maciej.lasyk.info/2016/Dec/16/systemd-231-latest-in-centos-7-thx-to-facebook/
 wget https://copr.fedorainfracloud.org/coprs/jsynacek/systemd-backports-for-centos-7/repo/epel-7/jsynacek-systemd-backports-for-centos-7-epel-7.repo -O /etc/yum.repos.d/jsynacek-systemd-centos-7.repo
 yum update systemd
+
+Yum package management 
+
+Remove old/orphans
+    package_cleanup in yum-utils to remove unused
+    yum autoremove --setopt=clean_requirements_on_remove=1
+
+
+
