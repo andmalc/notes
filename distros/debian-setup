@@ -721,8 +721,9 @@ Check, create and/or adapt the following lines:
 
 /etc/hosts
 
-		127.0.0.1 localhost
-		<permanent IP> <hostname> // 127.0.1.1 <hostname>
+127.0.0.1    localhost.localdomain localhost
+127.0.1.1    my-machine
+
 
 /etc/resolv.conf
 
