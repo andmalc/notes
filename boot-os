@@ -1,4 +1,35 @@
 
+Linux Boot  {{{1
+
+MBR/BIOS
+    System power up
+    BIOS reads first sector on disk, executes code there 
+    Partitioned devices: MBR - 512 bytes
+        MBR contains boot loader & partition table
+        Boot loader usually chains to volume boot record 
+    Non-partitioned device: VBR in first sector
+
+Boot loader loads Linux kernel & initramfs into memory.
+kernel reads initramfs, loads /init from there if present
+init loads disk file system & boots sytem
+
+
+
+Initramfs
+	replaced initrd in kernel 2.6
+    not needed if /usr/ and /etc on same disk as kernel
+    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
+
+
+https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
+
+Init system
+    first process started by kernel
+    starts all daemons etc. required by OS
+    Later starts user services 
+
+
+
 Boot Firmware {{{1
 Coreboot {{{2
 
@@ -27,6 +58,11 @@ Shell
 	Copy into EFI subfolder and create entry with efibootmgr
 	https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#edit
 
+    bcfg boot dump -b
+        page through boot entries
+    bcfg boot mv 3 0
+        move third entries to first/default
+
 efibootmgr
     Entries with ID Boot[hex] - leading 0's not needed i.e. 0004 = 4
     Asterick indicates active 
@@ -52,23 +88,6 @@ efibootmgr
 
 Grub with UEFI
 https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
-
-
-Linux Boot  {{{1
-
-Initramfs
-	replaced initrd in kernel 2.6
-    not needed if /usr/ and /etc on same disk as kernel
-    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
-
-
-https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
-
-Init system
-    first process started by kernel
-    starts all daemons etc. required by OS
-    Later starts user services 
-
 
 
 kernel {{{1

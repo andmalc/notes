@@ -14,13 +14,16 @@ show size with ls -lsh
 Create, manage image files {{{1
 
 Create img/qcow 
+    mkosi
     virt-builder
 
 guestfish shell - from libguestfstools
 
 qemu-img
-    create      Create raw format image file
-                size is virtual, file will be sparse
+    create      
+        Create raw format image file. Size is virtual, file will be sparse
+
+        -b  <fn>    backing file
         -f  format
         -o backing_file=fn
             use base image option to get only differences saved, no size needed
@@ -32,6 +35,7 @@ qemu-img
 
     info
         Size on disk
+    clone
 
     commit
         commit changes to base image or backing file
@@ -41,12 +45,6 @@ qemu-img
         Create img file from block device
             qemu-img convert /dev/blah root.qcow2 -O raw
 
-    snapshot <fn>
-        -a  apply - 
-        -c  create
-        -l  list snapshots in inmage
-        -d  delete ss
-
 
 virt-sparsify
     qcow2 or raw
@@ -54,8 +52,39 @@ virt-sparsify
 virt-resize
     resize disk images
 
+virsh pool-refresh
+
 Backup an image file - size is < 1/3
 	tar c --sparse -f img.bak.tar img.img 
+
+Snapshots/base images {{{1
+
+base_image
+    qemu-img create -f qcow2 -b <base-img> <out-file>
+	base-image is not modified until 'commit' in monitor or 'qemu-image commit fn'
+	may create a new derived image based on existing derived
+
+    Commit changes back to base
+        qemu-img commit clone.img
+    Convert clone to be a base
+        qemu-img convert clone.img -O qcow2 newclone.img
+
+    'commit' in monitor
+
+
+qemu-img snapshot <fn>
+    -a  apply - 
+    -c  create <tag | ss name>
+    -l  list snapshots in inmage
+    -d  delete ss
+
+    run qemu with -snapshot option
+    changes written to temp files
+    write changes to image with 'C-a s'
+	in monitor
+		info snapshots
+		commit (all | device)
+
 
 Booting images {{{1
 
@@ -88,29 +117,6 @@ Usage
 Graphical boot of iso to install on raw disk image
  qemu-system-x86_64  -machine accel=kvm --enable-kvm --cdrom /opt/coreos.iso -boot d  -m 4096 -net nic,model=e1000  -net user,hostfwd=tcp:127.0.0.1:6666-:22 -name coreos -localtime -no-reboot -drive format=raw,file=/opt/coreos.raw
 
-
-
-Snapshots/base images {{{1
-
-base_image
-    qemu-img create -f qcow2 -b <base-img> <out-file>
-	base-image is not modified until 'commit' in monitor or 'qemu-image commit fn'
-	may create a new derived image based on existing derived
-
-    Commit changes back to base
-        qemu-img commit clone.img
-    Convert clone to be a base
-        qemu-img convert clone.img -O qcow2 newclone.img
-
-    'commit' in monitor
-
-snapshot
-    run qemu with -snapshot option
-    changes written to temp files
-    write changes to image with 'C-a s'
-	in monitor
-		info snapshots
-		commit (all | device)
 
 
 console/serial {{{1

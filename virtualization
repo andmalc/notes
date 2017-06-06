@@ -120,9 +120,14 @@ virt-install \
 
 virsh {{{1
 
+Access as non-root
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
+
 virsh --connect qemu:///system <cmd> <guestname>
 	list --all
         list running & inactive domains
+
 
 virt-viewer --connect qemu+ssh://root@play.malcolmson.ca/system demo2
 	start
@@ -130,6 +135,13 @@ virt-viewer --connect qemu+ssh://root@play.malcolmson.ca/system demo2
 	destroy - force shutdown
 	suspend
 	resume
+
+Create new vm from existing domain definition
+alternative to virt-clone
+    virsh dumpxml domain > vm.xml
+    virsh define vm.xml 
+
+
 
 Share host files with guest {{{1
 

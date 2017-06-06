@@ -39,6 +39,36 @@ xargs
         autoload -U zargs
         zargs **/*~ -- rm
 
+Line editing {{{1
+
+Notation:
+	^k = \C=k = control key + k
+	M-k = Meta (usually Alt) key + k
+	ek = Escape + k
+
+Line Editor Key Bindings
+	Default bindings
+		^l	clear screen
+		char
+			^f	move one char forward
+			^b	move one char back
+			^d	delete char to right (also: list completions, log out)
+			BS	delete to left
+		word
+			M-f	word forward
+			M-b	word back
+			^w/M-BS delete word to left
+			M-D	delete word to right
+
+		line
+			^a	beginning of line
+			^e	end of line
+			^u	kill line 
+			^k   kill line to right
+			^U Delete line
+			^Y Yank line back (ie restore)
+
+
 Braces, Parentheses, Brackets {{{1
 
 Parentheses ()
@@ -356,32 +386,6 @@ Command History {{{1
 vim sw=4 foldmethod=marker
 Key Binding {{{1
 
-Notation:
-	^k = \C=k = control key + k
-	M-k = Meta (usually Alt) key + k
-	ek = Escape + k
-
-Line Editor Key Bindings
-	Default bindings
-		^l	clear screen
-		char
-			^f	move one char forward
-			^b	move one char back
-			^d	delete char to right (also: list completions, log out)
-			BS	delete to left
-		word
-			M-f	word forward
-			M-b	word back
-			^w/M-BS delete word to left
-			M-D	delete word to right
-
-		line
-			^a	beginning of line
-			^e	end of line
-			^u	kill line 
-			^k   kill line to right
-			^U Delete line
-			^Y Yank line back (ie restore)
 
 	Changing
 		Modify in .inputrc

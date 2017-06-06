@@ -18,8 +18,8 @@ locations
     ~/.config/systemd/user  
 
 Sections [xxx]
-    Unit & Install sections - only common Options
-    Other sections according to unit type, e.g. [Service] for .service type
+    Unit & Install sections - common options
+    Other sections specific to unit type, e.g. [Service] for .service type
 
 
 Target Units
