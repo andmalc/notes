@@ -1,22 +1,61 @@
-Debian Packages
+
+
+Debian Packages {{{1
     msttcorefonts
     recommended: ttf-bitstream-vera
-Utilities
+
+Utilities {{{1
     x-ttcidfont - what does this do?
     fontconfig, used by xft2, seems to come pre-configured to use defoma's tt fonts.
     xfontsel
         view available fonts
 
-
-utilities
 	fontconfig
 		current font util for Gnome & KDE
 		used by freetype2 and Xft2
-	fc-cache -fv	recache & display fonts
+	
+    fc-cache -fv	recache & display fonts
 
-files
-	/etc/fonts/local.conf
-		
+Files {{{1
+
+/etc/fonts/local.conf
+
+Sample local.conf for Bitstream Vera
+https://www.gnome.org/fonts/
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<!-- /etc/fonts.conf file to configure system font access -->
+<fontconfig>
+        <!--  Enable sub-pixel rendering
+        <match target="font">
+                <test qual="all" name="rgba">
+                        <const>unknown</const>
+                </test>
+                <edit name="rgba" mode="assign"><const>rgb</const></edit>
+        </match>
+         -->
+
+        <alias>
+                <family>serif</family>
+                <prefer>
+                        <family>Bitstream Vera Serif</family>
+                </prefer>
+        </alias>
+        <alias>
+                <family>sans-serif</family>
+                <prefer>
+                        <family>Bitstream Vera Sans</family>
+                </prefer>
+        </alias>
+        <alias>
+                <family>monospace</family>
+                <prefer>
+                        <family>Bitstream Vera Sans Mono</family>
+                </prefer>
+        </alias>
+</fontconfig>
+
 Fonts General
 	Major font types: Type1 & TrueType.  Type1 well supported on Linux because historically associated with PostScript printing.  TrueType not as well supported but desirable because of their superior hinting.  Hinting is important for display on low resolution devices such as screens.
 
