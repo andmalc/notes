@@ -6,6 +6,8 @@ adduser {{{1
 high level tool, depends on perl
 package shadow-utils
 
+Fedora: adduser is symlink to useradd
+
 adduser -g wheel -m andmalc
 
 adduser <username> <groupname>

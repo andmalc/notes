@@ -1,4 +1,16 @@
+Rescue {{{1
+
+kernel command line
+    remove rhgbi quiet
+    systemd.unit=rescue.target or 1 
+
 Systemd-Boot {{{1
+
+esp/loader/loader.conf
+
+default  arch
+timeout  4
+editor   0
 
 
 Boot Entries:
@@ -32,6 +44,10 @@ Grub_install --target-x86_64_efi /dev/sda" then copy the grubx64.efi to EFI/BOOT
 
 Do not use grub2-install on UEFI system!
 
+Update grub config
+grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
+/etc/grub2-efi.cfg is symlink 
 
 Missing efi bootloader files: reinstall Grub
     dnf reinstall grub2-efi grub2-efi-modules shim
