@@ -81,3 +81,18 @@ https://github.com/jiahaog/nativefier
 npm install nativefier [-g]
     w/o -g installs into current dir 
 
+Network {{{1
+
+nftables simple firewall
+
+Security {{{1
+
+
+Yubikey
+
+Install Fedora packages: pam_yubico u2f-hidraw-policy
+udevadm trigger
+
+
+
+

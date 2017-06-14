@@ -48,4 +48,33 @@ Phones {{{1
 Nexus 5
 OpenGapps - install ARM version, Micro size fits, Mini size?
 
+Filesystem {{{1
+
+fs is ext4 so cannot be mounted by Windows
+MTP is newer protocol and used instead.
+
+/               root fs
+/sdcard         shortcut to /data/media/0
+/data           ext4 partition
+                caches & misc sys folders
+/data/media     TW backups
+/data/media/0   0 is first Android user, 10 is next
+                apps folders, Downloads, Pictures 
+                Removed by stock factory reset
+                
+                
+Factory reset 
+from within custom ROM is done by TW
+Normaly only wipe needed
+/data/media preserved by standard TW wipe unless 'Format Data' 
+wipes caches too
+Do when switching ROMs but not when upgrading
+
+
+Backups
+Default options: system, data, and boot
+Also backup efs or System Image if avaiable for complete system restore, e.g. return to stock, but do not restore these unless known necessary as risk of bricking.
+
+
+
 

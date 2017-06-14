@@ -1,4 +1,27 @@
 
+console 
+    provides a way for the kernel and other processes to send text output to the user, and to receive text input from the user. 
+    user typically enters text with a computer keyboard and reads the output text on a computer monitor
+
+Linux system console 
+    internal to the Linux kernel
+    the device which receives all kernel messages and warnings and which allows logins in single user mode
+
+    two main implementations, differ in how to draw characters
+        legacy text mode
+            works with VGA and previous video types
+        current framebuffer
+            graphic hardware-independent abstraction layer
+            able to show graphics, eg logos while booting
+
+virtual consoles 
+    consoles that are logically separate, but which access the same physical keyboard and display
+    created after boot complete, each runs a getty process which runs /bin/login
+
+terminal emulator
+    program that emulates a video terminal within some other display architecture
+
+
 Job Control
 	suspend command puts shell in background, but can't suspend a login shell
 

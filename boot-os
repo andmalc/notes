@@ -1,4 +1,35 @@
 
+Linux Boot  {{{1
+
+MBR/BIOS
+    System power up
+    BIOS reads first sector on disk, executes code there 
+    Partitioned devices: MBR - 512 bytes
+        MBR contains boot loader & partition table
+        Boot loader usually chains to volume boot record 
+    Non-partitioned device: VBR in first sector
+
+Boot loader loads Linux kernel & initramfs into memory.
+kernel reads initramfs, loads /init from there if present
+init loads disk file system & boots sytem
+
+
+
+Initramfs
+	replaced initrd in kernel 2.6
+    not needed if /usr/ and /etc on same disk as kernel
+    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
+
+
+https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
+
+Init system
+    first process started by kernel
+    starts all daemons etc. required by OS
+    Later starts user services 
+
+
+
 Boot Firmware {{{1
 Coreboot {{{2
 
@@ -22,35 +53,41 @@ If fails starts Default Boot Behavior process:
     fallback.efi looks for files *.csv in directories other than BOOT, uses content to create new Boot entires pointing to same disk as fallback.efi was lauched from.
 
 
+Shell
+	Shell.efi from edk2 package
+	Copy into EFI subfolder and create entry with efibootmgr
+	https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#edit
+
+    bcfg boot dump -b
+        page through boot entries
+    bcfg boot mv 3 0
+        move third entries to first/default
 
 efibootmgr
     Entries with ID Boot[hex] - leading 0's not needed i.e. 0004 = 4
     Asterick indicates active 
+    -c  create entry
+    -d  disk containing loader, defaults to /dev/sda
+    -l  loader, e.g. elilo.efi
+    -L  label for boot manager display
     -o  set boot order ID,ID etc.
     -n  set boot order or next boot only
+    -p  parition containing bootloader - default 1
     -b  modify item 
     -v  show UUIDs etc.
+    -u  unicode command line arguments, e.g root=/dev/xxx
     
     Delete items
         first reset order without item to be deleted
         delete it
             -b ID -B
 
-Linux Boot  {{{1
+	Boot entry
+	https://wiki.archlinux.org/index.php/EFISTUB
+	efibootmgr -d /dev/sda -p 1 -c -L "Slackware" -l \\EFI\Slackware\\kernel-generic -u "root=/dev/sdZ rw initrd=/EFI/Slackware/initrd.gz"
 
-Initramfs
-	replaced initrd in kernel 2.6
-    not needed if /usr/ and /etc on same disk as kernel
-    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
-
-
-https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
-
-Init system
-    first process started by kernel
-    starts all daemons etc. required by OS
-    Later starts user services 
-
+Grub with UEFI
+https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
 
 
 kernel {{{1
