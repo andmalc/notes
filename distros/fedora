@@ -264,6 +264,17 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
 
 Repos {{{1
 
+
+dnf repo management
+    repolist [all]
+        list enabled [all] repos
+
+    config-manager 
+        --set-enabled repo
+        --set-disabled repo
+
+Release management {{{1
+
 Repo files in /etc/yum.d
     fedora-release-rawhide
     fedora-updates-testing 
@@ -275,15 +286,6 @@ Install from specific release:
     dnf --enablerepo=fedora-23 update systemd
 
 dnf system-upgrade download --refresh --releasever=24 --allowerasing
-
-dnf repo management
-    repolist [all]
-        list enabled [all] repos
-
-config-manager 
-	--set-enabled repo
-	--set-disabled repo
-
 Return to stable:
     disable testing/rawhide repos
     dnf distro-sync

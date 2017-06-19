@@ -1,3 +1,20 @@
+
+Show drivers in use:
+    lspci -nnk
+
+
+Sysfs - introduced by kernel 2.6
+
+Show list of options
+    modinfo -p i915
+
+Show options in effect
+    systool -m i915 -av
+
+Configure options
+    /etc/modprobe.d/i915.conf
+    options i915 enable_rc6=1 enable_fbc=1 semaphores=1
+
 Drivice Driver Modules
     All hardware identified by device files.  3 types:
         Character - can handle data one character at a time, e.g. modems
@@ -41,7 +58,6 @@ module config as done by update-modules
 	modules aliases in modprobe.conf/modules.conf
 		alias device_file  common_name
 		Debian: generated from list of modules in /etc/modules by update-modles	
-** OLD **	
 
 Hardware Monitor & Conifg
 	View interrups use

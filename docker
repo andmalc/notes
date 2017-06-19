@@ -10,11 +10,14 @@ final arg is directory containing Dockerfle
 -t		tag, 'andmalc/blah'
 
 run {{{2
+docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+
+options
 
 -d      daemonize/run in background
+--name  name cont.
 --entrypoint    override default command
 -i      interactive
---name  name cont.
 -P      auto map ports in container to host
 
 -p		publish 
@@ -42,11 +45,16 @@ commit      create image from container
 
 
 Container commands {{{2
+
+start       
 attach      attach to a running container
-^p^q		detach from shell without stopping container
-ps          show running containers
-    -l      last container created/started
-    -a      all containers including stopped
+
+cp          copy file into cont
+            docker cp /tmp/test_file docker_container_1:/tmp/
+
+exec        run cmd without attaching
+            docker exec docker_container_1 ps ax
+
 export      export to tar file
 inspect     show container info
 logs <cid>  show standard output
@@ -55,8 +63,13 @@ rm          remove stopped cont.
 stop        stop container
 top         show processes running in cont.
 port <cid> <port#>  show host port for cont. port
+stats       realtime container resource usage
 
 
+^p^q		detach from shell without stopping container
+ps          show running containers
+    -l      last container created/started
+    -a      all containers including stopped
 
 Examples {{{1
 

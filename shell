@@ -376,6 +376,8 @@ Command History {{{1
 		-e vi n	edit in vi command n
 		-s [pat=rep] [cmd] reexecute cmd after substitutions
 
+        fc -ln  -m 'pat*' -100 
+            list commands starting with pat, no line numbers
 
 	M-.     insert last arg at insertion point
 
@@ -383,7 +385,6 @@ Command History {{{1
 
 
 
-vim sw=4 foldmethod=marker
 Key Binding {{{1
 
 

@@ -38,6 +38,45 @@ block sizes
     make 4k fs
         mkfs.ext4 -F -b 4096 
 
+Partition types 
+
+EF00	ESP
+8300	Linux filesystem
+8E00	LVM
+
+Loopback files, images {{{1
+
+
+file for use as loop devices - img
+	create file 
+		qemu-img
+		dd if=/dev/zero of=/home/you/cryptfile bs=1M count=500
+        truncate -s 10G lvm.img
+    
+	create file using head
+        head -c 100MB /dev/zero >image.iso
+
+
+	create a device from file
+		losetup <dev> <file>
+        losetup -f --show lvm.img
+        or use qemu-img convert
+
+
+	mount a partition
+        kpartx  - create device mapper entries for partitions in a device file
+
+		print partition table
+			 fdisk -l -u file.img
+		multiply starting cyclinder number * 512, e.g. 63 * 512 = 32256
+		mount -o loop,offset=32256 image.img mnt	
+
+    create lvm vg in file
+        pvcreate /dev/loop0
+        vgcreate lxc /dev/loop0
+
+Sparseify raw image file
+    cp --sparse=always 
 Block devices, Disks, Partitions {{{1
 Info {{{2
 
@@ -144,12 +183,6 @@ testdisk
 
 Wipe device
     wipefs -a
-
-Partition types {{{2
-
-EF00	ESP
-8300	Linux filesystem
-8E00	LVM
 
    
 
@@ -503,34 +536,4 @@ Access LVM on disk from rescue disk
 
 
 
-
-Loopback files, images {{{1
-
-
-file for use as loop devices - img
-	create file 
-		qemu-img
-		dd if=/dev/zero of=/home/you/cryptfile bs=1M count=500
-        truncate -s 10G lvm.img
-    
-	create file using head
-        head -c 100MB /dev/zero >image.iso
-
-
-	create a device from file
-		losetup <dev> <file>
-        losetup -f --show lvm.img
-
-
-	mount a partition
-        kpartx  - create device mapper entries for partitions in a device file
-
-		print partition table
-			 fdisk -l -u file.img
-		multiply starting cyclinder number * 512, e.g. 63 * 512 = 32256
-		mount -o loop,offset=32256 image.img mnt	
-
-    create lvm vg in file
-        pvcreate /dev/loop0
-        vgcreate lxc /dev/loop0
 

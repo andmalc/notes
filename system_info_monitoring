@@ -47,22 +47,39 @@ PRIORITY=3
 _UID=1000
 _SYSTEMD_UNIT
 
-Manage {{{2
+Manage Logs {{{2
 
 log
 --disk-usage    show size
 --vacuum-size=1G
 --vacuum-time=1year
 
-Config {{{2
-
 /etc/systemd/journald.conf
 SystemMaxUse=   max disk usage
 
 
 
+Processes {{{1
 
-Utilites {{{1
+ps  process snapshot 
+    Processes in [[ ]] have been swaped out due to inactivity
+    Status Codes: S - sleeping, R - running
+
+    axfww   show process tree 
+    -ef     flat output for greping
+
+System Info {{{1
+
+uname - processor type, kernel type etc
+
+
+kernel boot messages
+    dmesg	
+
+Virtual Memory
+    view all memory usage with 'cat /proc/meminfo'
+
+Other {{{1
 
 journal-brief
     http://cyberelk.net/tim/2015/10/19/journal-brief/
@@ -71,20 +88,4 @@ journal-brief
 Monitor log 
 	tail -f		Monitor growth of a log file
 	tailf		same, but wait for log activity to write to the file (avoids disk spin up on laptops)
-
-Display System Info: 
-    uname - processor type, kernel type etc
-
-
-Prints kernel boot messages
-    dmesg	
-
-ps  process snapshot 
-    Processes in [[ ]] have been swaped out due to inactivity
-    Status Codes: S - sleeping, R - running
-
-    -ef     flat output for greping
-
-Virtual Memory
-    view all memory usage with 'cat /proc/meminfo'
 

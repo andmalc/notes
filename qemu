@@ -39,7 +39,9 @@ qemu-img
 
     commit
         commit changes to base image or backing file
-    convert     convert an image file to a block device => big files
+    convert     
+        convert an image file to a block device => big files
+        auto sparsifies
         qemu-img convert root.qcow2 -O raw /dev/sdb
 
         Create img file from block device
@@ -47,6 +49,7 @@ qemu-img
 
 
 virt-sparsify
+    reduce file size after files deleted
     qcow2 or raw
 
 virt-resize

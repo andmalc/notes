@@ -46,23 +46,23 @@ ip address - protocol address management
 	add
 		ip addr add 192.168.1.1/24 dev eth0
 	del
-	show,list,ls,l
-
-ip a | addr
-    show interfaces, address, nic info
-
-ip a add <ip address>/<netmask> <device>
-    config a NIC
-
-
-ip a del dev <device>
-
-ip tunnel
+        ip a del dev <device>
+	show
+        ip a s dev eth0
+    
+    list,ls,l
 
 ip link
 	set, s
-        dev [interface] up/down
-		name <new name>
+        dev [interface] 
+            up/down
+            name <new name>
+
+ip route
+    show
+        ip r s 
+
+ip tunnel
 
 
 ip n | neighbour

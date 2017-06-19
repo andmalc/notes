@@ -1,20 +1,6 @@
 
 Modify user and groups 
 
-adduser {{{1
-
-high level tool, depends on perl
-package shadow-utils
-
-Fedora: adduser is symlink to useradd
-
-adduser -g wheel -m andmalc
-
-adduser <username> <groupname>
-	add user to group <groupname>
-addgroup
-
-
 user* {{{1
 
 useradd, usermod, userdel, groupdel
@@ -28,6 +14,20 @@ usermod -aG <comma sep groupnames> user
 
 usermod -s <shell path>
     change shell
+
+adduser {{{1
+
+high level tool, depends on perl
+package shadow-utils
+Fedora: adduser is symlink to useradd
+
+
+adduser -g wheel -m andmalc
+
+adduser <username> <groupname>
+	add user to group <groupname>
+addgroup
+
 
 Other utils {{{1
 
