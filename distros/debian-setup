@@ -1,4 +1,11 @@
 
+Add 32bit support
+sudo dpkg --add-architecture i386 
+
+install deb with dependencies
+    gdebi  
+    install deb then apt-get install -f 
+
 Installation {{{1
 Sources {{{2
 
