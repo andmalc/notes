@@ -1,5 +1,9 @@
 
 
+Locale bug
+localedef -i en_US -f UTF-8 en_US.UTF-8
+
+
 Repos:
 
 EPEL - extra packages
@@ -13,13 +17,24 @@ CR (testing)
 
 
 Install DNF
-Vhttp://dnf.baseurl.org/2016/07/01/fresh-dnf-for-rhel-7-and-centos-7/
+    Enable EPEL
+    yum install dnf -y
 
 Enable EPEL and install Python3
 https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-centos-7
 
 
-Systemd 231
+Systemd 233
+SELinux to permissive mode
 https://maciej.lasyk.info/2016/Dec/16/systemd-231-latest-in-centos-7-thx-to-facebook/
 wget https://copr.fedorainfracloud.org/coprs/jsynacek/systemd-backports-for-centos-7/repo/epel-7/jsynacek-systemd-backports-for-centos-7-epel-7.repo -O /etc/yum.repos.d/jsynacek-systemd-centos-7.repo
 yum update systemd
+
+Yum package management 
+
+Remove old/orphans
+    package_cleanup in yum-utils to remove unused
+    yum autoremove --setopt=clean_requirements_on_remove=1
+
+
+

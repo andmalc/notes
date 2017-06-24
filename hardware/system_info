@@ -1,9 +1,0 @@
-
-lspci
-
-lsusb
-
-lscpu
-
-
-libinput list-devices
