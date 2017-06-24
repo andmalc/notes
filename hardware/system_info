@@ -6,3 +6,4 @@ lsusb
 lscpu
 
 
+libinput list-devices
