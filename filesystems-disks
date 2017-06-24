@@ -433,11 +433,15 @@ Info
     pvdisplay --maps
         shows physical layout of volume
 
-    pvremove
+    blkid
+        shows lv's including thin plus mount points
 
-	pvscan
-	vgscan
 	fdisk -l    shows lv sizes
+
+pvremove
+
+pvscan
+vgscan
 
 pvresize - resize vg on a device
 
@@ -485,8 +489,8 @@ Create
             -V --virtualsize    
 
 Info
-    lvs
-    lvdisplay 
+    lvs         shows snapshot space
+    lvdisplay   does not show snapshot space
     lsblk -f    shows tree of vg and lv's
 
 Resize  
