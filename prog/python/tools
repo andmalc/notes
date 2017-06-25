@@ -1,41 +1,47 @@
+
+Pip {{{1
+
+http://pypi.python.org/pypi/pip
+replaces easy_install
+Installed as dep of python-virtualenv and pip is installed into a virtualenv
+Install
+    Debian package, as root: 
+        Deb package python-pip then upgrade with sudo pip install pip --upgrade
+    No Debian, no root:
+        Must start with setuptools installed
+             curl http://python-distribute.org/distribute_setup.py | python
+        Install pip as part of virtualenv & only avail inside of a virtualenv
+            curl -O https://raw.github.com/pypa/virtualenv/master/virtualenv.py
+        Run
+            python virtualenv.py my_new_env
+        
+config:
+    automatically use current ENV
+        export PIP_RESPECT_VIRTUALENV=true
+    only run in virtualenv
+        export PIP_REQUIRE_VIRTUALENV=true
+installing packages
+    If python is local, will install to .local or use --user
+    Install to virtualenv -E
+
+Venv - Py3 {{{1
+
+python3 -m venv <env name>
+. <env name>/bin/activate
+deactivate
+
+
+Virtualenv {{{1
+
+Changes $PATH to include ENV/bin
+Changes module site.py to add module search path add ENV/lib/python-x.x/site-packages
+Newly installed modules go there too.
+
 Local Install 
 	http://forcecarrier.wordpress.com/2013/07/26/installing-pip-virutalenv-in-sudo-free-way/
 	wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
 	curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 	pip install --user virtualenv
-
-
-Pip
-	http://pypi.python.org/pypi/pip
-	replaces easy_install
-	Installed as dep of python-virtualenv and pip is installed into a virtualenv
-	Install
-		Debian package, as root: 
-			Deb package python-pip then upgrade with sudo pip install pip --upgrade
-		No Debian, no root:
-			Must start with setuptools installed
-				 curl http://python-distribute.org/distribute_setup.py | python
-			Install pip as part of virtualenv & only avail inside of a virtualenv
-				curl -O https://raw.github.com/pypa/virtualenv/master/virtualenv.py
-			Run
-				python virtualenv.py my_new_env
-			
-	config:
-		automatically use current ENV
-			export PIP_RESPECT_VIRTUALENV=true
-		only run in virtualenv
-			export PIP_REQUIRE_VIRTUALENV=true
-	installing packages
-		If python is local, will install to .local or use --user
-		Install to virtualenv -E
-	
-Virtualenv
-	Changes $PATH to include ENV/bin
-	Changes module site.py to add module search path add ENV/lib/python-x.x/site-packages
-	Newly installed modules go there too.
-
-virtualenvwrapper
-http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html
 
 	
 config:
@@ -64,23 +70,11 @@ Commands
 	mkproject 
 	setvirtualenvproject - set existing directory to project dir
 
-Pythonbrew
-	http://www.ken-far.com/2013/03/installing-python-with-pythonbrew.html#more
-	Build Dependencies libreadline-dev libncurses5-dev libssl-dev zlib1g-dev libbz2-dev libsqlite3-dev
+virtualenvwrapper  {{{1
 
-supervisor
-	auto-start programs, like sys-v-init
+http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html
 
-web test
-	http://blog.ianbicking.org/2010/04/02/webtest-http-testing/
+Pythonbrew {{{1
 
-Vim
-	http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
-
-	https://www.ryanleaf.org/index.php/2015/10/22/getting-you-complete-me-ycm-to-work-on-fedora-22/
-
-
-Data mining including record linkage
-	http://datamining.anu.edu.au/projects/linkage.html#prototype_software
-
-
+http://www.ken-far.com/2013/03/installing-python-with-pythonbrew.html#more
+Build Dependencies libreadline-dev libncurses5-dev libssl-dev zlib1g-dev libbz2-dev libsqlite3-dev

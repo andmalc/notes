@@ -1,9 +1,15 @@
-Fugitive
-http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
+Fugitive http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
+
+https://orga.cat/posts/most-useful-git-commands
+
+Options {{{1
+
+--no-pager
 
 Terms {{{1
 
 Repo is set of commits
+
 Commit:
     pointer to a tree obj which is snapshot of all files & dirs
     author & commiter info
@@ -15,14 +21,32 @@ Refs
     Symbolic - points to another ref
 
 Branch
-    movable pointer (simple ref) to tip (newest) commit 
+    movable pointer (simple ref) to tip (newest) commit of collection of commits
     branch moved forward on each commit
 
-HEAD 
-    usually symbolic ref - 
-    refers to tip of current local branch.  
-    Detatched if is simple ref.
-    Checking out branch moves this pointer.  
+    Master      default name of first branch
+    HEAD        Normally symbolic ref to /refs/heads/<branch name>
+                This defines which branch is on
+                If earlier commit checked out, is hard link to commit ID.
+                Then in detached HEAD mode, not on branch
+
+    HEAD 
+        usually symbolic ref - 
+        refers to tip of current local branch.  
+        Detatched if is simple ref.
+        Checking out branch moves this pointer.  
+
+Checkout cid
+    Change the HEAD symref to point to the new  branch 
+    Reset the index to match the tip of the new branch 
+    If branch given, modified files in working dir retained unless forced -f 
+    If no branch name, update the working tree to match the index
+
+origin      
+    default name of remote branch
+    remote branches locally referred to as origin/branch_name
+    Can then c/o with 'co <name>'.  Remote is 'upstream'
+    origin/master = refs/remotes/origin/master
 
 Index 
     includes snapshot of all files, not just staged.
@@ -34,7 +58,8 @@ Merge commits  multiple parents
 
 
 Repos {{{1
-Create new repo with remote at BB
+
+Example: create new repo with remote at BB
 	git init <dir>
 	git add . 
 	git commit -m 'comment'
@@ -45,16 +70,11 @@ Create new repo with remote at BB
 	git commit -a  #all changes in working directory
 	git push -u origin master
 
-Remote repos
-origin      default name of remote branch
-            remote branches locally referred to as origin/branch_name
-            Can then c/o with 'co <name>'.  Remote is 'upstream'
-
 remote 
-    show origin  
+    -v          show origin details
     add         <remote add <name> <url>
     fetch		pull remote changes to remote tracking branch
-    clone		create new local repo, remote tracking branch is auto-created
+    clone		create local repo, remote tracking branch auto-created
     pull		pull remote changes to remote tracking branch 
                     and start merge = fetch+merge
     set-url <name> <new URL>
@@ -72,21 +92,30 @@ Status
 					Red is changed or untracked
                     Green is staged
 
+cid = <commit ID or branch name>
 
 Diff - shows changes to working tree
+    cid [cid] [filename]
+
 	no arg			changes to tracked files not staged
 	--cached		changes staged
 	--staged		same as --cached
     HEAD            staged vs. current commit
 
-	<branch> <remote name>/<branch>
+    cid             changes to tracked + newly tracked vs. cid
+    cid cid         changes to tracked + newly tracked vs. cid
 	HEAD\^ HEAD		show diffs between last two commits
 					prefix noglob in zsh for no ^ escape needed
-	difftool			show diff in vim etc.
-
+    
+    diff for single file
+    cid fn
     origin/master:./ -- <filename>
-    A1234B:./ -- <filename>
-                    diff for single file
+    A1234B:./ -- <filename> 
+
+difftool			show diff in vim etc.
+
+show [cid]
+    show last changes or in cid 
 
 
 Log - shows commit history
@@ -125,7 +154,8 @@ Reverting / Resetting {{{1
 https://www.atlassian.com/git/tutorials/undoing-changes
 
 revert <commit>
-    Generate a new commit that undoes changes in <commit>, applies that to the current branch.    
+    generate a new commit that undoes changes in <commit> 
+    applies that to the current branch.    
     Preferred over Reset because preserves history
 
     revert HEAD~1
@@ -133,27 +163,28 @@ revert <commit>
 
 
 Reset
-    Usually used to undo changes in staging and working dir.  Not for shared commits
-    Permanent undo - potential to lose work
-
 	reset				Unstages all, no effect on files 
-	reset --hard <commit>	unstages, reverts changes in working dir
-	reset -- <path>		unstages <path>
 	reset -p			unstage interactively
-	
-	rebase	?	 
+   
+    Undo last commit, preserving local changes
+        reset --soft HEAD~1
+    Undo last commit, preserving local changes in index
+        git reset --mixed HEAD~1
+    Reset the index and working tree to the desired tree
+        reset --hard <commit>
+        # Move the branch pointer back to the previous HEAD
+        git reset --soft HEAD@{1}
+        git commit -m "Revert to 56e05fced"
+    Undo non-pushed commits
+        git reset origin/master
+    Reset to remote state
+        git fetch origin
+        git reset --hard origin/master
 
-Restore one file from earlier commit.  WD is altered.
-	checkout <commit ID> <file path>
+    Reset/Restore one file from earlier commit
+	    checkout <commit ID> <file path>
 
 Branches {{{1
-
-Branch          collection of commits, all points reachable from named commit
-Master          default name of first branch
-HEAD            Normally symbolic ref to /refs/heads/<branch name>
-                This defines which branch is on
-                If earlier commit checked out, is hard link to commit ID.
-                Then in detached HEAD mode, not on branch
 
 
 branch 
@@ -163,7 +194,16 @@ branch
     -d  delete <branch>
     -rd delete remote <remote>/<branch>
 
-    <name>	create new branch but don't switch to it	    	   
+<branch name> [cid]	
+    create new branch from current or other commit 
+    doesn't switch to it	    	   
+
+create new branch <name> and switch to it
+    checkout -b <name>	
+
+create new branch tracking remote and switch to it
+    checkout -b <name> origin/name
+
 
 Set upstream branch
     branch -b <branchname> --track origin/<remote b name>
@@ -172,17 +212,6 @@ Set upstream branch
 show-branch show all changes in branch
 
 
-Checkout:
-    Change the HEAD symref to point to the new  branch 
-    Reset the index to match the tip of the new branch 
-    If branch given, modified files in working dir retained unless forced -f 
-    If no branch name, update the working tree to match the index
-
-create new branch <name> and switch to it
-    checkout -b <name>	
-
-create new branch tracking remote and switch to it
-    checkout -b <name> origin/name
 
 git symbolic-ref HEAD
 

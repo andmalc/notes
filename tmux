@@ -81,4 +81,10 @@ Session Managers {{{1
 tmuxp
 http://tmuxp.git-pull.com
 
+Plugins {{{1
 
+tpm manager
+    prefix + I/U  install/update plugins
+
+    tmux-resurrect
+        prefix + Ctrl-s/r   save/restore
