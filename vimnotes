@@ -18,13 +18,16 @@ $VIMRUNTIME + ~/.vim, $VIM/vimfiles etc.
 
 Debian standard for 3rd party plugins is /usr/share/vim/addons
 				
-modelines
+modeline
+    default on
     modeline must be set and modelines => 0 to be enabled
     syntax
-            [text<white>]{vi:|vim:|ex:}[white]{options}
+            [text]<white>]{vi:|vim:|ex:}[white]{options}
             WS before vim is required if text before.
     options
             list of option settings separated with ws or ':'
+    examples
+            vim:ts=4
             " vim:ts=4 sw=4
             /* vim:set ai et sts=2 sw=2 tw=80: */   #this format when comment needs closing 
 
@@ -166,56 +169,6 @@ Folding {{{1
 				zo to open it
 				zO to open it all the way
 				zr/R	reduce 1/reduce all folding
-Edit Modes {{{1
-
-Entering Insert mode
-	i				Insert- enter text before cursor
-	I				insert text before first non-blank in line
-	a,A				Append, as for i 
-	o				Open line below
-	O				Open line above
-	gI				insert text at column 1
-
-Insert mode keys
-	go to normal mode
-		c-[, c-c	 
-	C-w		delete word left
-	C-T,D	Insert, delete 1 shiftwidth indent
-	End				go to cursor after last char in line
-	Home	go to cursor to first char in line
-	0 CTRL-D		  delete all indent in the current line
-	^ CTRL-D		  delete all indent in the current line, restore in next line
-	C-V    Insert next non-digit literally
-	C-O		Next one keystroke in normal mode
-
-registers
-	Insert (paste) register n
-		C-R"n
-		C-R C-A/C-W				insert word/Word under cursor
-	let @a=" ... " - assign to a register (help 'let-@')
-
-Selecting Text
-	v				start Vndmalc@gmail.comisual mode per character
-	V				.. by line
-	^V				.. by block
-	^o^v	blockwise, from insert mode
-
-Special Inserts:
-	:[n]r[ead] fn	insert file to line n or at current line
-	:r! cmd			insert so from cmd below
-
-Replace mode:
-	gR			replaces blank areas.
-	r        replace character under
-	R        Enter Replace mode
-
-
-Run commands in other modes
-	Single Command mode
-		Ctrl-O	Enter a command and return to insert mode.
-	To run normal or command mode commands from Insert Mode, enter: 
-		ctrl+v[Escape key]:command
-
 Lookups & Word Completion {{{1
 
 :help ins-completion
@@ -276,7 +229,53 @@ Tags & Jumps
 	*/#	to next/prev word under cursor
 
 
-Editing {{{1
+Edit Modes {{{1
+
+Entering Insert mode
+	i				Insert- enter text before cursor
+	I				insert text before first non-blank in line
+	a,A				Append, as for i 
+	o				Open line below
+	O				Open line above
+	gI				insert text at column 1
+
+go to normal mode
+    c-[, c-c	 
+
+Run commands in other modes
+	Single Command mode
+		Ctrl-O	Enter a command and return to insert mode.
+	To run normal or command mode commands from Insert Mode, enter: 
+		ctrl+v[Escape key]:command
+
+
+Insert mode {{{2
+
+movement
+	End				go to cursor after last char in line
+	Home	go to cursor to first char in line
+
+edit
+	C-w		delete word left
+
+indents
+	C-T,D	Insert, delete 1 shiftwidth indent
+	0 CTRL-D		  delete all indent in the current line
+	^ CTRL-D		  delete all indent in the current line, restore in next line
+
+?
+	C-V    Insert next non-digit literally
+	C-O		Next one keystroke in normal mode
+
+registers
+	Insert (paste) register n
+		C-R"n
+		C-R C-A/C-W				insert word/Word under cursor
+	let @a=" ... " - assign to a register (help 'let-@')
+
+
+
+
 Normal mode {{{2
 Deleting
 	[x]x		Delete [x] characters under and after the cursor
@@ -317,6 +316,11 @@ Changing
 		gU<motion>		Make motion text upper case
 		guu/gUU			Make line lower/upper case
 
+Replace mode:
+	gR			replaces blank areas.
+	r        replace character under
+	R        Enter Replace mode
+
 Copying and Moving
 		syntax: reg/visual block, y or d, motion
 		yy, Y			yank whole line
@@ -327,6 +331,13 @@ Copying and Moving
 
 Elevate permission to root while editing
 	:w !sudo tee %
+
+Selecting Text
+	v				start Vndmalc@gmail.comisual mode per character
+	V				.. by line
+	^V				.. by block
+	^o^v	blockwise, from insert mode
+
 
 Command mode {{{2
 
@@ -348,6 +359,10 @@ Foolproof paste
 	:r! cat 
 	Ctrl-v
 	Ctrl-d
+
+Special Inserts:
+	:[n]r[ead] fn	insert file to line n or at current line
+	:r! cmd			insert so from cmd below
 
 
 
@@ -734,3 +749,4 @@ Display:
 
 
 
+vim:ts=4 sw=4 ft=

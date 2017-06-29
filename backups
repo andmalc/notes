@@ -1,25 +1,27 @@
+
+dd & gzip
+sudo dd bs=4M if=/dev/sdb | gzip > rasbian.img.gz
+gunzip --stdout rasbian.img.gz | sudo dd bs=4M of=/dev/sdb
+
+
+Tar output & input {{{1
+
 Archiveless tar copy
-	(cd dir1 && tar cf - . ) | (cd dir2 && tar xvfp -) 
+    (cd dir1 && tar cf - . ) | (cd dir2 && tar xvfp -) 
 
 Same with cpio (faster?)
-	cd dir1 && find -depth | cpio -pdmv dir2
+    cd dir1 && find -depth | cpio -pdmv dir2
 
 tar archived input to gpg
-	gpg compresses its input
-		tar -c *.jpg | gpg -ear douggorley > files.tar.gz.asc
+    gpg compresses its input
+        tar -c *.jpg | gpg -ear douggorley > files.tar.gz.asc
 
 tar stdout to zip
-	 tar cf - . | zip - - | dd of=/dev/nrst
+     tar cf - . | zip - - | dd of=/dev/nrst
             
 tar stdout to ssh
-	tar czvf - . | ssh user@host "cat > file.tgz"
+    tar czvf - . | ssh user@host "cat > file.tgz"
 	
-unison
-	best for synchronizing if both roots are changed.
-
-scp
-	must give options -p (preserve permissions) & -r (recurse)
-	no way to exclude files
 
 more tar/ssh examples
 send:
@@ -37,29 +39,13 @@ ssh remotehost1 " ssh remotehost2 \"( cd /source/path; tar cf - desiredfiles ) \
 
 Note that 'tar cf' and 'tar xf' can be replaced with 'tar czf' and 'tar xzf' for gzip compression. Or, for bzip2 compression: 'tar 'cjf' and 'tar xjf'. 
 
+Other apps {{{1
+unison
+	best for synchronizing if both roots are changed.
 
-
-Include & Exclude data
-	Include:
-			mozilla-firebird (from faq)
-			bookmarks.html, prefs.js, chrome
-			Username/pw data: 8digit#.s
-			Form data: 8digit#.w
-			Junk Mail filters: training.dat 
-			Extensions & customizations: chrome dir
-		Mail/news
-			Mail boxes w/o extension eg INBOX. (where?)
-			News group info hostinfo.dat (where?)
-			Address book(s) all .mab files - main abook.mab
-	Exclude:
-		mozilla-firebird (from faq)
-			xul.mfl, xul.mfasl, or XUL FastLoad File, localstore.rdf 
-			chrome/*.jar (custom theme files)
-		SSH
-			.ssh dir 
-
-		zsh
-			tar czvf backup/andmalc-1219.tgz andmalc/*~andmalc/backup~andmalc/tmp
+scp
+	must give options -p (preserve permissions) & -r (recurse)
+	no way to exclude files
 
 pax
     basic backup
@@ -87,8 +73,5 @@ pax
     inclusion
         -n <file pattern>
 
-
-Firefox/mozilla files to backup
-	http://forums.mozillazine.org/search.php?mode=results
 
 
