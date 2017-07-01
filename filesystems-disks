@@ -213,12 +213,13 @@ ncdu
 Labels {{{2
 
 e2label / e2fsprogs		for extX
-btrfs filesystem label /dev/XXX <label> 
+btrfs filesystem label /dev/XXX <label>  #using btrfs-progs
 swaplabel -L <label> /dev/XXX
 
 In fstab:
-    Get Partition unique GUID with gdisk
+    Get Partition unique GUID or Partition label (not filesystem label) with gdisk
     PARTUUID=8C208C30-4E8F-4096-ACF9-858959BABBAA /data ext4 user,defaults 0 0
+    PARTLABEL=blah etc.
 
 
 Attributes {{{2	

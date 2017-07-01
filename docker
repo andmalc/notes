@@ -9,9 +9,27 @@ build {{{2
 final arg is directory containing Dockerfle
 -t		tag, 'andmalc/blah'
 
+Image commands {{{2
+
+images      list images on localhost
+pull        pull image from repo
+build       build an image from a Dockerfile
+history     show layers
+rmi         remove image
+save        export to tar
+tag         tag existing image;
+
+commit      create image from container
+    <cid> <new image name>      
+    -m=<commit message>
+
+
 run {{{2
 docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 
+cmd [executable, param, ...] - runs exact command
+w/o brackets runs cmd in shell - /bin/sh -c <command>
+ 
 options
 
 -d      daemonize/run in background
@@ -28,21 +46,6 @@ options
 -t      allocate terminal
 -v src:dest mount data volume in cont.
 --volumes-from  mount volume from cont. (does not have to be running)
-
-Image commands {{{2
-
-images      list images on localhost
-pull        pull image from repo
-build       build an image from a Dockerfile
-history     show layers
-rmi         remove image
-save        export to tar
-tag         tag existing image;
-
-commit      create image from container
-    <cid> <new image name>      
-    -m=<commit message>
-
 
 Container commands {{{2
 
@@ -89,14 +92,20 @@ Remove all containers
 Dockerfile {{{1
 
 run vs. cmd vs. entrypoint
+
 run     execute immediately & commits the result
-cmd     does nothing during build, provides execution default for container
+
+cmd     does nothing during build
+        provides execution default for container, does nothing if no run args
         one only per Dockerfile
 
-cmd
-    [executable, param, ...]
-    w/o brackets runs cmd in shell
- 
+entrypoint  
+    will run if no run args
+    if run args, they are passed to entrypoint
+
+entrypoint and cmd
+    args to cmd passed to entrypoint
+
 
 
 Networking {{{1

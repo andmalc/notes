@@ -41,6 +41,8 @@ xargs
 
 Line editing {{{1
 
+^l	clear screen
+
 Notation:
 	^k = \C=k = control key + k
 	M-k = Meta (usually Alt) key + k
@@ -48,7 +50,6 @@ Notation:
 
 Line Editor Key Bindings
 	Default bindings
-		^l	clear screen
 		char
 			^f	move one char forward
 			^b	move one char back

@@ -69,14 +69,6 @@ parameter expansion
     $ character introduces parameter/brace expansion
     ${name} - braces are optional
 
-event selection:
-	!           start history expansion
-	!!			last command - may omit ! if followed by :<word selection>
-    !^          first param
-    !:2         second param
-    !*          all previous args
-	!str        last command starting with str
-	!?str[?]    last command containing str
 
 
 Command Line Editing {{{1
@@ -104,20 +96,39 @@ Commands & arguments {{{1
 \e. or M-.	    last argument - repeat to cycle backwards      
 
 fc:
-	fc <pat>    edit most recent command starting with <pat>
-	fc -l <pat> display, dont edit
+	fc -m <pat>    edit most recent command matching <pat>
+	fc -l -m <pat> display, dont edit
 
 	
 [<cmd>] M-p / M-n	
     prev/next command or search for <cmd> if entered
 
-word selection: 
-    number	- 0 is cmd
-    * - all args
-    $ - last arg
-    x-  Arguments from #x to $ (last arg)
-        ex. !!0-  Command + all args except last 
+Command history expansion {{{1 
 
+https://www-s.acm.illinois.edu/workshops/zsh/history/hist_expn.html
+
+event[:word][:modifier] (same as bash)
+
+event designators
+	!!			last command 
+        may omit 2nd ! if followed by :<word selection> or str search
+	!str        last command starting with str
+	!?str[?]    last command containing str
+
+word designators
+    args
+    *   all 
+    ^   arg
+    $   last 
+    x-  args from #x to $
+    
+    examples
+        !!^      first arg of last command
+        !!*     cmd + all args except last 
+        !:2         second param
+
+modifier
+    :h  strip level
 
 Filesystem {{{1
 
@@ -136,7 +147,6 @@ syntax :+letter
 same for globbing and parameter substitution 
 
 usage: 
-    history events - word:modifier (same as bash)
     parameter substitution - ${param:<mod>}
     globbing - *(:t)  
         may combine with qualifier (U:t)
@@ -311,4 +321,4 @@ Built in prompt feature:
         -s  save
 
 
-
+vim:ft=

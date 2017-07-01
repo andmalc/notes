@@ -96,6 +96,8 @@ edit <unit>
     --runtime
         temporary edits lost on reboot
 
+daemon-reload
+
 list-unit-files
 
 
@@ -132,9 +134,6 @@ logind
         SuspendState=freeze
 
 
-networkctl 	
-	noarg	lists network interfaces
-	status #	shows info for interface #
 
 timedatectl
     list-timezone
@@ -183,7 +182,7 @@ Container as service - must be in /var/lib/machines
 systemctl start systemd-nspawn@mycontainer.service
 
 
-Networking {{{2
+Container networking {{{2
 
 --port=<host #>:<cont #>
 	map port in cont. to host
@@ -199,4 +198,54 @@ examples {{{2
 -xb -D /  #ephemeral snap of root
  -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
 --template=/    #use host root dir as template 
+
+networking {{{1
+
+
+networkctl 	
+	noarg	lists network interfaces
+	status #	shows info for interface #
+
+wireless with networkd {{{2
+
+https://forum.manjaro.org/t/how-to-use-systemd-networkd-to-manage-your-wifi/1557
+
+# /etc/systemd/network/wireless.network
+[Match]
+Name=wl*
+
+[Network]
+DHCP=yes
+RouteMetric=20
+IPv6PrivacyExtensions=true
+## to use static IP uncomment these instead of DHCP
+#DNS=192.168.1.254
+#Address=192.168.1.87/24
+#Gateway=192.168.1.254
+
+# /etc/wpa_supplicant/wpa_supplicant-wlp1s0.conf
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=wheel
+update_config=1
+eapol_version=1
+ap_scan=1
+fast_reauth=1
+
+sudo systemctl disable networkmanager
+sudo systemctl stop networkmanager
+
+sudo -i
+rm /etc/resolv.conf
+systemctl enable systemd-networkd
+systemctl enable wpa_supplicant@wlp1s0
+systemctl enable systemd-resolved
+systemctl start systemd-networkd
+systemctl start wpa_supplicant@wlp1s0
+systemctl start systemd-resolved
+ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+set +o history
+sudo wpa_passphrase <ESSID> <passphrase> >> /etc/wpa_supplicant/wpa_supplicant-wlp1s0.conf
+set -o history
+
 

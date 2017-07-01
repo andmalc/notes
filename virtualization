@@ -151,17 +151,6 @@ alternative to virt-clone
 
 
 
-Share host files with guest {{{1
-
-https://ask.fedoraproject.org/en/question/79010/qemu-user-session-shared-filesystem/
-https://eklitzke.org/fedora-qemu-and-9p-filesystem-passthrough
-
-sudo semanage fcontext -a -t virt_content_t "/home/vagrant/test(/.*)?"
-sudo restorecon -R /home/vagrant/test
-
-Guest fstab
-shared  /home/andmalc/mnt      9p      defaults,noauto
-
 lxc {{{1
 
 designed and ideally suited for running full system containers vs. running single process
@@ -199,6 +188,13 @@ https://help.ubuntu.com/lts/serverguide/lxd.html#lxd-configuration
 Fedora repo: 
 dnf copr enable ganto/lxd
 dnf install lxd lxd-client
+
+Run lxd init to set up storage
+
+storage options
+    btrfs
+        mount  /var/lib/lxd on btrfs
+
 
 container config
     config device
@@ -240,5 +236,15 @@ lxc
             shows images saved in storage
 
     config get storage
+
+
+Spice Graphical Virt {{{1
+
+double mouse issue:
+guest settings in Virt-manager, add Hardware, Input, Evtouch USB Graphics Tablet
+
+Enable shared clipboard & higher resolution for Ubuntu guest:
+Install spice-vdagentd
+SPICE_VDAGENTD_EXTRA_ARGS=-X in /etc/defalt/spice-vdagned
 
 
