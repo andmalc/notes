@@ -37,6 +37,8 @@ gpasswd
 	-a <username> <groupname>  
 	-a sammy wheel
 
+getent group 
+    show groups and members
 
 Display & Change Groups {{{1
 

@@ -1,3 +1,15 @@
+Terms {{{1
+
+Def of machine from man machinectl
+
+    Virtual Machines (VMs) that virtualize hardware to run full operating system (OS) 
+    instances (including their kernels) in a virtualized environment on top of the host OS.
+
+    Containers that share the hardware and OS kernel with the host OS, in order to 
+    run OS userspace instances on top the host OS.
+
+    The host system itself
+
 
 Create a rootfs {{{1
 
@@ -131,6 +143,8 @@ virsh {{{2
 Access as non-root
 export LIBVIRT_DEFAULT_URI=qemu:///system
 
+Copy file into VM
+    virt-copy-in -d ubuntu myfile /etc/default
 
 virsh --connect qemu:///system <cmd> <guestname>
 	list --all
@@ -149,6 +163,19 @@ alternative to virt-clone
     virsh dumpxml domain > vm.xml
     virsh define vm.xml 
 
+
+
+Graphical Virt {{{2
+
+double mouse issue:
+guest settings in Virt-manager, add Hardware, Input, Evtouch USB Graphics Tablet
+
+Enable shared clipboard & higher resolution for Ubuntu guest:
+Install spice-vdagent
+SPICE_VDAGENTD_EXTRA_ARGS=-X in /etc/defalt/spice-vdagentd
+sudo virt-copy-in -d ubuntu spice-vdagentd /etc/default/
+
+Ubuntu resolution on HP monitor 1600x1200 4:3
 
 
 lxc {{{1
@@ -177,7 +204,7 @@ lxc-destroy --name u1
 lxc-clone -o C1 -n C2
 lxc-snapshot -n C1
 
-lxd {{{1
+lxd {{{0
 
 Best: http://lxd.readthedocs.io/en/latest/
 
@@ -236,15 +263,5 @@ lxc
             shows images saved in storage
 
     config get storage
-
-
-Spice Graphical Virt {{{1
-
-double mouse issue:
-guest settings in Virt-manager, add Hardware, Input, Evtouch USB Graphics Tablet
-
-Enable shared clipboard & higher resolution for Ubuntu guest:
-Install spice-vdagentd
-SPICE_VDAGENTD_EXTRA_ARGS=-X in /etc/defalt/spice-vdagned
 
 
