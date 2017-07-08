@@ -1,129 +1,36 @@
-Docs {{{1
-	tutorials
-		http://diveintopython.org/
-	FAQts
-		http://www.faqts.com/knowledge_base/index.phtml/fid/199
 
 
-functional utils: lambda, filter, reduce, lc's
-	http://www.devx.com/opensource/Article/21549#rateThisContentLink
+attributes ref as obj.ref
+methods - callable attributes 
+no distinction betwen method & data attributes as in other languages
+references to non-existant attributes is a semantic error and not caught by the compiler, instead raises an exception
 
-specified.
-Python specific environment variables to set or add to a startup script:
-	PATH	Used by os to find interpreter
-	PYTHONPATH	Variable used by interpeter to find modules files for 
-	import.  Add paths to python/Libs, python/tkinker(?).
-Adjust path
-	import sys
-	sys.path.append(".")
-Imports from dirs in site-packages with version numbers e.g. pygtk-2.0
-	 import pygtk
-	 pygtk.require("2.0")
-	 import gtk
-Running 
-	execfile	
-		Run a program from within interpreter execfile('thing.py')
-	Exit interpeter
-		sys.exit()   or
-		raise SystemExit
-	Runtime API - a set of services exported by libraries upon
-	compilation.
-
-
-Lexical Structure {{{1 
-	Line Structure & Indentation
-		Line continuation character: \ or ()
-		Tabs insert number of spaces required to indent to a multiple of 8.
-		Multiple statements on a line seperated by ';'
-		Comment character '#' - extends to end of line:
-		
-	Tokens - Identifiers, keywords, operators, delimiters, & literals
-	Identifiers
-		Identifiers (aka variables) with form:
-			_x   not imported by 'from xx import *'.
-			__x  used to indicate private class members
-			__x__	system defined names
-			'_'		result of last evaluation (in interactive mode only)
-	Statements
-        Python source comprises simple & compound statements.  
-		Types
-			assignment
-				create names
-			expression
-				function & method calls and expressions at prompt
-			print
-				to sys.stdout.write()
-
-
-Expressions & Operators {{{1
-	expressions evaluated -> a value
-	names created when bound (by assignmnet or implicitly by def, class etc.) to a value
-
-Objects, Names, & Attributes {{{1 
-	Objects 
-		object is Python term for data
-		All objects have identity, type, & value.  Some also have attributes
-			identity
-				like a memory address
-				never changes
-				id fuction (built in) - return identity
-			type
-				never changes
-				type function (built in) - return type
-				types module contains type objs for builtin types eg ListType.
-			value
-				may change, depends if type is mutable (lists, dictionaries) or
-				immutable (strings, numbers, tuples)
-		containers are objects containing references to other objects
-			lists, tuples, dictionaries, classes,modules (?)
-	References/Names
-		data is accessed thr references: may be 
-			variables/identifiers
-			attributes
-			items in a container[<index or key>]	
-		references not typed
-		names introduced by name binding operations
-			assignment
-				regular
-					name = expression
-						binds or rebinds name <target> to value of expression
-				augmented 
-					calls special method appropriate to operator 
-			retreival
-				value = name
-		attributes
-			= qualified names (?)
-			refers to names searched in the __dict__ dictionary of modules, classes, instances
-			attributes ref as obj.ref
-			methods - callable attributes 
-			no distinction betwen method & data attributes as in other languages
-			references to non-existant attributes is a semantic error and not caught by the compiler, instead raises an exception
-		find names
-			If no such attribute in local name space, parent name spaces searched.
-			lookup order
-				by __getattribute__ if defined
-				in instance dictionary: d.__dict__
-				in class dictionary: d.__class__.__dict>>
-				in first super class's ns, second super class's ns, in ns of super's parents
-				by __getattr__
-			special attributes
-				__dict__	
-					A dictionary or other mapping obj used to store an object's (writable) attributes.
-				__class__	
-					The class to which a class instance belongs.
-				__bases__	
-					The tuple of base classes of a class object. 
-					isinstance function (types module) - return base class
-		show names
-			dir
-				namespace inspection 
-				Works for any object with attributes.
-			vars
-				Dump Obj Local Name Space 
-				Returns dict mapping of local names and values.  
-				Contrast dir(s) which returns a list of names.
-			locals
-				?
+find names
+    If no such attribute in local name space, parent name spaces searched.
+    lookup order
+        by __getattribute__ if defined
+        in instance dictionary: d.__dict__
+        in class dictionary: d.__class__.__dict>>
+        in first super class's ns, second super class's ns, in ns of super's parents
+        by __getattr__
+    special attributes
+        __dict__	
+            A dictionary or other mapping obj used to store an object's (writable) attributes.
+        __class__	
+            The class to which a class instance belongs.
+        __bases__	
+            The tuple of base classes of a class object. 
+            isinstance function (types module) - return base class
+show names
+    dir
+        namespace inspection 
+        Works for any object with attributes.
+    vars
+        Dump Obj Local Name Space 
+        Returns dict mapping of local names and values.  
+        Contrast dir(s) which returns a list of names.
+    locals
+        ?
 
 Kinds of Built-in Types {{{1 
 	see Standard Type Hierarchy in Ref
@@ -474,68 +381,6 @@ Commands
 
 
 
-Py 2.2 changes {{{1
-	attributes
-		__getattr__(self,name)
-			Called when 'name' not found in obj namespace dict
-			Not necessarily the best way to manage attribute access, in part
-			because of function call to handle all attribute access.
-		__getattribute__(self,name)
-			New in Py 2.2
-			Called for all attribute access
-		__slots__ = [ 'attr', 'attr', ... ]
-			Contrains attribute access to named attrs
-	Properties: property() built-in function
-		aka Managed attributes because properties are attributes managed by get/set methods
-		usage resembles attribute access but implementation uses methods
-		Advantage of: 
-			functions called only for specified names (faster).       
-		e.g.
-        class Item(object):
-            def __init__(self,name):
-                self.name=name
-            def getx(self): return self.__x
-            def setx(self, value): self.__x = value*2
-            def delx(self): del self.__x
-            x = property(getx, setx, delx, "I'm the 'x' property.")
-
-		class C(object):
-			def get_size (self):
-				result = ... computation ...
-				return result
-			def set_size (self, size):
-				... compute something based on the size
-				and set internal state appropriately ...
-			# Define a property.  The 'delete this attribute'
-			# method is defined as None, so the attribute
-			# can't be deleted.
-			size = property(get_size, set_size, None, "Storage size of this instance")
-	Sequence Access
-		__getitem__(self, index)
-			Should be used to support random access to attr values (ie not
-			appropriate in a file object) - Prior to Py 2.2, might be used to
-			support iteration.
-		Now use iterators for sequential access.  If an obj is it's own iterator
-		(usual case), __iter__() returns 'self'.
-	Type testing
-		with type/classes unification, instead of type(x) == type(y), do
-			isinstance(x,int)
-			isinstance(x,(int,long))
-		type(x) is now same as x.__class__
-
-
-Py 2.3 changes {{{1
-	substring testing: 'in' operator can test for multiple characters
-	new modules
-		itertools
-
-Py 2.4 changes {{{1
-    generator expns
-        Create dictionary with first word in line as the item's key
-        g=dict(line.split(' ',1) for line in lines)
-        also
-        d=dict((k,v) for k,v in [('a',1),('b',2)] if v>1)
-        
 Ideas & Tasks {{{1
     Classes
         class A:

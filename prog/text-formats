@@ -4,6 +4,13 @@ asciidoc
 
 yaml {{{1
 
+Docs:
+https://www.digitalocean.com/community/tutorials/an-introduction-to-cloud-config-scripting
+
 Lint with yamllint
+
+Key/value format:
+    key: value #need space after :
+
 
 
