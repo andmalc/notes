@@ -223,6 +223,7 @@ In fstab:
 
 
 Attributes {{{2	
+
 change times
 	atime
 		access time
@@ -233,6 +234,26 @@ change times
 	ctime   
 		change to file data, permissions, or ownership (most
 		inclusive)
+
+Resizing {{{2
+
+
+Changing volumes
+	with ext2 filesystems
+		e2fsadm - 
+			resize physical or LVM volumes and filesystems (using lvextend and
+			ext2online)
+		ext2online - resize online (mounted) ext2 fs. Requires kernel patch. 
+		ext2resize 
+            resize offline ext2 fs.
+            default enlarges fs to fill partition, do after growpart
+	LVM
+		pvresize - resize vg on a device
+
+growpart
+    resize vol to take all available room
+    fedora: in cloud-utils-growpart package
+
 
 ExtX {{{2
 
@@ -292,104 +313,6 @@ btrfs check --repair
 fstab entry
 	LABEL=testbtrfs  /btrfs defaults,subvolid=269 0 0
 
-
-Mounting & Permissions (edit needed) {{{1
-
-mount
-	attaches a filesystem on a device to a point in unix filesystem tree.
-	defaults options 
-		rw, suid, dev, exec, auto, nouser, async
-
-mount partition in a loopback file
-	http://wiki.edseek.com/guide:mount_loopback
-	http://www.unix.com/filesystems-disks-memory/24366-can-loopback-filesystem-partitioned.html
-	install grub
-		http://www.usenet-forums.com/linux-general/95580-install-grub-hdd-image.html
-
-
-allow umounting
-	Running 'exec /bin/sh' eliminates last processes.
-	fuser: show what processes are using which files.
-	cat /proc/mounts
-
-automount
-	docs
-		HOWTO - very good intro to network filesystems 
-			http://www.Linux-Consulting.com/Amd_AutoFS/autofs.html
-
-	requirements
-		amd automount daemon - userspace
-		autofs - kernel support needed -
-			cat /proc/filesystems -> autofs
-
-attributes
-	ownership
-		user & users imply noexec, nosuid, & nodev unless subsequently
-		overriden 
-			e.g. -o user[s],exec,suid
-		"auto, uid=500, gid=100" 
-			take all ownership of files in mounted partition.
-restricting access
-	Colin Watson
-		There should be no need to apply the restrictive permissions to
-		subdirectories too, because once execute permission is withheld on
-		a parent directory you can't get to the subdirectories anyway 
-	in /home - chmod * 700
-	in adduser.conf
-		DIR_MODE=700
-
-		
-change times
-	atime
-		access time
-		time of read (including backups) 
-		permissions changes don't affect
-	mtime   
-		change to file data
-	ctime   
-		change to file data, permissions, or ownership (most
-		inclusive)
-
-Changing volumes
-	with ext2 filesystems
-		e2fsadm - 
-			resize physical or LVM volumes and filesystems (using lvextend and
-			ext2online)
-		ext2online - resize online (mounted) ext2 fs. Requires kernel patch. 
-		ext2resize - resize offline ext2 fs.
-	LVM
-		pvresize - resize vg on a device
-
-
-
-Mounting & Permissions  {{{1
-
-setfacl -m 'u:andmalc:rwx' /var/lib/machines 
-
-mount
-	attaches a filesystem on a device to a point in unix filesystem tree.
-
-	mount as writable by a user
-		 -o user,dmask=022,fmask=011
-
-allow umounting
-	Running 'exec /bin/sh' eliminates last processes.
-	fuser: show what processes are using which files.
-	cat /proc/mounts
-
-/etc/fstab settings
-	defaults options 
-		rw, suid, dev, exec, auto, nouser, async
-	ownership
-		user & users imply noexec, nosuid, & nodev unless subsequently
-		overriden 
-			e.g. -o user[s],exec,suid
-		"auto, uid=500, gid=100" 
-			take all ownership of files in mounted partition.
-
-	recommended options
-		/		defaults,relatime,errors=remount-ro
-		/home	nodev,nosuid,relatime
 
 
 

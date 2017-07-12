@@ -1,5 +1,17 @@
 
 
+7/12
+
+Installed Babel JS on TP Fedora 
+Allows using new JS features
+sudo npm install -g --save-dev babel-cli babel-preset-env
+
+
+
+
+
+Past
+
 Auth0 - add authentication to web apps
 https://auth0.com/?utm_source=plunker&utm_campaign=footerlogo
 

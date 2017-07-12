@@ -25,7 +25,7 @@ Connection
         con delete <id>
 
     Connect to network
-        con up <ssid>
+        con up <connection/profile name>
 
     Edit conn
         c mod <id>

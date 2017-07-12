@@ -1,3 +1,19 @@
+attributes
+	ownership
+		user & users imply noexec, nosuid, & nodev unless subsequently
+		overriden 
+			e.g. -o user[s],exec,suid
+		"auto, uid=500, gid=100" 
+			take all ownership of files in mounted partition.
+
+restricting access
+	Colin Watson
+		There should be no need to apply the restrictive permissions to
+		subdirectories too, because once execute permission is withheld on
+		a parent directory you can't get to the subdirectories anyway 
+	in /home - chmod * 700
+	in adduser.conf
+		DIR_MODE=700
 
 
 File & USER ADMIN & SECURITY

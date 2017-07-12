@@ -1,4 +1,8 @@
 
+xz example
+    xzcat Fedora-IMAGE-NAME.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX
+
+
 dd & gzip
 sudo dd bs=4M if=/dev/sdb | gzip > rasbian.img.gz
 gunzip --stdout rasbian.img.gz | sudo dd bs=4M of=/dev/sdb
