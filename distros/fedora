@@ -254,6 +254,7 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
     provides <path to fn>
         shows which packages provide a file 
         can use glob instead of exact path
+            dnf provides '*/semanage'
 
     repoquery <pkg name | key word>
         search repos for packages

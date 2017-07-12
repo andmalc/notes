@@ -31,8 +31,8 @@ Enable
 
 
 semanage
-    Install on Centos
-        policycoreutils-python
+        package policycoreutils-python-utils
+        maybe not needed: port enabled if done by firewall-cmd (?)
 
     login
         -l      Show map of login names to SE Linux users

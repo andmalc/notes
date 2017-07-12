@@ -25,11 +25,14 @@ Zones
     
 firewall-cmd CLI {{{1
 
-firewall-cmd --reload
 
 Show service status
     --state     shows if running
-    --list-all
+    --get-default-zone
+    --get-active-zones              show all zones controlling traffic
+    --list-all [--zone=xx]          list rules associated with active/indicted zone
+    --list-all-zones | less         show all rules for all zones
+    --change-interface=<interface>  Change interface to different zone
 
 
 Manage zones
@@ -39,12 +42,7 @@ Manage zones
     --set-default-zone=<zone>       
     --get-active-zones              List zones and their interfaces
    
-Manage interfaces
-    Apply to default zone or spec with --zone= 
-    --add-interface=<interface>     Add interface 
-    --change-interface=<interface>  Change interface to different zone
-
-Manage zones                    
+Conigure zones                    
     Apply to current zone or specify with --zone=<zone>
     Changes temporary unless 1st arg is --permanent
 
@@ -54,8 +52,22 @@ Manage zones
      --remove-service=<service>
      --add-port=<port>[-<port>]/<protocol>
      --add-masquerade
+        
+        firewall-cmd --permanent --zone=public --add-service=http 
+        firewall-cmd --permanent --zone=public --add-service=https
 
-Examples
-sudo firewall-cmd --permanent --zone=public --add-service=http 
-sudo firewall-cmd --permanent --zone=public --add-service=https
-sudo firewall-cmd --reload
+Manage interfaces
+    Apply to default zone or spec with --zone= 
+    --add-interface=<interface>     Add interface 
+    --change-interface=<interface>  Change interface to different zone
+
+Save changes
+    --reload    like a reset - discards changes not made permanent
+    --runtime-to-permanent # saves and enables changes 
+
+Session Example
+    firewall-cmd --zone=FedoraServer --change-interface=eth0
+    firewall-cmd --set-default-zone=FedoraServer
+    sudo firewall-cmd –runtime-to-permanent
+
+

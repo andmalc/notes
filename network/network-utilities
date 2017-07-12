@@ -1,5 +1,6 @@
 
 netcat
+    package nmap-ncat
 	server: nc -l -p <port>
 	client: nc <host> <port>
 	scan: nc -vz <host> <port or port range>
