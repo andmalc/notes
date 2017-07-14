@@ -4,24 +4,28 @@ Assets: owned: cash, inventory, building, equipment
 Liabilities: owed to others: bills, credit balances, loans
 Equity: claims owners have on assets based on their portion of the ownership.
 
-Account Categories
+Account Groups
 
 Balance sheet accounts: 
-    * Assets, liabilities, and owners’ equity accounts.  
-    * Financial condition of business
-
+    current Assets
+    long term assets
+    current liabilities 
+    long term liabilities 
+    equities
+    
 Income statement accounts: 
-    * Revenue and income accounts, and expense and loss accounts.  
-    * Summarize profit making activities.
+    Revenue and income accounts
+    cost of goods sold
+    expense and loss accounts
 
 
 Account Types
 
-Revenue/Incoming
+Incoming 
     Credit - green
     grp income
 
-Receivables/Assets
+Assets
     Debit - blue
     grp customers
     grp assets - cash, bank acnt.
@@ -31,9 +35,9 @@ Liability
     grp suppliers
     grp debts
 
-Expenses/outgoing
+Outgoing
     Debit - red
-    services, products, saleries
+    expenses, services, products, saleries
 
  An account is a separate record, or page as it were, for each asset, each liability, and so on. One transaction affects two or more accounts. The journal entry records the whole transaction in one place; then each piece is recorded in the accounts that are affected by the transaction.
 
