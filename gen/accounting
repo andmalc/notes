@@ -1,44 +1,61 @@
 Assets = Liabilities + Equity
 
-Assets: owned: cash, inventory, building, equipment
+Assets: cash, inventory, building, equipment, receivables
 Liabilities: owed to others: bills, credit balances, loans
 Equity: claims owners have on assets based on their portion of the ownership.
 
-Account Groups
-
-Balance sheet accounts: 
-    current Assets
-    long term assets
-    current liabilities 
-    long term liabilities 
-    equities
-    
-Income statement accounts: 
-    Revenue and income accounts
-    cost of goods sold
-    expense and loss accounts
 
 
-Account Types
+Account Types {{{1
 
-Incoming 
-    Credit - green
-    grp income
+Permanent - Balance Sheet {{{2
 
-Assets
-    Debit - blue
-    grp customers
-    grp assets - cash, bank acnt.
+Do not close at end of accounting period
 
-Liability
-    Credit - yellow
-    grp suppliers
-    grp debts
+    Assets
+        Debit - blue
+        Possible Groups: customers, cash, bank acnt.
 
-Outgoing
-    Debit - red
-    expenses, services, products, saleries
+        sub-groups
+        current assets: cash, savings, bank account, inventory, pre-paid services
+        long term assets: land, buildings, equipment
 
- An account is a separate record, or page as it were, for each asset, each liability, and so on. One transaction affects two or more accounts. The journal entry records the whole transaction in one place; then each piece is recorded in the accounts that are affected by the transaction.
+    Liability
+        Credit - yellow
+        Possible Groups: debts, suppliers
+
+        sub-groups
+        current liabilities: accounts payable, sales tax collected, credit cards payable 
+        long term liabilities: loans 
+
+    equities: retained earnings, captial (money or other contributions by owner)
+
+
+Non-permanent - Financial Statement {{{2
+
+    Incoming 
+        Credit - green
+        Possible Groups: Consulting, Support
+
+        sub-groups
+        Revenue / income accounts: sales of goods & services, sales discounts, 
+        sales returns, cost of goods sold: purchases, returns of purchases, discounts
+
+    Outgoing
+        Debit - red
+        Possible Groups: expenses, services, products, saleries
+
+        sub-groups
+        expense and loss accounts: advertising, rentals, bank charges, insurance, rent
+ 
+Transactions {{{1
+
+Has origin and destination, affects two or more accounts. 
+The journal entry records the whole transaction in one place; then each piece is recorded in the accounts that are affected by the transaction.
+
+
+Balances {{{1
+
+Real time value of all incoming and outgoing Transactions that are posted on an Account
 
 

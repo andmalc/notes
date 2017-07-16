@@ -79,6 +79,29 @@ kernel boot messages
 Virtual Memory
     view all memory usage with 'cat /proc/meminfo'
 
+
+
+/proc filesystem
+    process information pseudo-file system
+    runtime info about system memory, devices mounted, hardware 
+
+lspci
+    cat /proc/pc
+
+lsusb
+
+lscpu
+
+lsmod
+    cat /proc/modules
+
+process info
+    proc/PID/cmdline, cwd, environ etc.
+
+
+/proc/bus/input/devices
+    input devices
+
 Other {{{1
 
 journal-brief

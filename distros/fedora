@@ -50,7 +50,17 @@ git vim-enhanced zsh tmux mlocate ncdu stow ranger
 Yubikey/U2F support
 pam-2uf u2f-hidraw-policy
 
+32 bit packages end with  i686
+Unlike Debian :i386
 
+Dependency errors:
+
+    error while loading shared libraries: libXss.so.1: wrong ELF class: ELFCLASS32
+    Package libXScrnSaver-1.2.2-6.1.el7.i686 already installed and latest version
+    => needs 64 bit version libXScrnSaver-1.2.2-6.1.el7.x86_64
+
+
+6
 
 Users {{{2
 

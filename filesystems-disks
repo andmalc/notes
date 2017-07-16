@@ -131,6 +131,8 @@ util-linux: sfdisk, cfdisk, fdisk
     share some commands like --wipe
 
 gdisk, cgdisk
+    http://www.rodsbooks.com/gdisk/
+
     like parted/cfdisk for gpt disks
     change partition labels
     no lvm info
@@ -216,8 +218,9 @@ e2label / e2fsprogs		for extX
 btrfs filesystem label /dev/XXX <label>  #using btrfs-progs
 swaplabel -L <label> /dev/XXX
 
+Get/set partition unique GUID or Partition label (not filesystem label) with gdisk
+
 In fstab:
-    Get Partition unique GUID or Partition label (not filesystem label) with gdisk
     PARTUUID=8C208C30-4E8F-4096-ACF9-858959BABBAA /data ext4 user,defaults 0 0
     PARTLABEL=blah etc.
 

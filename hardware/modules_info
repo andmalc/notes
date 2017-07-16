@@ -1,9 +1,34 @@
 
-Show drivers in use:
-    lspci -nnk
+Architecture {{{1
+
+Debian - https://wiki.debian.org/Multiarch/HOWTO
+dpkg --add-architecture
+apt-get update
+apt-get install package:architecture
+
+dpkg --print-architecture # amd64 for 64 bit
+dpkg --print-foreign-architectures  # i386 for 32 bit
 
 
-Sysfs - introduced by kernel 2.6
+Drivice Driver Modules General {{{1
+
+All hardware identified by device files.  3 types:
+    Character - can handle data one character at a time, e.g. modems
+    Block - can handle larger amounts - blocks - at a time e.g. disk drives
+    Network - data sent in packets
+        File listing in /dev identifies type in left column
+- Drivers allow kernel to pass data to and from the device
+- Kernel modules can be inserted into runing kernel and removed if unneeded.
+utils
+    lsmod		List loaded modules
+    insmod		Load module
+    rmmod		Unload module
+
+kernel & udev can load 'detectable' modules (on USB & PCI buses)
+    see hotplug docs for more on how to tell if a module is detectable
+    character, block, & network protocol drivers mostly loaded on use
+
+Options {{{1
 
 Show list of options
     modinfo -p i915
@@ -12,80 +37,44 @@ Show options in effect
     systool -m i915 -av
 
 Configure options
+	module loading statements in /etc/modprobe.d/
+
     /etc/modprobe.d/i915.conf
     options i915 enable_rc6=1 enable_fbc=1 semaphores=1
 
-Drivice Driver Modules
-    All hardware identified by device files.  3 types:
-        Character - can handle data one character at a time, e.g. modems
-        Block - can handle larger amounts - blocks - at a time e.g. disk drives
-        Network - data sent in packets
-            File listing in /dev identifies type in left column
-	- Drivers allow kernel to pass data to and from the device
-	- Kernel modules can be inserted into runing kernel and removed if unneeded.
-	utils
-		lsmod		List loaded modules
-		insmod		Load module
-		rmmod		Unload module
-
-kernel & udev can load 'detectable' modules (on USB & PCI buses)
-    see hotplug docs for more on how to tell if a module is detectable
-    character, block, & network protocol drivers mostly loaded on use
-
-Still must be loaded in /etc/modules and /etc/modprobe.d/ (as of summer 05)
-    ide-cd
-    sound modules (in modprobe.d)
 
 
-modprobe and module-init-tools as of 6/04
-	modprobe.conf no longer used
-	module loading statements in /etc/modprobe.d/
+Hardware Monitor & Conifg {{{1
 
-** OLD **
-module config as done by update-modules
-	under kernel 2.6
-		provided by module-init-tools package.  Old modutils utilities renamed as
-		*.modutils and are still used under a 2.4 kernel
-		manual entries in /etc/modprobe.conf - run update-modules
-		/etc/modprobe.conf includes /lib/modules/modprobe.conf which is generated
-		from the contents of /etc/modprobe.d/	
-	files
-		under kernel 2.4
-			/etc/modules.conf 
-		/etc/conf.modules - obsolete
-		/etc/modules
-			Debian: names of kernel modules to load at boot
-	modules aliases in modprobe.conf/modules.conf
-		alias device_file  common_name
-		Debian: generated from list of modules in /etc/modules by update-modles	
+Show drivers in use:
+    lspci -nnk
 
-Hardware Monitor & Conifg
-	View interrups use
-		cat /proc/interrupts
-	View i/o port addresses
-		cat /proc/ioports
-	List contents of virtual device space
-		ls /proc
-	List devices on pci bus including pc cards
-	 	cat /proc/pci
-	List processes using a file or filesystem
-		fuser
-	Resources not in use are not listed.
+Sysfs - introduced by kernel 2.6
 
-Permissions
-	fstab entry 
-		allows user access to a device (make user member of usb group)
-			/dev/cf_card /mnt/flash/cf vfat  defaults,noexec,rw,user,uid=0,gid=432,umask=007,noauto 0 0
-		explanation
-			Noexec prevents programs from being run from the card, rw is
-			read/writable, user allows users to mount it, uid=0 means all files are
-			owned by user 0 (root), gid=432 means the files are owned by group 432
-			(usb), umask=007 means that all files have permissions 770 (which seems
-			needlessly cryptic, and took a while to work out), noauto means not to
-			try to mount on boot. 
+View interrups use
+    cat /proc/interrupts
+View i/o port addresses
+    cat /proc/ioports
+List contents of virtual device space
+    ls /proc
+List devices on pci bus including pc cards
+    cat /proc/pci
+List processes using a file or filesystem
+    fuser
+Resources not in use are not listed.
 
 
-Error messages:
-	Error while initializing the sound driver, device /dev/disp can't be opened (Permission denied)
-		> Add yourself to the group 'audio' and re-logon.
+Video drivers {{{1
 
+Show Intel graphics mesa version
+    install mesa-utils package
+    glxinfo | grep OpenGL
+
+    3D acceleration working?
+    glxinfo  | grep rendering
+
+Install 32bit OpenGL graphics
+https://www.codeweavers.com/support/wiki/Diag/MissingLibGL
+
+Debugging 
+LIBGL_DEBUG=verbose <cmd>

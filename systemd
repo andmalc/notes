@@ -6,6 +6,32 @@ https://fedoramagazine.org/what-is-an-init-system/
 Troubleshooting
 https://freedesktop.org/wiki/Software/systemd/Debugging/
 
+Unit Types {{{1
+
+https://www.freedesktop.org/software/systemd/man/systemd.unit.html#
+
+Mount Units
+https://www.freedesktop.org/software/systemd/man/systemd.mount.html
+
+
+Path Units
+https://www.freedesktop.org/software/systemd/man/systemd.path.html
+
+
+Service units 
+    own processes as shown by systemctl status
+    processes started in cgroups which allow systemd to manage associated proceses together
+        
+
+Target Units
+    used to link other units together to describe a system state
+    units may be services or other targets
+    AllowIsolate =yes option indicates is boot target
+    .wants directory - contains units started with target
+        e.g. /usr/lib/systemd/system/multi-user.target.wants
+
+    starts then monitors services via 'service units'
+
 Unit Files {{{1
 
 configure system resources such as processes and file system
@@ -22,19 +48,6 @@ Sections [xxx]
     Other sections specific to unit type, e.g. [Service] for .service type
 
 
-Target Units
-    used to link other units together to describe a system state
-    units may be services or other targets
-    AllowIsolate =yes option indicates is boot target
-    .wants directory - contains units started with target
-        e.g. /usr/lib/systemd/system/multi-user.target.wants
-
-starts then monitors services via 'service units'
-
-Service units 
-    own processes as shown by systemctl status
-    processes started in cgroups which allow systemd to manage associated proceses together
-        
 
 systemctl {{{1
 lists running units
@@ -55,11 +68,17 @@ isolate <target name>
     switch immmediately to other target
     stop all other processes
 
+list-dependencies <unit>
+    Shows units required and wanted by the specified unit
+    target units are recursively expanded
+    
 list-jobs
     check for stuck jobs 
 
+list-timers
+
 list-units --type=[target | unit type]  #this is default command
-    List running services & their status
+    List running or failed services & their status
         systemctl list-units -t service --all 
 
 list-sockets --show-types
