@@ -1,22 +1,8 @@
-7/15
+7/16
 
-External storage for games etc.
-    mount -o remount,exec,suid
-
-
-Crossover 
-    Bottle settings
-        drive letter for external storage
-        graphics settings for dpi and resolution
-
-    Check for issues with ./bin/cxdiag --debug
-    Missing library doc: https://www.codeweavers.com/support/wiki/Diag
-
-Steam on Linux
-    never got working under xential Crouton.
-        mesa drivers workig confirmed with glxinfo & glxgears 
-        could not find 32 bit OpenGL libraries though installed per 
-            https://www.codeweavers.com/support/wiki/Diag/MissingLibGL
+Unable to connect C9 to Digital
+    host: digital.malcolmson.ca
+    C9 ssh key 
 
 7/12
 

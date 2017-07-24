@@ -1,0 +1,117 @@
+
+
+Formulas {{{1
+
+## Formulas
+
+
+
+Sheet/Range format in formulas:
+=importrange("0AsUmBbBY_9iHdHZBYkp6VTZoZkJvTkFhcUFLWXdXTnc";"List!A:A")
+
+
+Sheets {{{1
+//#region [Sheets]
+
+KB:
+Ctrl+space		select column
+Ctrl+shift+right arrow		select all columns
+Ctrl+shift+down arrow		select all rows
+
+
+
+Cell/Range Syntax {{{2
+
+Range with tab name   ‘tab name’!A2:E
+Absolute cell ref     $A$1
+
+### Row/Column syntax
+A:A     An entire column
+2:2     entire row
+B2:2    row starting with col.
+B:D     contiguous cols.
+B2:D    contiguous cols starting with row
+2:5     contiguous rows
+B2:5    contiguous rows starting with col.
+
+//#region
+
+Text {{{2
+
+Concatenate strings   concat(str1,str2) - 2 args only
+& operator
+Count non-blank text values   counta
+Split text            split(<str>,”<sep>”)
+
+Regex
+=REGEXEXTRACT(A1,"\d+")
+REGEXMATCH
+REAGEXREPLACE
+
+
+Cell Formats {{{2
+
+Blank cells are always 'string' format, even when number format applied.
+
+
+Sheet Functionss {{{2
+
+FIXED(val, # of decimals, thousands sep)
+    if thousands sep is blank - shows sep
+
+IFERROR(test, val)
+    returns test if true or val
+
+unique(rng1, rng2...)
+    return unique rows in rng1 AND in optional other ranges.
+
+
+Read-only view of a range
+=ARRAYFORMULA('myseet'!A:O)
+
+Data Management {{{2
+
+Query range with Visualization query language
+=QUERY(harrycdn,"select A,B,C,F,I,J,M")
+
+Pivot Table - like
+=QUERY(Data!A1:B6;"select A, sum(B), count(B) group by A")
+
+Data
+VLookup
+  vlookup(key-column, source rng, index of cols to return, is first col of source sorted?)
+  Multi columns index format {1,2,3,4}
+  Make sure source range is sorted!
+
+Filtering
+
+httpsabazroberts.wordpress.com/2016/10/26/google-sheets-functions-filter/#gafe
+
+Apps Script {{{1
+
+
+Base JavaScript API
+Google Apps Script a subset of ECMAScript / JavaScript 1.8
+
+Loop {{{2
+
+function testLoop() {
+  
+  var array = [
+    1,2,3,4,5
+    ];
+
+    Logger.log("forEach:");
+    array.forEach(function (item,idx,arr) {
+      Logger.log(item + " " + idx + " " + arr);
+      });
+      }
+
+Functions {{{2
+
+Event handlers
+    http://code.google.com/googleapps/appsscript/guide_events.html
+Simple handlers: run as executing user
+Triggers / Installable handlers:
+    run as installing user
+    document does not have to be open

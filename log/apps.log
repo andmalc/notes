@@ -1,4 +1,31 @@
+7/17
 
+CX on Fedora
+    required libtxc_dxtn 32-bit library
+        http://download1.rpmfusion.org/free/fedora/releases/26/Everything/i386/os/Packages/l/
+    FS viewer Windows 64 bit error - out of date video drivers
+
+
+7/15
+
+
+External storage for games etc.
+    mount -o remount,exec,suid
+
+
+Crossover 
+    Bottle settings
+        drive letter for external storage
+        graphics settings for dpi and resolution
+
+    Check for issues with ./bin/cxdiag --debug
+    Missing library doc: https://www.codeweavers.com/support/wiki/Diag
+
+Steam on Linux
+    never got working under xential Crouton.
+        mesa drivers workig confirmed with glxinfo & glxgears 
+        could not find 32 bit OpenGL libraries though installed per 
+            https://www.codeweavers.com/support/wiki/Diag/MissingLibGL
 
 4/1/17
 Gnome Extensions chrome support

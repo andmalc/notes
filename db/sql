@@ -1,15 +1,56 @@
-Case for dbs vs spreadsheets
-    http://www.igetit.net/newsletters/Y03_04/ssvdb.htm
+Quotes
+		single quotes to enclose strings including column aliases
+		quotes preserve case in Aliases
+		double quotes for identifiers, e.g. column nams
 
-SQL Joins Visualizer
-    http://sql-joins.leopard.in.ua/
+Selecting
+
+
+  derived columns
+    generated using data in same row
+
+Filtering
+
+  Logical operators.  Used in conditional statements
+    like      match similar values, case sensitive
+    ilike     case insensitive,
+    in        where <col> in (1,2,3)
+    between   rows within range, inclusive
+              requires AND
+              where <col> between 5 and 10
+    and       satisfy two conditions
+    or        either or both of two conditions
+    not       does not match a condition
+              negate any conditional statement
+              
+    is null   no data
+              fields with just spaces are not null
+    is not null
+  
+  Comparison operators
+    if alpha operands use alphabetical ordering
+    
+     =, <> or !=, <=, >=  comparisons
+                equal, not equal, less than or equal, greater than or equal
+
+Sorting
+
+  order by <col> [desc][, <col2>]
+  
+Ascending order is default: a-z 1-x
+
+
+Misc
+  --      Comment
+  /* */   Multi line comment
+
 
 Tables
-    Create 
+    Create
         CREATE TABLE <name> (list of create definitions)
         Create definition: col_name type constraints
-        contraints: [NOT NULL | NULL] [DEFAULT default_value] [AUTO_INCREMENT] [PRIMARY KEY] 
-
+        contraints: [NOT NULL | NULL] [DEFAULT default_value] [AUTO_INCREMENT] [PRIMARY KEY]
+  
         create table aname (first varchar(10), last varchar(20));
     Join
         SELECT title, artist
@@ -23,14 +64,14 @@ Data
         INSERT INTO <table> [(name, age)] VALUES ('value', 23);
 
 Select statements
-    <tables or expressions> 
+    <tables or expressions>
     Examples
         Filtering data with WHERE and Condition List
         Condition List is a boolean expression:
                 wrong: name = 'France' or 'USA'
                 right: name = 'France' or name = 'USA'
         e.g.
-                SELECT name , region FROM cia 
+                SELECT name , region FROM cia
                         WHERE area < 2000 AND gdp > 5000000000
         Filter on a list
                 SELECT name FROM cia
@@ -52,40 +93,20 @@ SELECT T1.KEY, T1.LINK,
   FROM MyTable T1
     INNER JOIN MyTable T2 ON T2.KEY = T1.LINK
 
-For Jet:
-
-SELECT T1.KEY, T1.LINK,
-    IIf(T1.LINK = 0, T1.TEXT, T2.TEXT) AS Message
-  FROM MyTable T1
-    INNER JOIN MyTable T2 ON T2.KEY = T1.LINK
 
 
 Wildcards
-	From cbrowne on TLUG list 10/2/03
-		In standard SQL, the "wildcards" are a little different from what you
-		are accustomed to:
 		- The equivalent to "*" is "%"
 		- The equivalent to "?" is "_"
-		- You use single quotes to enclose strings, so use 'something'
 		   rather than "something".
 
-		PostgreSQL also supports, using the ~ operator, pretty full-scale
-		regular expressions.  So, you might have a query to look for people
-		with names starting with "B":
 		  select * from some_table where name like 'B%';
 
-		If you need case insensitivity, you might use:
-		  select * from some_table where lower(name) like 'b%';
+  		If you need case insensitivity, you might use:
+  		  select * from some_table where lower(name) like 'b%';
 
-		To search for a field 3 characters long, you might try:
-		  select * from another_table where some_column like '___';	
-
-		match operator '~'
-			WHERE '^q' ~ a_column;
+  		To search for a field 3 characters long, you might try:
+  		  select * from another_table where some_column like '___';
 
 
-Methods
-	Generating Database Server-Side Cross Tabulations	
-		http://www.onlamp.com/pub/a/onlamp/2003/12/04/crosstabs.html
-		Cross-tabulations = crosstab, pivot-table, breakdown by ...
 

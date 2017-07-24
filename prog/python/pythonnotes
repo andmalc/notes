@@ -1,3 +1,14 @@
+# Group list by chunks
+L=[3,6,2,9,8]
+for i in range(0,len(L),3):
+    print i,L[i:i+3]
+    0 [3, 6, 2]
+    3 [9, 8, 10]
+    #Or
+    zip(*[iter(L)]*3)
+    thing
+
+
 Data structures {{{1
 
 Tuples:

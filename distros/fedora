@@ -1,6 +1,11 @@
 
 Setup {{{1
 
+Sizes - F 26
+Workstation root partition 5GB
+Default partions: EFI 200M, Boot 1G, Root and Home equal
+
+
 https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
 boot parition must be extX formatted and not in LVM
@@ -185,7 +190,7 @@ Atom editor
 Console {{{3
 
 visudo
-tmux, git, zsh, mlocate
+tmux git zsh mlocate
 
 Other {{{3
 
@@ -272,6 +277,9 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
         --requires <pkg>    show package dependencies
 
 
+rpm file - install dependencies
+yum --nogpgcheck localinstall <pkg file>
+or maybe dnf install <pkg file>
 
 Repos {{{1
 

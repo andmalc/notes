@@ -58,4 +58,7 @@ Balances {{{1
 
 Real time value of all incoming and outgoing Transactions that are posted on an Account
 
+Balances cleared at end of accounting period and amounts 'transfered' to owner's equity.
+
+
 
