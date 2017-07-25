@@ -1,52 +1,53 @@
 
 
-Formulas {{{1
-
-## Formulas
-
-
-
-Sheet/Range format in formulas:
-=importrange("0AsUmBbBY_9iHdHZBYkp6VTZoZkJvTkFhcUFLWXdXTnc";"List!A:A")
-
-
 Sheets {{{1
-//#region [Sheets]
-
-KB:
-Ctrl+space		select column
-Ctrl+shift+right arrow		select all columns
-Ctrl+shift+down arrow		select all rows
-
 
 
 Cell/Range Syntax {{{2
 
+Sheet/Range format in formulas:
+  'Sheet Name'!A1:B2  #single quotes around sheet name with space
+
+
 Range with tab name   ‘tab name’!A2:E
 Absolute cell ref     $A$1
 
-### Row/Column syntax
-A:A     An entire column
-2:2     entire row
-B2:2    row starting with col.
-B:D     contiguous cols.
-B2:D    contiguous cols starting with row
-2:5     contiguous rows
-B2:5    contiguous rows starting with col.
+Row/Column syntax
+  A:A     An entire column
+  B:D     contiguous cols.
+  B2:D    contiguous cols starting with row
+  
+  2:2     entire row
+  B2:2    row starting with col.
+  2:5     contiguous rows
+  B2:5    contiguous rows starting with col.
 
-//#region
+Reference & Connect Ranges with ArrayFormula syntax
+
+{A1:C5}   read-only reference
+          ARRAYFORMULA('myseet'!A:O)
+
+{rng,rng} combine ranges with equal row counts horizontally
+{rng;rng} combine ranges with equal column counts vertically
 
 Text {{{2
 
-Concatenate strings   concat(str1,str2) - 2 args only
-& operator
-Count non-blank text values   counta
-Split text            split(<str>,”<sep>”)
+Concatenate strings
+  concat(str1,str2) - 2 args only
+
+Count non-blank text values
+  counta
+
+Split text
+  split(<str>,”<sep>”)
+
+Convert number into text or date formats
+  text
 
 Regex
 =REGEXEXTRACT(A1,"\d+")
-REGEXMATCH
-REAGEXREPLACE
+  REGEXMATCH
+  REAGEXREPLACE
 
 
 Cell Formats {{{2
@@ -54,7 +55,7 @@ Cell Formats {{{2
 Blank cells are always 'string' format, even when number format applied.
 
 
-Sheet Functionss {{{2
+Functionss {{{2
 
 FIXED(val, # of decimals, thousands sep)
     if thousands sep is blank - shows sep
@@ -66,26 +67,53 @@ unique(rng1, rng2...)
     return unique rows in rng1 AND in optional other ranges.
 
 
-Read-only view of a range
-=ARRAYFORMULA('myseet'!A:O)
 
-Data Management {{{2
+Queries/Data {{{2
 
-Query range with Visualization query language
-=QUERY(harrycdn,"select A,B,C,F,I,J,M")
+Visualization query language
+  https://developers.google.com/chart/interactive/docs/querylanguage
 
-Pivot Table - like
-=QUERY(Data!A1:B6;"select A, sum(B), count(B) group by A")
+  conditional statements
+    contains
 
-Data
+  comparisons
+    <>
+
+
+  Dates
+    select A where B > date '2017-02-22'
+
+Query function
+  query('tab'!range, "select statement with 'quoted string'", [# of header rows, guessed if ommitted])
+  
+  =QUERY(harrycdn,"select A,B,C,F,I,J,M")
+ 
+  Join multiple ranges horizontally with arrayformula syntax
+  =QUERY({range1,range2},"select *")
+
+  Pivot Table - like
+  =QUERY('Data Sheet'!A1:B6;"select A, sum(B), count(B) group by A")
+
+  select F, sum(G) where E != ‘’ group by F label ‘total retweets’
+  
 VLookup
-  vlookup(key-column, source rng, index of cols to return, is first col of source sorted?)
+  Search for key in column
+  vlookup(key cell or column, source rng, index of cols to return, is first col of source sorted?)
+  If search range is 2 dimensional, forumula will return same
   Multi columns index format {1,2,3,4}
   Make sure source range is sorted!
+
+  Make lookup table by placing search cell to left of forumla
+    https://productforums.google.com/forum/#!msg/docs/WOWhf-lGxmo/z7Pec8exAQAJ
+
+HLookup
+  Search for key in row
+
 
 Filtering
 
 httpsabazroberts.wordpress.com/2016/10/26/google-sheets-functions-filter/#gafe
+
 
 Apps Script {{{1
 
