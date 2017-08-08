@@ -1,18 +1,10 @@
 
 
-Sheets {{{1
 
 
-Cell/Range Syntax {{{2
-
-Sheet/Range format in formulas:
-  'Sheet Name'!A1:B2  #single quotes around sheet name with space
+Cell & Range references {{{1
 
 
-Range with tab name   ‘tab name’!A2:E
-Absolute cell ref     $A$1
-
-Row/Column syntax
   A:A     An entire column
   B:D     contiguous cols.
   B2:D    contiguous cols starting with row
@@ -22,18 +14,45 @@ Row/Column syntax
   2:5     contiguous rows
   B2:5    contiguous rows starting with col.
 
-Reference & Connect Ranges with ArrayFormula syntax
+Absolute cell ref     $A$1
 
+Sheet + Range
+  'Sheet Name'!A1:B2  #single quotes around sheet name with space
+
+
+Reference & Connect Ranges
 {A1:C5}   read-only reference
           ARRAYFORMULA('myseet'!A:O)
 
 {rng,rng} combine ranges with equal row counts horizontally
 {rng;rng} combine ranges with equal column counts vertically
 
-Text {{{2
+Reference range in external file
+=importrange("<ss key from URL>","sheet!A:D")})
+
+ArrayFormulas {{{1
+
+write a formula once, and apply it to an entire row or column
+arg must be a range, not a cell
+write a formula as you normally would (e.g. VLOOKUP, rewrite any individual cells (A2) as ranges (A2:A)
+use instead of copy/paste to populate an entire column
+
+Shortcut Ctrl+Shift+Enter
+
+Cell Formats {{{1
+
+Blank cells are always 'string' format, even when number format applied.
+
+Alignments:
+    str     left
+    number  right
+    boolean centre
+
+Text {{{1
 
 Concatenate strings
   concat(str1,str2) - 2 args only
+  aspersand: =A1 & "blah"
 
 Count non-blank text values
   counta
@@ -44,18 +63,39 @@ Split text
 Convert number into text or date formats
   text
 
+Escape " CHAR(34)
+    https://en.wikipedia.org/wiki/List_of_Unicode_characters
+
 Regex
 =REGEXEXTRACT(A1,"\d+")
   REGEXMATCH
   REAGEXREPLACE
 
 
-Cell Formats {{{2
+Dates {{{1
 
-Blank cells are always 'string' format, even when number format applied.
+Get numeric version of date by switching cell format to number
+
+functions
+  return date value
+    today       today's date
+    today()-#   # days in past
+    
+    date(yyyy-mm-dd)  returns date value
+ 
+  take date value
+    month   number for month (7=July)
+    day     day of month
+    weekday number for day of week (4=Wednesday)
+    year    year portion of date
 
 
-Functionss {{{2
+examples
+  =DATE(YEAR(TODAY()), MONTH(TODAY()), 1)
+    first day of month
+
+
+Functions {{{1
 
 FIXED(val, # of decimals, thousands sep)
     if thousands sep is blank - shows sep
@@ -68,40 +108,18 @@ unique(rng1, rng2...)
 
 
 
-Queries/Data {{{2
-
-Visualization query language
-  https://developers.google.com/chart/interactive/docs/querylanguage
-
-  conditional statements
-    contains
-
-  comparisons
-    <>
-
-
-  Dates
-    select A where B > date '2017-02-22'
-
-Query function
-  query('tab'!range, "select statement with 'quoted string'", [# of header rows, guessed if ommitted])
-  
-  =QUERY(harrycdn,"select A,B,C,F,I,J,M")
- 
-  Join multiple ranges horizontally with arrayformula syntax
-  =QUERY({range1,range2},"select *")
-
-  Pivot Table - like
-  =QUERY('Data Sheet'!A1:B6;"select A, sum(B), count(B) group by A")
-
-  select F, sum(G) where E != ‘’ group by F label ‘total retweets’
-  
 VLookup
   Search for key in column
-  vlookup(key cell or column, source rng, index of cols to return, is first col of source sorted?)
+  vlookup(key cell or column, source rng, index of cols to return, if_sorted)
   If search range is 2 dimensional, forumula will return same
   Multi columns index format {1,2,3,4}
-  Make sure source range is sorted!
+
+  Source Range
+    use absolute cell refs
+    if_sorted: 
+        match on interval
+        make sure column really is sorted to avoid wrong matches
+
 
   Make lookup table by placing search cell to left of forumla
     https://productforums.google.com/forum/#!msg/docs/WOWhf-lGxmo/z7Pec8exAQAJ
@@ -114,6 +132,62 @@ Filtering
 
 httpsabazroberts.wordpress.com/2016/10/26/google-sheets-functions-filter/#gafe
 
+
+Queries{{{1
+
+query('tab'!range, "select statement with 'quoted string'", [# of header rows, guessed if ommitted])
+  
+Visualization query language
+  https://developers.google.com/chart/interactive/docs/querylanguage
+
+  conditional statements
+    where
+        contains
+        matches
+            regex
+        like
+            % wildcard
+
+  comparisons
+    <>
+
+
+Aggregate
+    avg, sum, count
+  
+    =QUERY('Data Sheet'!A1:B6;"select A, sum(B), count(B) group by C")
+    select F, sum(G) where E != ‘’ group by F label ‘total retweets’
+
+Sorting
+    order by count(B) desc
+
+Filtering
+    Not null: <col> !=''
+
+Label column
+    label count(B) 'count'
+
+Dates
+    date in string
+    "select A where B > date '2017-02-22'"
+
+    date in cell
+        https://youtu.be/LFZnSY0YdwU?list=PLv9Pf9aNgemvr7NVz4bMr7TEQgiENfUgs
+
+        "select X where D > date '" & text(B1,"yyyy-mm-dd") & "'" (best way?)
+
+
+
+
+
+Join multiple ranges horizontally with arrayformula syntax
+  Use Col# format to reference columns
+  Use importrange if either range in external sheet
+  If error, run importrange on its own to prompt for access permission
+
+  =QUERY({range1,range2},"select Col1, Col3"
+
+  
 
 Apps Script {{{1
 

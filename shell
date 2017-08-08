@@ -39,6 +39,10 @@ xargs
         autoload -U zargs
         zargs **/*~ -- rm
 
+Exclude directories in Bash
+    shopt -s extglob
+    echo rm -rf ./!(bin|sbin|usr|...)
+
 Line editing {{{1
 
 ^l	clear screen

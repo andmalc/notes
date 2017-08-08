@@ -68,6 +68,8 @@ Shifting
 		r/R				rotate windows downwards/upwards
 		K/J/H/L			move current to top/bottom/left/right, full width
 
+        :tab split      open split window into own tab and displays tab bar
+                        zoom window
 Scrolling 
 		C-F/B			scroll forward/back by screen
 		C-E,D			down 1 line, 1/2 screen down
@@ -277,11 +279,13 @@ registers
 
 
 Normal mode {{{2
+
 Deleting
 	[x]x		Delete [x] characters under and after the cursor
 	[x]X		Delete [x] characters before the cursor
 	nD, d$		Delete to end 
 	dd			Delete whole line		
+	cc			Delete whole line, preserving autoindent, enter insert mode
 	J			join lines (ie delete EOLs)
 	J/:j		Join n lines of text, add spaces in place of removed EOLs.	
 						If joinspaces is on, insert two spaces after .,!, or ?	
@@ -324,6 +328,7 @@ Replace mode:
 Copying and Moving
 		syntax: reg/visual block, y or d, motion
 		yy, Y			yank whole line
+        y$              yank to end of line
 		p, P			put a register after/before the cursor position 
 		]p				like p, but adjust indent to current line
 		[p				like P, but adjust indent to current line

@@ -152,6 +152,27 @@ Shell & running executables {{{1
 
 Run external programs {{{2
 
+Recommended 
+
+Click
+   builds cli apps
+   http://click.pocoo.org/5/
+
+sh 
+   https://amoffat.github.io/sh/
+
+shutit
+  https://learnxinyminutes.com/docs/shutit/
+
+invoke
+  task execution
+  http://www.pyinvoke.org/
+fabric
+  run/automate programs over ssh
+  related ? to invoke
+  http://www.fabfile.org/
+
+
 Subprocess module
 	http://docs.python.org/library/subprocess.html
 	http://www.doughellmann.com/PyMOTW/subprocess/

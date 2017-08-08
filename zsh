@@ -70,7 +70,6 @@ parameter expansion
     ${name} - braces are optional
 
 
-
 Command Line Editing {{{1
 
 (Meta = Alt, ^ = Ctrl+ \e = Escape) 

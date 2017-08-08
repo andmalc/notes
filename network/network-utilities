@@ -10,6 +10,8 @@ trace packets
 	tcpdump
 
 nmap 
+    cheat sheet saved at Drive/Share/pdf
+
     detect hosts on network
         192.168.0.* | grep Host
     -sn     ping scan
