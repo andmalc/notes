@@ -5,6 +5,7 @@ Console {{{1
 Ranger console file manager
 http://ranger.nongnu.org/
 
+ncdu    ncurses util for visualizing disk space usage
 
 fzf - command-line fuzzy finder written in Go
 https://github.com/junegunn/fzf

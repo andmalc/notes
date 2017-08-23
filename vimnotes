@@ -200,6 +200,11 @@ t<marker>
 
 Motions {{{1
 
+
+Line movement
+    set rnu (relative line numbering) to see # of line from insertion point
+
+
 w/W		beginning of next word/blank separated words, same for other motions incl. gE for blank sep ge.
 space	move right
 b		move to beginning of current word

@@ -1,6 +1,7 @@
 
 Add 32bit support
 sudo dpkg --add-architecture i386 
+Package names:  <name>:i386
 
 install deb with dependencies
     gdebi  
