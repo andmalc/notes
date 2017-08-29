@@ -60,6 +60,9 @@ emmet.vim           expands HTML tag abrieviations
 
 Graphical editors {{{1
 
+Oni - neovim 
+https://github.com/extr0py/oni
+
 Atom
 Developed by GitHub
 Based on Electron
