@@ -64,6 +64,20 @@ List processes using a file or filesystem
 Resources not in use are not listed.
 
 
+lspci
+    cat /proc/pc
+
+lsusb
+
+lscpu
+
+lsmod
+    cat /proc/modules
+
+/proc/bus/input/devices
+    input devices
+
+
 Video drivers {{{1
 
 Show Intel graphics mesa version
