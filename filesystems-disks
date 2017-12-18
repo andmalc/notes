@@ -411,6 +411,7 @@ Create
             -l 100%FREE
         snapshot
             -s origin [name|path]
+            lvcreate -s /dev/mapper/vgmain-root26 -L 10G -n root26bak
         thin vols
             -T --thin
             -V --virtualsize    
