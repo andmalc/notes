@@ -3,7 +3,7 @@ ADB {{{1
 
 Install 
     on fedora android-tools pkg
-    Debian android-tools-adb
+    Debian android-tools-adb android-tools-fastboot 
 
     Direct download
     https://developer.android.com/studio/releases/platform-tools.html
