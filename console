@@ -1,8 +1,11 @@
 
 console 
+    traditionally physical input/output device =  teleprinter 
     provides a way for the kernel and other processes to 
         receive text input from the user, typically entered with keyboard 
         send text output to the user, typically on a computer monitor
+
+     teleprinter = tty 
 
     console listens on stdin for character input and sends to shell or program running in shell
 

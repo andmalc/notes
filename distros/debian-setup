@@ -1,3 +1,5 @@
+Minimal Gnome on Stretch
+aptitude install --without-recommends gdm3
 
 Add 32bit support
 sudo dpkg --add-architecture i386 

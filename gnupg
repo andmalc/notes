@@ -1,3 +1,17 @@
+Generate ed25519 compat keys
+    Ed25519 is protocol for digital signature
+    X25519 protocol for encryption
+
+    gpg --expert --full-gen-key
+        choose 9, 1
+
+    add Curve25519 for ssh auth
+        gpg --expert --edit-key 
+        11 for Authentication
+        Toggle Authentication
+        save
+        1 for Curve25519
+        save
 
 http://www.pps.univ-paris-diderot.fr/~jch/software/pgp-validating.html
 https://fedoramagazine.org/gpg-using-your-key/

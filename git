@@ -42,16 +42,20 @@ Checkout cid
     If branch given, modified files in working dir retained unless forced -f 
     If no branch name, update the working tree to match the index
 
+Index 
+    includes snapshot of all files, not just staged.
+    new blob created for added/modified files 
+    is the new commit.
+
 origin      
     default name of remote branch
     remote branches locally referred to as origin/branch_name
     Can then c/o with 'co <name>'.  Remote is 'upstream'
     origin/master = refs/remotes/origin/master
 
-Index 
-    includes snapshot of all files, not just staged.
-    new blob created for added/modified files 
-    is the new commit.
+
+Remote 
+    like a bookmark for a repository
 
 
 Merge commits  multiple parents
@@ -209,6 +213,8 @@ Set upstream branch
     branch -b <branchname> --track origin/<remote b name>
     push --set-upstream origin gh-pages
 
+Change remote 
+    git 
 show-branch show all changes in branch
 
 
