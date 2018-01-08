@@ -97,34 +97,9 @@ command) arg
 
 
 
-
-Grep {{{1
-
-grep pat path 
-
-
-grep -v "^#"
-
--i	case insensitive search
--r	recursive - search subdirectories
-\	Backslash - a quoting character
--c pat	Count occurences of pattern
-	grep -r pat /usr/local/... 
-
-Egrep
-	Extended searching.  
-	Quote expression and surround each regex with () and use:
-	+	1=> occurances
-	?	0<>1 occurances
-	|	OR operator
-
-	-f	Search for list of patterns in a file
-	
-
 Locate {{{1	
 
 Match filename patterns:  if pat contains no metacharacters, pat can match any part of filename.
 
 Try also: 'slocate' (?)
-
 

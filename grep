@@ -1,19 +1,26 @@
-Pattern matching with regex, not shell syntax
-Will match anywhere on a liine
+Filtering tool
 
-Find alternatives:
-grep 'str1\|str2' filename
-
+grep pat path 
 
 options
+    -c pat	Count occurences of pattern
+    -i	case insensitive search
 	-w	match whole words
 	-s	dont print access denied messages, etc
 	-l  only list matching files
     -A# after context
+    -r	recursive - search subdirectories
 	-v  exclude match
 
-Matching
-    ^/$   beginning/end of line (anchors)
+
+
+
+Pattern Matching {{{1
+
+Pattern matching with regex, not shell syntax
+Will match anywhere on a liine
+
+^/$   beginning/end of line (anchors)
 
 Bracket expressions
     [abc]  match if any character 
@@ -21,6 +28,9 @@ Bracket expressions
 
 Character classes
     [:upper:]
+
+Find alternatives:
+grep 'str1\|str2' filename
 
 Repitition
     *   zero or more times
@@ -32,7 +42,21 @@ Repitition
 Grouping
     ()  Enclose group.  Escape if not extended
 
+
+Egrep
+	Extended searching.  
+	Quote expression and surround each regex with () and use:
+	+	1=> occurances
+	?	0<>1 occurances
+	|	OR operator
+
+	-f	Search for list of patterns in a file
+	
+
+Tips {{{1
+
+Exclude blank lines
+grep -v "^#"
+
 excluding files under zsh
 	grep -irl thing (*~*html)(.)
-
-
