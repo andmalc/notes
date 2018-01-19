@@ -10,50 +10,84 @@ Options
 
 
 Commands 
-    list-sessions
-	new-session             -s
-    attach to target        -a -t
     Redraw on bigger screen -d      
+
+Sessions {{{1
+
+Options
+    new session         new -s <session name>
+    list                list-sessions / ls
+    attach to target    attach/a -t <name>
+    kill                kill-session -t <name>
+
+$       rename session
+()      switch to previous/next session
+s       list-sessions
+        highlight a session with vi or arrow keys.  Right arrow to expand windows
+
 
 
 Windows {{{1
-l       last window
-n/p     switch to next/previous window
-arrow   move to other window or pane
+
+Options
+    create window       -n <name>
+
+Prefix+
+1,2,3   move to window #
+C+n/p     switch to next/previous window
 ,       rename window
 &       kill window
+w       list sessions & windows
+
+?:
+l       last window
+arrow   move to other window or pane
 [       scroll	
-w       list windows
+
 
 join-pane -s # -t #		Two windows into 2 panes
 
+move-window
+    move within session or to another one
+    window id format: [<session name>]:<window #>
+    shortcut: .
+
 Panes  {{{1
 
-cmd -t target arg
-    client, session, window or pane which a command should affect.
+Options
+    cmd -t target arg
+        client, session, window or pane which a command should affect.
 
 break-pane
     switch current pane into its own window
+    shortcut !
 
-join-pane
+join-pane 
     insert a window as a panel in current
-    -s source_panel     panel to be inserted into current window
+    window id format: [<session name>]:<window #>
+    -s source pane #     pane to be inserted into current window
     -p percent
+    -t target - default: current window
+
 
 split-window into panes 
     split current window or -t # window 
-    -v  vert (default, to right)
-    -h  horiz (to below)
-    -b  to left or above
+    -v  vert - windows stacked. Default
+    -h  horiz - windows side by side
+    -b  combine with v or h for active pane to left or above
+    shortcuts
+        -   split window vertical (modified from ")
+        |   split window horizontal (modified from %)
 
 resize-pane
     Ctrl + up,down, left, right
+    -Z      zoom
+    shortcut: z
+
 
 select-layout
     <space>
 
-|       split window horizontal (modified from %)
--		split window vertical (modified from ")
 ;       last active pane
 o		other pane in current window
 z       toggle hide other panes (?)
@@ -81,6 +115,29 @@ Session Managers {{{1
 tmuxp
 http://tmuxp.git-pull.com
 
+Copy mode {{{1
+
+Copy:
+1. move to start
+2. Space
+3. move to end
+4. Enter
+
+Vi mode movement keys: h,j,k,l
+
+Exit Copy mode: Enter or Esc
+
+w/b     word forward/back
+g/G     file top/bottom
+/?      search forward/back
+
+Commands
+    show-buffer     show current buffer contents
+    save-buffer <file>
+    capture-pane
+    choose-buffer   select a buffer and paste into current pane
+
+
 Plugins {{{1
 
 tpm manager
@@ -88,3 +145,17 @@ tpm manager
 
     tmux-resurrect
         prefix + Ctrl-s/r   save/restore
+
+    tmux-continuum
+        saves all sessions using tmux-resurrect every fifteen minutes
+        auto restore on tmux start
+        Option to auto start tmux with systemd
+
+Startup script {{{1
+
+​if​ ! tmux has-session -t development; ​then​
+ ​exec tmux new-session -s development -d
+​ 	  ​# other setup commands before attaching....​
+​ 	​fi​
+​ 	exec tmux attach -t development
+

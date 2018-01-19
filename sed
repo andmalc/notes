@@ -5,6 +5,8 @@ Docs
 
 
 Basic sed operatation: 
+$ sed "s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file>.
+
 options:
 	read each line of input 
 	each line in turn becomes the current line.  

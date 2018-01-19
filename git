@@ -11,10 +11,22 @@ Terms {{{1
 Repo is set of commits
 
 Commit:
-    pointer to a tree obj which is snapshot of all files & dirs
+    pointer to a tree obj which is snapshot of all files & dirs created by git add
     author & commiter info
     commit message
     except for first 'root' commit, stores zero or more pointers to parent commits
+
+Commit ID
+    SHA-1 checksum of the commit’s contents
+
+    relative references to a commit ID: ~#
+        ~1  one commit before current
+
+
+Index 
+    staging area for new commit and becomes the new commit
+    includes snapshot of all files, not just staged.
+    new blob created for added/modified files 
 
 Refs
     Simple - points to commit ID
@@ -25,27 +37,23 @@ Branch
     branch moved forward on each commit
 
     Master      default name of first branch
-    HEAD        Normally symbolic ref to /refs/heads/<branch name>
-                This defines which branch is on
-                If earlier commit checked out, is hard link to commit ID.
-                Then in detached HEAD mode, not on branch
 
-    HEAD 
-        usually symbolic ref - 
-        refers to tip of current local branch.  
-        Detatched if is simple ref.
-        Checking out branch moves this pointer.  
+HEAD        
+    Normally symbolic ref to /refs/heads/<branch name>
+    refers to tip of current local branch.  
+    This defines which branch is on
+    is parent of next commit
+    If earlier commit checked out, is hard link to commit ID.
+    Then in detached HEAD mode, not on branch
+
+    Detatched if is simple ref.
+    Checking out branch moves this pointer.  
 
 Checkout cid
     Change the HEAD symref to point to the new  branch 
     Reset the index to match the tip of the new branch 
     If branch given, modified files in working dir retained unless forced -f 
     If no branch name, update the working tree to match the index
-
-Index 
-    includes snapshot of all files, not just staged.
-    new blob created for added/modified files 
-    is the new commit.
 
 origin      
     default name of remote branch
@@ -91,7 +99,8 @@ Set new remote
 
 Info {{{1
 
-Status 
+Status              shows status of working dir & staging 
+                    Vs. Log which shows commit history
 	-sb				short form
 					Red is changed or untracked
                     Green is staged
@@ -124,12 +133,17 @@ show [cid]
 
 Log - shows commit history
 	-#				number of commits to show
-	 -p				show diffs	
 	 --grep			matching string
-	 --stat			short summary of files and changes
 	 --decorate --graph --oneline --all
-     --grep
-	 <path>			show commits with this file
+                    show branch grath
+     --grep         grep commit messge
+     --oneline
+
+	 <path>			show commits to this file only
+
+    also show files changed:
+         --stat			short summary of files and changes
+         -p				show diffs	
 
 ls-files
     Show tracked files in working tree & index.  
@@ -145,10 +159,16 @@ Add & Commit {{{1
 
 
 add <path spec>
+    creates snapshot of file which is later used by commit
     -i  interactive
+    -p  stage subsections of a file
 
 commit -v			show diff in commit message
-commit -a			commit all tracked files
+
+commit -a		commits all staged and changed tracked files including deletes
+                bypasses staging
+                untracked files excluded
+                
 
 Show remote commit
     ls-remote
@@ -169,7 +189,9 @@ revert <commit>
 Reset
 	reset				Unstages all, no effect on files 
 	reset -p			unstage interactively
-   
+  
+    Unstages change in Index - undoes add
+        reset HEAD -- <file>
     Undo last commit, preserving local changes
         reset --soft HEAD~1
     Undo last commit, preserving local changes in index

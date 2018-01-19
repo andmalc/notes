@@ -1,43 +1,28 @@
-attributes
-	ownership
-		user & users imply noexec, nosuid, & nodev unless subsequently
-		overriden 
-			e.g. -o user[s],exec,suid
-		"auto, uid=500, gid=100" 
-			take all ownership of files in mounted partition.
+Listing {{{1
 
-restricting access
-	Colin Watson
-		There should be no need to apply the restrictive permissions to
-		subdirectories too, because once execute permission is withheld on
-		a parent directory you can't get to the subdirectories anyway 
-	in /home - chmod * 700
-	in adduser.conf
-		DIR_MODE=700
+ls {{{2
+
+Options
+    t   newest modification at top 
+    R   recursive
+    C   list in columns
+    A   hidden but omit ./..
+
+Tips
+    ls -RC  recursive in columns 
+    ls -AFC - Show types, hidden but not ./.., in columns
 
 
-File & USER ADMIN & SECURITY
 
-type command - shows command path
+Attributes {{{1
 
-Groups: Password file contains entry (at end of line) for user's default
-group.  Additional group membership in groups file.
+ownership
+    user & users imply noexec, nosuid, & nodev unless subsequently
+    overriden 
+        e.g. -o user[s],exec,suid
+    "auto, uid=500, gid=100" 
+        take all ownership of files in mounted partition.
 
-
-Ownership
-	Only root can change ownership. 
-	Only owner can change group - must be a member of new group.
-
-mv	ownership doesn't change except accross file systems
-cp	new file created.  User owns created file.
-
-File Permissions
-    Docs
-        unix man page at:
-            www.neosoft.com/neosoft/man/chmod.1.html
-		http://www.library.yale.edu/~lso/workstation/docs/permissions/
-		permissions for shared directories
-			http://helpdesk.ua.edu/unix/tipsheet/tipv3n7.html
 
 Stickiness
 	Files 
@@ -60,7 +45,8 @@ setuid & setguid
 				3. chmod g+s or leading 2, chmod 2xxx
 			file moved in not affected, files copied are
     
-Permissions 
+File & Dir Permissions {{{1
+
 File Permissions
     r 4  read
     w 2  write
@@ -80,13 +66,21 @@ Directory Permissions
     s   setuid and guid
 		set guid: sudo chmod g=rxs <dir>
 
+restricting access
+	in /home - chmod * 700. No need for restrictive permissions on subdirs
+	in adduser.conf
+		DIR_MODE=700
+
+
+Mode Octal {{{1
+
 Modes are absolute (using octal numbering) or symbolic
 
-File Mode Octal Examples 
+File
 	600		personal
 	644, 664	readonly for group or world
 
-Directory Octal Mode Examples
+Directory 
 	700		personal
 	750		group read
 	775		group access, world read
@@ -98,13 +92,9 @@ Special modes
     4000    set user ID on execution
     2000    set group ID on execution
     1000    sticky bit
-
-
-who=perm
-    =rw,+X  set rw to defaults, retain ex that are already set
-    u=rwx,go=rx (755) file is rx by everyone, w by owner only
-    go= clear all modes for go
-    g=u,u-w set group bits equal to user bits but clear g write bit
-
 umask	restricts access - subtracted from default mode
+
+Groups: 
+    Password file contains entry (at end of line) for user's default group.  
+    Additional group membership in groups file.
 

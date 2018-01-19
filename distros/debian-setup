@@ -141,6 +141,9 @@ Locales
 
 date/time
 	timedatectl
+    manual method:
+        unlike /etc/localtime
+        ln -s /usr/share/zoneinfo/America/Toronto /etc/localtime
 
 Install missing archive key
 	wget http://www.voyage.hk/dists/experimental/archive.key 

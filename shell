@@ -21,16 +21,9 @@ Graphical login:
     does not create a login shell
     controlled by session or window manager
 
-Docs
-	http://www.gnu.org/software/bash/manual/html_node/index.html#SEC_Contents
-
-
 Quick write to file
     tee myfile <<< blahblah
     tee -a myfile <<< xxx #appends
-
-Python in shell
-https://github.com/Russell91/pythonpy
 
 
 xargs 
@@ -39,9 +32,6 @@ xargs
         autoload -U zargs
         zargs **/*~ -- rm
 
-Exclude directories in Bash
-    shopt -s extglob
-    echo rm -rf ./!(bin|sbin|usr|...)
 
 Line editing {{{1
 
@@ -410,43 +400,5 @@ Key Binding {{{1
 			http://zsh.sunsite.dk/Guide/zshguide04.html#l76
 
 
-
-
-Prompts & Xterm Titles {{{1
-
-	PROMPT='%<control char><rest of prompt>'
-	# if privilaged, otherwise %  %#
-	\e      escape sequence for escape (ESC)
-	\a      escape sequence for bell (BEL)
-	%n      expands to $USERNAME
-	%m      expands to hostname up to first '.'
-	%/	cwd
-	%~      expands to cwd, replacing $HOME with '~'
-
-Prompts with color
-	[3<0-9>m sets color where <0-9> is color number
-	Ctrl+v+<Esc> enters an escape in a string but prints as '^['
-	PROMPT='^[[3<color #>m zsh%% ^[[30m' gives a colored prompt of 'zsh%' 
-
-Recommended prompt:
-	PROMPT=$(echo '%{\033[31m%}%m>%{\033[30m%}')
-	RPROMPT=$(echo '%{\033[32m%}%~%{\033[30m%}')
-
-Prompt to show a '+' when in a subshell
-	PS1='%(2L.+.)%# '
-
-Title print:
-	Basic pattern:
-		* ESC]0;stringBEL -- Set icon name and window title to string
-		* ESC]1;stringBEL -- Set icon name to string
-		* ESC]2;stringBEL -- Set window title to string
-
-	So, if \e is escape and \a is Bell
-	Under zsh, -P enables % sequences above, or use variables like ${USER}
-	without the -P.
-		print -Pn "\e]0;Thing\a"
-		print -n "\e]0;${USER}@${HOST}\a"
-
-	See zsh notes on precmd & preexec for adding job info.
 
 
