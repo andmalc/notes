@@ -37,8 +37,30 @@ modeline
             " vim:ts=4 sw=4
             /* vim:set ai et sts=2 sw=2 tw=80: */   #this format when comment needs closing 
 
-Windows/ui/Interface {{{1
-Windows 
+Interface {{{1
+
+status line
+create		ls=2
+set
+	set statusline=%f\ %P col %v  
+		format
+	see statusline help for printf flags
+
+show status		Ctrl+G
+
+cmdheight		
+				# of screen lines in command output
+titlestring 
+		set titlestring=New\ Title
+						set titlestring=%{&statusline}\ %F
+
+Show/Display Line Numbers
+  set number/nu, nonumber/nonu	show,hide line numbers
+  n,n#	temporarily show numbers on lines n,n
+  .=	show current line number
+
+
+Windows  {{{1
 
 Opening
     sv      vertical split
@@ -86,20 +108,6 @@ Scrolling
 layout
 		mkview [n], loadview [n]   - saves window options including folds
 		
-status line
-create		ls=2
-set
-	set statusline=%f\ %P col %v  
-		format
-	see statusline help for printf flags
-
-show status		Ctrl+G
-
-cmdheight		
-				# of screen lines in command output
-titlestring 
-		set titlestring=New\ Title
-						set titlestring=%{&statusline}\ %F
 
 
 Files {{{1
@@ -113,7 +121,9 @@ r		read in file
 
 bro[wse] {command} [dir name] for commands including :e & :w, open a file browser.
 
-
+Preview window
+    pedit <file>    open
+    C-W z           close
 
 
 buffer list
@@ -162,21 +172,24 @@ eol styles
 		also: cygwin/utils u2d & d2u
 
 Folding {{{1
-		Option to include fold markers within a comment
-				e.g. set cms=..\ %s   'docutils comment format
-		Foldlevel: higher foldlevel = more branches open
-				zm		- fold more - subtracts 1 from fl. (less shown)
-				zr		- fold less - adds 1 to fl. (more shown)
-				zR		- open all
-				zM		- fold all
-		Opening
-				Nzo		Open N fold levels under cursor
-				zO		Open all folds under cursor
-				zc to close a fold
-				zC to close it all the way
-				zo to open it
-				zO to open it all the way
-				zr/R	reduce 1/reduce all folding
+
+Option to include fold markers within a comment
+        e.g. set cms=..\ %s   'docutils comment format
+Foldlevel: higher foldlevel = more branches open
+        zm		- fold more - subtracts 1 from fl. (less shown)
+        zr		- fold less - adds 1 to fl. (more shown)
+        zR		- open all
+        zM		- fold all
+Opening
+        Nzo		Open N fold levels under cursor
+        zO		Open all folds under cursor
+        zc to close a fold
+        zC to close it all the way
+        zo to open it
+        zO to open it all the way
+        zr/R	reduce 1/reduce all folding
+
+
 Lookups & Word Completion {{{1
 
 :help ins-completion
@@ -207,27 +220,32 @@ t<marker>
 Motions {{{1
 
 
-Line movement
-    set rnu (relative line numbering) to see # of line from insertion point
 
-
+Words
 w/W		beginning of next word/blank separated words, same for other motions incl. gE for blank sep ge.
-space	move right
 b		move to beginning of current word
 e		move to end of current word
 ge,E	back to end of word
-n +,-	move n lines on non blank in column 1
+
+Sentences etc.
 )(		sentences forward, backward
+{,}		move by sentences or blocks
 }{		paragraphs forward, backward
 ]],[[	sections, forward, backward, start of sect
 ][,[]			""				, end of sect
-{,}		move by sentences or blocks
 
+space	move right
+
+Line
+set rnu (relative line numbering) to see # of line from insertion point
+n +,-	move n lines on non blank in column 1
+
+
+Move to Character
 [n]f/F<char> 
 	move to nth next/prev char in line.  ; to repeat
 [n]t/T	same but exclusive
 	eg: c2t) - change within 2nd bracket
-
 
 		
 Tags & Jumps
@@ -292,26 +310,31 @@ registers
 Normal mode {{{2
 
 Deleting
+    
+	C-H		Delete char left
+	C-W		Delete word left
+	C-U		Delete line left
+   
+   Word
 	[x]x		Delete [x] characters under and after the cursor
 	[x]X		Delete [x] characters before the cursor
-	nD, d$		Delete to end 
+	daw/W		Deletes whole words, before & after cursor
+	de			delete to end of word, leave space
+	db			delete word previous
+	
+    Line
+    nD, d$		Delete to end 
 	dd			Delete whole line		
 	cc			Delete whole line, preserving autoindent, enter insert mode
 	J			join lines (ie delete EOLs)
 	J/:j		Join n lines of text, add spaces in place of removed EOLs.	
 						If joinspaces is on, insert two spaces after .,!, or ?	
-	de			delete to end of word, leave space
-	db			delete word previous
 	gp			put, leave cursor after
 	"n...		With deletion commands (d,c,s) remove text into buffer n.
 						With paste/put command, put from buffer n
 	[dc][/?]text		
 			Delete/change from current position search to text
 			Use text object specifiers with delete:
-	daw/W		Deletes whole words, before & after cursor
-	C-H		Delete char left
-	C-W		Delete word left
-	C-U		Delete line left
 
 Changing
 	   cw	   change word 
@@ -490,7 +513,26 @@ Python file settings {{{1
 		set autoindent
 		autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
-Formating {{{1
+Display special characters {{{1
+
+
+set list - shows tabs & line endings
+        tabs CTRL-I
+        end of line $
+        see listchars
+
+Find tabs & spaces
+    " Show all tabs:
+    /\t
+    " Show trailing whitespace:
+    /\s\+$
+    " Show trailing whitespace only after some text (ignores blank lines):
+    /\S\zs\s\+$
+    " Show spaces before a tab:
+    / \+\ze\t
+
+
+Auto Formating {{{1
 
 commands
         gq[motion]		
@@ -519,6 +561,16 @@ formatoptions (fo)
 						
 Search & Replace {{{1
 
+%s/foo/bar/g
+    Find each occurrence of 'foo' (in all lines), and replace it with 'bar'.
+
+s/foo/bar/g
+    Find each occurrence of 'foo' (in the current line only), and replace it with 'bar'.
+
+%s/foo/bar/gc
+    Change each 'foo' to 'bar', but ask for confirmation first.
+
+
 g/pat/p			   print all lines in file matching pat
 
 		/ ?				Search forward/backward
@@ -538,21 +590,6 @@ g/pat/p			   print all lines in file matching pat
 		Regex atoms
 				\<		start of word
 
-debuging 
-        set list - shows tabs & line endings
-                tabs CTRL-I
-                end of line $
-                see listchars
-
-Find tabs & spaces
-    " Show all tabs:
-    /\t
-    " Show trailing whitespace:
-    /\s\+$
-    " Show trailing whitespace only after some text (ignores blank lines):
-    /\S\zs\s\+$
-    " Show spaces before a tab:
-    / \+\ze\t
 
 Ex Mode {{{1
 
@@ -564,10 +601,6 @@ Command Line
 				Ctrl U			Delete line to left
 		@:		repeat last ex command
 
-Show/Display Line Numbers
-  set number/nu, nonumber/nonu	show,hide line numbers
-  n,n#	temporarily show numbers on lines n,n
-  .=	show current line number
 
 q:	display Ex history, can edit and reexecute
 

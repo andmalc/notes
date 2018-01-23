@@ -1,37 +1,104 @@
 
-Shell types
-    Login shell
-        force: su - andmalc
-        test: echo $0 - if result is -<shell name> is login
-
-    interactive, login
-        login at text console, SSH, or with su -
-    non-interactive login 
-        is rare
-        Only if window manager reads /etc/profile or .profile
-    interactive, non-login
-        start a shell in terminal or start a shell inside another
-        rc config files are read
-    non-interactive, non-login
-        common
-        when programs run another with a script
-        .env config files read
-
-Graphical login: 
-    does not create a login shell
-    controlled by session or window manager
-
-Quick write to file
-    tee myfile <<< blahblah
-    tee -a myfile <<< xxx #appends
-
-
 xargs 
     takes a newline separated list and maps the list to a command
     under zsh use zargs
         autoload -U zargs
         zargs **/*~ -- rm
 
+Copy last command into file
+    echo "!!" > filename
+
+
+Shell types {{{1
+
+Login shell
+    force: su - andmalc
+    test: echo $0 - if result is -<shell name> is login
+
+interactive, login
+    login at text console, SSH, or with su -
+non-interactive login 
+    is rare
+    Only if window manager reads /etc/profile or .profile
+interactive, non-login
+    start a shell in terminal or start a shell inside another
+    rc config files are read
+non-interactive, non-login
+    common
+    when programs run another with a script
+    .env config files read
+
+Graphical login: 
+    does not create a login shell
+    controlled by session or window manager
+
+
+File Descriptors & Redirection {{{1
+
+Redirection
+http://en.wikipedia.org/wiki/Redirection_(Unix)
+
+Standard I/O
+Stdin, stdout, and stderr are default both interactively and in a script
+by convention numbered 0, 1, and 2.  
+Redirection is changing any of these default means of input or output
+
+
+Redirect to/from files {{{2
+
+keyboard as input
+    cat
+
+file as input
+    cat < file
+    < file cat
+
+output to file
+    program-name > out.txt
+    e.g. ls > directorylisting.txt
+    use >> to append to file
+
+
+To specify the file with a number, place the number before the >
+	program-name 1> out.txt
+	program-name 2> errors.txt
+
+Redirect both stdin and stderror 
+	Traditional format: cmd logfile 2>&1
+	New format: cmd >& logfile (not with teed output)
+
+Redirect to file and show on screen
+	cmd | tee logfile 2>&1
+
+Drop errors	
+	2> /dev/null
+
+Standard out from a command in a sub-shell to a file:
+(ls -) > file
+	
+Quick write to file
+    tee myfile <<< blahblah
+    tee -a myfile <<< xxx #appends
+
+
+Heredoc/string {{{2
+
+cat > newfile
+Enter text
+^D
+
+cat > filename <<+
+stuff
++
+
+Append string to existing file:
+cat >> /etc/apt/apt.conf << .
+hi!
+.
+
+Herestring:
+tr a-z A-Z <<< "one two three"
+ONE TWO THREE
 
 Line editing {{{1
 
@@ -78,29 +145,25 @@ Brackets []
 Expands text as output from command
 
 Quoting {{{1
+	
+Single quoted string enloses literals 
+A double quoted string is evaluated for shell variables or backslash escaping.
+
+'xxx'	strong quotes 
+        * no expansion or metacharacters
+""xxx"	weak quotes 
+        * $, `, and \ not disabled
+        * shell & envir. variablex expanded
+\       At end of line - special case: removes new line char.
+`		command - executed before rest of line.
 
 Never quote a glob or regular expression
-	for x in "~/*"; do
+
+for x in "~/*"; do
+done
   # This loop will run once with $x set to "~/*" rather than once
   # for every file and directory under $HOME, as was intended
-	done
 
-	case "$var" in                                                                                                          	'this|that')                                                                                                          
-			# This will only hit if $var is exactly "this|that"                                                                 ;;                                                                                                                  
-		# This will only hit if $var is exactly "*"                                                                         
-		;;                                                                                                                  
-	esac   
-
-Command Lines
-	Single quoted string enloses literals whereas a double quoted string is
-	evaluated for shell variables or backslash escaping.
-	'xxx'	strong quotes 
-            * no expansion or metacharacters
-	""xxx"	weak quotes 
-            * $, `, and \ not disabled
-            * shell & envir. variablex expanded
-	\       At end of line - special case: removes new line char.
-	`		command - executed before rest of line.
 
 
 
@@ -197,60 +260,6 @@ Bash & Zsh advanced test [[ ]] (( ))
 	(( )) for numeric
 
 
-
-
-File Descriptors & Redirection {{{1
-
-Redirection
-http://en.wikipedia.org/wiki/Redirection_(Unix)
-
-Stdin, stdout, and stderr are by convention numbered 0, 1, and 2.  
-Stdout is default
-
-
-Redirect to/from files
-    to standard output, stderr prints to scree, existing file clobbered
-	program-name > out.txt
-	e.g. ls > directorylisting.txt
-
-    use >> to append to file
-    
-    run command1 with file1 as input
-        command1 < file1
-
-
-To specify the file with a number, place the number before the >
-	program-name 1> out.txt
-	program-name 2> errors.txt
-
-Redirect both stdin and stderror 
-
-	Traditional format: cmd logfile 2>&1
-	New format: cmd >& logfile (not with teed output)
-
-Redirect to file and show on screen
-	cmd | tee logfile 2>&1
-
-Drop errors	
-	2> /dev/null
-
-Standard out from a command in a sub-shell to a file:
-(ls -) > file
-	
-
-Heredoc:
-
-cat > newfile
-Enter text
-^D
-
-cat > filename <<+
-stuff
-+
-
-cat >> /etc/apt/apt.conf << .
-hi!
-.
 
 
 Job control {{{1

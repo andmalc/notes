@@ -68,6 +68,7 @@ join-pane
     -s source pane #     pane to be inserted into current window
     -p percent
     -t target - default: current window
+    -b  open window above or to left
 
 
 split-window into panes 

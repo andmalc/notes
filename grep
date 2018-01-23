@@ -12,6 +12,9 @@ options
     -r	recursive - search subdirectories
 	-v  exclude match
 
+    -o  print only matched part of line, matches on separate lines
+
+     -E, --extended-regexp
 
 
 
@@ -60,3 +63,8 @@ grep -v "^#"
 
 excluding files under zsh
 	grep -irl thing (*~*html)(.)
+
+Match whole words, print each on separate line
+    grep -oE '\w+' 
+
+

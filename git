@@ -1,3 +1,7 @@
+For novices: https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud
+
+Pro Git by Scott Chachon - https://git-scm.com/book/en/v2
+
 Fugitive http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
 
 https://orga.cat/posts/most-useful-git-commands
@@ -24,6 +28,8 @@ Commit ID
 
 
 Index 
+    Maps SHA hashes to file names
+    created at checkout, updated by add command
     staging area for new commit and becomes the new commit
     includes snapshot of all files, not just staged.
     new blob created for added/modified files 
@@ -131,19 +137,24 @@ show [cid]
     show last changes or in cid 
 
 
-Log - shows commit history
-	-#				number of commits to show
-	 --grep			matching string
-	 --decorate --graph --oneline --all
-                    show branch grath
-     --grep         grep commit messge
-     --oneline
-
+Log - shows commit history of current branch including ancestors from other branches
 	 <path>			show commits to this file only
 
-    also show files changed:
+    display options:
+        --all           show other branches too
+        --decorate      show branch names
+        -#				number of commits to show
+         --oneline
+
+    filter:
+         --grep         grep commit messge
+
+     file info:
          --stat			short summary of files and changes
          -p				show diffs	
+
+	 --decorate --graph --oneline --all
+
 
 ls-files
     Show tracked files in working tree & index.  
@@ -226,6 +237,9 @@ branch
 
 create new branch <name> and switch to it
     checkout -b <name>	
+
+create new branch <name> based on other branch and switch to it
+    checkout -b <new branch name> <source branch name>	
 
 create new branch tracking remote and switch to it
     checkout -b <name> origin/name
@@ -335,6 +349,12 @@ gitdiff with vim:
         BA  base
         RE  remote
         ME  merged
+
+vimdiff
+    panels
+        left: working tree
+        centre: common base
+        right: version in merge branch
 
 Fugitive
 http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
