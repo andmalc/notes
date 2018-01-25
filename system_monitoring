@@ -1,95 +1,4 @@
 
-Linux Boot  {{{1
-
-MBR/BIOS
-    System power up
-    BIOS reads first sector on disk, executes code there 
-    Partitioned devices: MBR - 512 bytes
-        MBR contains boot loader & partition table
-        Boot loader usually chains to volume boot record 
-    Non-partitioned device: VBR in first sector
-
-Boot loader loads Linux kernel & initramfs into memory.
-kernel reads initramfs, loads /init from there if present
-init loads disk file system & boots sytem
-
-
-
-Initramfs
-	replaced initrd in kernel 2.6
-    not needed if /usr/ and /etc on same disk as kernel
-    Fedora dracut creates one tailored to harware installed on to reduce size ("host-only" mode).  Rescue version is much bigger 
-
-
-https://www.freedesktop.org/wiki/Software/systemd/FileHierarchy/
-
-Init system
-    first process started by kernel
-    starts all daemons etc. required by OS
-    Later starts user services 
-
-
-
-Boot Firmware {{{1
-Coreboot {{{2
-
-coreboot is the part of the firmware that initializes the hardware
-Payload boots OS
-
-Payloads:
-    Chromebook stock payload is depthcharge
-    payload that implements a Legacy BIOS bootloader is SeaBIOS
-    SeaBIOS installed in section of the firmware normally reserved for booting an OS in Legacy mode (called RW_LEGACY)
-
-UEFI {{{1
-
-ESP EFI System Partition
-    does not have to be FAT but this is most compatible
-
-Searches through boot order entries in order for a Device Path + File match
-If fails starts Default Boot Behavior process:
-    searches removable devices then fixed devices for an ESP (as found in GPT) containing \EFI\BOOT\BOOTX64.efi & executes it
-    BOOTX64 looks for file fallback.efi in same directory & executes it
-    fallback.efi looks for files *.csv in directories other than BOOT, uses content to create new Boot entires pointing to same disk as fallback.efi was lauched from.
-
-
-Shell
-	Shell.efi from edk2 package
-	Copy into EFI subfolder and create entry with efibootmgr
-	https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#edit
-
-    bcfg boot dump -b
-        page through boot entries
-    bcfg boot mv 3 0
-        move third entries to first/default
-
-efibootmgr
-    Entries with ID Boot[hex] - leading 0's not needed i.e. 0004 = 4
-    Asterick indicates active 
-    -c  create entry
-    -d  disk containing loader, defaults to /dev/sda
-    -l  loader, e.g. elilo.efi
-    -L  label for boot manager display
-    -o  set boot order ID,ID etc.
-    -n  set boot order or next boot only
-    -p  parition containing bootloader - default 1
-    -b  modify item 
-    -v  show UUIDs etc.
-    -u  unicode command line arguments, e.g root=/dev/xxx
-    
-    Delete items
-        first reset order without item to be deleted
-        delete it
-            -b ID -B
-
-	Boot entry
-	https://wiki.archlinux.org/index.php/EFISTUB
-	efibootmgr -d /dev/sda -p 1 -c -L "Slackware" -l \\EFI\Slackware\\kernel-generic -u "root=/dev/sdZ rw initrd=/EFI/Slackware/initrd.gz"
-
-Grub with UEFI
-https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
-
-
 kernel {{{1
 source {{{2
 
@@ -172,6 +81,50 @@ Process namespaces {{{2
        mount namespace of the process with the specified ID
 	after fork, child process shares parent's namespace
 	after clone, child gets private copy
+
+
+Processes {{{1
+
+ps  process snapshot 
+    Processes in [[ ]] have been swaped out due to inactivity
+    Status Codes: S - sleeping, R - running
+
+    axfww   show process tree 
+    -ef     flat output for greping
+
+System Info {{{1
+
+http://www.binarytides.com/linux-commands-hardware-info
+
+uname - processor type, kernel type etc
+
+
+kernel boot messages
+    dmesg	
+
+Virtual Memory
+    view all memory usage with 'cat /proc/meminfo'
+
+
+
+/proc filesystem
+    process information pseudo-file system
+    runtime info about system memory, devices mounted, hardware 
+
+process info
+    proc/PID/cmdline, cwd, environ etc.
+
+
+
+Other {{{1
+
+journal-brief
+    http://cyberelk.net/tim/2015/10/19/journal-brief/
+
+
+Monitor log 
+	tail -f		Monitor growth of a log file
+	tailf		same, but wait for log activity to write to the file (avoids disk spin up on laptops)
 
 system filesystems {{{1
 
