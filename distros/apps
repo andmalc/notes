@@ -25,7 +25,7 @@ ripgrep - Rust grep
 geeknote - cli Evernote
 https://github.com/pipakin/geeknote
 
-Terminix - GTK3 terminal emulator
+Tilix, formally Terminix - GTK3 terminal emulator
 F25: need Copr repo: dnf copr enable heikoada/terminix
 
 
