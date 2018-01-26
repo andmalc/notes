@@ -87,7 +87,12 @@ efibootmgr
 	efibootmgr -d /dev/sda -p 1 -c -L "Slackware" -l \\EFI\Slackware\\kernel-generic -u "root=/dev/sdZ rw initrd=/EFI/Slackware/initrd.gz"
 
 Grub with UEFI
-https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
+
+grubx64.efi
+    Use strings (Debian binutils) with grep to find grub.cfg location. 
+    https://blog.learningtree.com/how-does-linux-boot-part-3-uefi-to-shim-to-the-next-link-in-the-chain/
+
+
 
 
 
@@ -99,11 +104,16 @@ kernel command line
 
 Systemd-Boot {{{1
 
-esp/loader/loader.conf
+Install
+ bootctl --path=esp install
 
-default  arch
-timeout  4
-editor   0
+esp/loader/loader.conf
+    default  arch
+    timeout  4
+    editor   0
+
+Find PARTUUID
+    blkid -s PARTUUID -o value /dev/sdxY
 
 
 Boot Entries:
