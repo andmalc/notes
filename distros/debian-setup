@@ -1,3 +1,5 @@
+https://sparkylinux.org/
+
 Minimal Gnome on Stretch
 aptitude install --without-recommends gdm3
 
@@ -21,6 +23,8 @@ apt.conf
     APT::Install-Recommends "0";
     APT::Install-Suggests "0";
 
+Backports
+https://backports.debian.org/Packages/
 
 UnofficialRepositories
     Google
@@ -46,10 +50,9 @@ general setup {{{1
 
 packages {{{2	
 
-essential
-    sudo zsh vim rsync screen tree rdate yafc pmount bzip2
-    zsh-static, openssh-server (w/o Recommends)
-    unison
+sudo zsh vim rsync screen tree rdate yafc pmount bzip2
+zsh-static, openssh-server (w/o Recommends)
+unison
 
 
 rcconf, 
@@ -221,25 +224,32 @@ smbfs - for smb/cifs shared fs
 
 
 hardware {{{1
-	hardware support
-		information
-			htop
-			cat /proc/cpuinfo
-			cat /proc/acpi/processor/CPU0/power
-			discover
-			lshal - list HAL devices (auto-installed)
-			lshw & lshw-gtk - details on all hw devices
-			lsscsi
-		power
-			laptop-mode-tools			
-			gnome-power-manager
-		diagnostic
-			test memory & CPU
-				memtest86  
-				Breakin - http://www.advancedclustering.com/software/breakin.html
-				grml memtest on boot
-			test power supply
-				http://www.antec.com/Believe_it/product.php?id=ODk=
+
+Intel wifi
+    enable non-free
+    install firmware-iwlwifi
+    modprobe -r iwlwifi ; modprobe iwlwifi
+
+hardware support
+    information
+        htop
+        cat /proc/cpuinfo
+        cat /proc/acpi/processor/CPU0/power
+        discover
+        lshal - list HAL devices (auto-installed)
+        lshw & lshw-gtk - details on all hw devices
+        lsscsi
+    power
+        laptop-mode-tools			
+        gnome-power-manager
+    diagnostic
+        test memory & CPU
+            memtest86  
+            Breakin - http://www.advancedclustering.com/software/breakin.html
+            grml memtest on boot
+        test power supply
+            http://www.antec.com/Believe_it/product.php?id=ODk=
+
 Hibernate/suspend
 	uswsusp - provides s2ram and s2disk
 
@@ -302,6 +312,30 @@ Alsa
 	t/s http://alsa.opensrc.org/index.php/FAQ#How_can_I_check_whether_ALSA_works.3F            
 
 network {{{1
+Interface config {{{2
+
+As of Stretch
+CLI w/l setup:
+ip link set wlp1s0 up             ## bring up interface
+iw dev wlp1s0 link                ## get link status
+iw dev wlp1s0 scan | grep SSID    ## scan for access points
+wpa_supplicant -i wlp1s0 -c<(wpa_passphrase "MY_SSID" "MY_PASSPHRASE")   ## connect to WPA/WPA2 ... add '-B' to background process
+dhclient wlp1s0                   ## obtain IP address
+
+/etc/interfaces
+allow-hotplug wlp1s0
+iface wlp1s0 inet dhcp
+wpa-ssid MY_SSID
+wpa-psk MY_PASSPHRASE                                       
+dns-nameservers 8.8.8.8 8.8.4.4
+
+Once network is up, install network-manager and use its console utility nmcli.
+
+as of Etch: "allow-hotplug eth0" (no 'auto')
+	causes interfaces to be brought up by udev when available
+	"/etc/init.d/networking restart" no longer reliable
+	use 'service networking restart'
+	using 'auto' returns to previous mode - int starts at boot
 
 Client apps {{{2
 
@@ -309,14 +343,6 @@ mosh - mobile shell
 lftp - console mult-protocol download 
 yafc - ssh/ftp client
 mtr		trace ping route
-
-Interface config {{{2
-
-as of Etch: "allow-hotplug eth0" (no 'auto')
-	causes interfaces to be brought up by udev when available
-	"/etc/init.d/networking restart" no longer reliable
-	use 'service networking restart'
-	using 'auto' returns to previous mode - int starts at boot
 
 firewall {{{2
 

@@ -1,5 +1,6 @@
 
 cat - concatenate files
+    https://en.wikipedia.org/wiki/Cat_%28Unix%29#Useless_use_of_cat
     defaults to reading from and outputing to terminal
     cat file1 file2 > targetfile
     cat > targetfile # type in lines below, end with c+d
@@ -8,6 +9,22 @@ cut
     extract input on tabs into fields
     -d  delimiter instead of tabs
     -c  select character range by position
+
+diff 
+diff file1 file2
+    Show how to change file1 to match file2
+
+    Options
+        -c      context
+        -u      show changed lines together
+
+    tutorial in Unix Power Tools
+    sdiff   show diffs in columns
+
+
+cmp     show info in common
+
+comm    show diffs in sorted lists
 
 less
     -S  do not wrap long lines.  Can page sideways with l/r arrows
@@ -27,7 +44,8 @@ tee
 
 tr
     translate characters
-    
+
+    -s <char>   squeeze repeats (remove duplicate chars)
      : '\n'     #convert colans to line breaks
      '[:space:]' '--'
      '[:upper:]' '[:lower:]'

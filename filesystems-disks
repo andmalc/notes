@@ -117,9 +117,11 @@ dd
 		dd bs=2048 if=/dev/part of=/dev/anotherpart
         bs=4M said faster
 
-    Add progress viewer with pv or dc3dd
-        pv < /dev/sda > /dev/sdb
-         dd if=/dev/foo bs=4M | pv -s 20G | sudo dd of=/dev/baz bs=4M
+    progress viewer with pv or dc3dd
+        pv - shows progress and speed
+            -s  expected size
+            pv < /dev/sda > /dev/sdb
+            dd if=/dev/foo bs=4M | pv -s 20G | sudo dd of=/dev/baz bs=4M
    
         dc3dd if=/dev/sda of=/dev/sdb
 
@@ -422,11 +424,10 @@ Info
     lsblk -f    shows tree of vg and lv's
 
 Resize  
-    lvextend
-            -r option resizes fs using fsadm (not for btrfs)
-            -r -L +3GB /dev/atomicos/root
-            -r -l +100%FREE 
     lvreduce
+        -L #G (reduce to # GB) or -#G (reduce by #GB)
+        -r  reduce filesystem.  Use this, not resize2fs!
+
     lvresize
 
 

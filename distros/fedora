@@ -1,6 +1,8 @@
 
 Setup {{{1
 
+Fedora Server netinstall image is a universal one, and can be used to install any Fedora Edition or your own set of favorite packages
+
 Sizes - F 26
 Workstation root partition 5GB
 Default partions: EFI 200M, Boot 1G, Root and Home equal

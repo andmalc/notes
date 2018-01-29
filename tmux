@@ -54,6 +54,20 @@ move-window
 
 Panes  {{{1
 
+Last pane   ;
+
+;       last active pane
+o		other pane in current window
+z       toggle hide other panes (?)
+x       kill pane
+q       show pane #'s
+{}		swap current pane with previous                           
+!       break pane into new window
+
+C+o     rotate in circle
+
+M+arrow resize (rapid for multiple times)
+
 Options
     cmd -t target arg
         client, session, window or pane which a command should affect.
@@ -89,14 +103,6 @@ resize-pane
 select-layout
     <space>
 
-;       last active pane
-o		other pane in current window
-z       toggle hide other panes (?)
-x       kill pane
-q       show pane #'s
-{}			swap pane                           
-!       break pane into new window
-M+arrow resize (rapid for multiple times)
 
 Layouts {{{2
 
