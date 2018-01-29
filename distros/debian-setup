@@ -11,6 +11,9 @@ install deb with dependencies
     gdebi  
     install deb then apt-get install -f 
 
+Disable automount
+    dconf-editor - search for automount
+
 Installation {{{1
 Sources {{{2
 
@@ -27,10 +30,11 @@ Backports
 https://backports.debian.org/Packages/
 
 UnofficialRepositories
-    Google
-        deb http://dl.google.com/linux/deb/ stable non-free
-        deb http://dl.google.com/linux/deb/ testing non-free
-        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+
+Google
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    deb http://dl.google.com/linux/deb/ stable non-free
+    deb http://dl.google.com/linux/deb/ testing non-free
 
 #deb http://www.deb-multimedia.org squeeze main
 
