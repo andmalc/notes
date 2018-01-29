@@ -24,6 +24,8 @@ diff file1 file2
 
 cmp     show info in common
 
+column  display output in columns
+
 comm    show diffs in sorted lists
 
 less

@@ -109,6 +109,10 @@ layout
 		mkview [n], loadview [n]   - saves window options including folds
 		
 
+Preview window
+    pedit <file>    open
+    C-W z           close
+
 
 Files {{{1
 
@@ -120,10 +124,6 @@ e +		open at end
 r		read in file
 
 bro[wse] {command} [dir name] for commands including :e & :w, open a file browser.
-
-Preview window
-    pedit <file>    open
-    C-W z           close
 
 
 buffer list
@@ -378,16 +378,6 @@ Selecting Text
 	^o^v	blockwise, from insert mode
 
 
-Command mode {{{2
-
-:substitute
-    example
-        :%s/\s\+$//e
-        :%s to run :substitute over the range %, which is the entire buffer.
-        \s t match all whitespace characters.
-        \+ to repeat them 1 or more times.
-        $ to anchor at the end of the line.
-        The e flag to not give an error if there is no match (i.e. the file is already without trailing whitespace).
 
 Inserting {{{1
 
@@ -446,10 +436,25 @@ Convert tabs to spaces
     se expandtab
 	%retab!
 
+Movement {{{1
+
+
+/ ?				Search forward/backward
+/CR				Repeat search, forward
+?CR				Repeat search, backward 
+
+;				1  repeat latest f, t, F or T N times
+
+*, g*	search forward for whole word, word under cursor
+#, g#	as above, backward
+
 Marks {{{1 
 ma				set mark with alpha char
 'a		go to mark
 'ma				go to beginning of line with mark		
+
+
+
 
 Registers {{{1
 
@@ -573,25 +578,18 @@ s/foo/bar/g
 
 g/pat/p			   print all lines in file matching pat
 
-		/ ?				Search forward/backward
-		/CR				Repeat search, forward
-		?CR				Repeat search, backward 
-		;				1  repeat latest f, t, F or T N times
 		[I				show lines matching word under cursor
 		More examples of editing with search in 'pattern.txt' line 150
-		*, g*	search forward for whole word, word under cursor
-		#, g#	as above, backward
 		smartcase		(scs)	
 				no ignore case when pattern has uppercase
 				ignorcase must be on.  
 				Used for the commands "/", "?", "n", "N", ":g" and ":s".  
 		magic	Enables extended regular expressions (eg \s)
-		%s/$/thing				Append 'thing' to every line
 		Regex atoms
 				\<		start of word
 
 
-Ex Mode {{{1
+Ex/command Mode {{{1
 
 Syntax: line address/pattern/command
 Command Line 
@@ -606,50 +604,73 @@ q:	display Ex history, can edit and reexecute
 
 Line Addressing {{{2
 
-{count}:		
-	   start entering an Ex command with range from current line to N
-	   lines down
-:n,n+o	Line address range with offset.  Extends match range.
-Substition chars:
+
  .	   current line
  $	   last line
  %	   all lines - shorthand for 1,$
+:n,n+o	Line address range with offset.  Extends match range.
+.+3	    three lines below cursor
+
+{count}:		
+	   start entering an Ex command with range from current line to N
+	   lines down
+
+
+Regex matching {{{2
+
+[address]g/pattern/[commands]
+
 /pat/n	line before/after pat
-/pat/en nth char from the end of a match
 n,/pat/ From line n to pat after cursor line (might be before line n)
 n;/pat/ From line n to pat after line n.  
 /pat1//pat2/	Line matching pat2 after pat1
-.+3				three lines below cursor
 
-Ex Text Movement Commands {{{2
 
-:[range]y[ank] [x]		Yank [range] lines [into register x].
-:[range]y[ank] [x] {count}
-				  Yank {count} lines, starting with last line number
-				  in [range] (default: current line [into register x].
-:[range]co[py] {address}		
-	   Copy the lines given by [range] to below the line given by {address}.  
-:t				Synonym for copy.
-:[range]m[ove] {address}		
-	   Move the lines given by [range] to below the line given by {address}.
-:[range]d [x]			Delete range lines into register x
-:c						Change text on line.  Type . to stop replacing
-:[line]pu[t] [x]		
-	   Put the text [from register x] after [line] (default current line).
-[n]:d x [n]		delete [n] lines [from current line] into register x.
-								  Specifier for n can be in before or after position.
-
-Global Command {{{2
-
-big doc: http://www.vim.org/tips/tip.php?tip_id=227
-[address]g/pattern/[commands]
-&		repeat last substitution
 g,g! (or v)/pat/p				
 	   global search: print lines that contain, don't contain pattern (:g = :%s). 
 	   g after search & replace means replace every instance in line.
 :g/thing/s/&/thingie/g	'&' matches or inserts first matched term.
 :g/.*/<p>&<\/p>					
 	   Surround line with tags cmds with following count
+
+Commands {{{2
+
+y[ank] [x]	yank [range] lines [into register x].
+y[ank] [x] {count}
+		    yank {count} lines, starting with last line number
+				  in [range] (default: current line [into register x].
+co[py] {address}		
+:t			synonym for copy.
+	        copy to below the line given by {address}.  
+m[ove] {address}		
+	        move the lines to below the line given by {address}.
+d [x]	    delete range lines into register x
+c		    change text on line.  Type . to stop replacing
+pu[t] [x]	put the text [from register x]
+d x [n]		delete [n] lines into register x.
+								  Specifier for n can be in before or after position.
+s   substitute
+    example
+        :%s/\s\+$//e
+        :%s to run :substitute over the range %, which is the entire buffer.
+        \s t match all whitespace characters.
+        \+ to repeat them 1 or more times.
+        $ to anchor at the end of the line.
+        The e flag to not give an error if there is no match 
+            (i.e. the file is already without trailing whitespace).
+        &		repeat last substitution
+
+Ex Examples {{{1
+
+20,30 m 40
+20,30g/blah         search within range
+g/blah/ m 0
+
+%s/$/thing			append 'thing' to every line
+
+g/blah/ norm A;     apply normal mode command to a range
+g/blah/ @a          apply macro to a range
+
 
 Counts {{{2
 
@@ -676,6 +697,8 @@ autocommands in 'starting.txt.'
 Path separator is '/' on all OS's.	Path strings are therefore not quoted.
 
 macro
+https://sanctum.geek.nz/arabesque/advanced-vim-macros/
+
 	record 
 	   qq	   record to q (to label macro as 'q')
 	   enter commands
@@ -760,21 +783,20 @@ imap example:
 
 Shell {{{1
 
-:![Unix Command]		Run a single command in shell
-:r!				Insert output from command into buffer
-:sh		Go to shell.  "Exit" to return.
-view (in shell)			Open a file in vi in read only mode
+:!cmd		Run a single command in shell
 :x,y!command	execute external command on lines x - y
-:```a``,.!command		
-	   execute external command on lines from beginning of line for mark a to
-	   current line. 
+"!cmd %     refer to current file in command
+
+:sh		Go to shell.  "Exit" to return.
+
 :r[ead] !{cmd}			
 	   Execute {cmd} and insert its standard output below the cursor.
-Execute cmd with range lines (or whole buffer if not specified) as stdin
-	   :[range]w !cmd
-Insert Output of a Command
-	   :r !{cmd}
-	   Also redirect stderr with 'shellredir'
+
+:[range]w !cmd
+    Execute cmd with range lines (or whole buffer if not specified) as stdin
+
+view (in shell)			Open a file in vi in read only mode
+
 
 TASKS {{{1
 
