@@ -393,7 +393,7 @@ Change
         vgremove  
 
 Info
-    vgs
+    vgs     easier to read than lvdisplay
     vgdisplay
     
 
@@ -420,6 +420,7 @@ Create
 
 Info
     lvs         shows snapshot space
+                easier to read than lvdisplay
     lvdisplay   does not show snapshot space
     lsblk -f    shows tree of vg and lv's
 

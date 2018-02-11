@@ -65,6 +65,9 @@ Shell
 
 efibootmgr
     Entries with ID Boot[hex] - leading 0's not needed i.e. 0004 = 4
+    Entry format:  HD(1,GPT, PARTUUID)/File(EFI/path )
+    PARTUUID from blkid
+
     Asterick indicates active 
     -c  create entry
     -d  disk containing loader, defaults to /dev/sda
@@ -84,6 +87,10 @@ efibootmgr
 
 	Boot entry
 	https://wiki.archlinux.org/index.php/EFISTUB
+    efibootmgr -c -d /dev/sdb -p 1 -L "USB drive" -l "\EFI\BOOT\BOOTX64.EFI"
+    efibootmgr -c -d /dev/mmcblk0 -p 1 -L "MMC card internal" -l "\EFI\BOOT\BOOTX64.EFI"
+
+
 	efibootmgr -d /dev/sda -p 1 -c -L "Slackware" -l \\EFI\Slackware\\kernel-generic -u "root=/dev/sdZ rw initrd=/EFI/Slackware/initrd.gz"
 
 Grub with UEFI
