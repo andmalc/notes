@@ -52,7 +52,7 @@ gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 Packages {{{2
 
 Install
-git vim-enhanced zsh tmux mlocate ncdu stow ranger
+git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user
 
 Yubikey/U2F support
 pam-2uf u2f-hidraw-policy
@@ -67,11 +67,11 @@ Dependency errors:
     => needs 64 bit version libXScrnSaver-1.2.2-6.1.el7.x86_64
 
 
-6
-
 Users {{{2
 
-usermod -a -G grp username
+useradd -G grp username #new user
+usermod -a -G grp username #existing user
+
 adm for journalctl 
 
 Home Dir {{{2
@@ -84,6 +84,8 @@ Envs
 .config
 
 Pull Notes, Config, Work
+git@github.com:andmalc/config.git
+
 git clone --recursive config # populates submodules
 git clone --recursive work
 git clone notes

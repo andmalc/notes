@@ -33,19 +33,17 @@ Options
     create window       -n <name>
 
 Prefix+
-1,2,3   move to window #
-C+n/p     switch to next/previous window
-,       rename window
-&       kill window
-w       list sessions & windows
+    1,2,3   move to window #
+    C+n/p     switch to next/previous window
+    ,       rename window
+    &       kill window
+    w       list sessions & windows
 
-?:
-l       last window
-arrow   move to other window or pane
-[       scroll	
+    ?:
+    l       last window
+    arrow   move to other window or pane
+    [       scroll	
 
-
-join-pane -s # -t #		Two windows into 2 panes
 
 move-window
     move within session or to another one
@@ -54,15 +52,14 @@ move-window
 
 Panes  {{{1
 
-Last pane   ;
-
+!       break pane into new window
+-|      split vert/horiz
 ;       last active pane
 o		other pane in current window
 z       toggle hide other panes (?)
 x       kill pane
 q       show pane #'s
 {}		swap current pane with previous                           
-!       break pane into new window
 
 C+o     rotate in circle
 
@@ -77,13 +74,13 @@ break-pane
     shortcut !
 
 join-pane 
+    Two windows into 2 panes
     insert a window as a panel in current
     window id format: [<session name>]:<window #>
     -s source pane #     pane to be inserted into current window
     -p percent
     -t target - default: current window
     -b  open window above or to left
-
 
 split-window into panes 
     split current window or -t # window 

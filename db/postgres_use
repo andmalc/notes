@@ -2,6 +2,8 @@
 Deeper into Postgres 9.5 - New Group By Options for Aggregation
 https://compose.io/articles/deeper-into-postgres-9-5-new-group-by-options-for-aggregation
 
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-9-4-on-debian-8
+
 
 Commands
     createuser
@@ -10,22 +12,38 @@ Commands
 
 psql
     db user
+    -d  db
+    -h  host
+    -l  list db's
+    -p  port
+    -U  connect as User
+
+    Default: connect via socket, user and db name same as unix user
+
+    Run as:
         sudo su - postgres
-        or createuser andmalc 
         or with -U option, or set PGUSER
 
-	\x commands
-        \x  Expanded display 
-        \c[onnect] [DBNAME|- USER|- HOST|- PORT|-]
+Meta-commands
 
-        list (append + for more details):
-            l       list databases
-            dn      list schemas
-            dt      list tables
+\x  Expanded display 
+\c[onnect] [DBNAME|- USER|- HOST|- PORT|-]
+\conninfo   connection info
+\copy
+\crosstabview
+\d <pat>
+    dl   list databases
+    dn  list schemas
+    dt  list tables
+    dg  list roles (was groups)
+    dp  list tables with access privilages
+\e <fn> edit 
+\h <cmd>    help with SQL command
 
-		g or ;			end input
-		o       send query results to a file or pipe
-		H       toggle HTML mode
+
+g or ;			end input
+o       send query results to a file or pipe
+H       toggle HTML mode
 
 Table design
     Timestamp:      colname TIMESTAMP DEFAULT now()

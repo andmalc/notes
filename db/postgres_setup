@@ -1,3 +1,5 @@
+https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps#security-within-postgresql
+
 Admin Commands
 	control postmaster (start this first)
 		pg_ctl start | stop | restart | status
@@ -14,38 +16,32 @@ Admin Commands
 	psql	[dbname] (default is username, though not in Debian)
 
 
+Files 
+Client Authentication Configuration File - pg_hba.conf
+	by default only local access allow
 
-Cygwin 
-	Read Cygwin/postgres README!
-	Packages
-		ash, bash, cygwin, cygrunsvr, fileutils, grep, ncurses,
-		postgresqlreadline, sed, sh-utils and textutils.  + cygipc (part of
-		Cygwin Utilities)
+	add host
+	host  sammydb  sammy   client_ip_address/32   md5
 
-	Setup: Manual Start Method
-		Run "ipc-daemon &".
-		Once ipc-daemon is running, initialize a database directory with
-			initdb -D /cygdrive/d/apps/cygwin/usr/local/pgsql/data 
-		Start postmaster:
-			postmaster -i -D /cygdrive/d/apps/cygwin/usr/local/pgsql/data
-			Run this in own window without a '&' to see messages.
+postgresql.conf
+	client connection config
+    listen_address condfig
 
-		Setup: NT Service Method
-			Read /usr/doc/cygwin/postgresql README for instructions.
 
-		Set up account to run postmaster:
-			"login incorrect".: You cannot change user context on NT/W2K if
-			your account has not explicitely set several user rights. Even
-			administrator doesn't have all these user rights. These rights are
-			"Act as part of the operating system" "Replace process level token"
-			"Increase quotas"
+User setup with psql
+	sudo -i -u postgres psql
+	CREATE DATABASE myproject OWNER andmalc;
+	create user andmalc with password 'brn2kale';
+	ALTER ROLE andmalc SET client_encoding TO 'utf8';
+	ALTER ROLE andmalc SET default_transaction_isolation TO 'read committed';
+	ALTER ROLE andmalc  SET timezone TO 'EST';
+	GRANT ALL PRIVILEGES ON DATABASE myproject TO andmalc
 
-		Probably use SYSTEM account as is default for services.
 
-		Install postgres as service with cygrunsrv (see example under notes for
-		ssh).  ipc-daemon - install & run as a service w/o cygrunsrv (contains
-		own code for this) 
+sudo systemctl restart postgresql
 
-    Newsgroup: comp.databases.postgresql.ports.cygwin
-    Mailing list: pgsql-cygwin@postgresql.org
+
+Firewall
+ufw
+	sudo ufw allow from 15.15.15.0/24 to any port 5432
 
