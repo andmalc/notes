@@ -43,6 +43,12 @@ Payloads:
 
 UEFI {{{1
 
+Docs:
+https://wiki.archlinux.org/index.php/EFISTUB
+https://wiki.debian.org/UEFI
+https://wiki.gentoo.org/wiki/Efibootmgr#Configuration
+
+
 ESP EFI System Partition
     does not have to be FAT but this is most compatible
 

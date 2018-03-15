@@ -2,10 +2,28 @@
 
 Console {{{1
 
+Nix package manager
+https://nixos.org/nix/
+https://nixos.org/nix/manual/#ch-basic-package-mgmt
+nix-channel --update
+nix-env -qa #list packages or query by regex
+nix-env -qas # package installation status
+nix-env -u # upgrade all
+
 Ranger console file manager
 http://ranger.nongnu.org/
 
 ncdu    ncurses util for visualizing disk space usage
+
+fd - find alternative
+https://github.com/sharkdp/fd
+Download https://github.com/sharkdp/fd/releases
+fd <pattern> [<dir tree to search>]
+By default: 
+- recursive
+- ignores case, hidden files and patterns in in gitignore.  
+- regex patterns
+
 
 fzf - command-line fuzzy finder written in Go
 https://github.com/junegunn/fzf
@@ -21,9 +39,6 @@ ripgrep - Rust grep
     -g <glob>   restrict to matching files
     -l  list matching filenames
 
-
-geeknote - cli Evernote
-https://github.com/pipakin/geeknote
 
 Tilix, formally Terminix - GTK3 terminal emulator
 F25: need Copr repo: dnf copr enable heikoada/terminix

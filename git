@@ -15,7 +15,8 @@ Terms {{{1
 Repo is set of commits
 
 Commit:
-    pointer to a tree obj which is snapshot of all files & dirs created by git add
+    pointer to a top level tree obj created by snapshotting Index 
+        as well as commiter info & other metadata
     author & commiter info
     commit message
     except for first 'root' commit, stores zero or more pointers to parent commits
@@ -28,9 +29,9 @@ Commit ID
 
 
 Index 
-    Maps SHA hashes to file names
-    created at checkout, updated by add command
+    composed by git add/git read-tree
     staging area for new commit and becomes the new commit
+    created at checkout, updated by add command
     includes snapshot of all files, not just staged.
     new blob created for added/modified files 
 
@@ -45,15 +46,23 @@ Branch
     Master      default name of first branch
 
 HEAD        
-    Normally symbolic ref to /refs/heads/<branch name>
-    refers to tip of current local branch.  
+    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
+        tip (last commit) of current local branch.  
     This defines which branch is on
-    is parent of next commit
+    When committing, HEAD is set as parent commit
     If earlier commit checked out, is hard link to commit ID.
     Then in detached HEAD mode, not on branch
 
     Detatched if is simple ref.
     Checking out branch moves this pointer.  
+
+Tags
+    lightweight
+        Like commit object but ref to commits, not trees.
+        Unlike branch refs never change
+    annotated
+        Can ref to any object, not just commits
+        -m field can hold any data
 
 Checkout cid
     Change the HEAD symref to point to the new  branch 
@@ -137,8 +146,11 @@ show [cid]
     show last changes or in cid 
 
 
-Log - shows commit history of current branch including ancestors from other branches
+Log 
+    shows commit history of current branch including ancestors from other branches
+    does not show commits not part of a branch unless specified with --stat
 	 <path>			show commits to this file only
+     --stat <cid>   specific commit
 
     display options:
         --all           show other branches too
@@ -150,7 +162,6 @@ Log - shows commit history of current branch including ancestors from other bran
          --grep         grep commit messge
 
      file info:
-         --stat			short summary of files and changes
          -p				show diffs	
 
 	 --decorate --graph --oneline --all

@@ -7,9 +7,12 @@ Commands
     containers
     from <image>
         create container from image
-    run <container> <cmd> 
+        --name new container name
+        --volume/-v <host-dir>:<container-dir>:<options>
+    run <container> <options> -- <cmd> 
         for casual use
         run command in container 
+        --hostname
         
         in production
             runc - lightweight universal run time container,

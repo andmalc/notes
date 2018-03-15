@@ -1,9 +1,10 @@
 
 Repeat change on multi lines (e.g. commenting all)
-1. Visual block mode (,q) and select lines
-2. Shift+i
+1. Visual block mode C-v and select lines
+2. I  (Insert mode from start of line)
 3. Make change
 4. Esc
+
 Help {{{1
 
 Jump
@@ -796,13 +797,6 @@ Shell {{{1
     Execute cmd with range lines (or whole buffer if not specified) as stdin
 
 view (in shell)			Open a file in vi in read only mode
-
-
-TASKS {{{1
-
-Discards duplicate lines
-	   Filter lines through 'uniq'
-
 
 
 Debugging Vim {{{1

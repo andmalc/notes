@@ -22,8 +22,11 @@ Options
 
 $       rename session
 ()      switch to previous/next session
-s       list-sessions
-        highlight a session with vi or arrow keys.  Right arrow to expand windows
+
+Browse sessions
+    s       list-sessions
+            highlight a session with vi or arrow keys.  Right arrow to expand windows
+    w       list sessions & windows
 
 
 
@@ -37,7 +40,6 @@ Prefix+
     C+n/p     switch to next/previous window
     ,       rename window
     &       kill window
-    w       list sessions & windows
 
     ?:
     l       last window
@@ -63,7 +65,11 @@ q       show pane #'s
 
 C+o     rotate in circle
 
-M+arrow resize (rapid for multiple times)
+
+resize-pane
+    Ctrl + up,down, left, right
+    z   zoom
+    M+arrow  (rapid for multiple times)
 
 Options
     cmd -t target arg
@@ -91,10 +97,6 @@ split-window into panes
         -   split window vertical (modified from ")
         |   split window horizontal (modified from %)
 
-resize-pane
-    Ctrl + up,down, left, right
-    -Z      zoom
-    shortcut: z
 
 
 select-layout

@@ -53,10 +53,11 @@ file as input
     cat < file
     < file cat
 
-output to file
+output redirection operators - output to file
     program-name > out.txt
-    e.g. ls > directorylisting.txt
-    use >> to append to file
+        e.g. ls > directorylisting.txt
+    >> append to file
+    >|  output and replace file if exists
 
 
 To specify the file with a number, place the number before the >
