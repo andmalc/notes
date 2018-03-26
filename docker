@@ -44,10 +44,24 @@ options
 		h:c  map port h on host to port c on container
 
 -t      allocate terminal
+
+Mounting {{{1
+
+--mount     preferred command
 -v src:dest mount data volume in cont.
 --volumes-from  mount volume from cont. (does not have to be running)
 
-Container commands {{{2
+--mount
+    type:[volume|bind|tempfs]
+    source:<name of vol>    ommit for anonymous volumes
+    destination:<path>      where to mount vol in container
+
+Types
+    volume
+        docker volume create my-vol
+
+
+Container commands {{{1
 
 start       
 attach      attach to a running container

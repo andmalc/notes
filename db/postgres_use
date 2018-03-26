@@ -26,16 +26,20 @@ psql
 
 Meta-commands
 
+\?  Help
 \x  Expanded display 
 \c[onnect] [DBNAME|- USER|- HOST|- PORT|-]
 \conninfo   connection info
 \copy
 \crosstabview
-\d <pat>
+
+\d <pat>    describe table etc.
+
+Listing
     dl   list databases
     dn  list schemas
     dt  list tables
-    dg  list roles (was groups)
+    du  list roles (was groups)
     dp  list tables with access privilages
 \e <fn> edit 
 \h <cmd>    help with SQL command
