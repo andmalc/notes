@@ -14,7 +14,11 @@ Rollback
 
 rpm-ostree upgrade
 
+Install
+
+rpm-ostree install 
 
 Packages to install
 
-e2fsprogs buildah vim-enhanced 
+e2fsprogs vim-enhanced git
+
