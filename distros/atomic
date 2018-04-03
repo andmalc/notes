@@ -1,0 +1,20 @@
+
+Registry
+registry.fedoraproject.org/fedora-minimal:latest
+
+
+
+Sytem upgrade
+
+atomic host upgrade
+rpm-ostree upgrade
+
+
+Rollback
+
+rpm-ostree upgrade
+
+
+Packages to install
+
+e2fsprogs buildah vim-enhanced 

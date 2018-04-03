@@ -208,6 +208,7 @@ findmnt     	show mounted filesystems
 du 
     tutorial
         https://www.rootusers.com/13-du-disk-usage-command-examples-in-linux/
+    -c      show grand total
     -hs * | sort -h - sort by human readable size
     -schx /*	shows disk space used by subdirs
 

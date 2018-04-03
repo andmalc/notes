@@ -171,6 +171,9 @@ done
 Looping {{{1
 
 
+for file in <pat>; do
+    mv $file ${<pat>}
+done
 
 Completion & Expansion {{{1
 

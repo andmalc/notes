@@ -27,6 +27,7 @@ psql
 Meta-commands
 
 \?  Help
+\!  <cmd> Run shell command or temp enter shell session
 \x  Expanded display 
 \c[onnect] [DBNAME|- USER|- HOST|- PORT|-]
 \conninfo   connection info

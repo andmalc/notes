@@ -8,15 +8,18 @@ http://www.pip-installer.org/en/latest/
 
 Pip {{{1
 
-    
-config:
-    automatically use current ENV
-        export PIP_RESPECT_VIRTUALENV=true
-    only run in virtualenv
-        export PIP_REQUIRE_VIRTUALENV=true
-installing packages
-    If python is local, will install to .local or use --user
-    Install to virtualenv -E
+python3.6 -m pip install --user pipenv
+
+
+OLD:
+    config:
+        automatically use current ENV
+            export PIP_RESPECT_VIRTUALENV=true
+        only run in virtualenv
+            export PIP_REQUIRE_VIRTUALENV=true
+    installing packages
+        If python is local, will install to .local or use --user
+        Install to virtualenv -E
 
 Venv - Py3 {{{1
 
@@ -26,9 +29,10 @@ deactivate
 
 
 pipenv {{{1
+
 https://www.kennethreitz.org/essays/announcing-pipenv
 
-pip install pipenv
+pipenv --python 3.6.0 install <uses requirements or Pipfile or <pkg>
 
 pipenv shell to invoke environment
 

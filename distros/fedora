@@ -1,5 +1,6 @@
+https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
-Setup {{{1
+Fedora versions, sizes, install {{{1
 
 Fedora Server netinstall image is a universal one, and can be used to install any Fedora Edition or your own set of favorite packages
 
@@ -10,12 +11,8 @@ Sizes - F 26
 Workstation root partition 5GB
 Default partions: EFI 200M, Boot 1G, Root and Home equal
 
-
-https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
-
 boot parition must be extX formatted and not in LVM
 efi partition may be shared, mount at /boot/efi
-
 
 Minimal Desktop install
 install minimal 
@@ -24,41 +21,9 @@ systemctl enable gdm.service
 systemctl set-default graphical.target
 
 
+Setup {{{1
 
-git clone git@github.com:andmalc/config.git
-
-Repos {{{2
-
-Desktop Repos:
-dnf copr enable heliocastro/hack-fonts
-dnf copr enable dacr/brackets
-
-telegram-desktop
-dnf copr enable rommon/telegram
-
-Atom editor
-dnf copr enable mosquito/atom
-dnf install atom
-
-Chrome:
-Depends on redhat-lsb libXScrnSaver
-
-https://www.google.com/linuxrepositories/
-Chrome repo in /etc/yum.repos.d/google-chrome.repo:
-[google-chrome]
-name=google-chrome
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
-enabled=1
-gpgcheck=1
-gpgkey=https://dl.google.com/linux/linux_signing_key.pub
-
-Packages {{{2
-
-Install
-git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user
-
-Yubikey/U2F support
-pam-2uf u2f-hidraw-policy
+Architecture {{{2
 
 32 bit packages end with  i686
 Unlike Debian :i386
@@ -69,6 +34,43 @@ Dependency errors:
     Package libXScrnSaver-1.2.2-6.1.el7.i686 already installed and latest version
     => needs 64 bit version libXScrnSaver-1.2.2-6.1.el7.x86_64
 
+Repos {{{2
+
+Desktop Repos:
+dnf copr enable heliocastro/hack-fonts
+dnf copr enable dacr/brackets
+
+
+https://www.google.com/linuxrepositories/
+Chrome repo in /etc/yum.repos.d/google-chrome.repo:
+[google-chrome]
+name=google-chrome
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+
+git clone git@github.com:andmalc/config.git
+
+
+Packages {{{2
+
+Install
+git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user
+
+Yubikey/U2F support
+pam-2uf u2f-hidraw-policy
+
+
+telegram-desktop
+dnf copr enable rommon/telegram
+
+Atom editor
+dnf copr enable mosquito/atom
+dnf install atom
+
+Chrome:
+Depends on redhat-lsb libXScrnSaver
 
 Users {{{2
 
