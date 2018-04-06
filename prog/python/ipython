@@ -1,26 +1,27 @@
 
-Startup
-	-log		start logging
-	-logplay 	playback log lines
-	-logfile
+Info
+    %quickref   overview
+    %magic      list magic functions
 
 Magic funcs
-	%lsmagic	list
-
-	%env		list environment vars
-	%hist -tn	history w/o line #s
-	%edit
+%env		list environment vars
+%edit
 		-x		do not execute
 		-p		use last input
 
-	logging
-		%logstart <log file>	initial start log
-		%logstop				stop logging, close log file
-		%logon					restart logging
+logging
+    %logstart <log file>	initial start log
+    %logstop				stop logging, close log file
+    %logon					restart logging
 
 Use zsh as shell
 	in genutils.py
 		replace stat = os.system(cmd)
 		with stat = subprocess.call(cmd,shell=True,executable='/bin/zsh')
 		use 'zsh -i' for interactive shell - reads .zshrc
+
+Startup
+	-log		start logging
+	-logplay 	playback log lines
+	-logfile
 

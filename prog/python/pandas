@@ -1,3 +1,14 @@
+Read data from file {{{1
+
+Read data from file {{{1
+
+read_csv()
+
+Set Date column as Index
+parse_dates=['Date'],index_col='Date
+
+
+
 Create df's {{{1
 
 df info
@@ -34,6 +45,8 @@ Rows {{{2
 
 Col on far left "Index Labels"
 Usually 0-based number but can be datetime
+
+df[:3]  slice of rows
 
 df.loc[0]   row 0
 df.loc[[0,1,3]]
@@ -81,21 +94,6 @@ mask = np.logical_and(df.CatA=='a', df.CatB=='e')
 df[mask][:5]  
 
 
-Functions {{{1
-
-
-df.apply(func), axis=1) - apply func elementwise, axis=0 (rows) is default
-
-
-Func to apply rowwise:
-def func(e):
-	return e['Col'] + e['Col']
-
-Func with extra args, first is element
-def func(e,x):
-	return e > x
-df.apply(func, args=(x,))
-
 
 Grouping {{{1
 
@@ -107,6 +105,21 @@ grouped.count() - applies count to all numeric columns
 grouped.aggregate(myfunc)  - any function
 grouped.agg([np.mean,len])  
 
+
+
+
+Functions {{{1
+
+Func to apply rowwise:
+def func(e):
+	return e['Col'] + e['Col']
+
+Func with extra args, first is element
+def func(e,x):
+	return e > x
+df.apply(func, args=(x,))
+
+df.apply(func), axis=1) - apply func elementwise, axis=0 (rows) is default
 
 
 
