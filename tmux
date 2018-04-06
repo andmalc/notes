@@ -54,8 +54,10 @@ move-window
 
 Panes  {{{1
 
-!       break pane into new window
--|      split vert/horiz
+-|      split-window
+        create new pane from vert/horiz split
+!       break-pane
+        change current pane into new window
 ;       last active pane
 o		other pane in current window
 z       toggle hide other panes (?)
@@ -66,36 +68,37 @@ q       show pane #'s
 C+o     rotate in circle
 
 
+Options for following commands
+    -v  vert - windows stacked. Default
+    -h  horiz - windows side by side
+    -b  combine with v or h for current pane to right or above
+    -d  remain in current window
+
+break-pane
+    change current pane into new window
+
+split-window 
+    split current window or -t # window into panes
+    shortcuts
+        -   split window vertical (modified from ")
+        |   split window horizontal (modified from %)
+
+join-pane
+    Merge two windows into 2 panes
+    Reverse with break-pane
+    window id format: [<session name>]:<window #>
+    -s source - window to be inserted into target
+    -t target - default: current window
+    -b  open window above or to left
+    -p percent
+
+    join-pane -s # -h -p 40
+
+
 resize-pane
     Ctrl + up,down, left, right
     z   zoom
     M+arrow  (rapid for multiple times)
-
-Options
-    cmd -t target arg
-        client, session, window or pane which a command should affect.
-
-break-pane
-    switch current pane into its own window
-    shortcut !
-
-join-pane 
-    Two windows into 2 panes
-    insert a window as a panel in current
-    window id format: [<session name>]:<window #>
-    -s source pane #     pane to be inserted into current window
-    -p percent
-    -t target - default: current window
-    -b  open window above or to left
-
-split-window into panes 
-    split current window or -t # window 
-    -v  vert - windows stacked. Default
-    -h  horiz - windows side by side
-    -b  combine with v or h for active pane to left or above
-    shortcuts
-        -   split window vertical (modified from ")
-        |   split window horizontal (modified from %)
 
 
 

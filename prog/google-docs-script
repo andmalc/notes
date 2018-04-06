@@ -10,16 +10,16 @@ https://sites.google.com/a/newvisions.org/scripts_resources/technical-blog/readi
 Cell & Range references {{{1
 
 
-  A:A     An entire column
-  B:D     contiguous cols.
-  B2:D    contiguous cols starting with row
-  
-  2:2     entire row
-  B2:2    row starting with col.
-  2:5     contiguous rows
-  B2:5    contiguous rows starting with col.
+A:A     An entire column
+B:D     contiguous cols.
+B2:D    contiguous cols starting with row
 
-Absolute cell ref     $A$1
+2:2     entire row
+B2:2    row starting with col.
+2:5     contiguous rows
+B2:5    contiguous rows starting with col.
+
+$A$1    Absolute cell ref     
 
 Sheet + Range
   'Sheet Name'!A1:B2  #single quotes around sheet name with space

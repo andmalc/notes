@@ -567,32 +567,19 @@ formatoptions (fo)
 						
 Search & Replace {{{1
 
-%s/foo/bar/g
-    Find each occurrence of 'foo' (in all lines), and replace it with 'bar'.
+[I				show lines matching word under cursor
 
-s/foo/bar/g
-    Find each occurrence of 'foo' (in the current line only), and replace it with 'bar'.
+smartcase		(scs)	
+        no ignore case when pattern has uppercase
+        ignorcase must be on.  
+        Used for the commands "/", "?", "n", "N", ":g" and ":s".  
 
-%s/foo/bar/gc
-    Change each 'foo' to 'bar', but ask for confirmation first.
-
-
-g/pat/p			   print all lines in file matching pat
-
-		[I				show lines matching word under cursor
-		More examples of editing with search in 'pattern.txt' line 150
-		smartcase		(scs)	
-				no ignore case when pattern has uppercase
-				ignorcase must be on.  
-				Used for the commands "/", "?", "n", "N", ":g" and ":s".  
-		magic	Enables extended regular expressions (eg \s)
-		Regex atoms
-				\<		start of word
 
 
 Ex/command Mode {{{1
 
 Syntax: line address/pattern/command
+
 Command Line 
 		Accelerator keys
 				Ctrl B			Line beginning
@@ -603,9 +590,22 @@ Command Line
 
 q:	display Ex history, can edit and reexecute
 
-Line Addressing {{{2
+Line Addressing and searching in Ex mode {{{2
+
+http://vimregex.com/
+
+magic	Enables extended regular expressions (eg \s)
 
 
+:range s[ubstitute]/pattern/string/cgiI
+    For each line in the range replace a match of the pattern with the string where:
+    c   Confirm each substitution
+    g   Replace all occurrences in the line (without g - only first).
+    i   Ignore case for the pattern.
+    I   Don't ignore case for the pattern.
+
+
+Line addressing
  .	   current line
  $	   last line
  %	   all lines - shorthand for 1,$
@@ -616,23 +616,12 @@ Line Addressing {{{2
 	   start entering an Ex command with range from current line to N
 	   lines down
 
-
-Regex matching {{{2
-
-[address]g/pattern/[commands]
-
-/pat/n	line before/after pat
-n,/pat/ From line n to pat after cursor line (might be before line n)
-n;/pat/ From line n to pat after line n.  
-/pat1//pat2/	Line matching pat2 after pat1
+Example
+Search for a pattern.  Refer to pattern in following substitude command
+/[(,)]
+:s//\r&/g
 
 
-g,g! (or v)/pat/p				
-	   global search: print lines that contain, don't contain pattern (:g = :%s). 
-	   g after search & replace means replace every instance in line.
-:g/thing/s/&/thingie/g	'&' matches or inserts first matched term.
-:g/.*/<p>&<\/p>					
-	   Surround line with tags cmds with following count
 
 Commands {{{2
 

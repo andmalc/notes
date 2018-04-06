@@ -1,0 +1,8 @@
+
+
+Formulas {{{1
+
+Extract first word
+LEFT({Memory del},FIND(' ',{Memory del})-1)
+
+

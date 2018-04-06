@@ -1,18 +1,82 @@
+Read data from file {{{1
+
+Read data from file {{{1
+
+read_csv()
+
+Set Date column as Index
+parse_dates=['Date'],index_col='Date
+
+
+
 Create df's {{{1
 
+df info
+    shape
+    columns => Index obj
+    dtypes  basic data type info
+    info() extended data type info
+
+Types (Pandas/Python)
+    object/string
+    int64/int
+    float64/float
+    datetime64/datetime (must import)
+
+    
 {col:val,val, col: val,val}
 {col:{index:val,index:val},col:{ ... }}
 
 
 Selecting columns & rows {{{1
 
+Columns {{{2
+
 Series:
-s['i']		select row by index
+s['col_name']		select row by index
+df[[col,col]]
+
 s['i1','i2','i3']	select multi rows by index
+df.ix[index for single row]  
+
+head/tail(n=#)   first/last n observations, default 5
+
+Rows {{{2
+
+Col on far left "Index Labels"
+Usually 0-based number but can be datetime
+
+df[:3]  slice of rows
+
+df.loc[0]   row 0
+df.loc[[0,1,3]]
+
+Last row:
+number_of_rows = df.shape[0]
+df.loc[number_of_rows -1] #last row, returns Series
+Or df.tail(n=1) #returns df
+Or df.iloc[-1]  #only with iloc method
+
+Rows & Cols {{{2
+
+df.loc[[rows], [columns]] 
+':' indicates all
+
+df.loc[:,['col1','col2']] #all rows in col1 & col2
+
+df.iloc[:,[2,4,-1]]  #iloc allows integer column indexs
 
 df[col][rows]  
-df[[multi cols]][rows]  
-df.ix[index for single row]  
+df[[col,col]][rows]  
+
+Ranges {{{2
+
+Under Py3 range func returns generator.  Must be converted to a list.
+
+df.iloc[:,list(range(3))]
+
+Slice syntax
+df.iloc[:,0:6:2]  # every other first five columns
 
 
 Filtering {{{1
@@ -30,11 +94,21 @@ mask = np.logical_and(df.CatA=='a', df.CatB=='e')
 df[mask][:5]  
 
 
+
+Grouping {{{1
+
+result = df.groupby(['Col', 'Col'])[['col to aggregate','col2']].aggregate_func()
+
+grouped = df.groupby('Col')
+grouped['Col'].nunique() - count of unique values
+grouped.count() - applies count to all numeric columns
+grouped.aggregate(myfunc)  - any function
+grouped.agg([np.mean,len])  
+
+
+
+
 Functions {{{1
-
-
-df.apply(func), axis=1) - apply func elementwise, axis=0 (rows) is default
-
 
 Func to apply rowwise:
 def func(e):
@@ -45,16 +119,7 @@ def func(e,x):
 	return e > x
 df.apply(func, args=(x,))
 
-
-Grouping {{{1
-
-grouped = df.groupby('Col', 'Col')
-grouped.sum()	- groups on index, sums all cols
-grouped['Col'].count()
-grouped.count() - applies count to all columns
-grouped.aggregate(myfunc)  - any function
-grouped.agg([np.mean,len])  
-
+df.apply(func), axis=1) - apply func elementwise, axis=0 (rows) is default
 
 
 
