@@ -7,11 +7,17 @@ buildah <cmd> <options> <container ID>
 
 config {{{2
 
+https://github.com/projectatomic/buildah/blob/master/docs/buildah-config.md
+
 --cmd
     buildah config --cmd /bin/bash $newcontainer
 
 --entrypoint
 --port
+--user
+    guid or name if in /etc/passwd
+--workingdir
+    
 
 copy {{{2
 
@@ -26,11 +32,14 @@ commit <container> <image>
 containers
 
 from {{{2
+
+https://github.com/projectatomic/buildah/blob/master/docs/buildah-from.md
+
 Create container from image 
 from <options> <image>
     create container from image
     --name new container name
-    --volume/-v <host-dir>:<container-dir>:<options>
+    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
 
     container=$(buildah from fedora)
