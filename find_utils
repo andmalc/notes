@@ -106,3 +106,14 @@ Match filename patterns:  if pat contains no metacharacters, pat can match any p
 
 Try also: 'slocate' (?)
 
+fd {{{1
+
+https://github.com/sharkdp/fd
+sudo dnf copr enable keefle/fd
+
+
+fzf  {{{1
+
+command-line fuzzy finder written in Go
+https://github.com/junegunn/fzf
+

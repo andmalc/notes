@@ -121,7 +121,7 @@ Line Editor Key Bindings
 			M-f	word forward
 			M-b	word back
 			^w/M-BS delete word to left
-			M-D	delete word to right
+			M-d	delete word to right
 
 		line
 			^a	beginning of line
@@ -130,6 +130,10 @@ Line Editor Key Bindings
 			^k   kill line to right
 			^U Delete line
 			^Y Yank line back (ie restore)
+
+Customized bindings
+In .zshrc
+    Alt + arrows for word forward/back
 
 
 Braces, Parentheses, Brackets {{{1

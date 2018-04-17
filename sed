@@ -3,6 +3,9 @@ Docs
 	O'Reilly book
 		http://www.unix.org.ua/orelly/unix/sedawk/index.htm
 
+    Processing a csv file
+        https://blog.theodo.fr/2018/03/regex-warrior/
+
 
 Basic sed operatation: 
 $ sed "s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file>.
@@ -30,6 +33,8 @@ OPTIONS
 	-f		script file arg
 
 	-F (awk)	Field separator e.g. -F, (comma as FS)
+
+    -r  extended regex
 
 	p	Print, if substitution made
 	w	Write to named file if substitution made

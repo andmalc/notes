@@ -1,3 +1,13 @@
+Docs {{{1
+
+Articles on tmux config
+http://deanbodenham.com/learn/home.html
+
+Colour chart
+https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+
+
+
 Startup {{{
 Options
 
@@ -12,7 +22,10 @@ Options
 Commands 
     Redraw on bigger screen -d      
 
-Sessions {{{1
+Sockets & Sessions {{{1
+
+Start with new socket
+    tmux -L tmuxtest 
 
 Options
     new session         new -s <session name>
@@ -100,10 +113,9 @@ resize-pane
     z   zoom
     M+arrow  (rapid for multiple times)
 
-
-
-select-layout
-    <space>
+swap-pane -DU [-s src]
+    -U  numerically previous pane (show #'s with q)
+    -D  numerically following pane
 
 
 Layouts {{{2
@@ -113,6 +125,10 @@ even-vertical       top to bottom
 main-horizontal (large pane on top)
 main-vertical (large pane on left)
 
+select-layout  main-horizontal
+
+rotate through layouts
+    <space>
 
 Sessions {{{2
 $   rename
@@ -145,6 +161,10 @@ Commands
     save-buffer <file>
     capture-pane
     choose-buffer   select a buffer and paste into current pane
+
+Key Bindings {{{1
+
+list-keys [-T <keymap>]
 
 
 Plugins {{{1

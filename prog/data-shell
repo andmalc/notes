@@ -5,8 +5,13 @@ cat - concatenate files
     cat file1 file2 > targetfile
     cat > targetfile # type in lines below, end with c+d
 
+
+csvkit
+    https://csvkit.readthedocs.io/en/1.0.3/
+
 cut
     extract input on tabs into fields
+    -f #-# field or fields to extract
     -d  delimiter instead of tabs
     -c  select character range by position
 
@@ -43,6 +48,13 @@ tee
 
     seq -f "Line %g" 10 | tee lines
 
+tail
+    output last ten lines
+    -n #    last # lines
+    -n +#   ten lines starting at line #
+
+    15 lines starting at 100
+        head -n 100 | tail -n 15
 
 tr
     translate characters
@@ -53,9 +65,11 @@ tr
      '[:upper:]' '[:lower:]'
      
 uniq
-    remove duplicatees
-    input list must be sorted
+    find adjacent repeated lines 
+    sort input list to find all dups
     -c  print count of occurances
+    -d  print dups only
+    -c  print unique only
 
 wc - counting
     -l      lines in file

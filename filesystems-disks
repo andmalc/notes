@@ -83,11 +83,14 @@ Info {{{2
 https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 
-lsblk -f	tree of disks, parts, labels, filesystem UUIDs, mount points
-            no partlabel, part UUID
+lsblk       tree of disks, parts, sizes, mount points
             tree display for lvm lv's
             run as regular user
             part of util-linux
+
+lsblk -f	tree of disks, parts, labels, filesystem UUIDs, mount points
+            best overview of devices and filesystems
+            no partlabel, part UUID
             
 blkid		shows partition UUID's and types
 			preferred for showing contents of block devices
@@ -98,7 +101,11 @@ cgdisk      GPT version of cfdisk
 sfdisk - partition table reporting
     by default uses sectors, not obsolete cylinder etc.
 	-s  [<device - partition or disk>]    show disk/partition size
+     TARGET,PROPAGATION
+
 	-l [options] <dev>
+     TARGET,PROPAGATION
+
 	-D  DOS compatibility - free 512 free at part beginning
 	-L  ignore irrelevant to Linux
 
@@ -193,10 +200,12 @@ Wipe device
 Filesystems {{{1
 FS Info {{{2
 
+lsblk -f        best overview of devices and filesystems
+
+
 df
 
 findmnt     	show mounted filesystems
-				lsblk -f also shows
     --df/-D     show space used
     --fstab/-s  show only from fstab
     -S <dev>    show on device
@@ -217,6 +226,8 @@ ncdu
 
 Labels {{{2
 
+
+
 e2label / e2fsprogs		for extX
 btrfs filesystem label /dev/XXX <label>  #using btrfs-progs
 swaplabel -L <label> /dev/XXX
@@ -224,6 +235,8 @@ swaplabel -L <label> /dev/XXX
 Get/set partition unique GUID or Partition label (not filesystem label) with gdisk
 
 In fstab:
+    fstab can use partition labels or UUIDs or filesystem labels or UUID
+    Labels (aka tags) preferred over UUIDs as readable, portable (see man mount)
     PARTUUID=8C208C30-4E8F-4096-ACF9-858959BABBAA /data ext4 user,defaults 0 0
     PARTLABEL=blah etc.
 

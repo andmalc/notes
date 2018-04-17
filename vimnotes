@@ -5,6 +5,10 @@ Repeat change on multi lines (e.g. commenting all)
 3. Make change
 4. Esc
 
+Edit command layout
+ [count] {operator} {[count] motion|text object}
+
+
 Help {{{1
 
 Jump
@@ -61,16 +65,26 @@ Show/Display Line Numbers
   .=	show current line number
 
 
-Windows  {{{1
+Windows & Tabs {{{1
 
-Opening
-    sv      vertical split
-    vs      horizontal split
+vertical = sideways
+horizontal = top to bottom
+
+Create with split
+    sp      horizontal split
+    vs      vertical split
     sb      split buffer
+    sba     split all buffers horizontal
+    vert sba     split all buffers vertical
 
+Window Closing
+		c, :close		Hide buffer - edit next window
+		q (or :q ?)		Quit editing & close window
+        :on[ly]             close all but current
 
-Moving Between
+Move Between Windows
 		C-W +
+        C-W (twice)     Last window
 		w				Move to window below (wrap)
 		W				Move to window above (wrap)
 		j				Move to window below
@@ -78,26 +92,32 @@ Moving Between
 		b						to bottom buffer
 		t						to top buffer
 
+Move Window
+        H   left
+        L   right
+        K   up
+        J   down
+        
+    Rotating with above commands: 
+            Move to the side when stacked creates vertical layout
+            Move up or down when side by side to create stacked layout
+
+		r/R				rotate windows downwards/upwards
+
 Window Sizing
 	Height
 		C-W N_				height = N
-		C-W =					make equal height
+        c-w _           full height (zoom)
 		C-W +,- N			increase/decrease height * n
 		z{height}<CR>		resize window height
 		res[ize] +-n | n
 	Width
 		C-W N|			width = N
+        c-w |           full width (zoom)
 		C-W N >,<      increase/reduce with * n
+    Restore
+		C-W =			make equal size
 
-Window Closing
-		c, :close		Hide buffer - edit next window
-		q (or :q ?)		Quit editing & close window
-
-Shifting
-		r/R				rotate windows downwards/upwards
-		K/J/H/L			move current to top/bottom/left/right, full width
-
-        :tab split      open split window into own tab and displays tab bar
                         zoom window
 Scrolling 
 		C-F/B			scroll forward/back by screen
@@ -114,6 +134,12 @@ Preview window
     pedit <file>    open
     C-W z           close
 
+Tabs {{{2
+
+c-w T       Move window to tab
+gt/T        Move to next/previous tab
+:tablonly   Close tabs, retain current window
+:tab split      open split window into own tab and displays tab bar
 
 Files {{{1
 
@@ -272,7 +298,11 @@ Entering Insert mode
 	gI				insert text at column 1
 
 go to normal mode
-    c-[, c-c	 
+    c-[, c-c,c-3, jj,
+
+    Mappings:
+        Caps Lock to Esc
+        Caps Lock to C then use with C-3
 
 Run commands in other modes
 	Single Command mode
@@ -307,76 +337,6 @@ registers
 
 
 
-
-Normal mode {{{2
-
-Deleting
-    
-	C-H		Delete char left
-	C-W		Delete word left
-	C-U		Delete line left
-   
-   Word
-	[x]x		Delete [x] characters under and after the cursor
-	[x]X		Delete [x] characters before the cursor
-	daw/W		Deletes whole words, before & after cursor
-	de			delete to end of word, leave space
-	db			delete word previous
-	
-    Line
-    nD, d$		Delete to end 
-	dd			Delete whole line		
-	cc			Delete whole line, preserving autoindent, enter insert mode
-	J			join lines (ie delete EOLs)
-	J/:j		Join n lines of text, add spaces in place of removed EOLs.	
-						If joinspaces is on, insert two spaces after .,!, or ?	
-	gp			put, leave cursor after
-	"n...		With deletion commands (d,c,s) remove text into buffer n.
-						With paste/put command, put from buffer n
-	[dc][/?]text		
-			Delete/change from current position search to text
-			Use text object specifiers with delete:
-
-Changing
-	   cw	   change word 
-	   S	   change whole line
-		 c$, C		 change to end of line, enter insert mode
-		C & D change & delete from cursor to end of line plus n more complete lines.
-		s is a synonym for cl
-		S is a synonym for cc
-		cc		change whole line
-		movement:
-		c0		change to beginning of line
-		c$		change to end of line
-		bce/bcw change word
-		c2j		change current and two lines down
-		~		toggle case
-		gU/u/~{motion}	make Nmove text uppercase/lowercase/swap case.
-		gU<motion>		Make motion text upper case
-		guu/gUU			Make line lower/upper case
-
-Replace mode:
-	gR			replaces blank areas.
-	r        replace character under
-	R        Enter Replace mode
-
-Copying and Moving
-		syntax: reg/visual block, y or d, motion
-		yy, Y			yank whole line
-        y$              yank to end of line
-		p, P			put a register after/before the cursor position 
-		]p				like p, but adjust indent to current line
-		[p				like P, but adjust indent to current line
-		gp				like p, but leave cursor after the new text
-
-Elevate permission to root while editing
-	:w !sudo tee %
-
-Selecting Text
-	v				start Vndmalc@gmail.comisual mode per character
-	V				.. by line
-	^V				.. by block
-	^o^v	blockwise, from insert mode
 
 
 
