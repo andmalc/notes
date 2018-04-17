@@ -1,6 +1,28 @@
-Read data from file {{{1
+Data Analysis {{{1
 
-Read data from file {{{1
+structured {{{2
+
+- observations and characteristics
+Qualitative
+Quantitative
+    Discreet
+        can take only certain values, can be counted
+    Continuous
+        range of values
+        Eg. time, temperature, measured qualities
+
+Structured data levels:
+    nominal
+        
+Unstructured {{{2
+
+free form text
+must be preprocessed to be understood
+
+
+Create df's {{{1
+
+Read data from file {{{2
 
 read_csv()
 
@@ -8,24 +30,21 @@ Set Date column as Index
 parse_dates=['Date'],index_col='Date
 
 
+Info {{{1
 
-Create df's {{{1
+shape
+columns => Index obj
+dtypes  basic data type info
+info() extended data type info
+describe 
+    qualitative data: counts, freq (most common value), unique etc.
+    quantitative data: min,max,mean etc.
 
-df info
-    shape
-    columns => Index obj
-    dtypes  basic data type info
-    info() extended data type info
-
-Types (Pandas/Python)
+Data types (Pandas/Python)
     object/string
     int64/int
     float64/float
     datetime64/datetime (must import)
-
-    
-{col:val,val, col: val,val}
-{col:{index:val,index:val},col:{ ... }}
 
 
 Selecting columns & rows {{{1
