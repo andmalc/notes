@@ -18,7 +18,7 @@ psql
     -p  port
     -U  connect as User
 
-    Default: connect via socket, user and db name same as unix user
+    psql -l localhost -U postgres -l 
 
     Run as:
         sudo su - postgres

@@ -259,12 +259,15 @@ create new branch tracking remote and switch to it
 
 
 Set upstream branch
+    branch --set-upstream-to=origin/master
     branch -b <branchname> --track origin/<remote b name>
     push --set-upstream origin gh-pages
 
-Change remote 
-    git 
+Change remote branch name or create (?)
+    git push origin <branch>
+
 show-branch show all changes in branch
+
 
 
 
