@@ -6,6 +6,8 @@ json {{{1
 jo - command line app, formats input as json
 sudo dnf copr enable ganto/jo
 
+jq
+
 
 yaml {{{1
 

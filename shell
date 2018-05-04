@@ -1,3 +1,6 @@
+cat - reads from file
+echo - reads from sting
+
 
 xargs 
     takes a newline separated list and maps the list to a command
@@ -39,12 +42,15 @@ Redirection
 http://en.wikipedia.org/wiki/Redirection_(Unix)
 
 Standard I/O
-Stdin, stdout, and stderr are default both interactively and in a script
-by convention numbered 0, 1, and 2.  
+Stdin, stdout, and stderr streams  numbered 0, 1, and 2.  
 Redirection is changing any of these default means of input or output
 
 
-Redirect to/from files {{{2
+Input {{{2
+
+< file
+<< here doc
+<<< string
 
 keyboard as input
     cat
@@ -52,6 +58,22 @@ keyboard as input
 file as input
     cat < file
     < file cat
+
+
+Here doc with << operator
+    tr a-z A-Z <<+
+    abc
+    def
+    +
+
+Quick write to file 
+    tee myfile << blahblah
+    tee -a myfile << xxx #appends
+
+Here string (input from string) - <<< operator
+    tr a-z A-Z <<< "one two three"
+
+Output {{{2
 
 output redirection operators - output to file
     program-name > out.txt
@@ -63,6 +85,8 @@ output redirection operators - output to file
 To specify the file with a number, place the number before the >
 	program-name 1> out.txt
 	program-name 2> errors.txt
+
+Combos {{{2
 
 Redirect both stdin and stderror 
 	Traditional format: cmd logfile 2>&1
@@ -77,9 +101,6 @@ Drop errors
 Standard out from a command in a sub-shell to a file:
 (ls -) > file
 	
-Quick write to file
-    tee myfile <<< blahblah
-    tee -a myfile <<< xxx #appends
 
 
 Heredoc/string {{{2
@@ -97,9 +118,6 @@ cat >> /etc/apt/apt.conf << .
 hi!
 .
 
-Herestring:
-tr a-z A-Z <<< "one two three"
-ONE TWO THREE
 
 Line editing {{{1
 
@@ -179,12 +197,16 @@ for file in <pat>; do
     mv $file ${<pat>}
 done
 
-Completion & Expansion {{{1
 
-Std Output of command
+Command substitution {{{1
+
+Creates child process whose standard output is piped back into shell
     $(cmd)
     `cmd` - obsolete format
 
+    vi $(fgrep -l malloc *.c)
+
+Completion & Expansion {{{1
 
 	${VAR}		Value of a shell variable name - curly brackets just used for clarity.
 

@@ -1,0 +1,57 @@
+General {{{1
+
+Base16
+http://chriskempson.com/projects/base16/
+
+Colour chart:
+https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+
+Colours and names:
+http://www.htmlcsscolor.com/
+
+
+tmux {{{1
+
+Base16 tpm plugin
+https://github.com/mshkrebtan/base16-tmux
+
+
+hterm {{{1
+
+https://groups.google.com/a/chromium.org/forum/#!searchin/chromium-hterm/256%7Csort:date/chromium-hterm/eEijj3W1UBk/rZWF1YPL3i4J
+
+background #002b36
+cursor #a9aaa9
+foreground #839496
+
+
+Reset terminal settings as above and use this:
+
+https://github.com/chriskempson/base16
+
+
+
+Vim {{{1
+
+Colour test:
+    http://www.robmeerman.co.uk/unix/256colours
+    :runtime syntax/colortest.vim
+
+zenburn colorscheme low contrast for dark environmnet.
+https://vimawesome.com/plugin/zenburn
+
+
+
+Log {{{1
+
+4/18
+Base16 working in shell
+Overrides bg set by terminal
+BG maintained in tmux
+Tmux status bar changes after installing base16 tpm plugin
+Vim also changes after installing plugin but only in tmux. Retains theme after exiting tmux
+
+
+
+
+
