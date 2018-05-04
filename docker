@@ -51,6 +51,10 @@ Mounting {{{1
 -v src:dest mount data volume in cont.
 --volumes-from  mount volume from cont. (does not have to be running)
 
+If SELinux in effect, need :z option
+    -v /SOURCE:/DESTINATION:z
+    http://www.projectatomic.io/blog/2015/06/using-volumes-with-docker-can-cause-problems-with-selinux/
+
 --mount
     type:[volume|bind|tempfs]
     source:<name of vol>    ommit for anonymous volumes
@@ -64,6 +68,8 @@ Types
 Container commands {{{1
 
 start       
+    -a      start and attach
+
 attach      attach to a running container
 
 cp          copy file into cont
