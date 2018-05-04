@@ -1,0 +1,14 @@
+
+
+python3 -m pip -v install --user jupyterlab          
+
+
+Show file locations
+    jupyter --paths
+
+
+Notebook config
+    .jupyter/jupyter_notebook_config.py
+
+    c.NotebookApp.terminado_settings = {'shell_command': ['zsh']}
+    c.NotebookApp.port = 8888
