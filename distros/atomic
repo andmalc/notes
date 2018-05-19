@@ -2,6 +2,8 @@
 Registry
 registry.fedoraproject.org/fedora-minimal:latest
 
+Dnf search
+podman run -it --rm registry.fedoraproject.org/fedora:28 dnf search strace
 
 
 Sytem upgrade

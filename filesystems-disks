@@ -200,10 +200,7 @@ Wipe device
 Filesystems {{{1
 FS Info {{{2
 
-lsblk -f        best overview of devices and filesystems
-
-
-df
+Devices and mounts
 
 findmnt     	show mounted filesystems
     --df/-D     show space used
@@ -214,7 +211,21 @@ findmnt     	show mounted filesystems
     e.g. -s -D  list mounted by fstab, show space used
     --verify 
 
+
+lsblk -f        best overview of devices and filesystems
+
+
+Disk overall usage
+
+df
+pydf    df with colours
+
+
+Directory/file usage
+
+
 du 
+    use nnn instead
     tutorial
         https://www.rootusers.com/13-du-disk-usage-command-examples-in-linux/
     -c      show grand total
@@ -223,6 +234,9 @@ du
 
 ncdu
     curses disk usage
+
+nnn
+    S to show directory totals
 
 Labels {{{2
 

@@ -13,16 +13,22 @@ nix-env -u # upgrade all
 Ranger console file manager
 http://ranger.nongnu.org/
 
-ncdu    ncurses util for visualizing disk space usage
+Disk space usage
+    Files/dirs
+        ncdu 
+        nnn
+    Partitions/disks
+        pydf
 
 fd - find alternative
 https://github.com/sharkdp/fd
-Download https://github.com/sharkdp/fd/releases
-fd <pattern> [<dir tree to search>]
-By default: 
-- recursive
-- ignores case, hidden files and patterns in in gitignore.  
-- regex patterns
+Fedora: fd-find
+
+    fd <pattern> [<dir tree to search>]
+    By default: 
+    - recursive
+    - ignores case, hidden files and patterns in in gitignore.  
+    - regex patterns
 
 
 fzf - command-line fuzzy finder written in Go
