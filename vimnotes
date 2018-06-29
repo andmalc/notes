@@ -32,7 +32,7 @@ smartcase		(scs)
 
 Interface {{{1
 
-Status line
+Status line - laststatus
    create		ls=2
    set
       set statusline=%f\ %P col %v  
