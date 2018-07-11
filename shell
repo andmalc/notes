@@ -270,6 +270,10 @@ command
 	if pipeline, uses exit status of last command	
 	! before inverts
 
+Testing {{{1
+
+http://wiki.bash-hackers.org/commands/classictest
+
 POSIX test statement -  [ ]
     if [ "$foo" = "$bar" ]
 	-z	0 length string

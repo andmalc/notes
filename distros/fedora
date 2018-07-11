@@ -10,18 +10,19 @@ Fedora Server netinstall image is a universal one, and can be used to install an
 Minimal Desktop
 https://www.reddit.com/r/Fedora/comments/8245vv/i_wish_fedora_workstation_had_a_minimal_desktop/
 
-Sizes - F 26
-Workstation root partition 5GB
-Default partions: EFI 200M, Boot 1G, Root and Home equal
-
-boot parition must be extX formatted and not in LVM
-efi partition may be shared, mount at /boot/efi
-
-Minimal Desktop install
 install minimal 
 sudo dnf group install gnome-desktop base-x hardware-support (for wireless)
 systemctl enable gdm.service
 systemctl set-default graphical.target
+
+dnf groupinstall 
+    basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
+    custom-environment - ?
+    minimal-environment - cli
+
+
+boot parition must be extX formatted and not in LVM
+efi partition may be shared, mount at /boot/efi
 
 
 Setup {{{1
@@ -236,15 +237,15 @@ Dnf <options> <command> <args eg. package spec>
         autoclean   remove orphans
         search      shows & searches by name, description
         info        shows details
-        list [<pkg>]
-                show pkg version, repo, if installed or available
-                if no arg, lists installed then avail packages
-                does not sync metadata
-                see also repoquery plugin
-        list [installed | available]
-                list all available and installed [just installed | avail & not installed]
+        list [installed | available] [<pkg>]
+            show pkg version, repo, if installed or available
+            if no arg, lists installed then avail packages
+            does not sync metadata
+            see also repoquery plugin
 
-        install, reinstall, remove, downgrade
+        install, reinstall, remove, downgrade <pkg or desired file> | <@Group name>
+            if /path/file given, acts like provides and installs pkg that provides file
+    
 
     Package spec
         can use globbing in pkg name
@@ -287,6 +288,9 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
         search repos for packages
         -l <pkg name>   list files in package
         --requires <pkg>    show package dependencies
+
+     dnf-plugin-system-upgrade
+        upgrde to new o/s version
 
 
 rpm file - install dependencies

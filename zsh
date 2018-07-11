@@ -17,8 +17,6 @@ vared
 
 Configuration {{{1
 
-
-Builtins
 Display options in/not in effect:
     setopt
     unsetopt
@@ -87,7 +85,7 @@ Delete
         left:       ^w or \e+backspace
         right:      Md or \ed
 
-Save current line in buffer stack
+Stash current line in buffer stack ( push-line), restores after next command
     ESC q
 
 Commands & arguments {{{1
