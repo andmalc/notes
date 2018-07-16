@@ -2,6 +2,14 @@
 Registry
 registry.fedoraproject.org/fedora-minimal:latest
 
+Filesystem
+
+Defaults for /etc   /usr/share
+
+Writable:
+    /var
+    /etc
+
 
 
 Sytem upgrade
