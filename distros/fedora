@@ -10,15 +10,24 @@ Fedora Server netinstall image is a universal one, and can be used to install an
 Minimal Desktop
 https://www.reddit.com/r/Fedora/comments/8245vv/i_wish_fedora_workstation_had_a_minimal_desktop/
 
-install minimal 
+Gnome install minimal 
 sudo dnf group install gnome-desktop base-x hardware-support (for wireless)
 systemctl enable gdm.service
 systemctl set-default graphical.target
 
+Alternate WM install from server edition
 dnf groupinstall 
     basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
     custom-environment - ?
     minimal-environment - cli
+
+Wayland minimal
+sway + Gnome Terminal
+
+Install into mounted partition
+dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
+install bootloader ?
+
 
 
 boot parition must be extX formatted and not in LVM
@@ -225,6 +234,8 @@ Dnf {{{1
 
 http://dnf.readthedocs.org/en/latest/command_ref.html
 
+Package management {{{2
+
 Dnf <options> <command> <args eg. package spec>
 
     Options:
@@ -232,23 +243,36 @@ Dnf <options> <command> <args eg. package spec>
         --enablerepo <repo>     install pkg from a repo
         --disable <repo>
         --releasever 23
+        --installroot=<path>
+            dnf --installroot=<installroot> --releasever=<release> install system-release
+
 
     Commands
         autoclean   remove orphans
-        search      shows & searches by name, description
         info        shows details
+        
+        in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
+            if /path/file given, acts like provides and installs pkg that provides file
+
         list [installed | available] [<pkg>]
-            show pkg version, repo, if installed or available
+            shows brief pkg summary: version, repo, install status
+            no pkg summary
             if no arg, lists installed then avail packages
             does not sync metadata
             see also repoquery plugin
+        
+        provides <pkg name or partial or filename>     
+            shows pkg (installed or not) owning file
 
-        install, reinstall, remove, downgrade <pkg or desired file> | <@Group name>
-            if /path/file given, acts like provides and installs pkg that provides file
-    
+        se|search   lists name, description. 
+                    result sectioned by closeness of match
+                    no installation info
 
-    Package spec
-        can use globbing in pkg name
+        upgrade <pkg spec>
+        up|update      is alias to upgrade
+        upgrade-minimal
+            Updates each package to the latest version that provides 
+            bugfix, enhancement or fix for security issue 
 
 
     Package Groups
@@ -269,7 +293,46 @@ History
     undo
     rollback
 
-Other
+Repos {{{2
+
+Repo files in /etc/yum.d
+    fedora-release-rawhide
+    fedora-updates-testing 
+
+repo [list|enable|disable] [repo-id]
+
+repolist [enabled | disabled | --all ]
+    list repo details
+
+[options] repoquery [<select-options>] [<query-options>] [<pkg-spec>]
+    search repos for packages
+    default output is pkg name.  Faster than 'dnf provides'
+
+    Select options - limit output set 
+    --file/-f       package owned by filej
+    --installed
+    --repo <repoid>
+    --upgrades  # pkgs providing upgrades to existing
+    --whatdepends <capability> # pkgs that depend on this one
+    --whatprovides <capability>
+    --whatrecommends <capability>
+    --whatrequires <capability>  # pkgs requiring this one
+    --whatsuggests <capability>
+
+
+    Query options - set what info displayed about each pkg
+    --depends
+    -i              info
+    -l <pkg name>   list files in package
+    --provides      pkgs providing service/cmd
+    --recommends
+    --requires <pkg>  #  show package dependencies (required by this pkg)
+
+Show recursive dependencies
+    dnf repoquery --requires nginx --resolve --recursive
+
+Other {{{2
+
     autoremove  uninstall orphan pkgs
     clean all   clear package cache
 
@@ -284,11 +347,6 @@ http://dnf-plugins-core.readthedocs.org/en/latest/index.html
         can use glob instead of exact path
             dnf provides '*/semanage'
 
-    repoquery <pkg name | key word>
-        search repos for packages
-        -l <pkg name>   list files in package
-        --requires <pkg>    show package dependencies
-
      dnf-plugin-system-upgrade
         upgrde to new o/s version
 
@@ -297,33 +355,19 @@ rpm file - install dependencies
 yum --nogpgcheck localinstall <pkg file>
 or maybe dnf install <pkg file>
 
-Repos {{{1
+Release management {{{2
 
-
-dnf repo management
-    repolist [all]
-        list enabled [all] repos
-
-    config-manager 
-        --set-enabled repo
-        --set-disabled repo
-
-Release management {{{1
-
-Repo files in /etc/yum.d
-    fedora-release-rawhide
-    fedora-updates-testing 
 
 Install from specific release: 
-    $releasever variable is number: 22, 23
-    Copy repo file and replace var with number to get packages from other release
-    Enabled = 0
-    dnf --enablerepo=fedora-23 update systemd
+$releasever variable is number: 22, 23
+Copy repo file and replace var with number to get packages from other release
+Enabled = 0
+dnf --enablerepo=fedora-23 update systemd
 
 dnf system-upgrade download --refresh --releasever=24 --allowerasing
 Return to stable:
-    disable testing/rawhide repos
-    dnf distro-sync
+disable testing/rawhide repos
+dnf distro-sync
 
 Install OS tree {{{1
 
