@@ -6,6 +6,11 @@ json {{{1
 jo - command line app, formats input as json
 sudo dnf copr enable ganto/jo
 
+jq
+
+Python glom for nested data like json
+https://sedimental.org/glom_restructured_data.html
+
 
 yaml {{{1
 
@@ -19,3 +24,5 @@ Key/value format:
 
 
 
+http://yaml-online-parser.appspot.com/
+https://docs.saltstack.com/en/latest/topics/yaml/

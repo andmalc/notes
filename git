@@ -71,7 +71,7 @@ Checkout cid
     If no branch name, update the working tree to match the index
 
 origin      
-    default name of remote branch
+    default name of remote repo
     remote branches locally referred to as origin/branch_name
     Can then c/o with 'co <name>'.  Remote is 'upstream'
     origin/master = refs/remotes/origin/master
@@ -90,9 +90,8 @@ Example: create new repo with remote at BB
 	git init <dir>
 	git add . 
 	git commit -m 'comment'
-	git remote add origin ssh://git@bitbucket.org/andmalc/work.git
-	git push -u origin --all # pushes up the repo and its refs for the first time
-	git mv	
+	git remote add bb ssh://git@bitbucket.org/andmalc/work.git
+	git push --all bb # pushes up the repo and its refs for the first time
 
 	git commit -a  #all changes in working directory
 	git push -u origin master

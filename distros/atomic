@@ -10,6 +10,8 @@ Writable:
     /var
     /etc
 
+Dnf search
+podman run -it --rm registry.fedoraproject.org/fedora:28 dnf search strace
 
 
 Sytem upgrade
@@ -27,8 +29,10 @@ Install
 rpm-ostree install 
 
 Packages to install
+e2fsprogs vim-enhanced gita git vim-enhanced zsh tmux util-linux-user
 
-e2fsprogs vim-enhanced git
+util-linux-user for chsh
+
 
 Config user
     Rename fedora user for ID 1000

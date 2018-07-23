@@ -1,15 +1,20 @@
 
 netcat
+    https://www.digitalocean.com/community/tutorials/how-to-use-netcat-to-establish-and-test-tcp-and-udp-connections-on-a-vps
+    netcat <options> host startport-endport
     package nmap-ncat
+    scan faster if use IP address instead of domain
+    options
+        -z  scan instead of opening connection
+        -v  verbose
+        -n  numeric host IP provided, DNS not needed
+
 	server: nc -l -p <port>
 	client: nc <host> <port>
 	scan: nc -vz <host> <port or port range>
 
-trace packets 
-	mtr
-	tcpdump
-
 nmap 
+    best choice for port scanning
     cheat sheet saved at Drive/Share/pdf
 
     detect hosts on network
@@ -46,11 +51,11 @@ netstat - deprecated, use ip -s, ss, ip route
 		l		listening servers only
 		a		show all
 
-darkstat
-	Easy monitoring of bandwidth
-	included webserver with graphs of bandwidth, usage by site 
+capturing network traffic,  trace packets 
+	mtr
+	tcpdump
 
-capturing network traffic
+
 	tcpdump 
 		raw info
 		good article

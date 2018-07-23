@@ -1,18 +1,12 @@
 
-Repeat change on multi lines (e.g. commenting all)
-1. Visual block mode C-v and select lines
-2. I  (Insert mode from start of line)
-3. Make change
-4. Esc
-
-Edit command layout
- [count] {operator} {[count] motion|text object}
+Edit command layout. [] indicates optional
+    [count] {operator} {[count] motion|text object}
 
 
 Help {{{1
 
 Jump
-    C + ]/0     follow links forward/back
+    C + ]/o     follow links forward/back
 
 :help a/A   help for normal mode a, Shift+A
 
@@ -29,7 +23,27 @@ $VIMRUNTIME + ~/.vim, $VIM/vimfiles etc.
 
 Debian standard for 3rd party plugins is /usr/share/vim/addons
 				
-modeline
+smartcase		(scs)	
+        no ignore case when pattern has uppercase
+        ignorcase must be on.  
+        Used for the commands "/", "?", "n", "N", ":g" and ":s".  
+
+
+
+Interface {{{1
+
+Status line - laststatus
+   create		ls=2
+   set
+      set statusline=%f\ %P col %v  
+         format
+      see statusline help for printf flags
+
+   show status		Ctrl+G
+
+   let -g status-style "bg=red"
+
+Modeline
     default on
     modeline must be set and modelines => 0 to be enabled
     syntax
@@ -42,27 +56,26 @@ modeline
             " vim:ts=4 sw=4
             /* vim:set ai et sts=2 sw=2 tw=80: */   #this format when comment needs closing 
 
-Interface {{{1
-
-status line
-create		ls=2
-set
-	set statusline=%f\ %P col %v  
-		format
-	see statusline help for printf flags
-
-show status		Ctrl+G
-
 cmdheight		
-				# of screen lines in command output
+    # of screen lines in command output
+
 titlestring 
-		set titlestring=New\ Title
-						set titlestring=%{&statusline}\ %F
+    set titlestring=New\ Title
+    set titlestring=%{&statusline}\ %F
 
 Show/Display Line Numbers
   set number/nu, nonumber/nonu	show,hide line numbers
   n,n#	temporarily show numbers on lines n,n
   .=	show current line number
+
+relative line numbering 
+    see # of line from insertion point
+    set rnu 
+
+Colours
+
+Show current colorscheme
+    :let colors_name
 
 
 Windows & Tabs {{{1
@@ -76,6 +89,20 @@ Create with split
     sb      split buffer
     sba     split all buffers horizontal
     vert sba     split all buffers vertical
+
+Window Sizing
+	Height
+		C-W N_				height = N
+      c-w _           full height (zoom)
+		C-W +,- N			increase/decrease height * n
+		z{height}<CR>		resize window height
+		res[ize] +-n | n
+	Width
+		C-W N|			width = N
+      c-w |           full width (zoom)
+		C-W N >,<      increase/reduce with * n
+    Restore
+		C-W =			make equal size
 
 Window Closing
 		c, :close		Hide buffer - edit next window
@@ -92,40 +119,14 @@ Move Between Windows
 		b						to bottom buffer
 		t						to top buffer
 
-Move Window
-        H   left
-        L   right
-        K   up
-        J   down
-        
-    Rotating with above commands: 
-            Move to the side when stacked creates vertical layout
-            Move up or down when side by side to create stacked layout
+Rotating 
+    with move commands: 
+        Move to the side when stacked creates vertical layout
+        Move up or down when side by side to create stacked layout
+    r/R				rotate window
 
-		r/R				rotate windows downwards/upwards
-
-Window Sizing
-	Height
-		C-W N_				height = N
-        c-w _           full height (zoom)
-		C-W +,- N			increase/decrease height * n
-		z{height}<CR>		resize window height
-		res[ize] +-n | n
-	Width
-		C-W N|			width = N
-        c-w |           full width (zoom)
-		C-W N >,<      increase/reduce with * n
-    Restore
-		C-W =			make equal size
 
                         zoom window
-Scrolling 
-		C-F/B			scroll forward/back by screen
-		C-E,D			down 1 line, 1/2 screen down
-		C-Y,U			up		"
-		z commands - scroll according to cursor position
-				z<CR>			current line to top
-				zz | z. current line to centre
 layout
 		mkview [n], loadview [n]   - saves window options including folds
 		
@@ -141,7 +142,7 @@ gt/T        Move to next/previous tab
 :tablonly   Close tabs, retain current window
 :tab split      open split window into own tab and displays tab bar
 
-Files {{{1
+Files/Buffers {{{1
 
 Opening, Closing, & Saving
 cd -	cd to previous directory
@@ -198,61 +199,51 @@ eol styles
 		:%s/\r//g  (better)
 		also: cygwin/utils u2d & d2u
 
-Folding {{{1
+Inserting {{{1
 
-Option to include fold markers within a comment
-        e.g. set cms=..\ %s   'docutils comment format
-Foldlevel: higher foldlevel = more branches open
-        zm		- fold more - subtracts 1 from fl. (less shown)
-        zr		- fold less - adds 1 to fl. (more shown)
-        zR		- open all
-        zM		- fold all
-Opening
-        Nzo		Open N fold levels under cursor
-        zO		Open all folds under cursor
-        zc to close a fold
-        zC to close it all the way
-        zo to open it
-        zO to open it all the way
-        zr/R	reduce 1/reduce all folding
+Foolproof paste
+	:r! cat 
+	Ctrl-v
+	Ctrl-d
 
-
-Lookups & Word Completion {{{1
-
-:help ins-completion
-
-Insert Mode Completion.  Enter with 'Ctrl-X'
-	^N, ^P	Complete word from forward/backward in current buffer
-	^X^]	Complete word form tag file
-	C-X,I	Replace from files
-	C-X C-L, C-N	Search backwards/forwards for line starting with same
-		characters before cursor
-Enabling word completion with ^N & ^P
-	complete (cpt) options control how completion works.  File(s) to search
-		can be specified within cpt string or with 'dictionary' setting.
-	cpt defaults include search current buffers and tags files.  Search of
-		dict files not on by default. 
-
-Text objects {{{1
-
-i<marker>
-	Edit within markers
-	Marker = ([{<"
-	When used with edit commands, affects text within marker pairs
-t<marker>
-	Edit until marker
+Special Inserts:
+	:[n]r[ead] fn	insert file to line n or at current line
+	:r! cmd			insert so from cmd below
 
 
 
-Motions {{{1
+Scrolling {{{1
 
+    C-F/B			scroll forward/back by screen
+    C-E,D			down 1 line, 1/2 screen down
+    C-Y,U			up		"
+    z commands - scroll according to cursor position
+            z<CR>			current line to top
+            zz | z. current line to centre
+        
+Cursor Movement {{{1
 
+Top/middle/bottom   H/M/L
 
+Character
+h/l     left/right
+space	move right
 Words
-w/W		beginning of next word/blank separated words, same for other motions incl. gE for blank sep ge.
-b		move to beginning of current word
-e		move to end of current word
-ge,E	back to end of word
+w/W	  beginning of next word
+b       move to beginning of current word
+e/E     move to end of current word
+
+Up/down by Line
+j/k     up/down
+n +,-	  move n lines on non blank in column 1
+
+
+Move to Character on same line
+   [n]f/F<char> 
+      move to nth next/prev char in line.  ; to repeat
+   [n]t/T	same but exclusive
+      eg: c2t) - change within 2nd bracket
+   ;				1  repeat latest f, t, F or T N times
 
 Sentences etc.
 )(		sentences forward, backward
@@ -261,41 +252,35 @@ Sentences etc.
 ]],[[	sections, forward, backward, start of sect
 ][,[]			""				, end of sect
 
-space	move right
-
-Line
-set rnu (relative line numbering) to see # of line from insertion point
-n +,-	move n lines on non blank in column 1
-
-
-Move to Character
-[n]f/F<char> 
-	move to nth next/prev char in line.  ; to repeat
-[n]t/T	same but exclusive
-	eg: c2t) - change within 2nd bracket
-
 		
-Tags & Jumps
-	^o/^i	jump back to last edit / forward
-	^I/^O	go to newer/older position in jump list
-			Can use to move between two files or within a 
-			file.															
-	:ts /pat	tag select arg is a regex
+Search (highlight matches) {{{1
 
-	gi	jump to last edit
-	`|'<mk>	jump to mark, beginning of line with mark
-	*/#	to next/prev word under cursor
+*, g*	search forward for whole word, word under cursor
+#, g#	as above, backward
 
+
+/ ?				Search forward/backward
+/CR				Repeat search, forward
+?CR				Repeat search, backward 
 
 Edit Modes {{{1
+While in Normal mode {{{2
 
 Entering Insert mode
-	i				Insert- enter text before cursor
-	I				insert text before first non-blank in line
-	a,A				Append, as for i 
-	o				Open line below
-	O				Open line above
-	gI				insert text at column 1
+	i			Insert- enter text before cursor
+	a,A			Append, as for i 
+	o			Open line below
+	O			Open line above
+	I			insert text before first non-blank in line
+	gI			insert text at column 1
+
+
+Change, continue in Insert mode
+    s           change char
+    S           delete line
+
+
+While in Insert mode {{{2
 
 go to normal mode
     c-[, c-c,c-3, jj,
@@ -305,17 +290,11 @@ go to normal mode
         Caps Lock to C then use with C-3
 
 Run commands in other modes
-	Single Command mode
-		Ctrl-O	Enter a command and return to insert mode.
-	To run normal or command mode commands from Insert Mode, enter: 
-		ctrl+v[Escape key]:command
 
-
-Insert mode {{{2
-
-movement
-	End				go to cursor after last char in line
-	Home	go to cursor to first char in line
+        Enter a command and return to insert mode
+    ctrl+v[Escape key]:command
+        run normal or command mode commands
+   
 
 edit
 	C-w		delete word left
@@ -340,20 +319,26 @@ registers
 
 
 
-Inserting {{{1
+Edit with markers {{{2
+
+i<marker>
+	Edit within markers
+	Marker = ([{<"
+	When used with edit commands, affects text within marker pairs
+t<marker>
+	Edit until marker
+
+
+Repeating {{{2
 
 C-@		insert previously inserted text and go to normal
 C-A		insert previously inserted text (= C-R.)
 
-Foolproof paste
-	:r! cat 
-	Ctrl-v
-	Ctrl-d
-
-Special Inserts:
-	:[n]r[ead] fn	insert file to line n or at current line
-	:r! cmd			insert so from cmd below
-
+Repeat change on multi lines (e.g. commenting all)
+1. Visual block mode C-v and select lines
+2. I  (Insert mode from start of line)
+3. Make change
+4. Esc
 
 
 Line Wrappping/Breaks, Indenting and Tabs {{{1
@@ -397,17 +382,64 @@ Convert tabs to spaces
     se expandtab
 	%retab!
 
-Movement {{{1
+Formating {{{1
+
+commands
+        gq[motion]		
+                Format lines motion moves over.  Textwidth option controls the length
+                of each formatted line.  If textwidth is 0, the formatted ine length
+                is the screen width (max 79) minus the value of any wrapmargin
+                setting.
+        gqq				Format current line
+        gqj		Format current and next line
+        gq}		Format till end of paragraph
+joinspaces		Insert 2 spaces after join command
+Formating Email Messages
+        These should be formated to break at 78 characters.
+
+formatoptions (fo)
+        now crnqo
+        comment options - croq
+                c - restrict auto-formatting to comments
+        auto formatting - tw must be > 0
+                a - turn on auto-formatting
+                t - auto-wrap by tw 
+                c - auto-wrap comments
+        w - lines w/o a trailing ' ' not formatted (e.g. wrapped prose text
+        will get rewrapped, list lines ended by CR's not)
+				
+						
+Folding {{{1
+
+Option to include fold markers within a comment
+        e.g. set cms=..\ %s   'docutils comment format
+Foldlevel: higher foldlevel = more branches open
+        zm		- fold more - subtracts 1 from fl. (less shown)
+        zr		- fold less - adds 1 to fl. (more shown)
+        zR		- open all
+        zM		- fold all
+Opening
+        Nzo		Open N fold levels under cursor
+        zO		Open all folds under cursor
+        zc to close a fold
+        zC to close it all the way
+        zo to open it
+        zO to open it all the way
+        zr/R	reduce 1/reduce all folding
 
 
-/ ?				Search forward/backward
-/CR				Repeat search, forward
-?CR				Repeat search, backward 
+Move to mark, tag, or edit {{{1
 
-;				1  repeat latest f, t, F or T N times
+	^o/^i	jump back to last edit / forward
+	^I/^O	go to newer/older position in jump list
+			Can use to move between two files or within a 
+			file.															
+	:ts /pat	tag select arg is a regex
 
-*, g*	search forward for whole word, word under cursor
-#, g#	as above, backward
+	gi	jump to last edit
+	`|'<mk>	jump to mark, beginning of line with mark
+	*/#	to next/prev word under cursor
+
 
 Marks {{{1 
 ma				set mark with alpha char
@@ -498,42 +530,9 @@ Find tabs & spaces
     / \+\ze\t
 
 
-Auto Formating {{{1
-
-commands
-        gq[motion]		
-                Format lines motion moves over.  Textwidth option controls the length
-                of each formatted line.  If textwidth is 0, the formatted ine length
-                is the screen width (max 79) minus the value of any wrapmargin
-                setting.
-        gqq				Format current line
-        gqj		Format current and next line
-        gq}		Format till end of paragraph
-joinspaces		Insert 2 spaces after join command
-Formating Email Messages
-        These should be formated to break at 78 characters.
-
-formatoptions (fo)
-        now crnqo
-        comment options - croq
-                c - restrict auto-formatting to comments
-        auto formatting - tw must be > 0
-                a - turn on auto-formatting
-                t - auto-wrap by tw 
-                c - auto-wrap comments
-        w - lines w/o a trailing ' ' not formatted (e.g. wrapped prose text
-        will get rewrapped, list lines ended by CR's not)
-				
-						
-Search & Replace {{{1
+Filter {{{1
 
 [I				show lines matching word under cursor
-
-smartcase		(scs)	
-        no ignore case when pattern has uppercase
-        ignorcase must be on.  
-        Used for the commands "/", "?", "n", "N", ":g" and ":s".  
-
 
 
 Ex/command Mode {{{1
@@ -750,6 +749,16 @@ view (in shell)			Open a file in vi in read only mode
 
 Debugging Vim {{{1
 
+http://vim.wikia.com/wiki/Displaying_the_current_Vim_environment
+
+
+Show 
+    Preceed with verbose to show where set
+    Options
+       set expandtab?
+    Variables
+        let [<var name>]
+
 Display: 
   plugin loading at startup
 	vim -V2
@@ -757,10 +766,7 @@ Display:
 	scriptnames
   functions called
 		functions
-  where setting set or key mapped
-	verbose ...
-	
 
 
 
-vim:ts=4 sw=4 ft=
+vim:ts=3 sw=3 ft=

@@ -1,4 +1,4 @@
-Docs {{{1
+General {{{1
 
 Articles on tmux config
 http://deanbodenham.com/learn/home.html
@@ -6,6 +6,16 @@ http://deanbodenham.com/learn/home.html
 Colour chart
 https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
 
+
+Setting options
+set / set-option option value
+    -g  global
+    -w  window
+    -s  session
+    -u  unset
+
+Show current settings
+tmux show-options -g
 
 
 Startup {{{
@@ -27,19 +37,22 @@ Sockets & Sessions {{{1
 Start with new socket
     tmux -L tmuxtest 
 
-Options
+Session options
     new session         new -s <session name>
     list                list-sessions / ls
     attach to target    attach/a -t <name>
     kill                kill-session -t <name>
 
-$       rename session
-()      switch to previous/next session
+Attach to named session or create
+    tmux new-session -A -c ~ -s sql
 
-Browse sessions
+
+Shortcuts
     s       list-sessions
             highlight a session with vi or arrow keys.  Right arrow to expand windows
     w       list sessions & windows
+    ()      switch to previous/next session
+    $       rename session
 
 
 
@@ -90,6 +103,9 @@ Options for following commands
 break-pane
     change current pane into new window
 
+display-panes
+    show pane #'s
+
 split-window 
     split current window or -t # window into panes
     shortcuts
@@ -109,8 +125,8 @@ join-pane
 
 
 resize-pane
-    Ctrl + up,down, left, right
     z   zoom
+    Ctrl + up,down, left, right
     M+arrow  (rapid for multiple times)
 
 swap-pane -DU [-s src]
@@ -179,6 +195,12 @@ tpm manager
         saves all sessions using tmux-resurrect every fifteen minutes
         auto restore on tmux start
         Option to auto start tmux with systemd
+
+Debugging {{{1
+
+tmux show-options [-g -w]
+
+tmux source-file ~/.tmux.conf
 
 Startup script {{{1
 

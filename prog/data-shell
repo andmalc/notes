@@ -15,6 +15,21 @@ cut
     -d  delimiter instead of tabs
     -c  select character range by position
 
+curl
+    Download and pipe file
+        curl -s http://www.gutenberg.org/files/76/76-0.txt | head -10
+    Download and save
+        curl -s http://www.gutenberg.org/files/76/76-0.txt > file.txt
+    Json
+         curl -s https://randomuser.me/api | jq '.'
+    Login 
+         -u username:password 
+    If using shortened URL
+        -L <url>
+    Oauth Login needed: 
+        curlicue https://github.com/decklin/curlicue
+
+        
 diff 
 diff file1 file2
     Show how to change file1 to match file2
@@ -102,5 +117,10 @@ Edit lines
 CSV files {{{1
 
 Discussion & tools in "Data Science at the Command Line" book
+
+Scripting {{{!
+
+Copy last command into file
+    echo "!!" > filename
 
 

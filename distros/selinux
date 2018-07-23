@@ -74,6 +74,9 @@ journalctl _SELINUX_CONTEXT=system_u:system_r:policykit_t:s0
 Troubleshooting {{{1
 
 https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/SELinux_Users_and_Administrators_Guide/chap-Security-Enhanced_Linux-Troubleshooting.html
+https://access.redhat.com/articles/2191331
+
+Note: selinux conflicts caused by wrong context type are *not* logged or displayed by troublshooting tools
 
 Install policycoreutils-python 
 grep denied /var/log/audit/audit.log | audit2why

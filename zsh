@@ -17,8 +17,6 @@ vared
 
 Configuration {{{1
 
-
-Builtins
 Display options in/not in effect:
     setopt
     unsetopt
@@ -87,7 +85,7 @@ Delete
         left:       ^w or \e+backspace
         right:      Md or \ed
 
-Save current line in buffer stack
+Stash current line in buffer stack ( push-line), restores after next command
     ESC q
 
 Commands & arguments {{{1
@@ -142,8 +140,8 @@ Navigation
 
 modifiers {{{1
 
-syntax :+letter 
-same for globbing and parameter substitution 
+syntax :<letter>
+used with globbing and parameter substitution 
 
 usage: 
     parameter substitution - ${param:<mod>}
@@ -151,6 +149,7 @@ usage:
         may combine with qualifier (U:t)
         e.g. cd to directory of last path argument
             cd !$:h 
+
 flags:
     h  head (dirname)
     t  tail - filename w/o path
@@ -169,12 +168,24 @@ set all subdirs group writable & setgid
 
 read: http://zsh.sunsite.dk/Guide/zshguide05.html#l137
 
-*    matches string of zero or more characters
-?    any one character
+glob operators {{{2
+http://zsh.sourceforge.net/Doc/Release/Expansion.html#Filename-Generation
+
+*   matches string of zero or more characters
+    does not match /
+    matches all files and dirs but not within them
+
 **/<pat> - recursive globbing
 	matches <pat> anywhere in path including in top directory
 
-operators {{{2
+?    any one character
+
+
+Braces []
+    []  any of enclosed characters
+
+    character classes 
+        e.g. [:alpha:] [:digit:]
 
 alternatives
     (alt1|alt2)
@@ -184,6 +195,7 @@ negation
     ^<pat>  - matches anything but pat
         negated part extends to end of string or ) but not past /
         **/^pat/tmp	- echo dir names having a tmp subdir
+        
     x~y - match x unless also matches y
         grep thing *~*html(.)
 
@@ -191,29 +203,15 @@ negation
 Qualifiers {{{2 
 
 select files & directories by time, size, type, ownership, permissions
-syntax: <pat>(qualifier)
+syntax: <pat>([file type]<one or more qualifiers>)
+    
+
 file types
     .	files
     /	dirs
     *	exec
     @	slinks
-permissions:
-    by ownership (u:<owner>)
-        *(u0) - owned by root
-        *(u:andmalc:) - owned by me
-        *(^u:andmalc:) - no owned by me
-    by file spec: (f:<spec>:)
-        print **/*(f:o+r:) - print files that are other readable - 
-        print *(f:gu+w,o-rx:) - files are writeable by owner ('user') and neither readable nor executable by other.
-        print *(f700)
-    permission shortforms
-        f# or f=#	files with access rights = #
-        (r), (w) and (x) readable, writeable and executable by the owner
-        (R), (W) and (X) as above, for world permissions
-        (A), (I) and (E) as above,  for group permissions
-        s	setuid files (04000)
-        S	setgid files (02000)
-        t   files with the sticky bit (01000)
+
 timestamp 
     type
         a		access
@@ -240,6 +238,28 @@ timestamp
 	combining qualifiers
 		files are owned by me and less than 5k or not world writable
 			*(ULk-5,^W) 
+permissions:
+    by ownership (u:<owner>)
+        *(u0) - owned by root
+        *(u:andmalc:) - owned by me
+        *(^u:andmalc:) - no owned by me
+    by file spec: (f:<spec>:)
+        print **/*(f:o+r:) - print files that are other readable - 
+        print *(f:gu+w,o-rx:) - files are writeable by owner ('user') and neither readable nor executable by other.
+        print *(f700)
+    permission shortforms
+        f# or f=#	files with access rights = #
+        (r), (w) and (x) readable, writeable and executable by the owner
+        (R), (W) and (X) as above, for world permissions
+        (A), (I) and (E) as above,  for group permissions
+        s	setuid files (04000)
+        S	setgid files (02000)
+        t   files with the sticky bit (01000)
+
+
+Globbing Flags {{{2
+
+format: (#f)
 
 (#i) - case insensitive matching within pattern
     in effect until end of pattern or as delimited by ()
