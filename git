@@ -119,13 +119,12 @@ Status              shows status of working dir & staging
 					Red is changed or untracked
                     Green is staged
 
-cid = <commit ID or branch name>
 
-Diff - shows changes to working tree
+Diff - shows changes in working tree relative to index
     cid [cid] [filename]
 
 	no arg			changes to tracked files not staged
-	--cached		changes staged
+	--cached cid	changes in index relative to cid
 	--staged		same as --cached
     HEAD            staged vs. current commit
 
