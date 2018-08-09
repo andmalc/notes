@@ -1,7 +1,10 @@
+Podman {{{1
 
-https://github.com/projectatomic/buildah
+podman run -d -p 80 --network=host --name=htest httpdtest
 
-Commands {{{1
+
+
+BD Commands {{{1
 
 buildah <cmd> <options> <container ID>
 

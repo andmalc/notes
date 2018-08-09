@@ -386,3 +386,13 @@ Change root password
 systemctl-nspawn -bD <path to container>
 
 
+Free up space {{{1
+
+Locales
+    localectl - verify is en_US
+    delete all folders in /usr/share/locale except for en_US
+
+Clear dnf cache in /var/cache/PackageKit
+    pkcon refresh force
+
+

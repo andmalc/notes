@@ -119,13 +119,12 @@ Status              shows status of working dir & staging
 					Red is changed or untracked
                     Green is staged
 
-cid = <commit ID or branch name>
 
-Diff - shows changes to working tree
+Diff - shows changes in working tree relative to index
     cid [cid] [filename]
 
 	no arg			changes to tracked files not staged
-	--cached		changes staged
+	--cached cid	changes in index relative to cid
 	--staged		same as --cached
     HEAD            staged vs. current commit
 
@@ -284,18 +283,17 @@ Add
     if no local name given, repo cloned into cwd/<final part of repo path>
 
 Delete
+    Note: no trailing slash after submodule name
     mv asubmodule asubmodule_tmp (?)
     git submodule deinit asubmodule    
-    git rm asubmodule
+    rm -r asubmodule
  
-    # Note: asubmodule (no trailing slash)
     # or, if you want to leave it in your working tree
     git rm --cached asubmodule
     mv asubmodule_tmp asubmodule
     rm -rf .git/modules/asubmodule
-    edit .gitmodules - remove section (?)
 
-Delete - version 2
+Delete - old, shouldn't be necessary
     git submodule deinit vim/pack/shapeshed/start/vim-airline
     git rm vim/pack/shapeshed/start/vim-airline
     rm -Rf .git/modules/vim/pack/shapeshed/start/vim-airline

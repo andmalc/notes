@@ -2,6 +2,14 @@
 Registry
 registry.fedoraproject.org/fedora-minimal:latest
 
+Filesystem
+
+Defaults for /etc   /usr/share
+
+Writable:
+    /var
+    /etc
+
 Dnf search
 podman run -it --rm registry.fedoraproject.org/fedora:28 dnf search strace
 
