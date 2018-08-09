@@ -19,10 +19,14 @@ Alternate WM install from server edition
 dnf groupinstall 
     basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
     custom-environment - ?
-    minimal-environment - cli
+    
+    Minimal-environment with Standard utils
+        Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
+        1.2GB
 
 Wayland minimal
-sway + Gnome Terminal
+Server Basic Desktop - didn't work with Minimal
+sway + Gnome Terminal + gdm ?
 
 Install into mounted partition
 dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf

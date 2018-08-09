@@ -1,4 +1,17 @@
 
+Debugging {{{1
+
+Default shell
+    echo $SHELL
+Current shell
+    echo $0
+
+Show options
+    set -o
+Test for set option
+    [[ -o opt ]]
+
+
 Docs {{{1
 
 http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/

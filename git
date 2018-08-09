@@ -309,6 +309,9 @@ Updating
     cd into module dir and git fetch
     git pull && git submodule update --init --recursive
 
+    sync after changing submodule URL
+    git submodule sync
+    git submodule update --init --recursive --remote
 
 Info
     submodule status

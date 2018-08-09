@@ -12,7 +12,8 @@ Copy last command into file
     echo "!!" > filename
 
 
-Shell types {{{1
+Terms {{{1
+Shell types {{{2
 
 Login shell
     force: su - andmalc
@@ -43,22 +44,38 @@ http://en.wikipedia.org/wiki/Redirection_(Unix)
 
 Standard I/O
 Stdin, stdout, and stderr streams  numbered 0, 1, and 2.  
-Redirection is changing any of these default means of input or output
+Additional opened files assigned numbers starting at 3
+
+Input from stdin instead of from file
+    wc -
+
+Redirection is changing these to non-terminal
+
+E.g redirect output
+    1. Close std output descriptor (1 - terminal)
+    2. Reassign descriptor to file
+
+To specify the file with a number, place the number before the >
+	program-name 1> out.txt
+	program-name 2> errors.txt
 
 
 Input {{{2
 
+redirection operators
 < file
-<< here doc
-<<< string
+<<here doc
+    <<TAG 
+    <<-TAG #ignore leading tabs in doc
+<<< "string blah"
 
-keyboard as input
-    cat
-
-file as input
+file as command input
     cat < file
     < file cat
 
+
+keyboard as input
+    cat
 
 Here doc with << operator
     tr a-z A-Z <<+
@@ -75,16 +92,18 @@ Here string (input from string) - <<< operator
 
 Output {{{2
 
-output redirection operators - output to file
-    program-name > out.txt
-        e.g. ls > directorylisting.txt
+Operators
+    >   redirect output
     >> append to file
     >|  output and replace file if exists
+    &>  output and errors 
+    > success_file 2> error_file
+
+command output to file
+    program-name > out.txt
+    ls > directorylisting.txt
 
 
-To specify the file with a number, place the number before the >
-	program-name 1> out.txt
-	program-name 2> errors.txt
 
 Combos {{{2
 
@@ -155,37 +174,72 @@ In .zshrc
 
 
 Braces, Parentheses, Brackets {{{1
+Parentheses {{{2
+Executes contents in subshell {{{3
+like ``
 
-Parentheses ()
-Executes contents - like ``
+(ls)    #return value 1 or 0
+$(ls)   #returns list of files
 
-Braces {}
-For variable expansion  
-STR="hello"
-STR2="${STR} world"
+Examples of using return value
+# 
+if grep someuser /etc/passwd ; then
+    # do something
+fi
 
-Brackets []
+# pipe in subshell
+if ( w | grep someuser | grep sqlplus ) ; then
+    # someuser is logged in and running sqlplus
+fi
+
+Other {{{3
+
+Arithmetic expressions (( expr or statement ))
+    $ not required for variable values
+
+Grouping expressions within conditional expressions
+
+Braces {{{2
+
+List or sequence expansion
+    {1,2,3} {a-z}
+
+Variable expansion  
+    STR="hello"
+    STR2="${STR} world"
+
+Brackets [] {{{2
 Expands text as output from command
+
+Variables {{{1
+
+var     name of variable
+$var    value of variable
+        quote or escape to avoid multi words if whitespace
+
+assignment - no spaces before or after =
+    a=1 
+
+Sourcing a file adds its variables to current
+Exporting: provides copy of var to child process, not current environment
 
 Quoting {{{1
 	
-Single quoted string enloses literals 
-A double quoted string is evaluated for shell variables or backslash escaping.
+Single quoted string enloses literals A double quoted string is evaluated for
+shell variables or backslash escaping.
 
 'xxx'	strong quotes 
         * no expansion or metacharacters
 ""xxx"	weak quotes 
-        * $, `, and \ not disabled
-        * shell & envir. variablex expanded
-\       At end of line - special case: removes new line char.
-`		command - executed before rest of line.
+        * $, `, and \ not disabled shell & envir. variablex expanded
+\       At end of line - special case: removes new line char.  `		command
+- executed before rest of line.
 
 Never quote a glob or regular expression
 
-for x in "~/*"; do
-done
-  # This loop will run once with $x set to "~/*" rather than once
-  # for every file and directory under $HOME, as was intended
+for x in "~/*"; do done
+  # This loop will run once with $x set to "~/*" rather than once for every
+  # file and directory under $HOME, as was intended
 
 
 
@@ -252,49 +306,77 @@ Rename files
 	e.g.
 		echo ${foo#*.} removes file name extention from $foo
 
-Conditions {{{1
+Conditional Expressions {{{1
 
-https://robots.thoughtbot.com/the-unix-shells-humble-if
-http://mywiki.wooledge.org/BashGuide
+operators:
+    -z	0 length string
+        if test -z "$Var"
+    -e  file exists
+    -f	is regular file
+    -n	string is non-empty/non-null
 
-if command ; then
-  expressions
-elif command ; then  # optionally
-  expressions
-else                 # optionally
-  expressions
-fi
-
-command
-	if returns 0 is true, else is false
-	if pipeline, uses exit status of last command	
-	! before inverts
-
-Testing {{{1
+Test statement {{{2
 
 http://wiki.bash-hackers.org/commands/classictest
 
 POSIX test statement -  [ ]
     if [ "$foo" = "$bar" ]
-	-z	0 length string
-		if test -z "$Var"
-	-n	string is non-empty/non-null
-	-f	is regular file
-	= or != string comparisons
-		if "$Var" = "blah"
 
-Bash & Zsh advanced test [[ ]] (( ))
-	http://mywiki.wooledge.org/BashFAQ/031
-	advantages vs. test command
-		Use familiar ==, >=, and <= operators
-		Check a string against a regular expression with =~
-		Check a string against a glob with ==
-		Less strict about quoting and escaping
-	[[ ]] for strings
-	(( )) for numeric
+    string comparisons
+        = or != 
+            if "$Var" = "blah"
+    
+Bash & Zsh test {{{2
+
+[[ ]] for strings
+(( )) for numeric
+
+http://mywiki.wooledge.org/BashFAQ/031
+compatible with above operators
+
+advantages vs. test command
+    Use familiar ==, >=, and <= operators
+    Check a string against a regular expression with =~
+    Check a string against a glob with ==
+    Less strict about quoting and escaping
+        [[ $name = xx ]] #works even if $name contains whitespace
+
+string comparisons
+    <word> = <pat> #http://wiki.bash-hackers.org/syntax/pattern
+    operators: =, ==, !=, =^ (regex match)
+    < >     before/after -  string collation order
+
+Operator precedence (highest ⇒ lowest):
+    ( <EXPRESSION> )
+    ! <EXPRESSION>
+    <EXPRESSION1> && <EXPRESSION2>
+    conditional evaluation with && and ||
 
 
 
+
+If statement {{{1
+
+https://robots.thoughtbot.com/the-unix-shells-humble-if
+http://mywiki.wooledge.org/BashGuide
+
+if condition ; then
+  expressions
+elif condition ; then  # optionally
+  expressions
+else                 # optionally
+  expressions
+fi
+
+Conditional execution
+    || OR - 2nd command executes only if 1st fails
+    &&  AND
+
+
+command
+	if returns 0 is true, else is false
+	if pipeline, uses exit status of last command	
+	! before inverts
 
 Job control {{{1
 

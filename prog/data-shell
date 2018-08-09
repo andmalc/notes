@@ -11,6 +11,7 @@ csvkit
 
 cut
     extract input on tabs into fields
+    fields: #,# or #-#
     -f #-# field or fields to extract
     -d  delimiter instead of tabs
     -c  select character range by position
@@ -46,16 +47,20 @@ cmp     show info in common
 
 column  display output in columns
 
-comm    show diffs in sorted lists
+comm    shows unique and common lines in sorted lists
 
 less
     -S  do not wrap long lines.  Can page sideways with l/r arrows
 
+paste f1 f2
+    combine contents of files into columns
+    
 sort
     sort by column two
         sort -k 2 <file>
     sort by column two then by column one
         sort -k2,2 -k1,1 <file>
+    Plus other sorting types
 
 tee
     read from standard input and write to standard output and files
