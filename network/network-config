@@ -13,6 +13,9 @@ List available wifi connections
     dev wifi list
 
 Connection
+    
+    nmcli device wifi connect <SSID|BSSID> password "pw"
+
     List created
         conn show
 

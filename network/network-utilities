@@ -52,14 +52,13 @@ netstat - deprecated, use ip -s, ss, ip route
 		a		show all
 
 capturing network traffic,  trace packets 
-	mtr
-	tcpdump
-
 
 	tcpdump 
 		raw info
-		good article
+		Docs
 			http://www.informit.com/articles/article.asp?p=352988&seqNum=3
+            https://danielmiessler.com/study/tcpdump/
+            https://tcpdump101.com/
 		
 		e.g.
 			Test ping through firewall using tcpdump
@@ -69,8 +68,11 @@ capturing network traffic,  trace packets
 
 	ethereal (graphical) / tethereal (cmd line)
 		friendlier interface
+	
+    mtr
 
 	tshark/wireshark
+        higher level interface
 		-D	list interfaces
 		-i	interface name or # from -D
 
