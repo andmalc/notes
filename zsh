@@ -34,18 +34,6 @@ Display options in/not in effect:
     setopt
     unsetopt
 
-Keyboard bindings {{{2
-
-
-bindkey
-	noarg	print existing bindings
-	-d		delete all keymaps, reset to default
-	-m		if binding ESC also bind Alt
-	-l/L	list short/long form
-
-
-Startup Files {{{2
-
 zprofile: 
     only run by login shells (called with -l) or su -.  Use for env vars used by
     applications, e.g. MAI
@@ -63,6 +51,17 @@ zsh -f -d
 source alternativefile.rc
 
 
+Keyboard bindings {{{2
+
+
+bindkey
+	noarg	print existing bindings
+	-d		delete all keymaps, reset to default
+	-m		if binding ESC also bind Alt
+	-l/L	list short/long form
+
+
+
 Parameters {{{2
 
 set by:
@@ -72,8 +71,6 @@ set by:
 expansion  - see zshparam
 
 
-Expansions {{{1
-
 Ctrl+/ to undo an expansion
 
 parameter expansion
@@ -81,7 +78,7 @@ parameter expansion
     ${name} - braces are optional
 
 
-Command Line Editing {{{1
+Command Line Movement & Editing {{{1
 
 (Meta = Alt, ^ = Ctrl+ \e = Escape) 
 
@@ -103,20 +100,16 @@ Stash current line in buffer stack ( push-line), restores after next command
 
 Commands & arguments {{{1
 
-\e. or M-.	    last argument - repeat to cycle backwards      
-
-fc:
-	fc -m <pat>    edit most recent command matching <pat>
-	fc -l -m <pat> display, dont edit
-
-	
-[<cmd>] M-p / M-n	
-    prev/next command or search for <cmd> if entered
-
-Command history expansion {{{1 
-
 https://www-s.acm.illinois.edu/workshops/zsh/history/hist_expn.html
 
+
+last argument - repeat to cycle backwards      
+	\e. or M-.	    
+
+prev/next command or search for <cmd> if entered
+	[<cmd>] M-p / M-n	
+
+	
 event[:word][:modifier] (same as bash)
 
 event designators
@@ -132,23 +125,18 @@ word designators
     $   last 
     x-  args from #x to $
     
-    examples
-        !!^      first arg of last command
-        !!*     cmd + all args except last 
-        !:2         second param
+examples
+!!^      first arg of last command
+!!*     cmd + all args except last 
+!:2         second param
 
 modifier
     :h  strip level
 
-Filesystem {{{1
+fc:
+	fc -m <pat>    edit most recent command matching <pat>
+	fc -l -m <pat> display, dont edit
 
-CD stack
-	cp file ~1 - copy file to first dir in stack 
-
-Navigation 
-    cd to dir with one word different in path (two variations):
-        cd <old> <new>
-        cd ${PWD/3.4/2.7} 
 
 
 modifiers {{{1
@@ -279,36 +267,47 @@ format: (#f)
     WoRDs = Wo((#i)rd)s
 
 Arrays  {{{1
-	Multiple 'word' parameters.  
-	spaces separate words
-	arrayname=(wordone wordtwo)
-		$#array   get array size
-		$array[n] get index
-		$array[5,8] get slice
-	Make list from directory listing:
-		list=(/usr/bin/*)
-		list=(/usr/bin/*:
-	Multiple word 'words': when expanded, e.g
-		a=('first word' 'second word')
-		cmd $a[0]
-		cmd wllget single argument 'first word' - not true in other shells.
-	Array Bound (Tied) variables - for making PATH type variables: 
-		typeset -TU	<SCALER> <array-name>
-		upper case form is for exporting to environment, lower case form is
-		easier to manipulate in shell.
-		U option ensures unique - not adding if already set
-			typeset -TU PYTHONPATH pythonpath
-			pythonpath=(/lib/python/site-packages lib/python2.2/site-packages)
-			
-            typeset -U PATH path
-            path+=(blah/blah) #appends 
-            path=(~/foo "$path[@]") #foo at beginning of array
 
-	eg
-		${array:gs/foo/bar} substitute foo for bar throughout array
-		${list:#pat} list excluding pat
-		$var:t  tail of path
+Multiple 'word' parameters.  
+spaces separate words
+arrayname=(wordone wordtwo)
+	$#array   get array size
+	$array[n] get index
+	$array[5,8] get slice
+Make list from directory listing:
+	list=(/usr/bin/*)
+	list=(/usr/bin/*:
+Multiple word 'words': when expanded, e.g
+	a=('first word' 'second word')
+	cmd $a[0]
+	cmd wllget single argument 'first word' - not true in other shells.
+Array Bound (Tied) variables - for making PATH type variables: 
+	typeset -TU	<SCALER> <array-name>
+	upper case form is for exporting to environment, lower case form is
+	easier to manipulate in shell.
+	U option ensures unique - not adding if already set
+		typeset -TU PYTHONPATH pythonpath
+		pythonpath=(/lib/python/site-packages lib/python2.2/site-packages)
+		
+    typeset -U PATH path
+    path+=(blah/blah) #appends 
+    path=(~/foo "$path[@]") #foo at beginning of array
 
+eg
+	${array:gs/foo/bar} substitute foo for bar throughout array
+	${list:#pat} list excluding pat
+	$var:t  tail of path
+
+
+Filesystem {{{1
+
+CD stack
+	cp file ~1 - copy file to first dir in stack 
+
+Navigation 
+    cd to dir with one word different in path (two variations):
+        cd <old> <new>
+        cd ${PWD/3.4/2.7} 
 Processes {{{1
 	Process substitution
 		( )		makes file

@@ -24,6 +24,7 @@ nmap
 
 ss  socket statistics
     like netstat but more info
+	Fedora: iproute route package
     ss -tlw
 
     check for listening socket

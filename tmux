@@ -86,12 +86,12 @@ Panes  {{{1
         change current pane into new window
 ;       last active pane
 o		other pane in current window
-z       toggle hide other panes (?)
+z       toggle hide other panes 
 x       kill pane
 q       show pane #'s
 {}		swap current pane with previous                           
 
-C+o     rotate in circle
+C+o     rotate panes clockwise. Pane numbers do not change.
 
 
 Options for following commands
@@ -104,9 +104,10 @@ break-pane
     change current pane into new window
 
 display-panes
-    show pane #'s
+	show pane #'s
+	shortcut q
 
-split-window 
+split-window - really split pane 
     split current window or -t # window into panes
     shortcuts
         -   split window vertical (modified from ")

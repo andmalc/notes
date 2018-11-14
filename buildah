@@ -1,8 +1,22 @@
+Fedora Registry
+https://registry.fedoraproject.org/
+
 Podman {{{1
 
-podman run -d -p 80 --network=host --name=htest httpdtest
+https://www.mankier.com/1/podman-run#Examples
+
+podman run --name toolbox --hostname toolbox --network=bridge -v /home/:/home -it toolbox /bin/bash
+
+create named container, attaches to terminal, stops cont. on shell exit
+	podman run --name toolbox --hostname toolbox -it toolbox /bin/bash
 
 
+Mount host dir into container
+	chcon -Rt svirt_sandbox_file_t <dir>
+	-v <host path>:<container path>
+
+Logs
+	podman logs <c id> | head
 
 BD Commands {{{1
 
@@ -56,7 +70,7 @@ run command in container
 --hostname
 --tt
 --volume value, -v value
-    uind mount a host location into the container while 
+    mount a host location into the container while 
    
     chcon -R -h -t container_file_t /var/roothome
     buildah run -v /var/roothome:/root:rslave fedora-working-container bash
@@ -86,8 +100,6 @@ buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 
 
-
-
 mount {{{2
 
 <container ID>  mounts root fs of container, returns mnt point
@@ -96,8 +108,6 @@ mount {{{2
 
 scratchmnt=$(buildah mount $newcontainer)
 echo $scratchmnt #see path of mount
-
-
 
 
 Image Mangement {{{1
@@ -115,5 +125,6 @@ buildah push fedora-bashecho docker-daemon:fedora-bashecho:latest
 Push to Docker.io
 docker login 
 buildah push echo docker.io/andmalc/echo:blog
+
 
 
