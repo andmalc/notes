@@ -13,7 +13,7 @@ create named container, attaches to terminal, stops cont. on shell exit
 
 Mount host dir into container
 	chcon -Rt svirt_sandbox_file_t <dir>
-	-v <host path>:<container path>
+    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
 Logs
 	podman logs <c id> | head
@@ -109,6 +109,8 @@ mount {{{2
 scratchmnt=$(buildah mount $newcontainer)
 echo $scratchmnt #see path of mount
 
+Mount volumne with from command
+    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
 Image Mangement {{{1
 
