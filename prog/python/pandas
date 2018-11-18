@@ -46,37 +46,32 @@ Data types (Pandas/Python)
     float64/float
     datetime64/datetime (must import)
 
+Col on far left "Index Labels"
+Usually 0-based number but can be datetime
+
 
 Selecting columns & rows {{{1
 
-Columns {{{2
+df[col][rows]  
+df[[col,col]][rows]  
 
-Series:
+Columns:
 s['col_name']		select row by index
 df[[col,col]]
 
 s['i1','i2','i3']	select multi rows by index
 df.ix[index for single row]  
 
-head/tail(n=#)   first/last n observations, default 5
-
-Rows {{{2
-
-Col on far left "Index Labels"
-Usually 0-based number but can be datetime
-
 df[:3]  slice of rows
 
-df.loc[0]   row 0
-df.loc[[0,1,3]]
+
+head/tail(n=#)   first/last n observations, default 5
 
 Last row:
 number_of_rows = df.shape[0]
-df.loc[number_of_rows -1] #last row, returns Series
-Or df.tail(n=1) #returns df
-Or df.iloc[-1]  #only with iloc method
-
-Rows & Cols {{{2
+    df.loc[number_of_rows -1] #last row, returns Series
+    df.tail(n=1) #returns df
+    df.iloc[-1]  #only with iloc method
 
 df.loc[[rows], [columns]] 
 ':' indicates all
@@ -85,33 +80,22 @@ df.loc[:,['col1','col2']] #all rows in col1 & col2
 
 df.iloc[:,[2,4,-1]]  #iloc allows integer column indexs
 
-df[col][rows]  
-df[[col,col]][rows]  
-
-Ranges {{{2
-
-Under Py3 range func returns generator.  Must be converted to a list.
-
-df.iloc[:,list(range(3))]
-
-Slice syntax
-df.iloc[:,0:6:2]  # every other first five columns
-
 
 Filtering {{{1
 
-df[['Col','Col][filtering expression]
+Applying filter to columns returns a boolean index
+Apply index to df to select records for which index reads True
 
-df[df['Col'] == 'val']  - filter on col=val  
-df[df['Col'].isin(['val','val'])]  
-df.col.where(df.col == 'x') - inserts NaN for non-matches
-df.col.where(df.col == 'x', 'sub') - substitude sub for non-matches 
+Example
+    df[df['Col'] == 'val']  - filter on col=val  
 
+.isin(['val','val'])]  
+.where(df.col == 'x') - inserts NaN for non-matches
+str.contains('str') - string in value
 
 Mask  
 mask = np.logical_and(df.CatA=='a', df.CatB=='e')  
 df[mask][:5]  
-
 
 
 Grouping {{{1
@@ -119,23 +103,46 @@ Grouping {{{1
 result = df.groupby(['Col', 'Col'])[['col to aggregate','col2']].aggregate_func()
 
 grouped = df.groupby('Col')
-grouped['Col'].nunique() - count of unique values
-grouped.count() - applies count to all numeric columns
 grouped.aggregate(myfunc)  - any function
 grouped.agg([np.mean,len])  
 
+Counts
+<col>.
+    value_counts()  Group by count, default desc sort
+    
+grouped['Col'].nunique() - count of unique values
+grouped.count() - applies count to all numeric columns
 
+Ranges {{{1
+
+Under Py3 range func returns generator.  Must be converted to a list.
+
+df.iloc[:,list(range(3))]
+
+Slice syntax
+    df.iloc[:,0:6:2]  # every other first five columns
+
+
+Create columns {{{1
+
+data['new'] = 2     - 2 is value of all rows
 
 
 Functions {{{1
 
-Func to apply rowwise:
+<col>.apply(func)
+
+# sets col value to 'blah'
 def func(e):
-	return e['Col'] + e['Col']
+	return "blah"
+
 
 Func with extra args, first is element
 def func(e,x):
 	return e > x
+
+
+	
 df.apply(func, args=(x,))
 
 df.apply(func), axis=1) - apply func elementwise, axis=0 (rows) is default
