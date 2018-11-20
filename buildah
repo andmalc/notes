@@ -5,10 +5,8 @@ Podman {{{1
 
 https://www.mankier.com/1/podman-run#Examples
 
-podman run --name toolbox --hostname toolbox --network=bridge -v /home/:/home -it toolbox /bin/bash
-
 create named container, attaches to terminal, stops cont. on shell exit
-	podman run --name toolbox --hostname toolbox -it toolbox /bin/bash
+podman run --name toolbox --hostname toolbox --network=bridge -v /home/:/home -it toolbox /bin/bash
 
 
 Mount host dir into container
@@ -38,15 +36,18 @@ https://github.com/projectatomic/buildah/blob/master/docs/buildah-config.md
 
 copy {{{2
 
+Copy file into container
 buildah copy containerID SRC [[...] DEST]
---chown owner:group
 
-buildah copy --chown myuser:mygroup containerID '/myapp/app.conf' '/myapp/app.conf'
+Options
+    --chown owner:group
 
+Example
+    buildah copy --chown myuser:mygroup containerID '/myapp/app.conf' '/myapp/app.conf'
 
-images {{{2
+commit {{{2
+
 commit <container> <image>
-containers
 
 from {{{2
 
@@ -54,26 +55,25 @@ https://github.com/projectatomic/buildah/blob/master/docs/buildah-from.md
 
 Create container from image 
 from <options> <image>
-    create container from image
+
+Options
     --name new container name
     --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
-
+Example
     container=$(buildah from fedora)
 
 run  {{{2
+
+run command in container 
 run <container> <options> -- <cmd> 
 
-for casual use
-run command in container 
-
---hostname
---tt
---volume value, -v value
-    mount a host location into the container while 
+Options
+    --hostname
+    --tt
+    --volume value, -v value
+        mount a host location into the container 
    
-    chcon -R -h -t container_file_t /var/roothome
-    buildah run -v /var/roothome:/root:rslave fedora-working-container bash
 
 --runtime path  
     default runc
@@ -102,12 +102,23 @@ buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 mount {{{2
 
+Mount volumne into container
+    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
+
 <container ID>  mounts root fs of container, returns mnt point
 <no args>       lists mounts
 
 
-scratchmnt=$(buildah mount $newcontainer)
-echo $scratchmnt #see path of mount
+Permissions issue fix:
+    chcon -R -h -t container_file_t /var/roothome
+
+
+Examples
+    scratchmnt=$(buildah mount $newcontainer)
+    echo $scratchmnt #see path of mount
+
+    buildah run -v /var/roothome:/root:rslave fedora-working-container bash
+
 
 Mount volumne with from command
     --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
@@ -127,6 +138,5 @@ buildah push fedora-bashecho docker-daemon:fedora-bashecho:latest
 Push to Docker.io
 docker login 
 buildah push echo docker.io/andmalc/echo:blog
-
 
 
