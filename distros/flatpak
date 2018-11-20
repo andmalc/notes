@@ -1,0 +1,24 @@
+
+
+Remotes {{{1
+
+remote-add <options> <repo file or URL>
+flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+See packages at remote
+flatpak remote-ls flathub
+
+flatpak --user update && flatpak --user search atom
+
+Show package details
+flatpak remote-info flathub io.atom.Atom
+
+
+Install & Manage {{{1
+
+flatpak --user install flathub io.atom.Atom
+
+List installed runtimes and packages
+flatpak list
+
+
