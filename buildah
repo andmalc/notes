@@ -8,13 +8,24 @@ https://www.mankier.com/1/podman-run#Examples
 create named container, attaches to terminal, stops cont. on shell exit
 podman run --name toolbox --hostname toolbox --network=bridge -v /home/:/home -it toolbox /bin/bash
 
+exec
+    run command in a container
+    pd exec -it <c ID> env
 
-Mount host dir into container
-	chcon -Rt svirt_sandbox_file_t <dir>
-    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
+export
+    Export container fs to tar archive
+    podman export $(podman create alpine) | tar -C rootfs -xvf -
+
+
+inspect
+    show container info
+
 
 Logs
 	podman logs <c id> | head
+
+top
+    show processes running within container
 
 BD Commands {{{1
 
@@ -63,12 +74,14 @@ Options
 Example
     container=$(buildah from fedora)
 
-run  {{{2
+run  {{{1
 
 run command in container 
 run <container> <options> -- <cmd> 
 
 Options
+    -d
+        run as daemon
     --hostname
     --tt
     --volume value, -v value
@@ -100,18 +113,22 @@ buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 
 
-mount {{{2
+Mounting {{{1
 
-Mount volumne into container
+mount
+    <container ID>  mounts root fs of container, returns mnt point
+    <no args>       lists mounts
+
+top <container id>
+    show process info: USER, Process ID, Parent Process ID
+
+
+Mount host dir into container
+chcon -Rt svirt_sandbox_file_t <dir>
     --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
-
-<container ID>  mounts root fs of container, returns mnt point
-<no args>       lists mounts
-
 
 Permissions issue fix:
     chcon -R -h -t container_file_t /var/roothome
-
 
 Examples
     scratchmnt=$(buildah mount $newcontainer)
@@ -120,8 +137,12 @@ Examples
     buildah run -v /var/roothome:/root:rslave fedora-working-container bash
 
 
-Mount volumne with from command
-    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
+Network {{{1
+
+Ports by default not accessible, must bind with -p 
+
+-p <host port>:<container port>
+
 
 Image Mangement {{{1
 
