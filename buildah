@@ -1,12 +1,75 @@
 Fedora Registry
 https://registry.fedoraproject.org/
 
+
+Container from scratch
+    http://www.projectatomic.io/blog/2017/11/getting-started-with-buildah/
+
+
 Podman {{{1
 
 https://www.mankier.com/1/podman-run#Examples
 
 create named container, attaches to terminal, stops cont. on shell exit
 podman run --name toolbox --hostname toolbox --network=bridge -v /home/:/home -it toolbox /bin/bash
+
+Image Mangement {{{2
+Commands {{{3
+
+build 
+    Build image from Dockerfile
+    Runs Buildah in background
+
+    build -t podbuilt .
+
+load 
+    Load image from an archive
+    -i filename
+
+login <URL>
+    login to container registry
+
+save 
+    Save image to an archive
+    save -o myhttp.tar --format oci-archive myhttpd
+
+
+tag
+    Add an additional name to a local image
+
+Image storage {{{3
+
+Default repository
+/var/lib/containers/storage
+
+Vs. Docker storage
+/var/lib/docker
+
+Get image from repo
+    docker login docker.io
+    podman -t hello-world docker.io/asamalik/hello-world
+
+Push to Docker storage
+    buildah push fedora-bashecho docker-daemon:fedora-bashecho:latest
+
+Push to Docker.io
+    buildah push echo docker.io/andmalc/echo:blog
+
+
+Containers {{{2
+Commands {{{3
+
+attach
+    attach to running container
+
+commit
+    create new image from changed container
+
+create 
+    create but do not start container
+
+diff
+    inspect changes in container filesystem
 
 exec
     run command in a container
@@ -16,18 +79,67 @@ export
     Export container fs to tar archive
     podman export $(podman create alpine) | tar -C rootfs -xvf -
 
+mount
+    Mount a working container’s root filesystem
+
+ps
+    list containers
+
+top 
+    show processes running within container
+
+
+run {{{3
+
+run command in container 
+run <container> <options> -- <cmd> 
+
+Options
+    -d
+        run as daemon
+    --hostname
+    --tt
+    --volume value, -v value
+        mount a host location into the container 
+
+--runtime path  
+    default runc
+
+-p 
+    Ports by default not accessible, must bind with -p 
+    -p <host port>:<container port>
+
+
+in production
+    runc - lightweight universal run time container,
+    containerd - complete container lifecycle runtime, uses runc
+    CRI-O 
+
+
+Install package in container
+    buildah run $contaidner -- dnf -y install java
+    https://github.com/projectatomic/buildah
+
+
+
+Info {{{2
+
+info 
+    Display system info
 
 inspect
     show container info
 
+history
+    show history of image
 
-Logs
-	podman logs <c id> | head
+logs 
+	fetch logs of a container
 
-top
-    show processes running within container
+ports <cont>
+    show all port mappings or for container
 
-BD Commands {{{1
+Buildah {{{1
 
 buildah <cmd> <options> <container ID>
 
@@ -35,10 +147,14 @@ config {{{2
 
 https://github.com/projectatomic/buildah/blob/master/docs/buildah-config.md
 
+config <options> <container>
+
 --cmd
     buildah config --cmd /bin/bash $newcontainer
 
 --entrypoint
+    default command
+
 --port
 --user
     guid or name if in /etc/passwd
@@ -48,7 +164,7 @@ https://github.com/projectatomic/buildah/blob/master/docs/buildah-config.md
 copy {{{2
 
 Copy file into container
-buildah copy containerID SRC [[...] DEST]
+buildah copy <options> <container> SRC [[...] DEST]
 
 Options
     --chown owner:group
@@ -57,6 +173,8 @@ Example
     buildah copy --chown myuser:mygroup containerID '/myapp/app.conf' '/myapp/app.conf'
 
 commit {{{2
+
+Saves working container to image available to run by podman or runc
 
 commit <container> <image>
 
@@ -74,44 +192,10 @@ Options
 Example
     container=$(buildah from fedora)
 
-run  {{{1
+run {{{2
 
-run command in container 
-run <container> <options> -- <cmd> 
-
-Options
-    -d
-        run as daemon
-    --hostname
-    --tt
-    --volume value, -v value
-        mount a host location into the container 
-   
-
---runtime path  
-    default runc
-
-
-in production
-    runc - lightweight universal run time container,
-    containerd - complete container lifecycle runtime, uses runc
-    CRI-O 
-
-
-Install package in container
-    buildah run $contaidner -- dnf -y install java
-
-Container from scratch
-    http://www.projectatomic.io/blog/2017/11/getting-started-with-buildah/
-    https://github.com/projectatomic/buildah
-
-
-
-Share local files with containers
-sudo chcon -R -h -t container_file_t /srv
-buildah run -v /srv:/srv:rslave fedora-working-container bash
-
-
+Run command in container or default command if cmd not given
+    run <container> [<cmd>]
 
 Mounting {{{1
 
@@ -136,28 +220,13 @@ Examples
 
     buildah run -v /var/roothome:/root:rslave fedora-working-container bash
 
-
-Network {{{1
-
-Ports by default not accessible, must bind with -p 
-
--p <host port>:<container port>
+Share local files with containers
+sudo chcon -R -h -t container_file_t /srv
+buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 
-Image Mangement {{{1
 
-Image storage
-    Default repository
-    /var/lib/containers/storage
+Runc {{{1
 
-    Vs. Docker storage
-    /var/lib/docker
-
-Push to Docker storage
-buildah push fedora-bashecho docker-daemon:fedora-bashecho:latest
-
-Push to Docker.io
-docker login 
-buildah push echo docker.io/andmalc/echo:blog
-
-
+start <container name>
+    -b <bundle dir - default current>

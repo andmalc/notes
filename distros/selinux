@@ -65,6 +65,8 @@ restorecon
     apply default context
     run after changing policy with semanage to apply to existing files
 
+    restorecon -Rv .ssh
+
 sealert -b 
     launch Alert browser
 

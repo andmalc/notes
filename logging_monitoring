@@ -1,3 +1,11 @@
+journal-brief
+    http://cyberelk.net/tim/2015/10/19/journal-brief/
+
+
+Monitor log 
+	tail -f		Monitor growth of a log file
+	tailf		same, but wait for log activity to write to the file (avoids disk spin up on laptops)
+
 
 Show monitored services, sorted by system, client slices
     systemctl status
