@@ -83,6 +83,23 @@ Windows & Tabs {{{1
 vertical = sideways
 horizontal = top to bottom
 
+New
+      n
+
+Sizing
+	Height
+		#_				height = #
+      _           full height (zoom)
+		+,- N			increase/decrease height * n
+		z{height}<CR>		resize window height
+		res[ize] +-n | n
+	Width
+		n|			width = N
+      |           full width (zoom)
+		n >,<      increase/reduce with * n
+    Restore
+		=			make equal size
+
 Create with split
     sp      horizontal split
     vs      vertical split
@@ -90,21 +107,8 @@ Create with split
     sba     split all buffers horizontal
     vert sba     split all buffers vertical
 
-Window Sizing
-	Height
-		C-W N_				height = N
-      c-w _           full height (zoom)
-		C-W +,- N			increase/decrease height * n
-		z{height}<CR>		resize window height
-		res[ize] +-n | n
-	Width
-		C-W N|			width = N
-      c-w |           full width (zoom)
-		C-W N >,<      increase/reduce with * n
-    Restore
-		C-W =			make equal size
-
-Window Closing
+Closing
+      o              only - close all other windows
 		c, :close		Hide buffer - edit next window
 		q (or :q ?)		Quit editing & close window
         :on[ly]             close all but current
@@ -264,58 +268,61 @@ Search (highlight matches) {{{1
 ?CR				Repeat search, backward 
 
 Edit Modes {{{1
-While in Normal mode {{{2
+Normal mode {{{2
 
-Entering Insert mode
-	i			Insert- enter text before cursor
-	a,A			Append, as for i 
-	o			Open line below
-	O			Open line above
-	I			insert text before first non-blank in line
-	gI			insert text at column 1
+Go to normal mode
+    c-[, c-c,c-3, jj,
 
+Run normal or command mode commands from Insert mode
+    ctrl+v[Escape key]:command
+   
 
 Change, continue in Insert mode
     s           change char
     S           delete line
 
 
-While in Insert mode {{{2
+Insert register contents
+   after/before cursor        "xp|P 
+   leave cursor after text    "xgp|P
+   at last change             c-r<reg>
+   C-R C-A/C-W				insert word/Word under cursor (?)
 
-go to normal mode
-    c-[, c-c,c-3, jj,
+previous insertions
+  c-a
+previous insertions, exit Insert mode
+  c-2 / c-@
 
-    Mappings:
-        Caps Lock to Esc
-        Caps Lock to C then use with C-3
 
-Run commands in other modes
+Insert mode {{{2
 
-        Enter a command and return to insert mode
-    ctrl+v[Escape key]:command
-        run normal or command mode commands
-   
+Enter Insert mode
+	i			Insert- enter text before cursor
+	a,A			Append, as for i 
+	o			Open line below
+	O			Open line above
+	I			insert text before first non-blank in line
+   gi       go to last edit and insert
+	gI			insert text at column 1
 
-edit
-	C-w		delete word left
+Edit
+   deletions
+        word left           c-w		
+        character left      c-h / BS	
+        under cursor        Del / Alt+BS 
+        all characters on current but not tabs      c-u
 
-indents
-	C-T,D	Insert, delete 1 shiftwidth indent
-	0 CTRL-D		  delete all indent in the current line
-	^ CTRL-D		  delete all indent in the current line, restore in next line
+
+
+Indents         
+   c-i / Tab    Insert 1 sw indent at insertion point
+   C-t/d        Insert, delete 1 shiftwidth indent at start of line
+   0 CTRL-D		 delete all indent in the current line
+   ^ CTRL-D		 delete all indent in the current line, restore in next line (?)
 
 ?
 	C-V    Insert next non-digit literally
 	C-O		Next one keystroke in normal mode
-
-registers
-	Insert (paste) register n
-		C-R"n
-		C-R C-A/C-W				insert word/Word under cursor
-	let @a=" ... " - assign to a register (help 'let-@')
-
-
-
 
 
 
@@ -436,7 +443,7 @@ Move to mark, tag, or edit {{{1
 			file.															
 	:ts /pat	tag select arg is a regex
 
-	gi	jump to last edit
+	gi	jump to last edit & Insert
 	`|'<mk>	jump to mark, beginning of line with mark
 	*/#	to next/prev word under cursor
 
@@ -463,6 +470,9 @@ names
 
 show
 		:reg
+
+assign to a register (help 'let-@')
+   let @a=" ... " 
 
 execute contents of register
 		@<reg name>
@@ -730,7 +740,11 @@ Chain commands	\| or <Bar>
 imap example:
 	:imap <c+d>	<esc>ddi	(i at end returns to insert mode)
 
-Shell {{{1
+Terminal & Shell {{{1
+
+Terminal
+https://github.com/vim/vim/blob/master/runtime/doc/terminal.txt
+
 
 :!cmd		Run a single command in shell
 :x,y!command	execute external command on lines x - y
@@ -769,4 +783,4 @@ Display:
 
 
 
-vim:ts=3 sw=3 ft=
+vim:ts=3 sw=3 sts=3

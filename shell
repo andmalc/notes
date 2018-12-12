@@ -1,6 +1,33 @@
+Misc {{{1
+
+Semicolon - command delimiter 
+
+echo 
+    -n      no newline 
+    -e      interpret backlashed control chars
+
+
 cat - reads from file
+
 echo - reads from sting
 
+Show type of shell
+    $0
+Return value of last command
+    $?
+
+Copy last command into file
+    echo "!!" > filename
+
+
+Control characters
+    man console_codes
+    interpreted by console driver and discarded before printing
+    ^[      start an escape sequence
+    ^X      interrupt escape sequence
+
+    ECMA-48 SGR sequence ESC [ parameters m sets display attributes
+        echo -e "\e[1;31m This is red text \e[0m"
 
 xargs 
     takes a newline separated list and maps the list to a command
@@ -8,12 +35,7 @@ xargs
         autoload -U zargs
         zargs **/*~ -- rm
 
-Copy last command into file
-    echo "!!" > filename
-
-
-Terms {{{1
-Shell types {{{2
+Shell types {{{1
 
 Login shell
     force: su - andmalc
@@ -36,6 +58,40 @@ Graphical login:
     does not create a login shell
     controlled by session or window manager
 
+
+Line editing {{{1
+
+^l	clear screen
+
+Notation:
+	^k = \C=k = control key + k
+	M-k = Meta (usually Alt) key + k
+	ek = Escape + k
+
+Line Editor Key Bindings
+	Default bindings
+		char
+			^f	move one char forward
+			^b	move one char back
+			^d	delete char to right (also: list completions, log out)
+			BS	delete to left
+		word
+			M-f	word forward
+			M-b	word back
+			^w/M-BS delete word to left
+			M-d	delete word to right
+
+		line
+			^a	beginning of line
+			^e	end of line
+			^u	kill line 
+			^k   kill line to right
+			^U Delete line
+			^Y Yank line back (ie restore)
+
+Customized bindings
+In .zshrc
+    Alt + arrows for word forward/back
 
 File Descriptors & Redirection {{{1
 
@@ -138,41 +194,6 @@ hi!
 .
 
 
-Line editing {{{1
-
-^l	clear screen
-
-Notation:
-	^k = \C=k = control key + k
-	M-k = Meta (usually Alt) key + k
-	ek = Escape + k
-
-Line Editor Key Bindings
-	Default bindings
-		char
-			^f	move one char forward
-			^b	move one char back
-			^d	delete char to right (also: list completions, log out)
-			BS	delete to left
-		word
-			M-f	word forward
-			M-b	word back
-			^w/M-BS delete word to left
-			M-d	delete word to right
-
-		line
-			^a	beginning of line
-			^e	end of line
-			^u	kill line 
-			^k   kill line to right
-			^U Delete line
-			^Y Yank line back (ie restore)
-
-Customized bindings
-In .zshrc
-    Alt + arrows for word forward/back
-
-
 Braces, Parentheses, Brackets {{{1
 Parentheses {{{2
 Executes contents in subshell {{{3
@@ -220,26 +241,30 @@ $var    value of variable
 assignment - no spaces before or after =
     a=1 
 
+delimit variable name with curly braces {}
+
 Sourcing a file adds its variables to current
 Exporting: provides copy of var to child process, not current environment
 
 Quoting {{{1
-	
-Single quoted string enloses literals A double quoted string is evaluated for
-shell variables or backslash escaping.
+
+Quotes prevent shell from evaluating line before command
+
+double quoted string is evaluated for shell variables or backslash escaping.
+
+""xxx"	weak quotes 
+        permits expansion of $variables and backslashed control chars like \t for tab
 
 'xxx'	strong quotes 
-        * no expansion or metacharacters
-""xxx"	weak quotes 
-        * $, `, and \ not disabled shell & envir. variablex expanded
-\       At end of line - special case: removes new line char.  `		command
-- executed before rest of line.
+        no expansion or metacharacters
+
+
+\       At end of line - special case: removes new line char.  command - executed before rest of line.
 
 Never quote a glob or regular expression
-
-for x in "~/*"; do done
-  # This loop will run once with $x set to "~/*" rather than once for every
-  # file and directory under $HOME, as was intended
+    for x in "~/*"; do done
+      # This loop will run once with $x set to "~/*" rather than once for every
+      # file and directory under $HOME, as was intended
 
 
 
@@ -250,6 +275,12 @@ Looping {{{1
 for file in <pat>; do
     mv $file ${<pat>}
 done
+
+For Loop
+    for x in y y y
+    do
+    ...
+    done
 
 
 Command substitution {{{1
@@ -308,28 +339,23 @@ Rename files
 
 Conditional Expressions {{{1
 
+[[ <EXPRESSION> ]]
+
 operators:
-    -z	0 length string
+    group expressions to set precedence     ()  
+    true if both expns are true             &&  
+    	0 length string
         if test -z "$Var"
     -e  file exists
     -f	is regular file
     -n	string is non-empty/non-null
 
-Test statement {{{2
-
-http://wiki.bash-hackers.org/commands/classictest
-
-POSIX test statement -  [ ]
-    if [ "$foo" = "$bar" ]
-
-    string comparisons
-        = or != 
-            if "$Var" = "blah"
-    
 Bash & Zsh test {{{2
 
 [[ ]] for strings
 (( )) for numeric
+
+Is a command so requires semi-colon delimiter if followed on same line e.g. in if statement
 
 http://mywiki.wooledge.org/BashFAQ/031
 compatible with above operators
@@ -354,19 +380,23 @@ Operator precedence (highest ⇒ lowest):
 
 
 
-
 If statement {{{1
 
 https://robots.thoughtbot.com/the-unix-shells-humble-if
 http://mywiki.wooledge.org/BashGuide
 
-if condition ; then
-  expressions
-elif condition ; then  # optionally
-  expressions
-else                 # optionally
-  expressions
-fi
+With Bash/Zsh test command
+
+    if [[condition]]; then
+      expressions
+    elif condition; then  # optionally
+      expressions
+    else                 # optionally
+      expressions
+    fi
+
+    if [[condition]]; then echo "test stuff" ; fi
+
 
 Conditional execution
     || OR - 2nd command executes only if 1st fails
@@ -378,7 +408,7 @@ command
 	if pipeline, uses exit status of last command	
 	! before inverts
 
-Job control {{{1
+Processes {{{1
 
 Running Processes
 	Pipes always between programs. Only works with programs which expect
@@ -388,6 +418,8 @@ Running Processes
 		echo thing is a word |
 		sed 's/word/wordzzz/'
 
+    Subshell
+        cmd_output=$(COMMANDS)
 
 Job Control
 	%n	refer to job by name or number
@@ -440,11 +472,13 @@ Subshells:
 Running Commands
 	sh [cmd]	Run a script without having to change its access mode
 
-	For Loop
-		for x in y y y
-		do
-		...
-		done
+Environment
+    env     show or set shell environment
+
+    Env for a command
+        prep <cmd> => PID
+        cat /proc/PID/environ  | tr '\0' '\n'
+
 
 
 Command History {{{1
@@ -525,5 +559,22 @@ Key Binding {{{1
 			http://zsh.sunsite.dk/Guide/zshguide04.html#l76
 
 
+
+
+Functions {{{1
+
+Define:
+ function fname()  #'function' is optional
+ { 
+     statements; 
+ }  
+
+Execute:
+    fname arg1 arg2
+
+Arguments: 
+    $0 = script name
+    $1 $2 =  arg1, arg2
+    $@ = all args
 
 

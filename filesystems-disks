@@ -124,13 +124,11 @@ dd
 		dd bs=2048 if=/dev/part of=/dev/anotherpart
         bs=4M said faster
 
-    progress viewer with pv or dc3dd
-        pv - shows progress and speed
-            -s  expected size
-            pv < /dev/sda > /dev/sdb
-            dd if=/dev/foo bs=4M | pv -s 20G | sudo dd of=/dev/baz bs=4M
-   
         dc3dd if=/dev/sda of=/dev/sdb
+
+        Test device speed.  fdatasync causes command to sync before end so result is accurate
+        Increase count if disk is very fast and command finishes quickly and so to get more accurate average
+        dd bs=1M count=256 if=/dev/zero of=test conv=fdatasync
 
 dd alternatives
     cat image.iso | pv >/dev/sdb

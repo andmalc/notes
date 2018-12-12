@@ -1,19 +1,11 @@
-Fedora Registry
-https://registry.fedoraproject.org/
-
-
-Container from scratch
-    http://www.projectatomic.io/blog/2017/11/getting-started-with-buildah/
-
-
 Podman {{{1
-
-https://www.mankier.com/1/podman-run#Examples
 
 create named container, attaches to terminal, stops cont. on shell exit
 podman run --name toolbox --hostname toolbox --network=bridge -v /home/:/home -it toolbox /bin/bash
 
-Image Mangement {{{2
+https://www.mankier.com/1/podman-run#Examples
+
+Images {{{2
 Commands {{{3
 
 build 
@@ -85,22 +77,26 @@ mount
 ps
     list containers
 
+start
+    start stopped container
+    cannot add command or change configuration
+
 top 
     show processes running within container
 
 
 run {{{3
 
-run command in container 
+run command in a new container 
 run <container> <options> -- <cmd> 
 
 Options
-    -d
-        run as daemon
-    --hostname
-    --tt
-    --volume value, -v value
-        mount a host location into the container 
+
+-d  run as daemon
+--hostname
+--tt
+--volume value, -v value
+    mount a host location into the container 
 
 --runtime path  
     default runc
@@ -115,10 +111,6 @@ in production
     containerd - complete container lifecycle runtime, uses runc
     CRI-O 
 
-
-Install package in container
-    buildah run $contaidner -- dnf -y install java
-    https://github.com/projectatomic/buildah
 
 
 
@@ -139,8 +131,12 @@ logs
 ports <cont>
     show all port mappings or for container
 
+top <container id>
+    show process info: USER, Process ID, Parent Process ID
+
 Buildah {{{1
 
+https://github.com/projectatomic/buildah
 buildah <cmd> <options> <container ID>
 
 config {{{2
@@ -194,18 +190,40 @@ Example
 
 run {{{2
 
-Run command in container or default command if cmd not given
+Run command in container 
     run <container> [<cmd>]
 
-Mounting {{{1
+Buildah run does not execute entrypoint
 
-mount
-    <container ID>  mounts root fs of container, returns mnt point
-    <no args>       lists mounts
+mount {{{2
 
-top <container id>
-    show process info: USER, Process ID, Parent Process ID
+<container ID>  mounts root fs of container, returns mnt point
+<no args>       lists mounts
 
+Buildah Examples {{{2
+
+Install package in container
+    buildah run $contaidner -- dnf -y install java
+
+
+scratchmnt=$(buildah mount $newcontainer)
+echo $scratchmnt #see path of mount
+
+buildah run -v /var/roothome:/root:rslave fedora-working-container bash
+
+Runc {{{1
+
+start <container name>
+    -b <bundle dir - default current>
+
+
+Image Registries {{{1
+
+Fedora Registry
+https://registry.fedoraproject.org/
+
+Topics {{{1
+Filesystem issues {{{2
 
 Mount host dir into container
 chcon -Rt svirt_sandbox_file_t <dir>
@@ -214,19 +232,30 @@ chcon -Rt svirt_sandbox_file_t <dir>
 Permissions issue fix:
     chcon -R -h -t container_file_t /var/roothome
 
-Examples
-    scratchmnt=$(buildah mount $newcontainer)
-    echo $scratchmnt #see path of mount
-
-    buildah run -v /var/roothome:/root:rslave fedora-working-container bash
-
 Share local files with containers
 sudo chcon -R -h -t container_file_t /srv
 buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 
+Running a server {{{2
 
-Runc {{{1
+Show container's published ports and address
+podman ps
+podman inspect -l | grep IPAddress\":
 
-start <container name>
-    -b <bundle dir - default current>
+Container logs
+podman logs --latest
+
+Container processes
+podman top <container_id>
+
+Show host's addresses
+ip a show dev eth0
+
+Firewalld services
+firewall-cmd --list-services
+firewall-cmd --add-service http
+
+
+
+

@@ -21,12 +21,10 @@ tmux show-options -g
 Startup {{{
 Options
 
--L <socketname>	
-	use to force non-default server, useful for testing config changes
-	e.g. tmux -f tmuxtemp -L myapp new-session
 -n      name
 -c      start dir
 -p      split percent
+-f	config file
 
 
 Commands 
@@ -199,9 +197,20 @@ tpm manager
 
 Debugging {{{1
 
+tmux -f <config file>
+    still reads .tmux.conf
+
 tmux show-options [-g -w]
 
 tmux source-file ~/.tmux.conf
+
+Verbose logging
+    -v
+
+Force non-default server, useful for testing config changes
+	tmu -L <socketname>	
+	tmux -f testconfig -L testsocket new-session
+
 
 Startup script {{{1
 

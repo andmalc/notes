@@ -65,3 +65,11 @@ log
 /etc/systemd/journald.conf
 SystemMaxUse=   max disk usage
 
+Benchmarking {{{1
+
+Crude cpu speed test
+    dd if=/dev/zero bs=1M count=1024 | md5sum
+
+    Chromebox 240 MB/s
+
+

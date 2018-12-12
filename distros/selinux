@@ -70,6 +70,12 @@ restorecon
 sealert -b 
     launch Alert browser
 
+Logging {{{1
+
+ausearch - tool for viewing audit logs
+    ts recent -   last ten minutes
+    ausearch -m AVC,USER_AVC -ts recent
+
 journalctl _SELINUX_CONTEXT=system_u:system_r:policykit_t:s0
 
 
