@@ -72,6 +72,10 @@ sealert -b
 
 Logging {{{1
 
+SE status overview
+    /usr/sbin/sestatus -v
+
+
 ausearch - tool for viewing audit logs
     ts recent -   last ten minutes
     ausearch -m AVC,USER_AVC -ts recent

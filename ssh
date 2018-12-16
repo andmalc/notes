@@ -85,12 +85,15 @@ https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
 -R answer on remote side, delivers to local
 -R <remote port>:localhost:<local port>
 
-Config
+Format: ssh -L <local port>:<server host>:<server port> [<jump host if used>]
+If port forwarded on same host as ssh server, <server host> is localhost
+
+
+Client Config
 LocalForward 2001 localhost:143
 
-If port forwarded on same host as ssh server, host is localhost
--L 8888:localhost88 
-
+Server sshd_config
+AllowTcpForwarding yes
 
 Docs {{{1
 

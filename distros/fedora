@@ -325,9 +325,9 @@ repolist [enabled | disabled | --all ]
 
 
     Query options - set what info displayed about each pkg
+    -l <pkg name>   list files in package
     --depends
     -i              info
-    -l <pkg name>   list files in package
     --provides      pkgs providing service/cmd
     --recommends
     --requires <pkg>  #  show package dependencies (required by this pkg)

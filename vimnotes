@@ -90,8 +90,8 @@ Sizing
 	Height
 		#_				height = #
       _           full height (zoom)
-		+,- N			increase/decrease height * n
-		z{height}<CR>		resize window height
+		N+,-        increase/decrease height * n
+		z{height}<CR>		resize window height (?)
 		res[ize] +-n | n
 	Width
 		n|			width = N
@@ -114,8 +114,8 @@ Closing
         :on[ly]             close all but current
 
 Move Between Windows
-		C-W +
-        C-W (twice)     Last window
+     C-W (twice)  Last window
+     arrow key    move to window in direction of arrow
 		w				Move to window below (wrap)
 		W				Move to window above (wrap)
 		j				Move to window below
@@ -282,17 +282,6 @@ Change, continue in Insert mode
     S           delete line
 
 
-Insert register contents
-   after/before cursor        "xp|P 
-   leave cursor after text    "xgp|P
-   at last change             c-r<reg>
-   C-R C-A/C-W				insert word/Word under cursor (?)
-
-previous insertions
-  c-a
-previous insertions, exit Insert mode
-  c-2 / c-@
-
 
 Insert mode {{{2
 
@@ -457,6 +446,17 @@ ma				set mark with alpha char
 
 
 Registers {{{1
+
+Insert register contents
+   after/before cursor        "xp|P 
+   leave cursor after text    "xgp|P
+   at last change             c-r<reg>
+   C-R C-A/C-W				insert word/Word under cursor (?)
+
+previous insertions
+  c-a (?)
+previous insertions, exit Insert mode
+  c-2 / c-@
 
 names
 	register name prefix: "
