@@ -32,7 +32,8 @@ Time specifcation
 
 	Examples:
 		find -mtime 7 - modified seven days ago
-		find -mtime -1 - modified within last day
+		find -mtime -1 - modified within last day 
+            also: -mtime 0
 		find -ctime +3  - changed more than 3 days ago
 		find / -amin +2 -amin -6
 			modified between 6 and 2 minutes ago

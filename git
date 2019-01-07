@@ -242,24 +242,23 @@ branch
     -d  delete <branch>
     -rd delete remote <remote>/<branch>
 
-<branch name> [cid]	
-    create new branch from current or other commit 
-    doesn't switch to it	    	   
+    create new branch from current or other commit, don't switch to it	    	   
+        <branch name> [cid]	
 
-create new branch <name> and switch to it
-    checkout -b <name>	
+    create new branch <name> and switch to it
+        checkout -b <name>	
 
-create new branch <name> based on other branch and switch to it
-    checkout -b <new branch name> <source branch name>	
+    create new branch <name> based on other branch and switch to it
+        checkout -b <new branch name> <source branch name>	
 
-create new branch tracking remote and switch to it
-    checkout -b <name> origin/name
+    create new branch tracking remote and switch to it
+        checkout -b <name> origin/name
 
 
 Set upstream branch
     branch --set-upstream-to=origin/master
     branch -b <branchname> --track origin/<remote b name>
-    push --set-upstream origin gh-pages
+    push --set-upstream origin gh-pages (confirmed works)
 
 Change remote branch name or create (?)
     git push origin <branch>
@@ -304,7 +303,12 @@ New clone of repo
     don't need to be in submodule dir
 
 Updating
-    cd into module dir and git fetch
+    cd into module dir
+    git pull origin master
+
+    or from submodule root
+    git submodule foreach git pull origin master
+
     git pull && git submodule update --init --recursive
 
     sync after changing submodule URL

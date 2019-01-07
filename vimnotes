@@ -544,6 +544,8 @@ Filter {{{1
 
 [I				show lines matching word under cursor
 
+Filter ex mode output
+   :filter /pat/ cmd
 
 Ex/command Mode {{{1
 
@@ -559,6 +561,18 @@ Command Line
 
 q:	display Ex history, can edit and reexecute
 
+Ex output to file
+   redir >file
+   redir END
+
+Ex output to buffer
+   redir @a
+   scriptnames
+   redir END
+   new
+   "aP
+
+   redir >file
 Line Addressing and searching in Ex mode {{{2
 
 http://vimregex.com/
@@ -695,6 +709,13 @@ expressions
 	   if, then, else
    ||, &&, ==
 	   OR, AND, equal
+
+Scripts
+	must end in .vim and be saved on runtime path
+
+	List loaded scripts
+		scriptnames
+
 
 Examples {{{2
 
