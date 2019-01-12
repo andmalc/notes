@@ -410,3 +410,12 @@ Clear dnf cache in /var/cache/PackageKit
     pkcon refresh force
 
 
+Tweaks {{{1
+
+Chromebook - map Delete to  Right Alt + BS
+Edit /usr/share/X11/xkb/symbols/us, and right after the line:
+    name[Group1]= "English (US)";
+add these lines:
+    include "level3(ralt_switch)"
+    key <BKSP> { [ BackSpace, BackSpace, Delete ] };
+
