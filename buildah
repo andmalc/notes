@@ -239,15 +239,37 @@ buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 Running a server {{{2
 
-Show container's published ports and address
+Pull image.
+Inspect to show metadata
+Repo
+    repo name and id
+ContainerConfig
+    User 
+    Exposed Ports 
+    Env environment vars etc.
+    Entrypoint
+    Cmd
+    Working dir
+
+
+Run container in forground (no -d), executes Cmd
+Now has network info e.g.  published ports and address
 podman ps
 podman inspect -l | grep IPAddress\":
 
-Container logs
+Container logs for monitoring in daemon mode
 podman logs --latest
 
 Container processes
 podman top <container_id>
+
+Run shell 
+podman exec -u root -it <container> /usr/bin/bash
+
+User ID inside container
+Need to make this ID owner of mounted storage
+podman inspect -l | grep -i user
+
 
 Show host's addresses
 ip a show dev eth0
