@@ -8,6 +8,8 @@ Fedora versions, sizes, install {{{1
 Fedora Server netinstall image is a universal one, and can be used to install any Fedora Edition or your own set of favorite packages
 
 Minimal Desktop
+https://www.reddit.com/r/Fedora/comments/a6c60d/my_notes_on_a_minimal_desktop_install_of_fedora_29/
+
 https://www.reddit.com/r/Fedora/comments/8245vv/i_wish_fedora_workstation_had_a_minimal_desktop/
 
 Gnome install minimal 
@@ -181,6 +183,11 @@ AutomaticLogin=andmalc
 /etc/systemd/journald.conf
 SystemMaxUse=   max disk usage
 
+DNS with systemd-resolved
+	configure /etc/systemd/resolved.conf
+	Enable systemd-resolved
+	symlinmk /etc/resolve.conf to /run/systemd/resolve/stub-resolv.conf
+	verify with resolvectl status
 
 Hardware config {{{2
 
@@ -296,6 +303,13 @@ History
         userinstalled       manually installed pkgs
     undo
     rollback
+
+RPM
+
+Show package of file
+    rpm -qf <path> => package name
+List files in package
+    rpm -ql <pkg>
 
 Repos {{{2
 
