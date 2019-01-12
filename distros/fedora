@@ -1,9 +1,8 @@
-https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
-
-New 3rd party repos
-https://fedoramagazine.org/third-party-repositories-fedora/#more-21080
 
 Fedora versions, sizes, install {{{1
+
+boot parition must be extX formatted and not in LVM
+efi partition may be shared, mount at /boot/efi
 
 Fedora Server netinstall image is a universal one, and can be used to install any Fedora Edition or your own set of favorite packages
 
@@ -34,50 +33,33 @@ install bootloader ?
 
 
 
-boot parition must be extX formatted and not in LVM
-efi partition may be shared, mount at /boot/efi
-
 
 Setup {{{1
 
-Architecture {{{2
+git clone git@github.com:andmalc/config.git
+
+https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
 32 bit packages end with  i686
 Unlike Debian :i386
 
 Dependency errors:
-
     error while loading shared libraries: libXss.so.1: wrong ELF class: ELFCLASS32
     Package libXScrnSaver-1.2.2-6.1.el7.i686 already installed and latest version
     => needs 64 bit version libXScrnSaver-1.2.2-6.1.el7.x86_64
 
-Repos {{{2
-
-Desktop Repos:
-dnf copr enable heliocastro/hack-fonts
-dnf copr enable dacr/brackets
+New 3rd party repos
+https://fedoramagazine.org/third-party-repositories-fedora/#more-21080
 
 
-https://www.google.com/linuxrepositories/
-Chrome repo in /etc/yum.repos.d/google-chrome.repo:
-[google-chrome]
-name=google-chrome
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
-enabled=1
-gpgcheck=1
-gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+Packages {{{1
 
-git clone git@github.com:andmalc/config.git
-
-
-Packages {{{2
-
-Install
-git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user
+git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user exa
 
 Yubikey/U2F support
 pam-2uf u2f-hidraw-policy
 
+android-tools for adb, fastboot
 
 telegram-desktop
 dnf copr enable rommon/telegram
@@ -86,8 +68,23 @@ Atom editor
 dnf copr enable mosquito/atom
 dnf install atom
 
+Brackets
+dnf copr enable dacr/brackets
+
 Chrome:
 Depends on redhat-lsb libXScrnSaver
+
+Firefox H.264 coded support
+RPMFusion repo
+ffmpeg-libs and compat-ffmpeg
+
+Fonts:
+Monospaced:
+* hack-fonts
+* levien-inconsolata-fonts
+* adobe-source-code-pro-fonts
+mozilla-fira-mono-fonts
+dejavu-sans-mono-fonts
 
 Users {{{2
 
@@ -207,33 +204,6 @@ Arc GTK theme
 numix icons 
 
 
-Packages {{{2
-
-Atom editor
-    sudo dnf copr enable mosquito/atom 
-    sudo dnf install atom
-
-Console {{{3
-
-visudo
-tmux git zsh mlocate
-
-Other {{{3
-
-
-android-tools for adb, fastboot
-
-Fonts:
-Monospaced:
-* hack-fonts
-* levien-inconsolata-fonts
-* adobe-source-code-pro-fonts
-mozilla-fira-mono-fonts
-dejavu-sans-mono-fonts
-
-
-
-
 Dnf {{{1
 
 http://dnf.readthedocs.org/en/latest/command_ref.html
@@ -244,12 +214,14 @@ Dnf <options> <command> <args eg. package spec>
 
     Options:
         --exclude <pkg or pat>  exclude from install, remove, list etc.
-        --enablerepo <repo>     install pkg from a repo
-        --disable <repo>
         --releasever 23
         --installroot=<path>
             dnf --installroot=<installroot> --releasever=<release> install system-release
 
+        Temporarily enable/disable a repo
+        --enablerepo <repo>     install pkg from a repo
+            --enablerepo=updates-testing fish
+        --disable <repo>
 
     Commands
         autoclean   remove orphans
@@ -291,7 +263,7 @@ Dnf <options> <command> <args eg. package spec>
 
 History
     list
-        recent
+        recent			recently added packages
         upgrade <pkg>       avail upgrades for pkg
         userinstalled       manually installed pkgs
     undo
@@ -303,7 +275,14 @@ Repo files in /etc/yum.d
     fedora-release-rawhide
     fedora-updates-testing 
 
-repo [list|enable|disable] [repo-id]
+Manage repos
+	config-manager
+		--add <repo URL>
+		--enable | --set-enabled <repo>
+		--disable <repo>
+
+
+repoinfo - more detail than repolist
 
 repolist [enabled | disabled | --all ]
     list repo details
@@ -342,9 +321,6 @@ Other {{{2
 
 Plugins
 http://dnf-plugins-core.readthedocs.org/en/latest/index.html
-
-    config-manager
-        --set-enabled updates-testing
 
     provides <path to fn>
         shows which packages provide a file 
