@@ -298,9 +298,13 @@ Delete - old, shouldn't be necessary
     rm -Rf .git/modules/vim/pack/shapeshed/start/vim-airline
     git commit
 
-New clone of repo
-    submodule init (creates .gitmodules) / submodule update
-    don't need to be in submodule dir
+Include submodule contents on initial clone
+    git clone repo --recursive
+
+    if forgot --recursive
+        cd <submodule dir>
+        git submodule update --init
+
 
 Updating
     cd into module dir
@@ -309,7 +313,7 @@ Updating
     or from submodule root
     git submodule foreach git pull origin master
 
-    git pull && git submodule update --init --recursive
+    git submodule update --init --recursive
 
     sync after changing submodule URL
     git submodule sync
