@@ -1,5 +1,4 @@
 Data Analysis {{{1
-
 structured {{{2
 
 - observations and characteristics
@@ -21,13 +20,27 @@ must be preprocessed to be understood
 
 
 Create df's {{{1
-
 Read data from file {{{2
+https://www.shanelynn.ie/python-pandas-read_csv-load-data-from-csv-files/
 
+index_col='Date
 read_csv()
 
-Set Date column as Index
-parse_dates=['Date'],index_col='Date
+Date parameters parse_dates, date_parser, dayfirst, keep_date
+
+nrows - # rows from top to read
+skiprows - rows or ranges of rows to skip
+usecols - which cols to import
+sep - separator char
+na_values - values to interpret as missing
+    na_values=['.', '??']
+
+dtype - set column datatypes 
+    dtype={"name": str, "age": np.int32}
+
+Which cols to read as dates
+parse_dates=['Date','birth_date']
+
 
 
 Info {{{1
@@ -56,16 +69,18 @@ df[col][rows]
 df[[col,col]][rows]  
 
 Columns:
-s['col_name']		select row by index
+s['col_name']		selects col by name, returns Series of values
 df[[col,col]]
 
+':' indicates all
+
 s['i1','i2','i3']	select multi rows by index
-df.ix[index for single row]  
 
 df[:3]  slice of rows
 
 
 head/tail(n=#)   first/last n observations, default 5
+
 
 Last row:
 number_of_rows = df.shape[0]
@@ -73,17 +88,53 @@ number_of_rows = df.shape[0]
     df.tail(n=1) #returns df
     df.iloc[-1]  #only with iloc method
 
+
+https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
+
+
+
+df.iloc {{{2
+
+Integer index only
+
+df.iloc[row selector,col selector]
+df.iloc[index for single row]  
+df.iloc[:,index for single col]  
+
+df.iloc[:,[2,4,-1]]  #all rows, three non-contigious columns
+
+df.loc {{{2
+
+Select using df Index and/or Labels or Boolean Series
 df.loc[[rows], [columns]] 
-':' indicates all
 
-df.loc[:,['col1','col2']] #all rows in col1 & col2
+df.loc['val'] # row matching val in Index column
+df.loc['val','Col']
+df.loc[:,Col] # returns Index & Col
 
-df.iloc[:,[2,4,-1]]  #iloc allows integer column indexs
+Row filter with Boolean Series
+Joe = df['first_name'] == 'Joe' => Boolean Series, True for each row where statement is true
+df.loc[Joe] # Allow rows where Joe = First Name
+df.loc[Joe & Ed] # Intersection of two Series
+df.loc[df['first_name'] == 'Joe'] # Same on one line
+df.loc[df['first_name'] == 'Joe', ['First Name','Last Name'] # Same with specific columns
+
+Examples:
+data.loc[data['first_name'] == 'Antonio', 'city':'email'] # cols in range
+data.loc[data['email'].str.endswith("hotmail.com")]   
+data.loc[data['first_name'].isin(['France', 'Tyisha', 'Eric'])]   
+data.loc[data['company_name'].apply(lambda x: len(x.split(' ')) == 4)] # 4 word company name
+
+Update values
+df.loc[data['platform'] == 'iPhone','platform'] = 'XXX'
+
+
+
 
 
 Filtering {{{1
 
-Applying filter to columns returns a boolean index
+Applying filter to columns returns a boolean index as a Series
 Apply index to df to select records for which index reads True
 
 Example
@@ -130,12 +181,12 @@ data['new'] = 2     - 2 is value of all rows
 
 Functions {{{1
 
-<col>.apply(func)
+# conditionally sets col value to 'blahblah'
+def func(r):
+    if r == 'blah':
+        return 'blahblah'
 
-# sets col value to 'blah'
-def func(e):
-	return "blah"
-
+df[<col>] = df[<col>].apply(func)
 
 Func with extra args, first is element
 def func(e,x):

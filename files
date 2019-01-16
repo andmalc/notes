@@ -98,3 +98,16 @@ Groups:
     Password file contains entry (at end of line) for user's default group.  
     Additional group membership in groups file.
 
+
+Utilities {{{1
+
+fzf
+    vim (fzf --height 40%) - fish
+    vim $(fzf --height 40%) - zsh
+
+exa
+    ls replacement
+
+
+
+

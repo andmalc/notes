@@ -6,6 +6,8 @@ echo
     -n      no newline 
     -e      interpret backlashed control chars
 
+Redirect to file w/o write permission
+    echo blah > sudo tee file
 
 cat - reads from file
 

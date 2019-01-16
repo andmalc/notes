@@ -128,7 +128,7 @@ dd
 
         Test device speed.  fdatasync causes command to sync before end so result is accurate
         Increase count if disk is very fast and command finishes quickly and so to get more accurate average
-        dd bs=1M count=256 if=/dev/zero of=test conv=fdatasync
+        dd bs=1M count=256 if=/dev/zero of=test conv=fdatasync status=progress bs=1M
 
 dd alternatives
     cat image.iso | pv >/dev/sdb

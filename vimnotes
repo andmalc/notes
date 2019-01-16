@@ -301,8 +301,6 @@ Edit
         under cursor        Del / Alt+BS 
         all characters on current but not tabs      c-u
 
-
-
 Indents         
    c-i / Tab    Insert 1 sw indent at insertion point
    C-t/d        Insert, delete 1 shiftwidth indent at start of line
@@ -312,7 +310,6 @@ Indents
 ?
 	C-V    Insert next non-digit literally
 	C-O		Next one keystroke in normal mode
-
 
 
 Edit with markers {{{2
