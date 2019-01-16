@@ -1,4 +1,15 @@
 
+Program types:
+- Filters
+    Take arbitrary input from file or stdin and usually modify and output same data
+    e.g. grep, sort, sed, awk
+    Historically took data via keyboard ?
+
+-   Others
+    Take data of specific types as input. Output data is not related.
+    May not take data on stdin.  Only recognize command line args (argv)
+    eg. rm, kill
+
 cat - concatenate files
     https://en.wikipedia.org/wiki/Cat_%28Unix%29#Useless_use_of_cat
     defaults to reading from and outputing to terminal

@@ -19,6 +19,10 @@ Disk space usage
 Bay - cat clone with syntax highlighting and git support
 https://www.ostechnix.com/bat-a-cat-clone-with-syntax-highlighting-and-git-integration/
 
+
+wl-clipboard  - clipbord tool for Wayland
+    https://github.com/bugaevc/wl-clipboard
+
 Finding files {{{1
 
 fd - find alternative

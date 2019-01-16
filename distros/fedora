@@ -244,7 +244,7 @@ Dnf <options> <command> <args eg. package spec>
             does not sync metadata
             see also repoquery plugin
         
-        provides <pkg name or partial or filename>     
+        provides <full path of file>
             shows pkg (installed or not) owning file
 
         se|search   lists name, description. 

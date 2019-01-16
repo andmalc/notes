@@ -14,7 +14,7 @@ set
     --show
     -U var
         Universal variable - saved in config
-
+        set -U EDITOR vim
 
 
 Combiners (And, Or, Not) {{{1
@@ -60,6 +60,9 @@ Show function source        functions <func name>
 Exit status of last command     $status
 
 Arguments: $argv list
+
+Show argument of last command
+    Alt + up arrow
 
 Parameter Expansion {{{1
 Wildcards {{{2
@@ -129,9 +132,19 @@ test
 
 Plugins {{{1
 
+Fisher plugin manager
+
+fzf
+    launch      Ctrl + T
+
+    With fzf_key_bindings.fish
+    Ctrl + T with multi select
+    Ctrl + R history
+    Alt + C cd into dir
+
+
 SSH agent launcher
 https://github.com/danhper/fish-ssh-agent
-
 
 Virtual Env helper
 https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell

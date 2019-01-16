@@ -118,3 +118,24 @@ fzf  {{{1
 command-line fuzzy finder written in Go
 https://github.com/junegunn/fzf
 
+Options
+    -q  query mode - use with search operators
+    -f  filter - same as query but non-interactive
+    -m  multi select with Shfit Tab
+    -i  cases insensitive
+    -e  exact match
+
+Preview files
+    fzf --preview='head -10 {+}'
+
+Extended Search Mode
+    'word1 word2'   filter on both words
+    'word           exact match
+
+Fish shell
+    Control T to launch
+
+history | fzf > .config/fish/config.fish
+history | fzf | fish
+
+
