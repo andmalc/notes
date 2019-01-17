@@ -10,12 +10,31 @@ All variables are lists of strings
 Can interate over and slice
 
 set
-    --append, --prepend
-    --show
-    -U var
-        Universal variable - saved in config
+    set <options> <var name> <value>
         set -U EDITOR vim
+    options
+        --append, --prepend
+        -U var
+            Universal variable - saved in config
+    info
+        list all vars           <no arg>
+        show debugging info     --show
+        show exported global    -xg
 
+Abbreviations
+    word that expands to a phrase
+    abbr -a gco git checkout
+    abbr -a l less
+
+
+Variable expansion {{{1
+
+Expand $var
+Separate from surrounding text {$var} or "$var"
+
+Spaces in var preserved - quotes not needed
+    set mydir 'My Docs'
+    mkdir $mydir
 
 Combiners (And, Or, Not) {{{1
 
@@ -50,12 +69,15 @@ Double quote var with test
 
 Functions {{{1
 
-Create alias=name           alias [--save]
 Edit function               funced [--save]
 Save interactive func to file   funcsave <function name>
 
 List defined functions      functions   
 Show function source        functions <func name>
+
+Alias
+    function that wraps a command:
+    alias --save ga='git add'`
 
 Exit status of last command     $status
 
@@ -89,15 +111,6 @@ Brace expansion {{{2
 A comma separated list of characters enclosed in curly braces will be expanded so each element of the list becomes a new parameter.
     echo input.{c,h,txt}
     # Outputs 'input.c input.h input.txt'
-
-Variable expansion {{{1
-
-Expand $var
-Separate from surrounding text {$var} or "$var"
-
-Spaces in var preserved - quotes not needed
-    set mydir 'My Docs'
-    mkdir $mydir
 
 Loops {{{1
 

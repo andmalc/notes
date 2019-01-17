@@ -68,6 +68,7 @@ find obscure phrases:
 
 Freeing disk space
 	Remove from /var/cache/apt/archives obsolete package versions
+		apt-get autoremove
 		apt-get autoclean
 		localepurge
 	Find packages with no dependencies

@@ -111,7 +111,10 @@ fd {{{1
 
 https://github.com/sharkdp/fd
 sudo dnf copr enable keefle/fd
+Debian pkg: fd-find
 
+fd <pattern> <path>
+fdfind . -E fishd.localhost -E fish_variables .config/fish/
 
 fzf  {{{1
 
