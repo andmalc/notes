@@ -69,11 +69,13 @@ Double quote var with test
 
 Functions {{{1
 
-Edit function               funced [--save]
-Save interactive func to file   funcsave <function name>
+Edit        funced [--save]
+Save        funcsave <function name>
 
-List defined functions      functions   
-Show function source        functions <func name>
+List defined    functions   
+Show source     functions <func name>
+
+Arguments: $argv list
 
 Alias
     function that wraps a command:
@@ -81,10 +83,9 @@ Alias
 
 Exit status of last command     $status
 
-Arguments: $argv list
-
 Show argument of last command
-    Alt + up arrow
+    Esc .
+
 
 Parameter Expansion {{{1
 Wildcards {{{2
@@ -161,3 +162,14 @@ https://github.com/danhper/fish-ssh-agent
 
 Virtual Env helper
 https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell
+
+Examples {{{1
+
+read -x lines < remove.txt
+set -x MY_VARIABLE (head -1 hello.txt)
+
+for l in (cat remove.txt )
+   echo (string match -r "[[:alpha:]]+" $l)
+end
+
+

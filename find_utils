@@ -128,6 +128,21 @@ Options
     -i  cases insensitive
     -e  exact match
 
+New Keybindings
+	Find file       Ctrl f
+	Search hist     Ctrl r
+	Cd into sub dirs    Alt o
+	Edit            Ctrl o
+	Insert name     Ctrl t
+
+Search after command
+	Zsh
+		less notes/**<Tab>
+	Fish shell
+		Control T to launch.  Last token is root dir for search
+		less notes<ctrl-t>
+
+
 Preview files
     fzf --preview='head -10 {+}'
 
@@ -135,8 +150,6 @@ Extended Search Mode
     'word1 word2'   filter on both words
     'word           exact match
 
-Fish shell
-    Control T to launch
 
 history | fzf > .config/fish/config.fish
 history | fzf | fish

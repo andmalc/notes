@@ -1,10 +1,17 @@
 
-Info
-    %quickref   overview
-    %magic      list magic functions
-
 Magic funcs
-%env		list environment vars
+
+Info
+    overview                %quickref   
+    list magic functions    %magic      
+    list environment vars   %env		
+    list or search history 
+        options
+            from all sessions  -g
+            save to file    -f <filename>
+        arg
+            search   <search term>`
+
 %edit
 		-x		do not execute
 		-p		use last input
