@@ -8,6 +8,8 @@ for i in range(0,len(L),3):
     zip(*[iter(L)]*3)
     thing
 
+Pretty print dictionary
+    print(json.dumps(d2,indent=1,sort_keys=True))
 
 Data structures {{{1
 

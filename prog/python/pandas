@@ -41,15 +41,20 @@ dtype - set column datatypes
 Which cols to read as dates
 parse_dates=['Date','birth_date']
 
+set existing column as Index
+    df.set_index("col name", drop=<bool>)
+        drop
+            preserve orig column
+            default True
 
 
-Info {{{1
+Gen {{{1
 
-shape
-columns => Index obj
-dtypes  basic data type info
-info() extended data type info
-describe 
+Info:
+    shape
+    index
+    columns => Index obj
+    describe 
     qualitative data: counts, freq (most common value), unique etc.
     quantitative data: min,max,mean etc.
 
@@ -59,28 +64,53 @@ Data types (Pandas/Python)
     float64/float
     datetime64/datetime (must import)
 
-Col on far left "Index Labels"
-Usually 0-based number but can be datetime
+Type info:
+    dtypes  basic data type info
+    info() extended data type info
+
+Data Structures {{{1
+
+Index
+    list of axis labels
+    Usually 0-based number but can be datetime
+
+Series
+    Index by slice,list, or index val
+    s[:3]
+    s[[4,2,1]]
+    s['label']
+
+    Missing label: KeyError or get method to set default
+
+Operations between Series
+    result is union of indexes.  
+    if not found in any one Series, result is marked missing 'Nan'.
+
+DataFrame
+    Args
+        data - list of dicts, numpy array
+            [{'a': 1, 'b': 2}, {'a': 5, 'b': 10, 'c': 20}]
+        columns = list - sets order of columns
+        dtype - optionally with column names
+            np.zeros((2, ), dtype=[('A', 'i4'), ('B', 'f4'), ('C', 'a10')])
+        index
+
+    More constructors
+        http://pandas.pydata.org/pandas-docs/stable/getting_started/dsintro.html
 
 
 Selecting columns & rows {{{1
 
-df[col][rows]  
+df[col label][row index or slice]  
+df[row index or slice]  
 df[[col,col]][rows]  
+df.<col name> - attribute access
 
-Columns:
-s['col_name']		selects col by name, returns Series of values
-df[[col,col]]
+Single col returns Series of values
 
 ':' indicates all
 
-s['i1','i2','i3']	select multi rows by index
-
-df[:3]  slice of rows
-
-
-head/tail(n=#)   first/last n observations, default 5
-
+s[['i1','i2','i3']]	select multi rows by index
 
 Last row:
 number_of_rows = df.shape[0]
@@ -88,10 +118,10 @@ number_of_rows = df.shape[0]
     df.tail(n=1) #returns df
     df.iloc[-1]  #only with iloc method
 
+head/tail(n=#)   first/last n observations, default 5
+
 
 https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
-
-
 
 df.iloc {{{2
 
@@ -104,32 +134,34 @@ df.iloc[:,index for single col]
 df.iloc[:,[2,4,-1]]  #all rows, three non-contigious columns
 
 df.loc {{{2
+Access using Labels, Index or Boolean Series
 
-Select using df Index and/or Labels or Boolean Series
 df.loc[[rows], [columns]] 
-
-df.loc['val'] # row matching val in Index column
-df.loc['val','Col']
-df.loc[:,Col] # returns Index & Col
+    e.g
+        df.loc['val'] # row matching val in Index column
+        df.loc['val','Col']
+        df.loc[:,Col] # returns Index & Col
 
 Row filter with Boolean Series
-Joe = df['first_name'] == 'Joe' => Boolean Series, True for each row where statement is true
-df.loc[Joe] # Allow rows where Joe = First Name
-df.loc[Joe & Ed] # Intersection of two Series
-df.loc[df['first_name'] == 'Joe'] # Same on one line
-df.loc[df['first_name'] == 'Joe', ['First Name','Last Name'] # Same with specific columns
+    Should have same length as row index
+    Filter will return all True rows
 
-Examples:
+Conditional returning Boolean Series
+    JoeSeries = df['first_name'] == 'Joe'
+    df.loc[JoeSeries] # Allow rows where Joe = First Name
+    df.loc[df['first_name'] == 'Joe'] # Same on one line
+    df.loc[df['first_name'] == 'Joe', ['First Name','Last Name'] # Same with specific columns
+
+Conditional Examples:
 data.loc[data['first_name'] == 'Antonio', 'city':'email'] # cols in range
 data.loc[data['email'].str.endswith("hotmail.com")]   
 data.loc[data['first_name'].isin(['France', 'Tyisha', 'Eric'])]   
 data.loc[data['company_name'].apply(lambda x: len(x.split(' ')) == 4)] # 4 word company name
 
+df.loc[Joe & Ed] # Intersection of two Series
+
 Update values
 df.loc[data['platform'] == 'iPhone','platform'] = 'XXX'
-
-
-
 
 
 Filtering {{{1
@@ -138,7 +170,7 @@ Applying filter to columns returns a boolean index as a Series
 Apply index to df to select records for which index reads True
 
 Example
-    df[df['Col'] == 'val']  - filter on col=val  
+    df[df['Col'] == 'val'  - filter on col=val  
 
 .isin(['val','val'])]  
 .where(df.col == 'x') - inserts NaN for non-matches
@@ -147,6 +179,11 @@ str.contains('str') - string in value
 Mask  
 mask = np.logical_and(df.CatA=='a', df.CatB=='e')  
 df[mask][:5]  
+
+Filter method
+    Filter on row or column labels
+    https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filter.html
+
 
 
 Grouping {{{1
@@ -177,6 +214,10 @@ Slice syntax
 Create columns {{{1
 
 data['new'] = 2     - 2 is value of all rows
+df['new']= df['age'] > 7
+
+df.assign 
+    return copy of data
 
 
 Functions {{{1

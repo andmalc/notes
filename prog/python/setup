@@ -10,6 +10,9 @@ Pip {{{1
 
 python3.6 -m pip install --user pipenv
 
+Install Python app from downloaded source
+    cd to source dir
+    pip install -e .
 
 OLD:
     config:

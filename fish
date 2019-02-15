@@ -29,12 +29,24 @@ Abbreviations
 
 Variable expansion {{{1
 
-Expand $var
+
+Undefined var $var or {$var} is null
+Undefined double quoted var "$var" length is 0
+
 Separate from surrounding text {$var} or "$var"
+    If var is not defined or empty list, surrounding text is eliminated
 
 Spaces in var preserved - quotes not needed
     set mydir 'My Docs'
     mkdir $mydir
+
+$$ to reference enclosed var
+    set fish trout
+    set animals fish
+    echo $$animals[1]
+    => trout
+
+
 
 Combiners (And, Or, Not) {{{1
 
@@ -48,13 +60,21 @@ ex
 
 
 Conditionals (If, Else, Switch) {{{1
-     if, else if, and else to conditionally execute code, based on the exit status of a command
+
+if, else if, and else to conditionally execute code, based on the exit status of a command
 
 if cat thing
   echo found
 else
   echo not found
 end
+
+#Test for empty list
+set files **filenames*
+if count $files >/dev/null
+    ls $files
+end
+
 
 Tests {{{1
 compare strings or numbers or check file properties (whether a file exists or is writeable etc.
@@ -90,12 +110,15 @@ Show argument of last command
 Parameter Expansion {{{1
 Wildcards {{{2
 
-    Any characters including / or empty
-        ***
-    Any characters including empty but not /
-        *
-    Any single character 
-        ?
+Any characters including / or empty
+    **
+Any characters including empty but not /
+    *
+Any single character 
+    ?
+
+Recursive hidden file 
+     ls -a **/\.blah*
 
 set foos *.foo
 if count $foos >/dev/null
@@ -117,8 +140,12 @@ Loops {{{1
 
 For, while
 
-Redirection {{{1
+Enumerate items in an arry
+    set foo a b c
+    for i in (seq (count $foo))
 
+
+Redirection {{{1
 Pipes {{{1
 
 echo hello |
@@ -135,12 +162,14 @@ Other Builtins {{{1
 
 cdh
 count
+    counts number of arguments
     status false if 0
 exec
 read
 string
     split
     join
+    length
 test
 
 

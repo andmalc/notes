@@ -85,7 +85,13 @@ Vim-MatchIt         jump between matching HTML tags
 emmet.vim           expands HTML tag abrieviations 
 
 
-Graphical editors {{{1
+Editors {{{1
+
+neovim / nvim
+Debian: python3-neovim
+
+
+Graphical Editors
 
 Oni - neovim 
 https://github.com/extr0py/oni

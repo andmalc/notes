@@ -188,7 +188,7 @@ add <path spec>
     -i  interactive
     -n  dry run
     -p  stage subsections of a file
-    -A/--all   updates index to match entire working tree
+    -A/--all   updates index to match entire working tree. Includes untracked files.
 
 commit 
     -v	show diff in commit message
