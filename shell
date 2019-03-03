@@ -525,15 +525,15 @@ Command History {{{1
 	fc command
 		no args	edit last command in vi
 		#		edit history #
+        -l      list output on std
+        -n      don't show line #s
+
 		-l # #	list commands # through #
 		-l -n	list last n commands (default 10)
 		-l s	list last command beginning with s
 		-ln n > file	save cmd# to file
 		-e vi n	edit in vi command n
 		-s [pat=rep] [cmd] reexecute cmd after substitutions
-
-        fc -ln  -m 'pat*' -100 
-            list commands starting with pat, no line numbers
 
 	M-.     insert last arg at insertion point
 
