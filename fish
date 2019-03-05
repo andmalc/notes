@@ -10,41 +10,10 @@ All variables are lists of strings
 Can interate over and slice
 
 set
-    set <options> <var name> <value>
-        set -U EDITOR vim
-    options
-        --append, --prepend
-        -U var
-            Universal variable - saved in config
-    info
-        list all vars           <no arg>
-        show debugging info     --show
-        show exported global    -xg
-
-Abbreviations
-    word that expands to a phrase
-    abbr -a gco git checkout
-    abbr -a l less
-
-
-Variable expansion {{{1
-
-
-Undefined var $var or {$var} is null
-Undefined double quoted var "$var" length is 0
-
-Separate from surrounding text {$var} or "$var"
-    If var is not defined or empty list, surrounding text is eliminated
-
-Spaces in var preserved - quotes not needed
-    set mydir 'My Docs'
-    mkdir $mydir
-
-$$ to reference enclosed var
-    set fish trout
-    set animals fish
-    echo $$animals[1]
-    => trout
+    --append, --prepend
+    --show
+    -U var
+        Universal variable - saved in config
 
 
 
@@ -60,21 +29,13 @@ ex
 
 
 Conditionals (If, Else, Switch) {{{1
-
-if, else if, and else to conditionally execute code, based on the exit status of a command
+     if, else if, and else to conditionally execute code, based on the exit status of a command
 
 if cat thing
   echo found
 else
   echo not found
 end
-
-#Test for empty list
-set files **filenames*
-if count $files >/dev/null
-    ls $files
-end
-
 
 Tests {{{1
 compare strings or numbers or check file properties (whether a file exists or is writeable etc.
@@ -89,36 +50,30 @@ Double quote var with test
 
 Functions {{{1
 
-Edit        funced [--save]
-Save        funcsave <function name>
+Create alias=name           alias [--save]
+Edit function               funced [--save]
+Save interactive func to file   funcsave <function name>
 
-List defined    functions   
-Show source     functions <func name>
-
-Arguments: $argv list
-
-Alias
-    function that wraps a command:
-    alias --save ga='git add'`
+Functions built-in
+    List defined functions      functions   
+    Show function source        functions <func name>
+    Show function location      -D <func name>
+    Erase function from curent session\
+        but not function file   --erase | -e
 
 Exit status of last command     $status
 
-Show argument of last command
-    Esc .
-
+Arguments: $argv list
 
 Parameter Expansion {{{1
 Wildcards {{{2
 
-Any characters including / or empty
-    **
-Any characters including empty but not /
-    *
-Any single character 
-    ?
-
-Recursive hidden file 
-     ls -a **/\.blah*
+    Any characters including / or empty
+        ***
+    Any characters including empty but not /
+        *
+    Any single character 
+        ?
 
 set foos *.foo
 if count $foos >/dev/null
@@ -136,16 +91,21 @@ A comma separated list of characters enclosed in curly braces will be expanded s
     echo input.{c,h,txt}
     # Outputs 'input.c input.h input.txt'
 
+Variable expansion {{{1
+
+Expand $var
+Separate from surrounding text {$var} or "$var"
+
+Spaces in var preserved - quotes not needed
+    set mydir 'My Docs'
+    mkdir $mydir
+
 Loops {{{1
 
 For, while
 
-Enumerate items in an arry
-    set foo a b c
-    for i in (seq (count $foo))
-
-
 Redirection {{{1
+
 Pipes {{{1
 
 echo hello |
@@ -162,14 +122,12 @@ Other Builtins {{{1
 
 cdh
 count
-    counts number of arguments
     status false if 0
 exec
 read
 string
     split
     join
-    length
 test
 
 
@@ -191,14 +149,3 @@ https://github.com/danhper/fish-ssh-agent
 
 Virtual Env helper
 https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell
-
-Examples {{{1
-
-read -x lines < remove.txt
-set -x MY_VARIABLE (head -1 hello.txt)
-
-for l in (cat remove.txt )
-   echo (string match -r "[[:alpha:]]+" $l)
-end
-
-

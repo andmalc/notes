@@ -129,11 +129,12 @@ Options
     -e  exact match
 
 New Keybindings
-	Find file       Ctrl f
+	Find file       Ctrl t
 	Search hist     Ctrl r
-	Cd into sub dirs    Alt o
+	Cd into sub dirs    Alt c
+	Cd into hidden dirs    Alt C
 	Edit            Ctrl o
-	Insert name     Ctrl t
+    xdg-open app    Ctrl g
 
 Search after command
 	Zsh

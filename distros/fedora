@@ -238,13 +238,19 @@ Dnf <options> <command> <args eg. package spec>
 
     Commands
         autoclean   remove orphans
+
+        history <cmd> <event ID>
+            list (default cmd)
+            undo, redo
+            1..20   show last 20 events
+
         info        shows details
         
         in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
             if /path/file given, acts like provides and installs pkg that provides file
 
         list [installed | available] [<pkg>]
-            shows brief pkg summary: version, repo, install status
+            shows name, version, repo, install status
             no pkg summary
             if no arg, lists installed then avail packages
             does not sync metadata
