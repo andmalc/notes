@@ -218,6 +218,8 @@ http://dnf.readthedocs.org/en/latest/command_ref.html
 Package management {{{2
 
 Dnf <options> <command> <args eg. package spec>
+    
+    Pkg spec: searches are case insensitive and match on whole package name
 
     Options:
         --exclude <pkg or pat>  exclude from install, remove, list etc.
