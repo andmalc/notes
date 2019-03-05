@@ -4,12 +4,31 @@ http://www.doughellmann.com/projects/virtualenvwrapper/
 file:///usr/share/doc/virtualenvwrapper/en/html/install.html#workon-home
 http://www.pip-installer.org/en/latest/
 
+Fedora Py3.8 setup
+ sudo dnf install python3.8
+ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+ python3.8 get-pip.py --user 
+ python3.8 -m pip install --user ipython
+
+
+Show sys.path 
+python3 -m site
+
 
 
 Pip {{{1
 
 python3.6 -m pip install --user pipenv
 
+pip install --user as default
+	~/.config/pip/pip.conf
+		[install]
+		user = true
+
+
+Install Python app from downloaded source
+    cd to source dir
+    pip install -e .
 
 OLD:
     config:

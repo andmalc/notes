@@ -40,6 +40,10 @@ Setup {{{1
 
 git clone git@github.com:andmalc/config.git
 
+
+Fedora setup Ansible Playbook
+https://github.com/flavienbonvin/ansible-fedora-configuration
+
 https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
 32 bit packages end with  i686

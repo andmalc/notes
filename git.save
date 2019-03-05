@@ -6,7 +6,6 @@ Fugitive http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
 
 https://orga.cat/posts/most-useful-git-commands
 
-
 Options {{{1
 
 --no-pager
@@ -145,15 +144,13 @@ show [cid]
     show last changes or in cid 
 
 
-Commit history 
-    log 
-        current branch including ancestors from other branches
-        does not show commits not part of a branch unless specified with --stat
+Log 
+    shows commit history of current branch including ancestors from other branches
+    does not show commits not part of a branch unless specified with --stat
+	 <path>			show commits to this file only
+     --stat <cid>   specific commit
 
-    args
-         <path>			show commits to this file only
-    options:
-         --stat <cid>   specific commit
+    display options:
         --all           show other branches too
         --decorate      show branch names
         -#				number of commits to show
@@ -167,17 +164,15 @@ Commit history
 
 	 --decorate --graph --oneline --all
 
-    show remote commit
-        ls-remote
 
-Show tracked files 
-    in working tree & index.  
-        ls-files
-            Ignores according to .gitignore
-            --abbrv --stage     Show index (includes all files)
+ls-files
+    Show tracked files in working tree & index.  
+    Ignores according to .gitignore
+    --abbrv --stage     Show index (includes all files)
 
 grep
     Ignores according to .gitignore
+
 
 
 Add & Commit {{{1
@@ -188,14 +183,17 @@ add <path spec>
     -i  interactive
     -n  dry run
     -p  stage subsections of a file
-    -A/--all   updates index to match entire working tree. Includes untracked files.
+    -A/--all   updates index to match entire working tree
 
-commit 
-    -v	show diff in commit message
+commit -v			show diff in commit message
 
-    -a  commits all staged and changed tracked files including deletes
-        bypasses staging, untracked files excluded
+commit -a		commits all staged and changed tracked files including deletes
+                bypasses staging
+                untracked files excluded
                 
+
+Show remote commit
+    ls-remote
 
 Reverting / Resetting {{{1
 
@@ -275,6 +273,7 @@ git symbolic-ref HEAD
 
 Submodules & Subtrees {{{1
 
+Repo independent of parent, harder to merge parent with child.  
 Tracked in .gitmodules file.  Composed from a gitlink tree entry in main repo that points to particular commit 
 
 Add
@@ -282,33 +281,11 @@ Add
     if path given, logical name is tail unless --name specified
     if no local name given, repo cloned into cwd/<final part of repo path>
 
-    Info added to:
-        .git/config
-    Creates 
-        .gitmodules 
-            used by init when repo is cloned to populate .git/config
-        .git/modules/<path to submodule> 
-            this is location of submodule's git repo
-            referenced by gitdir file in sm root.
-
-
-Include submodule contents on initial clone
-    git clone repo --recursive
-
-    if forgot --recursive
-        git submodule init
-            update .gitconfig with info from .gitmodules
-        git submodule update
-            pull files and create entry in .git/modules
-    or
-        git submodule update --init
-
-
 Delete
-    optional: mv asubmodule asubmodule_tmp (?)
-    git submodule deinit <path to submodule>
-    git rm  <path to submodule>
     Note: no trailing slash after submodule name
+    mv asubmodule asubmodule_tmp (?)
+    git submodule deinit asubmodule    
+    rm -r asubmodule
  
     # or, if you want to leave it in your working tree
     git rm --cached asubmodule
@@ -321,15 +298,18 @@ Delete - old, shouldn't be necessary
     rm -Rf .git/modules/vim/pack/shapeshed/start/vim-airline
     git commit
 
+New clone of repo
+    submodule init (creates .gitmodules) / submodule update
+   [A don't need to be in submodule dir
 
-Updating
+BUpdating
     cd into module dir
     git pull origin master
-
-    or from submodule root
+[B
+  A  or from submodule root
     git submodule foreach git pull origin master
 
-    git submodule update --init --recursive
+    git pull && git submodule update --init --recursive
 
     sync after changing submodule URL
     git submodule sync
@@ -356,12 +336,6 @@ Subtrees
 
 
 Merging {{{1
-
-Merge pull request on GitHub
-    ID = number to right of issue name on GH page for request
-    BRANCHNAME = new branch to create
-    git fetch origin pull/ID/head:BRANCHNAME
-    git checkout BRANCHNAME
 
 Merge conficts
     Edited files
@@ -432,13 +406,6 @@ clone a local copy
 add URL of original as remote upstream
 update by fetching changes, checking out master then merging upstream/master
 
-Clone repo locally
-Make changes
-Make new blank repo at GH
-Change remote to new URL:
-    git add remote myrepo URL
-    git checkout -b newbranch
-    git push -u myrepo newbranch # -u =  set upstream 
 
 Utilities {{{1
 

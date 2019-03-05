@@ -1,3 +1,4 @@
+j
 General {{{1
 
 Articles on tmux config
@@ -158,10 +159,11 @@ http://tmuxp.git-pull.com
 Copy mode {{{1
 
 Copy:
-1. move to start
-2. Space
-3. move to end
-4. Enter
+Enter copy mode: <prefix>+[
+Start copy: <Space>
+Copy text: <Enter>
+Paste text: <prefix>+]
+
 
 Vi mode movement keys: h,j,k,l
 
