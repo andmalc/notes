@@ -12,10 +12,14 @@ Can interate over and slice
 set
     set <options> <var name> <value>
         set -U EDITOR vim
-    options
-        --append, --prepend
+    scope options
+        -l  local within current block and children but not
+            child functions
+        -g  global outside block
+        -x  local and exported to child processes but not global
         -U var
-            Universal variable - saved in config
+            Universal - saved in config
+
     info
         list all vars           <no arg>
         show debugging info     --show
@@ -23,6 +27,7 @@ set
 
 Abbreviations
     word that expands to a phrase
+    are universal variables saved in .config/fish/fish_variables 
     abbr -a gco git checkout
     abbr -a l less
 
@@ -89,22 +94,29 @@ Double quote var with test
 
 Functions {{{1
 
+Define      function <func name>
+                ...
+            end
+
 Edit        funced [--save]
 Save        funcsave <function name>
-
-List defined    functions   
+            functions <func name> > ~/.config/fish/functions
+List        functions   
 Show source     functions <func name>
 
 Arguments: $argv list
 
 Alias
     function that wraps a command:
-    alias --save ga='git add'`
+        function <alias name>
+            <alias command>
+        end
 
 Exit status of last command     $status
 
 Show argument of last command
     Esc .
+
 
 
 Parameter Expansion {{{1
