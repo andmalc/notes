@@ -2,6 +2,10 @@
 Edit command layout. [] indicates optional
     [count] {operator} {[count] motion|text object}
 
+Copy selected text to file
+   1. Select text in visual mode
+   2. :'<,'>!tee out.txt
+
 
 Help {{{1
 
@@ -171,8 +175,8 @@ bro[wse] {command} [dir name] for commands including :e & :w, open a file browse
 
 
 buffer list
-	&		current
-	#		alternate
+	&		filename of current buffer 
+	#		alternate buffer file name
 	+		indicates modified
 
 BUFFER LIST COMMANDS
@@ -185,10 +189,19 @@ BUFFER LIST COMMANDS
 	:bad[d] fn		add fn to file list
 	:x[it]	Write file if changed and exit.  Hides current buffer if more windows(?)
 	:q!		Quits but does not abandon changed hidden buffers (use :quall! for this)
-	:[range]wq[!] [file]	write & quit, but only write the lines in [range].
-	copy file and open original in other window
-		:w foobar | sp #
-		like: C-W, C-^ (split, edit alternate)kk
+
+	:w
+		write & quit, but only write the lines in [range].
+		if file given, it becomes alternate (#)
+			:[range]wq[!] [file]	
+		copy file and open original in other window
+			:w foobar | sp #
+			like: C-W, C-^ (split, edit alternate)kk
+		write buffer or lines to external command
+			[range]w[rite] [++opt] !{cmd}
+			eg Python script quick run
+				:w !python3 - writes buffer to python
+
 
 Buffer types:
 	active: file loaded and displayed.	In ls as ' '
