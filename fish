@@ -10,10 +10,48 @@ All variables are lists of strings
 Can interate over and slice
 
 set
-    --append, --prepend
-    --show
-    -U var
-        Universal variable - saved in config
+    set <options> <var name> <value>
+        set -U EDITOR vim
+    scope options
+        -l  local within current block and children but not
+            child functions
+        -g  global outside block
+        -x  local and exported to child processes but not global
+        -U var
+            Universal - saved in config
+
+    info
+        list all vars           <no arg>
+        show debugging info     --show
+        show exported global    -xg
+
+Abbreviations {{{1
+
+word that expands to a phrase
+are universal variables saved in .config/fish/fish_variables 
+abbr -a gco git checkout
+abbr -a l less
+
+
+Variable expansion {{{1
+
+
+Undefined var $var or {$var} is null
+Undefined double quoted var "$var" length is 0
+
+Separate from surrounding text {$var} or "$var"
+    If var is not defined or empty list, surrounding text is eliminated
+
+Spaces in var preserved - quotes not needed
+    set mydir 'My Docs'
+    mkdir $mydir
+
+$$ to reference enclosed var
+    set fish trout
+    set animals fish
+    echo $$animals[1]
+    => trout
+>>>>>>> 5245c468b3c1eb2bc50dfd4f1a0aa934a4c4634c
 
 
 
@@ -50,20 +88,34 @@ Double quote var with test
 
 Functions {{{1
 
-Create alias=name           alias [--save]
-Edit function               funced [--save]
-Save interactive func to file   funcsave <function name>
+Define      function <func name>
+                ...
+            end
 
-Functions built-in
-    List defined functions      functions   
-    Show function source        functions <func name>
-    Show function location      -D <func name>
-    Erase function from curent session\
-        but not function file   --erase | -e
+Edit        funced [--save]
+Save        funcsave <function name>
+            functions <func name> > ~/.config/fish/functions
+Erase function from curent session but not function file   --erase | -e
+List        functions   
+Show function location      -D <func name>
+Show source     functions <func name>
+
+Arguments: $argv list
+
+Alias {{{1
+
+function that wraps a command
+
+    function <alias name>
+        <alias command>
+    end
+
+Create alias=name           alias [--save]
 
 Exit status of last command     $status
 
 Arguments: $argv list
+
 
 Parameter Expansion {{{1
 Wildcards {{{2

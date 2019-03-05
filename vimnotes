@@ -36,6 +36,9 @@ smartcase		(scs)
 
 Interface {{{1
 
+Cursorline
+   Highlights or underlines current line
+
 Status line - laststatus
    create		ls=2
    set
