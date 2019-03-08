@@ -1,3 +1,9 @@
+Packages to install
+
+fedora-toolbox fish fzf git neovim python3-neovim util-linux-user vim
+
+util-linux-user for chsh
+
 
 Registry
 registry.fedoraproject.org/fedora-minimal:latest
@@ -28,10 +34,6 @@ Install
 
 rpm-ostree install 
 
-Packages to install
-e2fsprogs vim-enhanced gita git vim-enhanced zsh tmux util-linux-user
-
-util-linux-user for chsh
 
 
 Config user

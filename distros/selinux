@@ -55,7 +55,9 @@ setsebool
 
 chcon
     change context
-    -t <type> <file>
+	-h	apply to symbolic link
+	-H	traverse symbolic link
+	-t <type> <file>
         apply type to file
         
     --reference <dir> <file to be changed>
@@ -89,6 +91,11 @@ https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/SE
 https://access.redhat.com/articles/2191331
 
 Note: selinux conflicts caused by wrong context type are *not* logged or displayed by troublshooting tools
+
+audit2allow
+    Displays reason for denial and generates policy files to allow
+    https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/security-enhanced_linux/sect-security-enhanced_linux-fixing_problems-allowing_access_audit2allow
+
 
 Install policycoreutils-python 
 grep denied /var/log/audit/audit.log | audit2why

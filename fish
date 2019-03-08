@@ -25,19 +25,19 @@ set
         show debugging info     --show
         show exported global    -xg
 
-Abbreviations {{{1
 
-word that expands to a phrase
-are universal variables saved in .config/fish/fish_variables 
-abbr -a gco git checkout
-abbr -a l less
+Expand $var
+Separate from surrounding text {$var} or "$var"
 
-
-Variable expansion {{{1
-
+Spaces in var preserved - quotes not needed
+    set mydir 'My Docs'
+    mkdir $mydir
 
 Undefined var $var or {$var} is null
 Undefined double quoted var "$var" length is 0
+
+$status = 0 if var set, = 1 not set
+    set -q var (not $var)
 
 Separate from surrounding text {$var} or "$var"
     If var is not defined or empty list, surrounding text is eliminated
@@ -51,7 +51,21 @@ $$ to reference enclosed var
     set animals fish
     echo $$animals[1]
     => trout
->>>>>>> 5245c468b3c1eb2bc50dfd4f1a0aa934a4c4634c
+
+
+
+Abbreviations {{{1
+
+word that expands to a phrase
+are universal variables saved in .config/fish/fish_variables 
+
+add     -a
+rename  -r
+erase   -e
+show    -s (default)
+
+abbr -a gco git checkout
+abbr -a l less
 
 
 
@@ -79,9 +93,6 @@ Tests {{{1
 compare strings or numbers or check file properties (whether a file exists or is writeable etc.
 
 See man test
-
-True if var set
-    set -q var (not $var)
 
 Double quote var with test
     test -z "$XDG_DATA_HOME"
@@ -112,7 +123,9 @@ function that wraps a command
 
 Create alias=name           alias [--save]
 
-Exit status of last command     $status
+Exit status of last command $status
+    0 = true, 1 = false
+
 
 Arguments: $argv list
 
@@ -143,14 +156,6 @@ A comma separated list of characters enclosed in curly braces will be expanded s
     echo input.{c,h,txt}
     # Outputs 'input.c input.h input.txt'
 
-Variable expansion {{{1
-
-Expand $var
-Separate from surrounding text {$var} or "$var"
-
-Spaces in var preserved - quotes not needed
-    set mydir 'My Docs'
-    mkdir $mydir
 
 Loops {{{1
 
@@ -175,6 +180,10 @@ Other Builtins {{{1
 cdh
 count
     status false if 0
+
+echo
+    -n  no newline
+
 exec
 read
 string
