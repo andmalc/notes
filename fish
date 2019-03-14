@@ -4,6 +4,13 @@ Tab Completion {{{1
         all         Ctrl + F
         one word    Alt right arrow
 
+Data Types {{{1
+
+Array
+set myarray a b c
+echo $myarray[1]
+
+
 Variables {{{1
 
 All variables are lists of strings
@@ -51,7 +58,6 @@ $$ to reference enclosed var
     set animals fish
     echo $$animals[1]
     => trout
->>>>>>> 5245c468b3c1eb2bc50dfd4f1a0aa934a4c4634c
 
 
 
@@ -178,8 +184,10 @@ count
 exec
 read
 string
-    split
     join
+    match <pat> <str>
+        -v      inverse - show not matching
+    split
 test
 
 

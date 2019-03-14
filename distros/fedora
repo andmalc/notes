@@ -1,6 +1,10 @@
 
 Fedora versions, sizes, install {{{1
 
+Fedora 29 Desktop on Dell 13
+    Root partition with Firefox, Brave, flatpak: 7GB
+    Flatpak org.freedesktop.Sdk runtime: 4.2GB
+
 boot parition must be extX formatted and not in LVM
 efi partition may be shared, mount at /boot/efi
 

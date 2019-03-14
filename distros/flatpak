@@ -16,9 +16,18 @@ flatpak remote-info flathub io.atom.Atom
 
 Install & Manage {{{1
 
-flatpak --user install flathub io.atom.Atom
+install
+    flatpak --user install flathub io.atom.Atom
 
-List installed runtimes and packages
-flatpak list
+search
+    flatpak remote-ls --app --user flathub <pattern>
+    flatpak search <pattern>
+
+
+list
+    List installed runtimes and packages
+    -d  detailed
+
+    flatpak list -d 
 
 
