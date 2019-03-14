@@ -808,8 +808,13 @@ Debugging Vim {{{1
 
 http://vim.wikia.com/wiki/Displaying_the_current_Vim_environment
 
+Start with no config:
+    vim -u NONE
 
 Show 
+	Scripts called on startup     scriptnames
+
+
    set verbose=9
    set verbosefile=~/tmp/vim_startup.txt
 
@@ -819,7 +824,6 @@ Display:
   plugin loading at startup
 	vim -V2
   vimtimescripts sourced
-	scriptnames
   functions called
 		functions
 

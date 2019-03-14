@@ -86,6 +86,7 @@ top
 
 
 run {{{3
+https://github.com/containers/libpod/blob/master/docs/podman-run.1.md
 
 run command in a new container 
 run <container> <options> -- <cmd> 
@@ -97,6 +98,8 @@ Options
 --tt
 --volume value, -v value
     mount a host location into the container 
+
+--rm=true
 
 --runtime path  
     default runc
