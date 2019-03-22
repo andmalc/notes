@@ -4,6 +4,13 @@ Tab Completion {{{1
         all         Ctrl + F
         one word    Alt right arrow
 
+Data Types {{{1
+
+Array
+set myarray a b c
+echo $myarray[1]
+
+
 Variables {{{1
 
 All variables are lists of strings
@@ -56,7 +63,6 @@ $$ to reference enclosed var
 PATH
     set -U fish_user_paths <paths>
 
-
 Abbreviations {{{1
 
 word that expands to a phrase
@@ -69,7 +75,6 @@ show    -s (default)
 
 abbr -a gco git checkout
 abbr -a l less
-
 
 
 Combiners (And, Or, Not) {{{1
@@ -190,8 +195,10 @@ echo
 exec
 read
 string
-    split
     join
+    match <pat> <str>
+        -v      inverse - show not matching
+    split
 test
 
 

@@ -128,11 +128,11 @@ Options
     -i  cases insensitive
     -e  exact match
 
-New Keybindings
-	Find file       Ctrl t
+New Keybindings installed with Fisher from https://github.com/jethrokuan/fzf
+	Find file       Ctrl f
 	Search hist     Ctrl r
-	Cd into sub dirs    Alt c
-	Cd into hidden dirs    Alt C
+	Cd into sub dirs    Alt o
+	Cd into hidden dirs    Alt Shift o
 	Edit            Ctrl o
     xdg-open app    Ctrl g
 

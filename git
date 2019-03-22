@@ -141,17 +141,18 @@ Diff - shows changes in working tree relative to index
 
 difftool			show diff in vim etc.
 
-show [cid]
-    show last changes or in cid 
+grep
+    Ignores according to .gitignore
 
 
-Commit history 
-    log 
-        current branch including ancestors from other branches
-        does not show commits not part of a branch unless specified with --stat
+log 
+    Commit history 
+    current branch including ancestors from other branches
+    does not show commits not part of a branch unless specified with --stat
 
     args
          <path>			show commits to this file only
+
     options:
          --stat <cid>   specific commit
         --all           show other branches too
@@ -167,17 +168,17 @@ Commit history
 
 	 --decorate --graph --oneline --all
 
-    show remote commit
-        ls-remote
-
-Show tracked files 
+ls-files
+    Show tracked files 
     in working tree & index.  
-        ls-files
-            Ignores according to .gitignore
-            --abbrv --stage     Show index (includes all files)
-
-grep
     Ignores according to .gitignore
+    --abbrv --stage     Show index (includes all files)
+
+ls-remote
+    show remote commit
+
+show [cid]
+    show last changes or in cid 
 
 
 Add & Commit {{{1
