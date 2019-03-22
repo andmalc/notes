@@ -53,6 +53,9 @@ $$ to reference enclosed var
     => trout
 
 
+PATH
+    set -U fish_user_paths <paths>
+
 
 Abbreviations {{{1
 

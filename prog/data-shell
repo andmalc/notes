@@ -1,4 +1,10 @@
 
+https://bconnelly.net/posts/working_with_csvs_on_the_command_line/
+
+Filter with multiple includes and includes
+https://superuser.com/questions/537619/grep-for-term-and-exclude-another-term
+
+
 Program types:
 - Filters
     Take arbitrary input from file or stdin and usually modify and output same data

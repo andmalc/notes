@@ -4,12 +4,15 @@ asciidoc
 json {{{1
 
 jo - command line app, formats input as json
-sudo dnf copr enable ganto/jo
+    https://github.com/jpmens/jo
+    
 
 jq
+    transform structured data 
+    https://stedolan.github.io/jq/
 
 Python glom for nested data like json
-https://sedimental.org/glom_restructured_data.html
+https://github.com/mahmoud/glom
 
 
 yaml {{{1

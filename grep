@@ -65,7 +65,6 @@ excluding files under zsh
 Match whole words, print each on separate line
     grep -oE '\w+' 
 
-
 Alternatives {{{1
 
 ack, ag, fzf

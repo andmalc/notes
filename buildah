@@ -108,6 +108,13 @@ Options
     Ports by default not accessible, must bind with -p 
     -p <host port>:<container port>
 
+-v
+    bind mount volume
+    hostdir:containerdir:options
+
+    Options:
+        default rw
+
 
 in production
     runc - lightweight universal run time container,

@@ -377,11 +377,20 @@ Special Inserts:
 
 Cursor Movement {{{1
 
-Top/middle/bottom   H/M/L
-
 Character
 	h/l     left/right
 	space	move right
+
+Move to Character on same line
+   [n]f/F<char> 
+
+move up till nth next/prev char in line.  ; to repeat
+   [n]t/T	same but exclusive
+      eg: c2t) - change within 2nd bracket
+
+repeat latest f, t, F or T N times
+   ;				
+
 
 Words
 	w/W	  beginning of next word
@@ -394,41 +403,41 @@ Up/down by Line
 	+,-	  move to non blank in column 1
 
 
-Move to Character on same line
-   [n]f/F<char> 
-      move to nth next/prev char in line.  ; to repeat
-   [n]t/T	same but exclusive
-      eg: c2t) - change within 2nd bracket
-   ;				1  repeat latest f, t, F or T N times
-
 Sentences etc.
 )(		sentences forward, backward
-{,}		move by sentences or blocks
+{,}		move by paragraphs or blocks
 }{		paragraphs forward, backward
 ]],[[	sections, forward, backward, start of sect
 ][,[]			""				, end of sect
 
+Top/middle/bottom   H/M/L
+
+Screenful Forward/Back
+   Ctrl F/B
+
 		
+Jumps {{{1
+
+
+Go to newer/older position in jump list. Can use to move between two files or within a file	
+   ^o/^i	
+   g; / g,
+
+jump back/forward to last edit 
+jump to last edit & Insert
+   gi
+
+''    return to line cursor on before jump
+``    return to cursor position before jump
+'.    jump to last changed line    
+%     jump to corresponding item, e.g. brace to brace
+
 Marks {{{1 
 
 ma			set mark with alpha char
 
 `a		   go to mark
 'ma		go to beginning of line with mark		
-
-Jumps {{{1
-
-	^o/^i	jump back/forward to last edit 
-	^I/^O	go to newer/older position in jump list
-			Can use to move between two files or within a 
-			file.															
-
-	gi	jump to last edit & Insert
-
-''    return to line cursor on before jump
-``    return to cursor position before jump
-'.    jump to last changed line    
-%     jump to corresponding item, e.g. brace to brace
 
 Tags {{{1
 
