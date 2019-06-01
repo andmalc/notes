@@ -1,3 +1,5 @@
+Check out:
+Completion plugin for NVim: https://github.com/Shougo/deoplete.nvim
 
 Edit command layout. [] indicates optional
     [count] {operator} {[count] motion|text object}

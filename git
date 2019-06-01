@@ -309,7 +309,9 @@ Delete
     optional: mv asubmodule asubmodule_tmp (?)
     git submodule deinit <path to submodule>
     git rm  <path to submodule>
-    Note: no trailing slash after submodule name
+        Note: no trailing slash after submodule name
+    git commit -a -m 'removed submodule ... '
+
  
     # or, if you want to leave it in your working tree
     git rm --cached asubmodule

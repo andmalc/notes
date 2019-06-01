@@ -55,6 +55,18 @@ pipenv --python 3.6.0 install <uses requirements or Pipfile or <pkg>
 
 pipenv shell to invoke environment
 
+pyenv {{{1
+https://github.com/pyenv/pyenv/blob/master/COMMANDS.md#
+
+Build dpendencies:
+https://github.com/pyenv/pyenv/wiki/Common-build-problems
+
+pyenv list \\ lists available versions
+pyenv install <version>
+pyenv shell <version>
+
+
+
 Virtualenv  {{{1
 
 Changes $PATH to include ENV/bin
