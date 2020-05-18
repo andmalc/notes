@@ -1,4 +1,4 @@
-
+Report bugs: https://pagure.io/teamsilverblue/issues
 
 Remotes {{{1
 
@@ -30,4 +30,9 @@ list
 
     flatpak list -d 
 
-
+info
+    flatpak info --show-permissions
+    
+ps
+    list running instances and runtimes
+    
