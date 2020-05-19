@@ -1,3 +1,4 @@
+eval (ssh-agent -c)
 
 Tab Completion {{{1
     Accept      
@@ -204,7 +205,8 @@ test
 
 Plugins {{{1
 
-Fisher plugin manager
+Fisher and Oh My Fish plugin managers
+
 
 fzf
     launch      Ctrl + T
@@ -215,8 +217,10 @@ fzf
     Alt + C cd into dir
 
 
-SSH agent launcher
-https://github.com/danhper/fish-ssh-agent
 
 Virtual Env helper
 https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell
+
+Spacefish shell prompt
+	https://github.com/matchai/spacefish/
+

@@ -101,6 +101,8 @@ Users {{{2
 useradd -G grp username #new user
 usermod -a -G grp username #existing user
 
+lchsh - change shell
+
 adm for journalctl 
 
 Home Dir {{{2
