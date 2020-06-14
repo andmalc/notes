@@ -455,7 +455,7 @@ Search (highlight matches) {{{1
 /CR				Repeat search, forward
 ?CR				Repeat search, backward 
 
-Formating {{{1
+Formating {{{u
 
 commands
         gq[motion]		

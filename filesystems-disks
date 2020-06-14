@@ -83,14 +83,11 @@ Info {{{2
 https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 
-lsblk       tree of disks, parts, sizes, mount points
-            tree display for lvm lv's
-            run as regular user
-            part of util-linux
-
 lsblk -f	tree of disks, parts, labels, filesystem UUIDs, mount points
             best overview of devices and filesystems
+            tree display for lvm lv's
             no partlabel, part UUID
+            part of util-linux
             
 blkid		shows partition UUID's and types
 			preferred for showing contents of block devices
@@ -119,16 +116,18 @@ Utilities {{{2
 
 dd
     http://www.noah.org/wiki/Dd_-_Destroyer_of_Disks 
-	exact copy of entire partition including MBR
-    dd - bs=2048 for compatibility with desktop disk utilities like Gnome Disks
-		dd bs=2048 if=/dev/part of=/dev/anotherpart
-        bs=4M said faster
+    
+	bs option
+		=2048 for compatibility with desktop disk utilities like Gnome Disks
+		=4M generally recommended by Fedora: 
+	status=progress 
 
-        dc3dd if=/dev/sda of=/dev/sdb
+	Test device speed.  fdatasync causes command to sync before end so result is accurate
+	Increase count if disk is very fast and command finishes quickly and so to get more accurate average
+	dd bs=1M count=256 if=/dev/zero of=test conv=fdatasync status=progress bs=1M
 
-        Test device speed.  fdatasync causes command to sync before end so result is accurate
-        Increase count if disk is very fast and command finishes quickly and so to get more accurate average
-        dd bs=1M count=256 if=/dev/zero of=test conv=fdatasync status=progress bs=1M
+	pipe compressed image to dd
+		unzip -p | dd etc.
 
 dd alternatives
     cat image.iso | pv >/dev/sdb
@@ -161,6 +160,9 @@ sfdisk - partition table reporting
 	-D  DOS compatibility - free 512 free at part beginning
 	-L  ignore irrelevant to Linux
     --wipe-partitions always|never|auto
+	no options 
+		- enters repr mode
+		- "," to wipe all and create new whole device partition
 
 udevadm info -n /dev/sdb -q all
 
@@ -168,7 +170,7 @@ parted/gparted
 	can resize ext2 & 3 partitions but start point can't move.
 	gparted can move start point
 	has lost partition rescue feature
-    less reliable than gdisk/cgdisk but is filesystem-aware
+    less reliable than gdisk/cgdisk but is ctem-aware
     better to use this only for resizing etc.
 
     wipe partition table: mklablel msdos | gpt
@@ -275,7 +277,7 @@ Changing volumes
 			resize physical or LVM volumes and filesystems (using lvextend and
 			ext2online)
 		ext2online - resize online (mounted) ext2 fs. Requires kernel patch. 
-		ext2resize 
+		resize2fs 
             resize offline ext2 fs.
             default enlarges fs to fill partition, do after growpart
 	LVM

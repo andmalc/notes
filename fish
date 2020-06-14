@@ -1,5 +1,7 @@
 eval (ssh-agent -c)
 
+Insert previous last arg: Alt up
+
 Tab Completion {{{1
     Accept      
         all         Ctrl + F

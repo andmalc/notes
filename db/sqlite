@@ -1,24 +1,6 @@
+Docs: https://www.sqlitetutorial.net/
 
-docs
-	SQL As Understood By SQLite	
-		http://www.hwaci.com/sw/sqlite/lang.html
-
-utils
-	Sqlite Browser
-		http://sqlitebrowser.sourceforge.net/
-
-
-Date/Time
-	http://www.sqlite.org/cvstrac/wiki?p=DateAndTimeFunctions
-
-	Compute the last day of the current month.
-	SELECT date('now','start of month','+1 month','-1 day');
-	
-	1st Tuesday in Oct of current year
-	SELECT date('now','start of year','+10 months','weekday 2');
-
-
-Commands
+Sqlite3 utility commands
 
 Info
 	.databases <db name pat>
@@ -31,12 +13,13 @@ Info
 
 Input
 
-From csv file
+	.open <db file>
+
+	From csv file
 	.mode csv
 	.import <fn> <table>
 		if table does not exist, uses first row as column names
 		if does, all imported rows as content unless '--skip 1'
-
 
 Output
 	.mode
@@ -54,4 +37,6 @@ Output
 
 	.save <fn>
 		save in memory db to file
+
+Litecli 
 

@@ -1,3 +1,8 @@
+CPU frequency control
+https://dunterov.github.io/cpu-freq/
+	Install kernel-tools
+	Show available governors
+		cpupower frequency-info --governors
 
 Fedora versions, sizes, install {{{1
 
@@ -100,6 +105,9 @@ Users {{{2
 
 useradd -G grp username #new user
 usermod -a -G grp username #existing user
+
+.ssh dir
+	restorecon -R -v /root/.ssh
 
 lchsh - change shell
 
@@ -219,6 +227,13 @@ Desktop tweaks {{{2
 
 Arc GTK theme 
 numix icons 
+
+Tap to click
+sudo gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
+
+Solid backgrond color
+gsettings set org.gnome.desktop.background picture-options 'none'
+gsettings set org.gnome.desktop.background primary-color '#HEX'
 
 
 Dnf {{{1

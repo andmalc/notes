@@ -19,28 +19,22 @@ Show current settings
 tmux show-options -g
 
 
-Startup {{{
-Options
+Startup {{{1
 
+Options
 -n      name
 -c      start dir
 -p      split percent
 -f	config file
 
 
-Commands 
-    Redraw on bigger screen -d      
+Sockets & Sessions Startup {{{2
 
-Sockets & Sessions {{{1
 
-Start with new socket
-    tmux -L tmuxtest 
-
-Session options
-    new session         new -s <session name>
-    list                list-sessions / ls
-    attach to target    attach/a -t <name>
-    kill                kill-session -t <name>
+new session         new -s <session name>
+list                list-sessions / ls
+attach to target    attach/a -t <name>
+kill                kill-session -t <name>
 
 Attach to named session or create
     tmux new-session -A -c ~ -s sql
@@ -54,6 +48,9 @@ Shortcuts
     $       rename session
 
 
+
+Start with new socket
+    tmux -L tmuxtest 
 
 Windows {{{1
 
