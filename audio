@@ -48,3 +48,9 @@ pcm.!default {
 
 
 
+Pulseaudio {{{1
+
+Disable
+   systemctl mask pulseaudio --user
+
+
