@@ -43,9 +43,33 @@ dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd d
 install bootloader ?
 
 
+Setup new VPS {{{1
+
+Have root password
+scp id_ecdsa and id_ecdsa.pub to root home dir on server.
+ssh into server as root.
+Create .ssh dir
+Move in id* files, chmod dir 500 and files 400.
+Copy id_ecdsa.pub to authorized_keys
+
+Create andmalc user with useradd -G wheel
+Visudo and enable passwordless sudo for wheel
+
+Copy .ssh dir to andmalc
+If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
+
+sudo dnf install -y git stow micro tmux fish vim 
+
+eval `ssh-agent`
+ssh-add .ssh/id_ecdsa
+
+git clone --recursive git@github.com:andmalc/config.git
 
 
-Setup {{{1
+
+
+Setup Home Dir {{{1
+
 
 git clone git@github.com:andmalc/config.git
 

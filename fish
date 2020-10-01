@@ -1,3 +1,5 @@
+
+
 eval (ssh-agent -c)
 
 Insert previous last arg: Alt up
@@ -6,6 +8,13 @@ Tab Completion {{{1
     Accept      
         all         Ctrl + F
         one word    Alt right arrow
+
+
+First time setup {{{1
+
+cp /usr/share/fish/config.fish ~/.config/fish
+
+
 
 Data Types {{{1
 
