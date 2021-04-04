@@ -58,11 +58,24 @@ options:
     --user
     --failed
 
-Subcommands
-
 unit commands {{{2
 
 start, restart, stop, restart, reload, status <runtime> [service | socket]
+
+list-units --type=[target | unit type]  #this is default command
+    
+    List running or failed services & their status
+        systemctl list-units -t service --all 
+        systemctl -t service -a
+
+reload
+    reload changed config without restarting service
+
+reboot cmds:
+    reboot, rescue, emergency
+
+kill <name>
+    use this instead of legacy kill command - cleans up dependent processes
 
 
 isolate <target name>   
@@ -78,13 +91,8 @@ list-jobs
 
 list-timers
 
-list-units --type=[target | unit type]  #this is default command
-    List running or failed services & their status
-        systemctl list-units -t service --all 
-
 list-sockets --show-types
 
-kill <name>
 
 show [--property=]
     no arg 

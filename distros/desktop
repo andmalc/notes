@@ -1,4 +1,21 @@
 
+Copy paste general
+	Clipboards based on selections
+		primary selection
+			Selected text is auto copied to primary selection
+			Paste with middle mouse click or Shift Insert (not all apps)
+        clipboard
+            selected text copied to clipboard after explicit copy command (Ctrl C)
+		cut buffers
+			added by an explicit copy command
+			xlipboard will add after each copy
+	tips
+		Middle-click in Mozilla - loads a URL in the X Primary
+
+    Some clipboard managers or applications will overwrite the primary contents with the clipboard contents when you perform an explicit copy.
+
+Old {{{1
+
 xrandr	shows X state, driver info
 
 xinput list 
@@ -7,28 +24,6 @@ xinput list-props <device #>
 	e.g.  xinput set-prop 12 "libinput Scroll Method Enabled" 0, 1, 0
 
 
-X copy paste
-	terms
-		primary selection
-			whatever selected in a standard X app but not in Mozilla
-			meant to immediate paste
-		cut buffers
-			added by an explicit copy command
-			xlipboard will add after each copy
-	utilities
-        xsel - recommended
-            Tmux buffer => clipboard
-                 tmux show-buffer | xsel -ib
-            
-        xclip
-            -o > file   #paste clipboard to file
-            xclip -o | tee <file>   #paste clipboard
-
-		xcb
-		xcutsel *
-	tips
-		Middle-click in Mozilla - loads a URL in the X Primary
-
 
 Authorize user connections
 	xhost +
@@ -36,7 +31,17 @@ Authorize user connections
 		insecure method, but can use temporarily
 	export DISPLAY=:0.0; xauth -merge ~<xserver-user>/.Xauthority
 
-Old {{{1
+utilities
+    xsel - recommended
+        Tmux buffer => clipboard
+             tmux show-buffer | xsel -ib
+        
+    xclip
+        -o > file   #paste clipboard to file
+        xclip -o | tee <file>   #paste clipboard
+
+    xcb
+    xcutsel *
 
 Startup Process {{{2
 
