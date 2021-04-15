@@ -31,13 +31,18 @@ Can interate over and slice
 set
     set <options> <var name> <value>
         set -U EDITOR vim
+
+    -a --append
+
+    --path
+        treat as path var
+
     scope options
-        -l  local within current block and children but not
-            child functions
-        -g  global outside block
+        -l  local within current block and children but not child functions
         -x  local and exported to child processes but not global
-        -U var
-            Universal - saved in config
+        -g  global outside block
+        -U Universal - saved in config
+        -gx exported global - use for environment vars in cofig.fish
 
     info
         list all vars           <no arg>
@@ -73,7 +78,7 @@ $$ to reference enclosed var
 
 
 PATH
-    set -U fish_user_paths <paths>
+    set fish_user_paths <paths>
 
 Abbreviations {{{1
 
@@ -81,6 +86,8 @@ word that expands to a phrase
 are universal variables saved in .config/fish/fish_variables 
 
 add     -a
+    -U  universal save (default)
+    -g  global save (use in config.fish)
 rename  -r
 erase   -e
 show    -s (default)
@@ -88,6 +95,13 @@ show    -s (default)
 abbr -a gco git checkout
 abbr -a l less
 
+Config.fish example
+    if status --is-interactive
+        abbr --add --global first 'echo my first abbreviation'
+        abbr --add --global second 'echo my second abbreviation'
+        abbr --add --global gco git checkout
+        # etcetera
+    end
 
 Combiners (And, Or, Not) {{{1
 
@@ -218,8 +232,10 @@ Plugins {{{1
 
 Fisher and Oh My Fish plugin managers
 
+Fisher
+https://github.com/jorgebucaran/fisher
 
-fzf
+environment variablefzf
     launch      Ctrl + T
 
     With fzf_key_bindings.fish
@@ -234,4 +250,8 @@ https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell
 
 Spacefish shell prompt
 	https://github.com/matchai/spacefish/
+
+Nix plugin
+    https://github.com/lilyball/nix-env.fish
+
 

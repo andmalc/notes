@@ -13,11 +13,21 @@ Info
             search   <search term>`
 
 %alias <alias name> <system command and args>
+    %alias_la ls -a
+    mydir = "dir"
+    %la $mydir
 
-    
+%autocall 1 only if args or 2 always
+
 %edit
 		-x		do not execute
 		-p		use last input
+
+%store
+    store vars in ns to disk
+
+%who/%whos
+    show names in current ns
 
 Input History
     Input cache: _i

@@ -19,9 +19,7 @@ Show current settings
 tmux show-options -g
 
 
-Startup {{{1
-
-Options
+Startup Options
 -n      name
 -c      start dir
 -p      split percent
@@ -59,7 +57,8 @@ Options
 
 Prefix+
     1,2,3   move to window #
-    C+n/p     switch to next/previous window
+    n/p     switch to next/previous window
+    w       choose window interactively
     ,       rename window
     &       kill window
 

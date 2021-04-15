@@ -268,61 +268,89 @@ Package management {{{2
 
 Dnf <options> <command> <args eg. package spec>
     
-    Pkg spec: searches are case insensitive and match on whole package name
+Pkg spec: searches are case insensitive and match on whole package name
 
-    Options:
-        --exclude <pkg or pat>  exclude from install, remove, list etc.
-        --releasever 23
-        --installroot=<path>
-            dnf --installroot=<installroot> --releasever=<release> install system-release
+Options:
+    --exclude <pkg or pat>  exclude from install, remove, list etc.
+    --releasever 23
+    --installroot=<path>
+        dnf --installroot=<installroot> --releasever=<release> install system-release
 
-        Temporarily enable/disable a repo
-        --enablerepo <repo>     install pkg from a repo
-            --enablerepo=updates-testing fish
-        --disable <repo>
+    Temporarily enable/disable a repo
+    --enablerepo <repo>     install pkg from a repo
+        --enablerepo=updates-testing fish
+    --disable <repo>
 
-    Commands
-        autoclean   remove orphans
+Commands
+    
+    autoclean   remove orphans
 
-        history <cmd> <event ID>
-            list (default cmd)
-            undo, redo
-            1..20   show last 20 events
+    history <cmd> <event ID>
+        list (default cmd)
+        undo, redo
+        1..20   show last 20 events
 
-        info        shows details
-        
-        in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
-            if /path/file given, acts like provides and installs pkg that provides file
+    info        shows details
+    
+    in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
+        if /path/file given, acts like provides and installs pkg that provides file
 
-        list [installed | available] [<pkg>]
-            shows name, version, repo, install status
-            no pkg summary
-            if no arg, lists installed then avail packages
-            does not sync metadata
-            see also repoquery plugin
-        
-        provides <full path of file>
-            shows pkg (installed or not) owning file
+    list | ls [installed | available] [<pkg>]
+        shows name, version, repo, install status
+        no pkg summary
+        if no arg, lists installed then avail packages
+        does not sync metadata
+        see also repoquery plugin
+    
+    provides <full path of file>
+        shows pkg (installed or not) owning file
 
-        se|search   lists name, description. 
+    repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
+        search repos for packages
+        default output is pkg name.  Faster than 'dnf provides'
+
+        Select options - limit output set 
+        --file/-f       package owned by filej
+        --installed
+        --repo <repoid>
+        --upgrades  # pkgs providing upgrades to existing
+        --whatdepends <capability> # pkgs that depend on this one
+        --whatprovides <capability>
+        --whatrecommends <capability>
+        --whatrequires <capability>  # pkgs requiring this one
+        --whatsuggests <capability>
+
+
+        Query options - set what info displayed about each pkg
+        -l <pkg name>   list files in package
+        --depends
+        -i              info
+        --provides      pkgs providing service/cmd
+        --recommends
+        --requires <pkg>  #  show package dependencies (required by this pkg)
+
+        Show recursive dependencies
+            dnf repoquery --requires nginx --resolve --recursive
+    
+    se|search   lists name, description. 
                     result sectioned by closeness of match
                     no installation info
 
-        upgrade <pkg spec>
-        up|update      is alias to upgrade
-        upgrade-minimal
-            Updates each package to the latest version that provides 
-            bugfix, enhancement or fix for security issue 
+    upgrade <pkg spec>
+    up|update      is alias to upgrade
+    upgrade-minimal
+        Updates each package to the latest version that provides 
+        bugfix, enhancement or fix for security issue 
 
 
-    Package Groups
-        group info, list, install 
-        group name
-            case insensitive
-            format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
+Package Groups
+    group info, list, install 
+    group name
+        case insensitive
+        format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
 
-        Show packages in a group
-            group info 'Basic Desktop'
+    Show packages in a group
+        group info 'Basic Desktop'
 
 
 History
@@ -357,33 +385,6 @@ repoinfo - more detail than repolist
 
 repolist [enabled | disabled | --all ]
     list repo details
-
-[options] repoquery [<select-options>] [<query-options>] [<pkg-spec>]
-    search repos for packages
-    default output is pkg name.  Faster than 'dnf provides'
-
-    Select options - limit output set 
-    --file/-f       package owned by filej
-    --installed
-    --repo <repoid>
-    --upgrades  # pkgs providing upgrades to existing
-    --whatdepends <capability> # pkgs that depend on this one
-    --whatprovides <capability>
-    --whatrecommends <capability>
-    --whatrequires <capability>  # pkgs requiring this one
-    --whatsuggests <capability>
-
-
-    Query options - set what info displayed about each pkg
-    -l <pkg name>   list files in package
-    --depends
-    -i              info
-    --provides      pkgs providing service/cmd
-    --recommends
-    --requires <pkg>  #  show package dependencies (required by this pkg)
-
-Show recursive dependencies
-    dnf repoquery --requires nginx --resolve --recursive
 
 Other {{{2
 

@@ -44,6 +44,10 @@ ssh remotehost1 " ssh remotehost2 \"( cd /source/path; tar cf - desiredfiles ) \
 Note that 'tar cf' and 'tar xf' can be replaced with 'tar czf' and 'tar xzf' for gzip compression. Or, for bzip2 compression: 'tar 'cjf' and 'tar xjf'. 
 
 Other apps {{{1
+
+zip
+    sf  list archive contents
+
 unison
 	best for synchronizing if both roots are changed.
 

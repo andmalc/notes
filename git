@@ -249,7 +249,7 @@ branch
         <branch name> [cid]	
 
     create new branch <name> and switch to it
-        checkout -b <name>	
+        git switch -c <new branch name>
 
     create new branch <name> based on other branch and switch to it
         checkout -b <new branch name> <source branch name>	
