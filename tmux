@@ -156,10 +156,12 @@ Copy mode {{{1
 
 Copy:
 Enter copy mode: <prefix>+[
-Start copy: <Space>
+Emacs mode:
+    Start copy: Ctrl <Space>
+Vi mode
+    Start copy: <Space>
 Copy text: <Enter>
 Paste text: <prefix>+]
-
 
 Vi mode movement keys: h,j,k,l
 

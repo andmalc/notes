@@ -211,6 +211,14 @@ Locale
        list-locales 
        set-locale LANG=locale
 
+Console
+    Ctr+ Alt 2
+
+    font settings
+        /etc/vconsole.conf
+        large font: FONT="latarcyrheb-sun32.psfu.gz"
+
+
 Date/time
 	timedatectl
 
