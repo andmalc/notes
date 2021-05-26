@@ -93,7 +93,7 @@ https://fedoramagazine.org/third-party-repositories-fedora/#more-21080
 
 Packages {{{1
 
-git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user exa
+git vim-enhanced fish tmux mlocate ncdu stow ranger util-linux-user exa
 
 Yubikey/U2F support
 pam-2uf u2f-hidraw-policy
