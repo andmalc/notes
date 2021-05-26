@@ -1,4 +1,12 @@
 
+Key Bindings
+https://fishshell.com/docs/current/cmds/bind.html
+    fish_key_reader - outputs bind statement for key
+
+    bind
+        -k <term> search for existing binding
+
+
 
 eval (ssh-agent -c)
 
@@ -232,8 +240,13 @@ Plugins {{{1
 
 Fisher and Oh My Fish plugin managers
 
-Fisher
-https://github.com/jorgebucaran/fisher
+Fisher https://github.com/jorgebucaran/fisher
+    records installed plugins in fish_config_dir/fish_plugins
+    install <Github path>
+    list
+    update
+
+
 
 environment variablefzf
     launch      Ctrl + T
