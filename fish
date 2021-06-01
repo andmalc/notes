@@ -46,10 +46,10 @@ set
         treat as path var
 
     scope options
+        -U Universal - saved in fish_variables file
         -l  local within current block and children but not child functions
         -x  local and exported to child processes but not global
         -g  global outside block
-        -U Universal - saved in config
         -gx exported global - use for environment vars in cofig.fish
 
     info

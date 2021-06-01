@@ -9,3 +9,12 @@ https://github.com/swaywm/sway/wiki/Shortcut-handling
 
 loadkeys - load keyboard translation tables
 
+
+
+Chromebook - map Delete to  Right Alt + BS
+Edit /usr/share/X11/xkb/symbols/us, and right after the line:
+    name[Group1]= "English (US)";
+add these lines:
+    include "level3(ralt_switch)"
+    key <BKSP> { [ BackSpace, BackSpace, Delete ] };
+
