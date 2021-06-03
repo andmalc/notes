@@ -1,0 +1,14 @@
+
+Fedora pkgs
+brightnessctl
+grimshot - screenshots
+    bindsym $mod+Print exec grimshot copy area
+
+Config
+
+/etc/systemd/logind.conf
+    IdleAction=suspend
+    IdleActionSec=30min
+
+
+

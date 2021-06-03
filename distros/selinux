@@ -17,10 +17,10 @@ Labeling
 Type enforcement
     normal policy is processes have access to files of same type
 
+Selinux {{{1
+
 
 ls -Z
-
-Selinux {{{1
 
 Status
     sestatus

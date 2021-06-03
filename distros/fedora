@@ -72,7 +72,7 @@ https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
 Packages {{{1
 
-git vim-enhanced zsh tmux mlocate ncdu stow ranger util-linux-user exa
+git vim-enhanced fish tmux mlocate ncdu stow ranger util-linux-user exa
 
 Yubikey/U2F support
 pam-2uf u2f-hidraw-policy
@@ -434,10 +434,8 @@ Clear dnf cache in /var/cache/PackageKit
 
 Old {{{1
 
-
 CPU frequency control
 https://dunterov.github.io/cpu-freq/
 	Install kernel-tools
 	Show available governors
 		cpupower frequency-info --governors
-
