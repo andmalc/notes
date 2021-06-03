@@ -1,3 +1,11 @@
+Edit tips:
+"object-action" selection: 
+   vipd - visually select and delete para
+
+Repeat last edit: .
+
+Jump to last edit: ctrl o
+
 Check out:
 Completion plugin for NVim: https://github.com/Shougo/deoplete.nvim
 
