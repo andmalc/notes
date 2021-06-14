@@ -361,6 +361,8 @@ Merge pull request on GitHub
 Merge conficts
     Edited files
         https://rtcamp.com/tutorials/git/git-resolve-merge-conflicts/
+        - find files: grep -lr '<<<<<<<' . 
+
     Files deleted/renamed
         Maintain deleted: readd and redelete
         Maintain 

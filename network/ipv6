@@ -1,3 +1,8 @@
+Allow ipv6 only hosts to reach ipv4
+    https://www.reddit.com/r/ipv6/comments/n48jzf/how_do_i_access_older_websites_that_dont_support/
+    https://nat64.xyz/
+    https://developers.google.com/speed/public-dns/docs/dns64
+
 
 Address Format {{{1
 

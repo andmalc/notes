@@ -33,6 +33,8 @@ echo $myarray[1]
 
 Variables {{{1
 
+https://fishshell.com/docs/current/#variables
+
 All variables are lists of strings
 Can interate over and slice
 
@@ -58,8 +60,9 @@ set
         show exported global    -xg
 
 
-Expand $var
-Separate from surrounding text {$var} or "$var"
+Expand variables
+     ~ (tilde) expanded only when unquoted
+    Separate from surrounding text {$var} or "$var"
 
 Spaces in var preserved - quotes not needed
     set mydir 'My Docs'

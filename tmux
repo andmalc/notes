@@ -26,29 +26,31 @@ Startup Options
 -f	config file
 
 
-Sockets & Sessions Startup {{{2
+Sockets & Sessions Startup {{{1
 
+Start with new socket
+    tmux -L tmuxtest 
 
-new session         new -s <session name>
-list                list-sessions / ls
-attach to target    attach/a -t <name>
-kill                kill-session -t <name>
+Session startups
+    new session         new -s <session name>
+    list                list-sessions / ls
+    attach to target    attach/a -t <name>
+    kill                kill-session -t <name>
 
-Attach to named session or create
-    tmux new-session -A -c ~ -s sql
+    Attach to named session or create
+        tmux new-session -A -c ~ -s sql
 
-
-Shortcuts
+Select and manage sessions
     s       list-sessions
             highlight a session with vi or arrow keys.  Right arrow to expand windows
     w       list sessions & windows
     ()      switch to previous/next session
     $       rename session
 
+Session Managers 
+    tmuxp http://tmuxp.git-pull.com
+        save and load configs
 
-
-Start with new socket
-    tmux -L tmuxtest 
 
 Windows {{{1
 
@@ -147,10 +149,6 @@ $   rename
 s   choose from list
 
 
-Session Managers {{{1
-
-tmuxp
-http://tmuxp.git-pull.com
 
 Copy mode {{{1
 

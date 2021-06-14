@@ -1,3 +1,17 @@
+
+Fedora package name: gnupg2
+Requires pinentry
+
+
+Use alternate config home
+    set -x --path GNUPGHOME ~/.config/gnupg
+    gpg --homedir=/media/something -K
+
+Troubleshooting
+    Kill gpg-agent
+        killall gpg-agent
+
+
 Generate ed25519 compat keys
     Ed25519 is protocol for digital signature
     X25519 protocol for encryption

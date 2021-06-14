@@ -20,7 +20,8 @@ Install/uninstall/rollback
     remove ophaned pkgs
         nix-collect-garbage -d
 
-Test pkg without installing
+nix-shell - ad-hoc dev env
+	Test pkg without installing
     nix-shell -p hello
 
 Update installed
@@ -28,6 +29,8 @@ Update installed
     nix-env -u '*'
 
 
+Fish nix-end plugin - added nix apps to path
+https://github.com/lilyball/nix-env.fish
 
 
     
