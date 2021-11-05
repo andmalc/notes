@@ -1,0 +1,5 @@
+grubby
+    https://docs.fedoraproject.org/en-US/Fedora/23/html/System_Administrators_Guide/sec-Configuring_GRUB_2_Using_the_grubby_Tool.html
+
+    grubby --update-kernel=/boot/vmlinuz-$(uname -r) --args="args to add" --remove-args="arg1 arg2"
+

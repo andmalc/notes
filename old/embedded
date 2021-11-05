@@ -1,0 +1,125 @@
+
+Serial gen {{{1
+
+Cu - USB to serial connection
+	must be member of dialout group
+	cu -l /dev/ttyUSB0 -s 38400
+
+minicom
+
+socat
+	redirect TCP to serial
+	
+Null-modem cable: needed with IBM compatible PC's as serial ports designed to be used with modems
+
+device names
+	ttyx	console terminal (known as virtual because can have multiple on one terminal)
+	pts		pseudo terminal (login in an Xterm or over network)	
+	ttySx	serial ports
+	ttyUSBx	USB serial ports
+	
+Serial default settings
+	Unit 0 = COM 1 
+	8 bit word
+	Stop bit 1
+	parity none
+
+Grub {{{1
+http://www.gnu.org/software/grub/manual/html_node/serial.html
+
+Grub2 setup:
+	/etc/default/grub: GRUB_TERMINAL=serial 
+
+SIMPLE GRUB.CFG: 
+
+### BEGIN /etc/grub.d/00_header ###
+serial
+terminal_input serial
+terminal_output serial
+set timeout=5
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'voyage' --class gnu-linux --class gnu --class os {
+        insmod part_msdos
+        insmod ext2
+        set root='(/dev/sda,msdos1)'
+        search --no-floppy --fs-uuid --set 7649b51e-3ede-49df-86fc-ec1b7dfe1792
+        echo    'Loading Linux 2.6.32-voyage ...'
+		linux   /boot/vmlinuz-2.6.32-voyage root=UUID=7649b51e-3ede-49df-86fc-ec1b7dfe1792 ro single 
+        echo    'Loading initial ramdisk ...'
+        initrd  /boot/initrd.img-2.6.32-voyage
+}
+
+
+
+kopt - kernel command line
+	console may appear multiple times, output will appear on all consoles 
+		last device selected is on /dev/console 
+		e.g. console=ttyS1,19200n8 console=tty1 output to serial port and 2nd to VGA 
+	if not specified, VGA console tried first then first serial port
+
+
+Serial output from Grub1
+	/etc/inittab
+		T0:23:respawn:/sbin/getty -L ttyS0 38400
+	Grub1
+		/boot/grub/menu.lst
+				serial --speed=38400
+				terminal --timeout=10 serial console
+			or
+				serial --speed=38400
+				terminal serial
+			Add to kopt: console=ttyS0,38400n8 console=tty0
+
+	Grub2
+		/etc/default/grub
+			GRUB_CMDLINE_LINUX_DEFAULT="console=tty0 console=ttyS0,38400n8"
+			GRUB_TERMINAL=serial
+			GRUB_SERIAL_COMMAND="serial --speed=38400"
+		/boot/grub/grub.cfg
+			insmod serial
+			same serial as above
+			terminal_output serial ; terminal_input serial
+
+			terminal_input serial.console
+			terminal_output serial.console
+
+
+insmod serial
+
+echo -e "nnTesting serial."
+echo "If I see ESC from serial within 10 seconds"
+echo "I will give over grub console to the serial port."
+
+serial --unit=0 --speed=38400 --word=8 --parity=no --stop=1
+terminal_input serial
+terminal_output serial
+#For some reason the "clear" command has been removed
+echo -e "nnnnnnnnnnnnnnnnnnnnnnnnnnn"
+echo -n "Press ESC within 10 second to take control of console  "
+if sleep -i -v 10 ; then
+  echo -e "nnnTimes up, going to console, sorry.nn"
+  terminal_input console
+  terminal_output console
+else
+  terminal_output console
+  echo -e "nnConsole has gone over to the serial port."
+  terminal_output serial
+fi
+
+### BEGIN /etc/grub.d/10_linux ###
+insmod lvm
+insmod ext2
+menuentry "Debian " {
+    set root=(hd0,1)
+    linux   /boot/live/vmlinuz boot=live persistent union=aufs live-media-path=boot/live con>
+    initrd  /boot/live/initrd.img
+}
+### END /etc/grub.d/10_linux ###
+
+Testing {{{1
+
+
+Run qemu with -nographic option to enable serial output
+

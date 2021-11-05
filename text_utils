@@ -1,0 +1,11 @@
+
+TEXT ARRANGING & TRANSFORMING UTILITIES
+
+Sort	Sorts by fields, from left to right
+
++<n>	Sort on field n (zero-based, from left)
+-<n>	Don't sort on field n
+
+-n	specify numbic sort on field
+
+

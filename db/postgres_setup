@@ -1,0 +1,47 @@
+https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps#security-within-postgresql
+
+Admin Commands
+	control postmaster (start this first)
+		pg_ctl start | stop | restart | status
+	initdb -D <dir>
+		create a new database cluster
+			/var/lib/postgres is usual
+		must be run by user owning the server process (-U username)
+	create admin user
+		sudo -u postgres bash
+	createuser -A -D <username>
+		add -P to prompt for password for password auth over TCPIP connections
+	createdb -O andmalc andmalcwork
+	dropdb	dbname
+	psql	[dbname] (default is username, though not in Debian)
+
+
+Files 
+Client Authentication Configuration File - pg_hba.conf
+	by default only local access allow
+
+	add host
+	host  sammydb  sammy   client_ip_address/32   md5
+
+postgresql.conf
+	client connection config
+    listen_address condfig
+
+
+User setup with psql
+	sudo -i -u postgres psql
+	CREATE DATABASE myproject OWNER andmalc;
+	create user andmalc with password 'brn2kale';
+	ALTER ROLE andmalc SET client_encoding TO 'utf8';
+	ALTER ROLE andmalc SET default_transaction_isolation TO 'read committed';
+	ALTER ROLE andmalc  SET timezone TO 'EST';
+	GRANT ALL PRIVILEGES ON DATABASE myproject TO andmalc
+
+
+sudo systemctl restart postgresql
+
+
+Firewall
+ufw
+	sudo ufw allow from 15.15.15.0/24 to any port 5432
+

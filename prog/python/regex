@@ -1,0 +1,37 @@
+
+Regex article
+http://junedmunshiblog.blogspot.in/2013/08/tutorialregular-expressions-in-python.html
+
+re.findall(pat,str) => list of matches
+re.sub(pat,sub,str) - replace pat with sub
+
+Pattern match:
+	m=re.match('xxx (group to match)',str)
+	m.group(0) => matched str
+	m.groups() => tuple of matches
+	m.groups() => tuple of matches
+
+[ ]: Set of possible character matches
++ : Matches the preceding pattern element one or more times.
+| : Separates alternate possibilities.
+\s : Matches a whitespace character which includes space,\t,\r,\n
+\w : Matches an alphanumeric character, including "_" 
+\   : Treat next character as literal character. 
+^	Beginning of line
+$	End of line excluding return
+
+Format example
+
+pat = re.compile(
+    r'''
+      (?P<streetnum>  \d+              )  #M series of digits
+      \s+
+      (?P<streetname> [A-Z\s]+         )  #M one-or-more word
+      \s+
+      (?P<streetdir>  S?E|SW?|N?W|NE?| )  #O direction or nothing
+      \s+
+      (?P<streettype> ST|RD|AVE?       )  #M street type
+      $                                   #M END
+    ''', re.VERBOSE) 
+
+

@@ -1,0 +1,148 @@
+
+https://opensource.com/life/16/8/3-command-line-music-players-linux
+
+
+
+containers {{{1
+	WebM (based on Matroska)
+		preferred, open source
+		convert using ffmeg
+			https://trac.ffmpeg.org/wiki/Encode/VP8
+			ffmpeg -i input.mp4 -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis output.webm
+
+
+	Matroska/MKV 
+		not supported on some playback devices
+	MP4 - promoted by Apple
+    avi (A-V Interweave)
+
+video codecs {{{1
+	H.264
+		high quality but moderate file size
+	FFmpeg
+		mpeg-2 - standard DVD format
+		mpeg-4
+			lower quality than h.264 but faster encoding.
+			Xvid is open source codec that creates mpeg-4 format files (ISO standard, not compatible with MS's version
+			not used on hardward DVD players (VCD or SVCD)
+    lavc
+        video encoding
+        part of ffmpeg project
+
+    DivX
+        create mpeg-4
+        older but common codec
+        lavc & xvid make compatible 
+    Xvid
+        create mpeg-4
+
+audio codecs {{{1
+    Opus 
+        preferred free format
+        better quality at lesser bitrates => smaller files
+	AAC
+		faac- not recommended but better than MP3
+		Core Audio - Mac version - better than faac 
+    flac 
+        Free Lossless Audio Codec
+        lossless compression
+            like zipping a wav file
+            expect 50% compression of digital music (DDD) or somewhat less of analog (AAD or ADD) music
+            recommended for audio CD archiving
+
+
+Sound Bitrates - recommended
+    Opus    very good at 96Kbs but OK at 64
+    OGG - avoid lower than 160
+    wma - best for very low rates, e.g. < 64 for speech
+
+
+
+libraries/infracture {{{1
+
+    gstreamer - Gnome media playing framework
+    faad Freeware Advanced Audio Decoder
+        plays MPEG4 (aka mp4, m4a)
+        gstreamer plug-in for this
+
+
+        see also Ubuntu list of apps:
+            http://ubuntuguide.org/#add-onapplications
+        mplayer 
+			media player
+			see Debian wiki page http://wiki.debian.org/MPlayer
+			repeat: mplayer -loop 0
+			play DVD: mplayer -fs dvd://1
+			play CD
+				mplayer -cdrom-device /dev/cdrom cdda:// -cache 5000
+				http://www.cyberciti.biz/faq/linux-unix-mplayer-playing-audio-dvd-cd-using-bash-shell/
+
+			ful screen console:
+				mplayer -vo fbdev -fs -zoom -aspect 1.3333 -sws 3 -vf scale=1000:700 movie.avi (as root?)
+				also maybe -vo aa or -vo caca
+        rhythmbox
+            gstreamer-based
+        sox - sound file format conversion
+        vlc	& wxvlc audio & video player & moz plugin
+            Windows version too
+        gnome-audio - for sound files
+    
+audio encoding
+        lame
+            non-free as encodes to mp3
+        vorbis
+            encodes to ogg container format
+		oggenc
+			like vorbis?
+
+video encoding
+    mencoder (part of Mplayer project)
+        creates avi or ogm (?) files using lavc or XdiV codecs
+        http://gentoo-wiki.com/HOWTO_Mencoder_Introduction_Guide#Introduction
+
+            shrinkta - gtk2 program for backing up DVDs
+            thoggen - similar
+            DVDShrink under Crossover or Wine
+    ffmpeg2theora
+        encode video formats to Theora
+        convert DVD VOB files 
+
+
+    playback DVD movies 
+        CSS (content scrambling system) support (from VLC project)
+            deb http://download.videolan.org/pub/videolan/debian sid main
+            deb-src http://download.videolan.org/pub/videolan/debian sid main
+            apt-get install vlc libdvdcss2 
+
+    encode encod music to MP4/AAC
+        Faac
+            deb http://apt.cerkinfo.be unstable main contrib non-free
+
+
+    Convert wmv to avi
+        requires mplayer
+        encoder infile.wmv -ovc lavc -oac lavc -o outfile.avi
+
+Tasks
+    Ripping audio from CD's
+        => digital audio data (uncompressed WAC PCM)
+    Encoding takes above and compresses according to scheme (MP3 etc.)
+        cdda2wav (+ cdda2mp3, cdda2ogg)
+            no CDDB support
+            play CD's from device (doesn't write a file)
+                -eN -t6
+            rip CD to files
+                -B filename.wav
+
+            graphical front-ends
+                grip
+                    CDDB support, makes mpu's etc.
+                burnit
+    rip DVD's (*.vob files) to mpeg or avi
+        mencoder dvd://1 -vf scale -zoom -xy 640 -o title.avi -ovc lavc -oac copy
+        read mplayer man pages for more
+        also: 
+            dvdbackup
+            dvdrip with transcode backend
+
+

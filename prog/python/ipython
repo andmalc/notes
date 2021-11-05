@@ -1,0 +1,83 @@
+
+Magic funcs
+
+Info
+    overview                %quickref   
+    list magic functions    %magic      
+    list environment vars   %env		
+    list or search history 
+        options
+            from all sessions  -g
+            save to file    -f <filename>
+        arg
+            search   <search term>`
+
+%alias <alias name> <system command and args>
+    %alias_la ls -a
+    mydir = "dir"
+    %la $mydir
+
+%autocall 1 only if args or 2 always
+
+%edit
+		-x		do not execute
+		-p		use last input
+
+%store
+    store vars in ns to disk
+
+%who/%whos
+    show names in current ns
+
+Input History
+    Input cache: _i
+
+    %history <range>
+        -f  export to filename
+        -g  grep pattern in previous input
+        -l  limit # of lines, default 10
+        -n  print line numbers
+        -o  print line and its output
+
+        range:
+            same syntax is used by %macro, %save, %edit, %rerun
+            1-5 lines 1 through 5
+            ~2/1-5  same in previous session
+
+    logging
+        %logstart <log file>	initial start log
+        %logstop				stop logging, close log file
+        %logon					restart logging
+
+    %recall | %rep
+        no args
+            edit or rerun string version of previous output
+        line # arg
+            edit previous command
+
+    %rerun
+        run previous input
+
+Output History
+    Output cache: _
+
+%sx or !!
+    system command
+    result stored in output cache "_"
+
+%who | %whos
+    print minimal | extended info of interactive variables
+
+
+
+Use zsh as shell
+	in genutils.py
+		replace stat = os.system(cmd)
+		with stat = subprocess.call(cmd,shell=True,executable='/bin/zsh')
+		use 'zsh -i' for interactive shell - reads .zshrc
+
+Startup
+	-log		start logging
+	-logplay 	playback log lines
+	-logfile
+

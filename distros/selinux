@@ -1,0 +1,106 @@
+
+Docs {{{1
+
+https://wiki.centos.org/HowTos/SELinux
+https://fedoraproject.org/wiki/SELinux_FAQ
+http://linuxtechlab.com/beginners-guide-to-selinux/
+https://people.redhat.com/duffy/selinux/selinux-coloring-book_A4-Stapled.pdf
+
+
+Labeling
+    user:role:type:level defines context 
+    context set when file created based on parent dir unless overruled by transition pol
+    most important part of context is type _t
+
+    Files moved retain label but if copied take label of parent
+
+Type enforcement
+    normal policy is processes have access to files of same type
+
+Selinux {{{1
+
+
+ls -Z
+
+Status
+    sestatus
+    getenforce
+
+Enable
+    setenforce 1
+    /etc/selinux/config
+
+Disble at boot
+    kernel arg enforcing=0
+
+semanage
+        package policycoreutils-python-utils
+        maybe not needed: port enabled if done by firewall-cmd (?)
+
+    login
+        -l      Show map of login names to SE Linux users
+
+    ports
+        -l      list ports
+
+        Add port for ssh
+        port     semanage port -a -t ssh_port_t -p tcp 2292
+
+    fcontext    
+        file management
+        run restrecon [-R] after to apply to existing
+        -a -t <type> "/home/dir(/.*)?"
+
+
+setsebool
+    change boolean
+
+chcon
+    change context
+	-h	apply to symbolic link
+	-H	traverse symbolic link
+	-t <type> <file>
+        apply type to file
+        
+    --reference <dir> <file to be changed>
+        apply context of dir to file
+
+restorecon
+    apply default context
+    run after changing policy with semanage to apply to existing files
+
+    restorecon -Rv .ssh
+
+sealert -b 
+    launch Alert browser
+
+Logging {{{1
+
+SE status overview
+    /usr/sbin/sestatus -v
+
+
+ausearch - tool for viewing audit logs
+    ts recent -   last ten minutes
+    ausearch -m AVC,USER_AVC -ts recent
+
+journalctl _SELINUX_CONTEXT=system_u:system_r:policykit_t:s0
+
+
+Troubleshooting {{{1
+
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/SELinux_Users_and_Administrators_Guide/chap-Security-Enhanced_Linux-Troubleshooting.html
+https://access.redhat.com/articles/2191331
+
+Note: selinux conflicts caused by wrong context type are *not* logged or displayed by troublshooting tools
+
+audit2allow
+    Displays reason for denial and generates policy files to allow
+    https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/security-enhanced_linux/sect-security-enhanced_linux-fixing_problems-allowing_access_audit2allow
+
+
+Install policycoreutils-python 
+grep denied /var/log/audit/audit.log | audit2why
+
+
+

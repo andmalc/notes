@@ -1,0 +1,51 @@
+Docs
+	SSH & VNC
+		http://www-106.ibm.com/developerworks/linux/library/l-share2/
+	Linux Journal (big) article
+		http://www.linuxjournal.com/article.php?sid=5499
+	VNC Roundup (Newsforge)
+		http://newsforge.com/comments.pl?sid=31011&threshold=0&commentsort=0&mode=thread&tid=&pid=53119#53132
+	Knoppix Forum post with sample .vnc/XSession
+		http://www.knoppix.net/forum/viewtopic.php?t=4918&highlight=
+	vnc & xdmcp
+		http://www.linux-mag.com/2003-03/guru_01.html
+
+TightVNC vncserver script:
+	/usr/bin/vncserver
+	Always run as non-root
+
+Config
+	vncpasswd to set password
+	.vnc/XSession must be executable
+
+	/etc/vncrc
+		define Xsession file: default is /etc/X11/Xsession
+
+Recommendations
+	Speed up VNC by running over ssh - 
+		I get a 6 times increase in speed if you redirect the VNC session over
+		SSH, use protocol 1, and select max compression. You use the power of
+		ssh compression to speed up VNC.  
+		ssh -L 5902:remote IP:5901 remote IP -l userid -F /root/.ssh/ssh_config
+
+		sshconfig
+                ForwardX11 yes
+                Protocol 1
+                Compression yes
+                CompressionLevel 9
+		client
+			vncviewer localhost::12345 -quality 1 
+
+Client
+	vncviewer localhost:2 -encodings "copyrect hextile"
+	Copyrect Hextile is CRITICAL.
+	This changes a 2-5 second latency 1024x768 desktop to almost no latency.
+
+	make viewer start same xsession as gdm
+		~/.xsession
+			/etc/gdm/Sessions/Default
+
+Troubleshooting
+	grey background
+		-> running vncserver from an xterm
+

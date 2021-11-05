@@ -1,0 +1,90 @@
+
+
+How to back up your Linux desktop without rsync - 9/21
+https://www.redhat.com/sysadmin/backup-Restic?sc_cid=7013a000002pkKgAAI
+
+
+xz example
+    xzcat Fedora-IMAGE-NAME.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX
+
+
+dd & gzip
+sudo dd bs=4M if=/dev/sdb | gzip > rasbian.img.gz
+gunzip --stdout rasbian.img.gz | sudo dd bs=4M of=/dev/sdb
+
+
+Tar output & input {{{1
+
+Archiveless tar copy
+    (cd dir1 && tar cf - . ) | (cd dir2 && tar xvfp -) 
+
+Same with cpio (faster?)
+    cd dir1 && find -depth | cpio -pdmv dir2
+
+tar archived input to gpg
+    gpg compresses its input
+        tar -c *.jpg | gpg -ear douggorley > files.tar.gz.asc
+
+tar stdout to zip
+     tar cf - . | zip - - | dd of=/dev/nrst
+            
+tar stdout to ssh
+    tar czvf - . | ssh user@host "cat > file.tgz"
+	
+
+more tar/ssh examples
+send:
+tar cf - myfiles | ssh remotehost " ( cd /destination/path tar cf - desiredfiles ) " | tar xf -
+
+get:
+ssh remotehost "( cd /source/path; tar cf - desiredfiles ) " | tar xf -
+
+
+send through:
+tar cf - myfiles | ssh remotehost1 " ssh remotehost2 \" ( cd /destination/path tar cf - desiredfiles ) \" " | tar xf -
+
+get through:
+ssh remotehost1 " ssh remotehost2 \"( cd /source/path; tar cf - desiredfiles ) \" " | tar xf - 
+
+Note that 'tar cf' and 'tar xf' can be replaced with 'tar czf' and 'tar xzf' for gzip compression. Or, for bzip2 compression: 'tar 'cjf' and 'tar xjf'. 
+
+Other apps {{{1
+
+zip
+    sf  list archive contents
+
+unison
+	best for synchronizing if both roots are changed.
+
+scp
+	must give options -p (preserve permissions) & -r (recurse)
+	no way to exclude files
+
+pax
+    basic backup
+        -wf home.pax .
+        -wfz /dev/device .  compressed backup, but can't do compression to a 
+                            floppy
+    list [verbosely/long] contents
+        -f[v] paxfile.pax | less
+    append to existing archive
+        -a
+    restore 
+		need to manually add z if archive is compressed.  
+		use 'file name' to check this.
+        do from destination dir:
+			-rvf <paxfile>      
+			-i  interactive
+    directory copy
+        -rw <source dir | .> <dest dir>
+        remember to set ownership of destination dir before copying
+        add -i to interactively copy
+    time spec
+        -T 
+    exclusion
+        -c <file pattern>
+    inclusion
+        -n <file pattern>
+
+
+

@@ -1,0 +1,42 @@
+Docs: https://www.sqlitetutorial.net/
+
+Sqlite3 utility commands
+
+Info
+	.databases <db name pat>
+		list open db's
+	.tables <table name pat>
+		list tables
+	.schema <table name pat>
+		describe table(s)
+	show	show settings
+
+Input
+
+	.open <db file>
+
+	From csv file
+	.mode csv
+	.import <fn> <table>
+		if table does not exist, uses first row as column names
+		if does, all imported rows as content unless '--skip 1'
+
+Output
+	.mode
+		default list
+	.separator
+	.output | .once
+		 <file name>	to file
+		'| cmd' 	pipe
+		-e	default editor
+
+	to csv file:
+	.headers on
+	.mode csv
+	.once <fn>
+
+	.save <fn>
+		save in memory db to file
+
+Litecli 
+

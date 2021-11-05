@@ -1,0 +1,39 @@
+Path Specification
+http://www.cis.upenn.edu/~bcpierce/unison/manual.html#paths
+
+Ignoring Paths
+http://www.cit.gu.edu.au/~anthony/info/apps/unison.hints
+
+Preferences taking path pattern values:
+ignore/ignorenot, follow, sortfirst/sortlast, backup
+
+3 Path value formats:
+Regex <regexp>  Posix extended regex (no character classes).  Must match whole path
+Name <name>  matches any path in which the last component matches name
+Path <path> matchs absolute (relative to root of replica) path
+
+Name & Path use shell globbing matching:
+# a ? matches any single character except /
+# a * matches any sequence of characters not including /
+# [xyz] matches any character from the set {x, y, z }
+# {a,bb,ccc} matches any one of a, bb, or ccc.
+
+Directory separator in paths is always '/'.  In roots it is os-dependent.
+
+If a directory is ignored, so will all its descendents.
+
+Unison & Keychain
+------------------
+Invoke unison with following script:
+
+@echo off
+call bash --login /dev/null
+call C:\Cygwin\home\kmoerder\ssh-agent.cmd
+unison
+
+The call to bash invokes the keychain in the .profile to get the keys ready then the call to ssh-agent.cmd defines the env variables for non-cygwin ssh-aware programs (such as unison).
+
+Specify location of server-side unison executable in profile:
+servercmd=<path>
+
+

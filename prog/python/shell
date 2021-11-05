@@ -1,0 +1,138 @@
+
+
+
+
+O/S {{{1
+
+Environment
+    os.environ['price']
+
+
+Files & Paths {{{2
+
+	os:
+		listdir, mkdir, remove
+	os.path:
+		join, isdir, exists, getmtime
+
+Many examples using generators
+   http://www.dabeaz.com/generators/
+
+os.walk(top, topdown=True, onerror=None)
+   returns tuple dirpath, dirnameS, filenames
+   if topdown=1, can modify dirnames in place 
+
+os.path
+
+abspath
+   returns full path
+   use if script arg is relative
+
+splitext
+   split filename into (base,extension)
+
+fnmatch - pattern matching in path names
+   http://www.dabeaz.com/generators/genfind.py
+
+
+
+Shell & running executables {{{1
+Run external programs {{{2
+
+Recommended 
+
+Click
+   builds cli apps
+   http://click.pocoo.org/5/
+
+sh 
+   https://amoffat.github.io/sh/
+
+shutit
+  https://learnxinyminutes.com/docs/shutit/
+
+invoke
+  task execution
+  http://www.pyinvoke.org/
+fabric
+  run/automate programs over ssh
+  related ? to invoke
+  http://www.fabfile.org/
+
+
+Subprocess module
+	http://docs.python.org/library/subprocess.html
+	http://www.doughellmann.com/PyMOTW/subprocess/
+
+	run external program, wait to finish
+		subprocess.call('ls -l', shell=True)
+	run program, don't wait
+		process=s.Popen('ls',stdout=s.PIPE)
+		(stdoutdata, stderrdata)= process.communicate()
+	'process' is a Popen instance
+
+
+subprocess module (new in 2.4)
+   replaces
+      os.system os.spawn* os.popen* popen2.*
+   using w/o return values
+        call(*args, **kwargs)
+          e.g.
+            from subprocess import call, STDOUT
+            call(["command", "arg", "arg"], stdout=open("/dev/null", "w"), stderr=STDOUT) 
+   using return values
+      old:
+         f=os.popen('ls -l')
+         filelist=f.readlines()
+         result=filelist.close()
+            #result returned on file close
+            #result is None if no errors 
+      new:
+         p = subprocess.Popen(["doxygen.exe", r"Doxyfile.cfg"], 
+             stdout=subprocess.PIPE, stderr=subprocess.STDOUT) 
+         lines = p.stdout.readlines() 
+
+
+Writing to stdin of an external program using os.popen
+   Cookbook Recipie 9.11
+
+Controlling an interactive program like ftp:
+   http://pexpect.sourceforge.net/
+   
+
+Arguments {{{2
+
+argparse - preferred
+not in stdlib: Click
+Optparse - new in 2.3,  prefered to getopt
+
+
+Embed in shell script {{{2
+
+#!/bin/bash 
+function now_date_time 
+{ 
+python - <<START 
+import datetime 
+value = datetime.datetime.now() 
+print (value) 
+START 
+}  
+now_date_time 
+Date_Time=$(now_date_time) 
+echo "Date and time now = $Date_Time"
+
+
+Other {{{1
+
+zipfile
+	zfile = zipfile.ZipFile("SomeZipFile.zip")
+
+	for name in zfile.namelist():
+	    localFile = open(name, "wb")
+		localFile.write(zfile.read(name))
+        localFile.close()
+
+
+
+vim:ts=4 sw=4 sts=3 ai et foldmethod=marker tw=80

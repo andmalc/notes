@@ -1,0 +1,22 @@
+
+formats
+    raster
+        jpeg
+        png
+        ico
+    text (?)
+        svg
+
+
+conversion
+    rsvg in librsvg2 deb
+        convert svg to raster formats for easier viewing
+
+
+apps
+    scribus - desktop publishing (work with svg)
+    inkscape - drawing
+    dia - drawing
+    imagemagick
+    blender
+

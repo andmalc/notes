@@ -1,0 +1,45 @@
+This is the article I mentioned
+
+http://madwifi-project.org/wiki/UserDocs/AntennaDiversity
+
+It appears that the default settings for the madwifi up to and including
+the latest version of Voyage assumes two antennas, but the newest
+version of Madwifi from svn which I am trying out defaults to using
+antenna 1 only.
+
+Using WLM54AGP23
+ IEEE 802.11 Unrecognized (Reserved frame), 
+
+Using CM9-GP
+	Atheros 5212 00:0b:6b:86:ef:5f
+
+Alix3 06:80:48:52:49:79
+	attempting to join alix0 as ap 
+		0.000000 06:80:48:52:49:79 -> WistronN_86:ef:5f MDS Header [Malformed Packet]
+	later
+		328.064270 06:80:48:52:49:79 -> Broadcast    ARP Who has 10.10.1.1?  Tell 10.10.1.110
+	does join anyway but arp
+	after ifup/down ath0, good arp
+
+TPT61 wlan0 00:13:e8:76:7f:c3 
+product: PRO/Wireless 4965 AG or AGN [Kedron]
+driver iwl4965
+
+attempting to join alix0
+	no communication until manual set essid on wlan0
+	tshark on alix 
+		96.177612 IntelCor_76:7f:c3 -> WistronN_86:ef:5f EAPOL Start
+		107.051373              ->              Ethernet [Malformed Packet]
+	tshark on t61
+		386.699015 IntelCor_76:7f:c3 -> WistronN_86:ef:5f EAPOL Start
+
+	
+
+diversity = 1
+txantenna = 0 
+rxantenna = 1
+
+
+modprobe ath_pci rfkill=0
+
+

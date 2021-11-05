@@ -1,0 +1,58 @@
+Server
+	create
+		httpd = ServerClass(server_address, HandlerClass)
+		httpd.serve_forever
+	python3:
+		python -m http.server 8000
+
+Modules:
+
+SocketServer module: 
+	BaseServer
+		init: server_address, RequestHandlerClass
+		get_request - override 
+		handle_request()  # if you do not use serve_forever()
+		finish_request - inst self.RequestHandlerClass(request,client_address)	
+	TCPServer(BaseServer)
+	BaseRequestHandler
+
+BaseHTTPServer module:
+	HTTPServer(SocketServer.TCPServer)
+		
+	BaseHTTPRequestHandler(SocketServer.StreamRequestHandler):
+		may add do_Get etc. methods 
+		parse_request - stores results in self.command, self.path, self.headers, self.request_version
+
+SimpleHTTPServer module:
+	This module builds on BaseHTTPServer by implementing the standard GET
+	and HEAD requests in a fairly straightforward manner.
+
+	SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+
+
+clients
+	urllib/urllib2
+		http://docs.python.org/howto/urllib2.html
+	httplip2
+	mechanize - for forms
+	tamperdata ?
+	
+	PyCurl
+		fast, uses cURL
+		http://pycurl.sourceforge.net/
+		http://www.ibm.com/developerworks/opensource/library/os-curl/index.html
+
+	Urlgrabber
+		simple to use 
+		http://urlgrabber.baseurl.org/
+
+
+
+
+scraping web pages
+http://www.packtpub.com/article/web-scraping-with-python
+Beautiful Soup
+use Firebug Firefox plugin to inspect page 
+
+twill: automate web browsing - http://twill.idyll.org/
+

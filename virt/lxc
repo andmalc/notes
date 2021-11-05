@@ -1,0 +1,89 @@
+
+
+designed and ideally suited for running full system containers vs. running single process
+
+10/2021
+https://www.redhat.com/sysadmin/exploring-containers-lxc
+
+https://help.ubuntu.com/lts/serverguide/lxc.html
+
+create 
+
+    lxc-create --template ubuntu --name c1 --bdev loop -- --release xenial
+
+
+    wizard
+        lxc-create -t download -n name
+
+
+lxc-ls --fancy
+lxc-start --name u1 --daemon
+lxc-info --name u1
+lxc-stop --name u1
+lxc-destroy --name u1
+
+
+lxc-clone -o C1 -n C2
+lxc-snapshot -n C1
+
+lxd {{{0
+
+Best: http://lxd.readthedocs.io/en/latest/
+
+https://linuxmonk.ch/wordpress/index.php/2016/getting-started-with-lxd-on-fedora/
+https://stgraber.org/2016/03/11/lxd-2-0-introduction-to-lxd-112/
+https://help.ubuntu.com/lts/serverguide/lxd.html#lxd-configuration
+
+Fedora repo: 
+dnf copr enable ganto/lxd
+dnf install lxd lxd-client
+
+Run lxd init to set up storage
+
+storage options
+    btrfs
+        mount  /var/lib/lxd on btrfs
+
+
+container config
+    config device
+
+    config 
+        get/set <container> key
+
+
+profile config - profiles hold settings for containers
+    profile
+        get
+        list
+        show <profile name>
+
+        device <profile name> 
+            get/set/add
+                profile device add default root disk path=/ pool=lxd-pool
+                    Set profile storage to lvm pool
+
+lxc
+    delete <container>
+    image 
+        delete <fingerprint>
+        list <storage location, default is local>:
+            image list images:
+                show 3rd party available images
+            image list ubuntu:
+                list offical unbuntu images
+    launch
+        launch images:fedora/25/amd64 fedora25  
+    list 
+        list runtime info
+    info <container name>
+
+    storage
+        delete
+        list
+        show
+            shows images saved in storage
+
+    config get storage
+
+

@@ -1,0 +1,52 @@
+
+Visual Model
+
+Assumes every element generates 1 or more element boxes
+Element Box:
+    content area surrounded by optional padding, borders, outlines, margins
+
+Box properties & types:
+    Normal flow
+        text renders left to right, tp to bottom
+    Block
+        gen by p, div, headings
+        stack vertically, 'new line'
+        any el can be made to gen with 'display:block'
+    Replaced element
+        completely replaced by content, e.g img
+    Inline
+        e.g. strong, em elments
+        no 'new line'
+        any el can be made to gen with 'display:inline'
+
+Backgrounds 
+    applied within padding by default
+    visible through gaps in border style
+    parent's always visible thr. margins
+
+
+Margins 
+    can have negative lengths
+
+Borders
+    Styles: sold, inset
+    border-color property
+        if not set, is foreground color of content
+
+Link to stylesheet file
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+Selectors
+    <name> Element name
+	.<name>	class
+	#<name>	id
+    [class*="blah-"]    class name starts with 'blah-'
+
+
+Colours
+	tomato
+
+Fonts
+    indicate size with rem unit.
+
+

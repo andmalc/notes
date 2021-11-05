@@ -1,0 +1,139 @@
+Read
+http://www.projectatomic.io/docs/docker-image-author-guidance/
+http://fedoramagazine.org/quick-containers-with-fedora-dockerfiles/
+
+Docker commands {{{1
+
+build {{{2
+
+final arg is directory containing Dockerfle
+-t		tag, 'andmalc/blah'
+
+Image commands {{{2
+
+images      list images on localhost
+pull        pull image from repo
+build       build an image from a Dockerfile
+history     show layers
+rmi         remove image
+save        export to tar
+tag         tag existing image;
+
+commit      create image from container
+    <cid> <new image name>      
+    -m=<commit message>
+
+
+run {{{2
+docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+
+cmd [executable, param, ...] - runs exact command
+w/o brackets runs cmd in shell - /bin/sh -c <command>
+ 
+options
+
+-d      daemonize/run in background
+--name  name cont.
+--entrypoint    override default command
+-i      interactive
+-P      auto map ports in container to host
+
+-p		publish 
+		Not needed if EXPOSE in dockerfile.
+		c	expose cont port to host
+		h:c  map port h on host to port c on container
+
+-t      allocate terminal
+
+Mounting {{{1
+
+--mount     preferred command
+-v src:dest mount data volume in cont.
+--volumes-from  mount volume from cont. (does not have to be running)
+
+If SELinux in effect, need :z option
+    -v /SOURCE:/DESTINATION:z
+    http://www.projectatomic.io/blog/2015/06/using-volumes-with-docker-can-cause-problems-with-selinux/
+
+--mount
+    type:[volume|bind|tempfs]
+    source:<name of vol>    ommit for anonymous volumes
+    destination:<path>      where to mount vol in container
+
+Types
+    volume
+        docker volume create my-vol
+
+
+Container commands {{{1
+
+start       
+    -a      start and attach
+
+attach      attach to a running container
+
+cp          copy file into cont
+            docker cp /tmp/test_file docker_container_1:/tmp/
+
+exec        run cmd without attaching
+            docker exec docker_container_1 ps ax
+
+export      export to tar file
+inspect     show container info
+logs <cid>  show standard output
+    -f      follow
+rm          remove stopped cont.
+stop        stop container
+top         show processes running in cont.
+port <cid> <port#>  show host port for cont. port
+stats       realtime container resource usage
+
+
+^p^q		detach from shell without stopping container
+ps          show running containers
+    -l      last container created/started
+    -a      all containers including stopped
+
+Examples {{{1
+
+Interactive 
+    docker run -t -i ubuntu:12.04 /bin/bash
+
+
+Run with exposed port
+    run -d -p 22 /fedora-ssh
+
+Daemon
+    docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+Remove all containers
+    drm -f $(docker ps -aq)
+
+Dockerfile {{{1
+
+run vs. cmd vs. entrypoint
+
+run     execute immediately & commits the result
+
+cmd     does nothing during build
+        provides execution default for container, does nothing if no run args
+        one only per Dockerfile
+
+entrypoint  
+    will run if no run args
+    if run args, they are passed to entrypoint
+
+entrypoint and cmd
+    args to cmd passed to entrypoint
+
+
+
+Networking {{{1
+
+http://www.dasblinkenlichten.com/docker-networking-101/
+
+
+Zsh Aliases {{{1
+
+alias drm="docker rm"
+alias dps="docker ps"

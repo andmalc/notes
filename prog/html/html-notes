@@ -1,0 +1,77 @@
+
+
+
+Older Browser Support {{{1
+normalize.css
+
+For IE support for sectioning elements:
+https://github.com/aFarkas/html5shiv
+
+Design Helpers {{{1
+placehold.it - make placeholder images
+placepuppy.it
+http://lorempixel.com/
+google.com/fonts
+
+Layout {{{1
+
+Block layout - vertically-biased
+Inline layout - horizontally-biased
+
+Image with float taller than its container: use clearfix
+http://learnlayout.com/clearfix.html
+
+Layout blocks left to right and wrapping
+http://learnlayout.com/inline-block.html
+
+FlexBox {{{2
+
+2012 version: display: flex or flex-{*}
+2011 version: display: flexbox or flex()
+2009 version: display: box or box-{*}
+
+http://www.sitepoint.com/easy-responsive-css-grid-layouts/
+http://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
+Flex container properties
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row (default) | column
+	flex-wrap: nowrap (default) | wrap 
+	flex-flow = direction || wrap (default row nowrap)
+	justify-content: flex-start (default) | flex-end | center | 
+		space-between (l & r stay at margins) | space-around (space between all)
+	align-items: flex-start | flex-end | center | stretch (default) | baseline
+	align-content (multi-line only)
+
+Flex Item properties
+	order
+	flex-shrink
+	flex-grow
+	flex-basis
+	flex = grow, shrink, basis
+		http://css-tricks.com/almanac/properties/f/flex/
+
+
+
+Media Queries {{{1
+
+Device width depends on orientation
+@media only screen and (max-width: 500px) {
+min-width   True if screen at least x
+            Minimum width at which these styles are shown
+max-width   True if screen no bigger than x
+            Maximum width at which these styles are shown
+
+
+Semantic elements {{{1
+
+article - self-contained content, makes sense on its own, must incl. heading
+header -
+	group of introductory & nav aides:
+	- For page: Site title, logo, table of contents, search box
+	- For section: heading, pub date, author, summary
+nav - major navigation
+section - group thematically related content with a heading
+aside - tangentially related content
+main - primary content of doc. Not child of article or sect.  Use with role="main" for IE compat.

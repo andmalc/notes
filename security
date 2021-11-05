@@ -1,0 +1,103 @@
+Docs {{{1
+
+
+
+Tools {{{1
+
+
+User Access {{{1
+
+Dealing with automated SSH password-guessing
+https://lwn.net/Articles/704089/
+
+
+	login restrictions
+		in /etc/pam.d/
+			su 
+				Only members of wheel can su to root:
+				auth required pam_wheel.so group=wheel debug 
+				
+		file permissions
+			umask
+				examples
+					022 - default (files are 644, dirs 751).  
+					027 - group can list & read files, no access for others
+				Set in PAM login.def and later in /etc/profile/, /etc/zshrc, or 
+				in user configs, and also via adduser from settings in /etc/skel/.
+            Leave user group name 'username' - this prevents group access 
+                to personal info (eg by adding to a 'user' group).
+            Set DIR_MODE in /etc/adduser.conf to 0750 to remove default 
+				world-readable 0755.  If a web server should read 
+				~/public_html 
+				for personal web page sharing, change DIR_MODE to 0751.
+		ssh
+			keychain 
+				add to .zlogin:
+					keychain ~/.ssh/id_dsa
+					. ~/.keychain/<hostname>-sh				  	
+
+					
+
+		gpg -  protect memory of program from being read
+			chown root /usr/bin/gpg
+			chmod u+s /usr/bin/gpg
+
+Groups
+	adm
+		reads logs
+	staff
+		junior admins
+		could give access to /usr/local
+
+
+Network Security {{{1
+
+
+Port scanning
+    nmap <IP address pattern>
+        check open ports
+            nmap -sT -PT your.external.ip.address	
+        what program listening on port?
+            lsof -i tcp:<port>
+
+firewall policies (from Securing Debian)
+	* incoming connections are allowed only to local services by allowed machines.
+	* outgoing connections are only allowed to services used by your system (DNS, web browsing, pop, email....) [33]
+	* the forward rule denies everything (unless you are protecting other systems, see below).
+	* all other incoming or outgoing connections are denied.
+
+	ports to open
+		80, 443 (secure web, imap etc.)
+
+
+OpenSSL  {{{1
+
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/sec-Using_OpenSSL.html
+
+
+Security Scan/Auditing {{{1
+
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/chap-system_auditing.html
+
+
+Security Auditing
+    https://linux-audit.com/lynis/
+
+OpenVAS
+http://www.openvas.org/
+
+Tripwire 
+    policies - twpol.txt determine which directories to snapshot and rules for identifying
+        violations
+    tripwire
+        --init	create snapshot
+        --check 
+    edit config and policies
+        generate config files
+            twadmin --print-cfgfile > twcfg.txt
+            twadmin --print-polfile > twpol.txt
+    edit, and resign pol and cfg
+        twadmin --create-cfgfile --cfgfile /etc/tripwire/tw.cfg \ 
+          --site-keyfile site_key etc/tripwire/twcfg.txt
+        twadmin --create-polfile --cfgfile /etc/tripwire/tw.cfg \
+          --site-keyfile /etc/tripwire/site_key /etc/tripwire/twpol.txt

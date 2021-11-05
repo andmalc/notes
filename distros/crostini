@@ -1,0 +1,25 @@
+overview
+    https://chromium.googlesource.com/chromiumos/docs/+/HEAD/containers_and_vms.md
+
+image server site
+    https://us.images.linuxcontainers.org/
+
+vmc
+    manage VM's
+    termina vm is default
+
+lxd
+    manage application containers
+    https://linuxcontainers.org/lxd/introduction/
+
+
+New distro images can be created either with vmc or with lxd
+    https://gist.github.com/rstacruz/aeb2273d19e5f5ffbe27a973cb82717f
+    https://wiki.archlinux.org/title/Chrome_OS_devices/Crostini#Create_the_container
+
+
+lxc
+    image
+        list    show downloaded os images
+    storage
+        info default    show storage info

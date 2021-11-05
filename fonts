@@ -1,0 +1,107 @@
+
+
+Debian Packages {{{1
+    msttcorefonts
+    recommended: ttf-bitstream-vera
+
+Utilities {{{1
+    x-ttcidfont - what does this do?
+    fontconfig, used by xft2, seems to come pre-configured to use defoma's tt fonts.
+    xfontsel
+        view available fonts
+
+	fontconfig
+		current font util for Gnome & KDE
+		used by freetype2 and Xft2
+	
+    fc-cache -fv	recache & display fonts
+
+Files {{{1
+
+/etc/fonts/local.conf
+
+Sample local.conf for Bitstream Vera
+https://www.gnome.org/fonts/
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<!-- /etc/fonts.conf file to configure system font access -->
+<fontconfig>
+        <!--  Enable sub-pixel rendering
+        <match target="font">
+                <test qual="all" name="rgba">
+                        <const>unknown</const>
+                </test>
+                <edit name="rgba" mode="assign"><const>rgb</const></edit>
+        </match>
+         -->
+
+        <alias>
+                <family>serif</family>
+                <prefer>
+                        <family>Bitstream Vera Serif</family>
+                </prefer>
+        </alias>
+        <alias>
+                <family>sans-serif</family>
+                <prefer>
+                        <family>Bitstream Vera Sans</family>
+                </prefer>
+        </alias>
+        <alias>
+                <family>monospace</family>
+                <prefer>
+                        <family>Bitstream Vera Sans Mono</family>
+                </prefer>
+        </alias>
+</fontconfig>
+
+Fonts General
+	Major font types: Type1 & TrueType.  Type1 well supported on Linux because historically associated with PostScript printing.  TrueType not as well supported but desirable because of their superior hinting.  Hinting is important for display on low resolution devices such as screens.
+
+	Fixed width vs. Variable Width
+		Fixed width fonts suited to text editors and consoles.  Best known such font is courier. Other examples: Letter Gothic, Lucida Console.
+		Variable width best for documents.
+	Serif & Sans Serif
+		Serifs are little hooks on the ends of characters.  They improve readability.  An example is Times New Roman
+		Sans Serif fonts have a stark appearance.  Their lack of details gives clarity at very small sizes.  Examples: MS Comic Sans, Verdana, Arial, Century Gothic, Helvetica.  MS claims that Verdana is readable at especially small sizes.
+
+	Types of Serif Fonts
+		Old Style (Garamond, Jenson, Goudy Old Style) 
+			- always readable
+			- Shapely, well defined serifs
+			- subtle contrast of light and heavy lines
+			- use with Humanist sans serif fonts
+
+		Moderns (Bodoni)
+			- Add character to document, not for long text sections.
+			- vertical emphasis
+			- lighter serifs (often just thin horizontal lines
+			- New Century Schoolbook is a Modern, but contrast lessened to improve readability.
+			- stark contrast of light & heavy lines
+
+		Transitional (Times Roman)
+			- between Old Style and Modern
+			- use with Humanists
+
+		Slab Serifs (Typewriter and most fixed width fonts)
+			- thick, block-like serifs
+			- sturdy look, used when degredation of quality may occur. (eg photocopies)
+			- use with Grotesque or sometimes Geometric or Humanist sans serif fonts
+
+
+	Types of Sans Serif Fonts
+		Geometric (Futura, Avant Garde, Century Gothic)
+			- Characters made of vertical and horizontal lines and circles
+			- minimalistic
+			- no weighting
+
+		Grotesque (Helvetica, Arial)
+			- Good for headlines
+			- Not as 'artsy' as Geometrics, more variation in weight, more strokes, squarer.
+
+		Humanist
+			- least mechanical in apprearance.
+			- use with old style or transitional fonts.
+			
+

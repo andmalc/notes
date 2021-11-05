@@ -1,0 +1,487 @@
+For novices: https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud
+
+Pro Git by Scott Chachon - https://git-scm.com/book/en/v2
+
+Fugitive http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
+
+https://orga.cat/posts/most-useful-git-commands
+
+
+Options {{{1
+
+--no-pager
+
+Terms {{{1
+
+Repo is set of the current and past commits
+
+Staging Index 
+    composed by git add/git read-tree
+    staging area for new commit and becomes the new commit
+    created at checkout, updated by add command
+    includes snapshot of all files, not just staged.
+    new blob created for added/modified files 
+
+Commit:
+    pointer to a top level tree obj created by snapshotting Index 
+        as well as commiter info & other metadata
+    author & commiter info
+    commit message
+    except for first 'root' commit, stores zero or more pointers to parent commits
+
+Commit ID
+    SHA-1 checksum of the commit’s contents
+
+    relative references to a commit ID: ~#
+        ~1  one commit before current
+
+
+Refs
+    Simple - points to commit ID
+    Symbolic - points to another ref
+
+Branch
+    movable pointer (simple ref) to tip (newest) commit of collection of commits
+    branch moved forward on each commit
+
+    Master      default name of first branch
+
+HEAD        
+    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
+        tip (last commit) of current local branch.  
+    This defines which branch is on
+    When committing, HEAD is set as parent commit
+    If earlier commit checked out, is hard link to commit ID.
+    Then in detached HEAD mode, not on branch
+
+    Detatched if is simple ref.
+    Checking out branch moves this pointer.  
+
+Tags
+    lightweight
+        Like commit object but ref to commits, not trees.
+        Unlike branch refs never change
+    annotated
+        Can ref to any object, not just commits
+        -m field can hold any data
+
+Checkout cid
+    Change the HEAD symref to point to the new  branch 
+    Reset the index to match the tip of the new branch 
+    If branch given, modified files in working dir retained unless forced -f 
+    If no branch name, update the working tree to match the index
+
+origin      
+    default name of remote repo
+    remote branches locally referred to as origin/branch_name
+    Can then c/o with 'co <name>'.  Remote is 'upstream'
+    origin/master = refs/remotes/origin/master
+
+
+Remote 
+    like a bookmark for a repository
+
+
+Merge commits  multiple parents
+
+
+Repos {{{1
+
+Example: create new repo with remote at BB
+	git init <dir>
+	git add . 
+	git commit -m 'comment'
+	git remote add bb ssh://git@bitbucket.org/andmalc/work.git
+	git push --all bb # pushes up the repo and its refs for the first time
+
+	git commit -a  #all changes in working directory
+	git push -u origin master
+
+remote 
+    -v          show origin details
+    add         <remote add <name> <url>
+    fetch		pull remote changes to remote tracking branch
+    clone		create local repo, remote tracking branch auto-created
+    pull		pull remote changes to remote tracking branch 
+                    and start merge = fetch+merge
+    set-url <name> <new URL>
+    push <repo> upload changes to remote.  Default repo is origin
+                <local branch name>:<remote name>
+
+Set new remote
+     remote add upstream https://github.com/octocat/Spoon-Knife.git
+
+
+Info {{{1
+
+Status {{{2
+
+Shows changes to tracked files and presence of untracked files in working dir
+
+-sb	
+	short form
+	Red is changed or untracked
+	Green is staged
+
+Diff {{{2
+
+Changes to file contents
+
+no arg		changes to tracked files not staged
+--cached cid	changes in index relative to cid
+--staged		same as --cached
+
+cid             changes to tracked + newly tracked vs. cid
+cid cid         changes to tracked + newly tracked vs. cid
+HEAD        	staged vs. current commit
+HEAD\^ HEAD	show diffs between last two commits.  Prefix noglob in zsh for no ^ escape needed
+    
+diff for single file
+cid fn
+origin/master:./ -- <filename>
+A1234B:./ -- <filename> 
+
+log {{{2
+
+    Commit history 
+    current branch including ancestors from other branches
+    does not show commits not part of a branch unless specified with --stat
+
+    args
+         <path>			show commits to this file only
+
+    options:
+         --stat <cid>   specific commit
+        --all           show other branches too
+        --decorate      show branch names
+        -#				number of commits to show
+         --oneline
+
+    filter:
+         --grep         grep commit messge
+
+     file info:
+         -p				show diffs	
+
+	 --decorate --graph --oneline --all
+
+ls-files {{{2
+
+    Shows tracked files 
+
+    --abbrv --stage/-s     Show index with abbreviated object name
+
+other info {{{2
+
+ls-remote
+    show remote commit
+
+show [cid]
+    show last changes or in cid 
+
+difftool			show diff in vim etc.
+
+grep
+    Ignores according to .gitignore
+
+
+
+Add & Commit {{{1
+
+
+add <path spec>
+    creates snapshot of file which is later used by commit
+    -i  interactive
+    -n  dry run
+    -p  stage subsections of a file
+    -A/--all   updates index to match entire working tree. Includes untracked files.
+
+commit 
+    -v	show diff in commit message
+
+    -a  commits all staged and changed tracked files including deletes
+        bypasses staging, untracked files excluded
+                
+
+Reverting / Resetting {{{1
+
+https://www.atlassian.com/git/tutorials/undoing-changes
+
+revert <commit>
+    generate a new commit that undoes changes in <commit> 
+    applies that to the current branch.    
+    Preferred over Reset because preserves history
+
+    revert HEAD~1
+        new commit undoing changes from last commit
+
+
+Reset
+https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
+
+no arg
+	Unstages chnages in Index, no effect on files
+	Implies --mixed HEAD
+
+<file>
+	Unstages a file
+
+--mixed
+	Reset Index but not working tree
+	
+--hard [<commit>]
+	Reset the index and changes to working tree
+
+--soft HEAD~1
+	Commit is removed from branch
+	HEAD points to previous commit
+	Preserves Index and working tree changes
+	No action if <commit> not specified
+
+Undo last commit, preserving local changes in index
+git reset --mixed HEAD~1
+
+# Move the branch pointer back to the previous HEAD
+git reset --soft HEAD@{1}
+git commit -m "Revert to 56e05fced"
+    Undo non-pushed commits
+        git reset origin/master
+    Reset to remote state
+        git fetch origin
+        git reset --hard origin/master
+
+    Reset/Restore one file from earlier commit
+	    checkout <commit ID> <file path>
+
+#Reset remote (e.g. on GitHub)
+--hard origin -f
+
+Restore a file verion before a commit
+    checkout <commit>~1 -- <file name>
+
+
+Branches {{{1
+
+
+branch 
+    -v  show all branches,  most recent commit
+    -r	show remote tracking branches
+    -a	show local and remote tracking branches
+    -d  delete <branch>
+    -rd delete remote <remote>/<branch>
+    -m	rename
+
+    create new branch from current or other commit, don't switch to it	    	   
+        <branch name> [cid]	
+
+    create new branch <name> and switch to it
+        git switch -c <new branch name>
+
+    create new branch <name> based on other branch and switch to it
+        checkout -b <new branch name> <source branch name>	
+
+    create new branch tracking remote and switch to it
+        checkout -b <name> origin/name
+
+
+Set upstream branch
+    branch --set-upstream-to=origin/master
+    branch -b <branchname> --track origin/<remote b name>
+    push --set-upstream origin gh-pages (confirmed works)
+
+Change remote branch name or create (?)
+    git push origin <branch>
+
+show-branch show all changes in branch
+
+git symbolic-ref HEAD
+
+
+Submodules & Subtrees {{{1
+
+Tracked in .gitmodules file.  Composed from a gitlink tree entry in main repo that points to particular commit 
+
+Add
+    submodule add [--name name] <repo URL> [relative path in parent repo]
+    if path given, logical name is tail unless --name specified
+    if no local name given, repo cloned into cwd/<final part of repo path>
+
+    Info added to:
+        .git/config
+    Creates 
+        .gitmodules 
+            used by init when repo is cloned to populate .git/config
+        .git/modules/<path to submodule> 
+            this is location of submodule's git repo
+            referenced by gitdir file in sm root.
+
+
+Include submodule contents on initial clone
+    git clone repo --recursive
+
+    if forgot --recursive
+        git submodule init
+            update .gitconfig with info from .gitmodules
+        git submodule update
+            pull files and create entry in .git/modules
+    or
+        git submodule update --init
+
+
+Delete
+    git rm -r  <path to submodule>
+        Note: no trailing slash after submodule name
+    git commit -a -m 'removed submodule ... '
+
+ 
+    # or, if you want to leave it in your working tree
+    git rm --cached asubmodule
+    mv asubmodule_tmp asubmodule
+    rm -rf .git/modules/asubmodule
+
+
+Updating
+    cd into module dir
+    git pull origin master
+
+    or from submodule root
+    git submodule foreach git pull origin master
+
+    git submodule update --init --recursive
+
+    sync after changing submodule URL
+    git submodule sync
+    git submodule update --init --recursive --remote
+
+Info
+    submodule status
+    git status ?
+
+
+Subtrees
+	Reference to another project.  Files not saved in parent repo. Dir is empty until  
+	Setup
+		remote add -f {remote_name} {repository_url}
+		subtree add --prefix={path/to/subdir} {remote} [branch] --squash
+	Pull changes
+		subtree merge --prefix={-} 
+		fetch {remote}
+		subtree pull --prefix={path/to/subdir} {remote} [branch] --squash
+	Read-tree
+		read-tree --prefix=<path from repo root> -u rack_branch
+
+
+
+
+Merging {{{1
+
+Merge pull request on GitHub
+    ID = number to right of issue name on GH page for request
+    BRANCHNAME = new branch to create
+    git fetch origin pull/ID/head:BRANCHNAME
+    git checkout BRANCHNAME
+
+Merge conficts
+    Edited files
+        https://rtcamp.com/tutorials/git/git-resolve-merge-conflicts/
+        - find files: grep -lr '<<<<<<<' . 
+
+    Files deleted/renamed
+        Maintain deleted: readd and redelete
+        Maintain 
+
+	merge --abort	abandon merge - what happens to uncommited changes?
+	merge -Xignore-all-space or -Xignore-space-change - ignore ws changes
+
+	checkout --ours <path>		keep whole file in local commit
+
+Buffer names
+	show with: ls-files -s
+	0	working tree
+	1	change
+	2	target
+	3	merge branch
+
+gitdiff with vim:
+    config:
+        git config merge.tool vimdiff
+        git config merge.conflictstyle diff3
+        git config mergetool.prompt false
+    commands
+        diffget
+        diffput
+    buffers
+        LO  local
+        BA  base
+        RE  remote
+        ME  merged
+
+vimdiff
+    panels
+        left: working tree
+        centre: common base
+        right: version in merge branch
+
+Fugitive
+http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
+http://alblue.bandlem.com/2011/10/git-tip-of-week-index-revisited.html
+
+File management {{{1
+
+Moves files		mv
+Remove files
+	rm		Deletes file/directory
+	rm --cached		Untracks files/directoires
+
+Unstage file
+	reset <file>
+    git reset HEAD <fn>
+
+Undelete files staged but not commited:
+    git checkout -- <fn>
+
+Ignore files
+	if already indexed:
+		git update-index --assume-unchanged
+	add to .gitignore
+
+Forking {{{1
+
+Fork at Github
+clone a local copy
+add URL of original as remote upstream
+update by fetching changes, checking out master then merging upstream/master
+
+Clone repo locally
+Make changes
+Make new blank repo at GH
+Change remote to new URL:
+    git add remote myrepo URL
+    git checkout -b newbranch
+    git push -u myrepo newbranch # -u =  set upstream 
+
+Utilities {{{1
+
+
+vcsh	manage multiple repos
+		http://goo.gl/t2xCne
+	init
+	list
+	enter
+
+Setup config on new machine
+	sudo apt-get install vcsh git mr
+	vcsh enter config
+	git remote add origin ssh://git@bitbucket.org/andmalc/config.git
+	git pull -u origin master
+
+Git Config {{{1
+
+[user]
+   email = andmalc@gmail.com
+   name = andmalc
+[core]
+   pager = less -r
+[status]
+	showUntrackedFiles = no
+a

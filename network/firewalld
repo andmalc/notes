@@ -1,0 +1,73 @@
+https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos-7
+https://fedoraproject.org/wiki/FirewallD#Dynamic_firewall_with_Firewall
+
+Design {{{1
+
+firewall-cmd or firewall-config (graphical) 
+    front ends to firewalld service which uses iptables command to control netfilter in kernl
+
+Zones
+    applied per interface.  Can set in Network Manager 
+    set according to level of trust in traffic on interaces
+
+    drop        only outgoing connections, incoming rejected, no message
+    block       only outgoing connections, incoming rejected with message
+    trusted     all connections accepted
+
+    Zones accepting only selected incoming connections 
+    public      other computers not trusted, some incoming accepted
+    external    like public with masquerading
+    work        computers on local network trusted
+    home        diff with work?
+    internal    diff work work?
+    dmz         publically accessible, limited access to local network
+
+    
+firewall-cmd CLI {{{1
+
+
+Show service status
+    --state     shows if running
+    --get-default-zone
+    --get-active-zones              show all zones controlling traffic
+    --list-all [--zone=xx]          list rules associated with active/indicted zone
+    --list-all-zones | less         show all rules for all zones
+    --change-interface=<interface>  Change interface to different zone
+
+
+Manage zones
+    --list-all-zones
+    --list-all [--zone=<zone>]      List enabled features of default zone or =zone
+    --get-default-zone
+    --set-default-zone=<zone>       
+    --get-active-zones              List zones and their interfaces
+   
+Conigure zones                    
+    Apply to current zone or specify with --zone=<zone>
+    Changes temporary unless 1st arg is --permanent
+
+    --get-services                  Show available services
+    --list-services                 List enabled service in current zone or spec with --zone=
+    --add-service=<service>
+     --remove-service=<service>
+     --add-port=<port>[-<port>]/<protocol>
+     --add-masquerade
+        
+        firewall-cmd --permanent --zone=public --add-service=http 
+        firewall-cmd --permanent --zone=public --add-service=https
+
+Manage interfaces
+    Apply to default zone or spec with --zone= 
+    --add-interface=<interface>     Add interface 
+    --change-interface=<interface>  Change interface to different zone
+
+Save changes
+    --reload    like a reset - discards changes not made permanent
+    --runtime-to-permanent # saves and enables changes 
+
+Session Example
+    firewall-cmd --zone=FedoraServer --change-interface=eth0
+    firewall-cmd --set-default-zone=FedoraServer
+    sudo firewall-cmd –runtime-to-permanent
+
+

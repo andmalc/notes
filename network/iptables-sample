@@ -1,0 +1,35 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+COMMIT
+
+### For use with libvirt - rules added by libvirt excluded
+*nat                                                                                                                           
+:PREROUTING ACCEPT [55581:6980812]                                                                                             
+:POSTROUTING ACCEPT [40316:2793106]                                                                                            
+:OUTPUT ACCEPT [40015:2777518]                                                                                                 
+-A PREROUTING -p tcp -m tcp --dport 5984 -j DNAT --to-destination 192.168.122.115:5984                                         
+-A POSTROUTING -s 192.168.152.0/24 -o br0 -j SNAT --to 97.107.132.26
+
+COMMIT                                                                                                                         
+# Completed on Thu Apr 15 19:31:10 2010                                                                                        
+*filter                                                                                                                        
+:INPUT DROP [0:0]                                                                                                              
+:FORWARD DROP [0:0]                                                                                                            
+:OUTPUT ACCEPT [0:0]                                                                                                           
+-A INPUT -m state --state RELATED,ESTABLISHED -j                                                                               
+ACCEPT                                                                                                                         
+-A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT                                                                                   
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT                                                                                    
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT                                                                                    
+-A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT                                                                               
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT                                                                               
+-A FORWARD -d 192.168.122.115/32 -p tcp -m tcp --dport 5984 -j ACCEPT                                                          
+COMMIT                                      

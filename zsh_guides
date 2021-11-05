@@ -1,0 +1,41 @@
+Zsh Manual - looks good so far
+Read through info
+
+ZSH Guide - may be more suitable for me than others
+http://asis.web.cern.ch/asis/products/MISC/zsh-2.6.beta4/zsh_toc.html
+
+Beginner's Guide to Unix Shell with zsh Examples including startup config files for zsh.
+http://ieee.uow.edu.au/documents/Unix_Guide/Unix_Guide/Unix_Guide.html
+
+Reference for Globbing, File name and process expansion:
+man zshexpn
+
+Cool Things in Bash & Zsh
+http://www.jpeek.com/talks/ukuug_20000720/
+
+Linux Magazine Articles
+http://www.linux-mag.com/depts/power.html
+
+
+Zsh Workshop - Looks good, concise
+http://www.acm.uiuc.edu/workshops/zsh/toc.html
+
+unixtips.org
+
+Adam's Zsh & Shell pages
+http://adamspiers.org/computing/zsh/
+
+Zsh Fan Page - includes G alias for grep less.  Links 
+http://www.princeton.edu/~kmccarty/zsh.html
+
+Developer Works article.  Includes explanation of escape char sequences
+http://www-106.ibm.com/developerworks/linux/library/l-z.html?open&l=335,t=gr,p=Z-Shell
+
+Mailing Lists (searchable)
+zsh.org/mla:w
+
+
+Avoid
+User's Guide: verbose, unclear
+http://zsh.sunsite.dk/Guide/zshguide.html
+

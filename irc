@@ -1,0 +1,86 @@
+
+
+Docs {{{1
+
+
+BEST DOC:
+https://pthree.org/2010/02/02/irssis-channel-network-server-and-connect-what-it-means/
+
+http://docs.dal.net/docs/newbie.html#6
+
+
+Default port: 6667
+
+Client {{{1
+
+/exit   quit app
+
+
+Networks {{{1
+
+used for defining client-specific settings you want to apply when connecting to a server. These settings can include username, real name, nickname, usermodes
+
+
+/network 
+    add [-option val] <name>
+        -nick andmalc 
+        -realname 'Andrew Malcolmso' 
+        -autosendcmd '^MSG NickServ identify ghandi;wait 2000' 
+    list
+    remove <network name>
+
+
+
+
+Servers  {{{1
+
+/connect <server name>
+/server
+    Re)connects to the server or a newly specified one.
+    /server [server # | server address [port] [password]] 
+    /server 127.0.0.1 3535 ghandi
+
+    add server to network
+    add -auto -network <name> <server address>
+
+/links          shows connected servers
+/nick <name>    change nick 
+/nickserv identify [nickname] password
+
+/quote          send raw command to server
+/disconnect     disconnects from active server
+
+Channels {{{1
+
+/join #channel
+/clear      clears text on screen
+/close      end chat
+/part       leave chat
+
+Freenode only:
+    http://freenode.net/kb/answer/findingchannels
+    Search for channels
+        /msg alis LIST *searchterm*
+
+
+
+Irssi {{{1
+
+https://irssi.org/documentation/startup/#first-steps
+
+
+Show Commands: /help
+
+/save   save current settings to config
+
+
+ZNC {{{1
+
+http://wiki.znc.in/Running_ZNC_as_a_system_daemon#systemd
+
+server definition
+/server add freenode
+/server add -net freenode -auto -ssl my.bouncer.net 6697 username/freenode:password
+/connect freenode
+
+

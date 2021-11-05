@@ -1,0 +1,60 @@
+Py-Win ODBC
+	Dates 
+		Requires:
+			dbi.dll     support classes for various SQL data types, e.g. dates
+			odbc.pyd    comppiled ODBC interface
+
+		dbiDate objects - no dates before 1970
+
+		Example Code:
+			print '\nDate conversions:'   # play with dbiDate object
+			date = result[0][-1]
+			fmt = '  %-25s%-20s'
+			print fmt % ('standard string:', str(date))
+			print fmt % ('seconds since epoch:', float(date))
+			timeTuple = time.localtime(date)
+			print fmt % ('time tuple:', timeTuple)
+			print fmt % ('user defined:', time.strftime('%d %B %Y', timeTuple))
+
+			Outputs:
+			Date conversions:
+			standard string:         Fri Dec 19 01:51:53 1997
+			seconds since epoch:     882517913.0
+			time tuple:              (1997, 12, 19, 1, 51, 53, 4, 353, 0)
+			user defined:            19 December 1997
+
+
+ADO
+	I have a problem using Python with win32all to access a database via ADO.
+
+	I'm doing a simple table lookup,
+
+		rs = Dispatch("ADODB.Recordset")
+		rs.Open("Table", "Provider=msdaora;...")
+		val = rs.Fields(1).Value
+
+	[This isn't Oracle related - I tested with an Access database as well]. The
+	problem is that "val" has a basic Python type - usually a Unicode string. If the
+	database field type is right (Long Integer in MS Access for instance) I get a
+	Python 'int' back, but for more general Number types (Decimal in Access, pretty
+	much anything in Oracle) I get a Unicode string back. OK, I know I can convert
+	back to some form of numeric form, but it's awfully messy.
+
+	In VBScript, you get an error: "Variable uses an Automation type not supported
+	in VBScript", which is probably worse than Python's answer.
+
+	The basic problem, though, is that the Value property is actually a VARIANT
+	type, and VARIANTs support more data types than either VBScript or Python. For
+	everyday use, win32all's approach of converting a VARIANT to the "best" native
+	Python type is reasonable. But for "advanced" use, it would be nice to be able
+	to get at some form of Python wrapper round a "real" VARIANT, which would allow
+	the programmer to make the decision.
+
+	This issue is even worse in Oracle, where pretty much *all* numeric fields are
+	stored as something which in ADO/VARIANT terms is a "Decimal" type, and which
+	Python converts to a Unicode string. Even 3-digit integers  [:-(] So I'm forever
+	having to convert Unicode strings back to integers.
+
+	Time to look into mxODBC or cxOracle...
+
+#################<>

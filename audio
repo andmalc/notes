@@ -1,0 +1,56 @@
+
+Alsa {{{1
+
+Fedora WS: 
+- Alsa utilities connect through Pulse Audio
+- can override by setting PCM in .asounrc or /etc/asoundrc.conf
+
+List sound cards
+	cat /proc/asound/cards
+
+Card designation: Card + Chip/Device
+Card: HDA Intel PCH 
+Device (chip) Realtek ALC283  
+
+List capture devices
+    arecord -l
+
+List playback devices
+    aplay -l
+
+Capture from file
+    arecord -f S16_LE -c 2 -r 16000 -d 3 -v audio.wav
+
+Play from file
+    aplay -D <PCM device> <file>
+
+
+Alsa Configs {{{2
+
+cm.!default {
+  type plug
+  slave {
+    pcm "hw:1,0"
+  }
+}
+ctl.!default {
+  type hw
+  card 1
+}
+
+Jack:
+
+pcm.!default {
+  @func getenv
+  vars [ PCM ]
+  default "plug:jack"
+}
+
+
+
+Pulseaudio {{{1
+
+Disable
+   systemctl mask pulseaudio --user
+
+

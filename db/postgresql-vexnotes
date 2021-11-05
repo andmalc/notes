@@ -1,0 +1,28 @@
+Postgres superuser default name: postgres
+
+Starting/stopping server
+	Single user mode:
+	/etc/init.d/postgres start/stop
+
+	Multiuser mode (pq superuser must execute)
+	postmaster -D datadir (e.g. '/var/lib/pgsql')
+
+PQ commands
+
+createuser username
+createdb dbname
+dropdb	dbname
+psql	dbname
+
+
+psql
+
+\h				help
+\g or ;			end input
+drop database dbname
+
+comments
+	--			single line
+	/* ... */	multi line
+
+

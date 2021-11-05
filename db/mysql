@@ -1,0 +1,53 @@
+
+Installation & Setup {{{1
+
+mysql_install_db
+    Run as root or other user provided that user can read and write to db directory
+    creates mysql database to hold privilages.  
+        Will not overwrite existing privilage tables
+        Tables: user, db, host, tables_priv, columns_priv, func
+    creates a test db
+    adds privilage entries for the user running mysql_install_db
+    adds root user without password
+    starts db
+
+access security
+	privilages, default
+		mysql root can do anything
+		anyone can create db's with name 'test' or starting with 'test_'
+	grant privilages
+		GRANT ALL ON <db>.* TO 'your_mysql_name'@'your_client_host';
+
+Utils {{{1
+
+connect
+    mysql 
+        -h <host> - default local
+        -u <user> - default anonymous
+
+list databases/details
+    util
+        mysqlshow <db>
+
+MySQL prompt {{{1
+
+show dbs
+    SHOW DATABASES
+switch to db
+    USE <db>
+create a db
+    CREATE DATABASE <name>;
+create table
+    CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20), species VARCHAR(20), sex CHAR(1), birth DATE, death DATE)
+show
+    tables
+        show tables
+        DESC / DESCRIBE <table> 
+
+
+Load data from file
+    LOAD DATA LOCAL INFILE '/path/pet.txt' INTO TABLE pet;
+    May need ' --local-infile' option to mysql client startup or add to mysql section of my.cnf
+    \N for nulls
+    default separator char is TAB 
+    separate by comma: FIELDS TERMINATED BY ','

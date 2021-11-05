@@ -1,0 +1,23 @@
+
+
+Locale bug
+localedef -i en_US -f UTF-8 en_US.UTF-8
+
+
+Repos:
+
+EPEL - extra packages
+    package list
+        https://dl.fedoraproject.org/pub/epel/7/x86_64/
+    sudo dnf install epel-release
+
+CR (testing)
+    install yum-utils
+    yum-config-manager --enable cr
+
+
+Set up Nix in bash shell
+Install fish using nix
+Install others
+
+

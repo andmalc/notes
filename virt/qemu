@@ -1,0 +1,477 @@
+
+Create a rootfs {{{1
+
+Create rootfs excluding system generated files
+    excludes file:
+        .bash_history
+        /dev/*
+        /mnt/*
+        /tmp/*
+        /proc/*
+        /sys/*
+        /usr/src/*
+    tar --numeric-owner -cjpf /tmp/mysystem.tar.bz2 / -X /tmp/excludes
+
+Create img/qcow 
+    mkosi --qcow2
+    virt-builder
+
+Filesystem => image file
+    virt-make-fs <dir> output.img
+
+Block device => image file
+    qmeu-img convert /dev/x output.img 
+
+Image modification {{{1
+
+In guestfs-tools:
+    guestfish shell
+        Edit image filesystem
+    virt-builder
+    virt-customize
+    virt-sparsify
+        reduce file size after files deleted
+        qcow2 or raw
+    virt-resize
+        resize disk images
+
+
+Image info {{{2
+
+qemu-img info
+virt-filesystems --long -h --all -a <img>
+
+show size with ls -lsh
+
+
+
+Create file with qemu-img {{{1
+
+qemu-img
+    create      
+        Create raw format image file. Size is virtual, file will be sparse
+
+        -b  <fn>    backing file
+        -f  format
+        -o backing_file=fn
+            use base image option to get only differences saved, no size needed
+
+        qemu-img create xp.raw 3G
+
+    check
+        Check image, allocation
+
+    info
+        Size on disk
+    clone
+
+    commit
+        commit changes to base image or backing file
+    convert     
+        convert an image file to a block device => big files
+        auto sparsifies
+        qemu-img convert root.qcow2 -O raw /dev/sdb
+
+        Create img file from block device
+            qemu-img convert /dev/blah root.qcow2 -O raw
+
+
+
+Qemu {{{1
+Qemu Snapshots/base images {{{2
+
+base_image
+    qemu-img create -f qcow2 -b <base-img> <out-file>
+	base-image is not modified until 'commit' in monitor or 'qemu-image commit fn'
+	may create a new derived image based on existing derived
+
+    Commit changes back to base
+        qemu-img commit clone.img
+    Convert clone to be a base
+        qemu-img convert clone.img -O qcow2 newclone.img
+
+    'commit' in monitor
+
+
+qemu-img snapshot <fn>
+    -a  apply - 
+    -c  create <tag | ss name>
+    -l  list snapshots in inmage
+    -d  delete ss
+
+    run qemu with -snapshot option
+    changes written to temp files
+    write changes to image with 'C-a s'
+	in monitor
+		info snapshots
+		commit (all | device)
+
+
+Qemu Booting images {{{2
+
+qemu-system-x86_64 \
+    -m 1G \
+    -display gtk \
+    -enable-kvm \
+
+
+    -kernel     kernel file
+    -append     kernel command line
+    -initrd
+    -L          path to BIOS file
+    -bios       BIOS file name
+
+UEFI boot
+https://www.reddit.com/r/qemu_kvm/comments/qctxzx/how_to_boot_qemu_in_efi_mode/
+
+qemu-system-x86_64 \
+         -enable-kvm \
+         -m 2048 \
+         -cpu host,kvm=off (?) \
+         -bios <path to OVMF.fd> \
+         -smbios type=0,uefi=on \
+         -hda foobar.raw 
+
+This also works
+qemu-system-x86_64 -m 512 -smp 2 -bios OVMF.fd -drive format=raw,file=foobar.raw
+
+    
+Boot from CD or iso
+	-boot d
+	-cdrom 	path to CD device or file
+
+Test a bootable USB drive
+	qemu -usb /dev/sdb
+
+Usage
+	qemu -hda xp.raw -cdrom /dev/cdrom -boot d -net user -m 256
+	run the image as follows :
+	qemu -hda xp.raw -cdrom /dev/cdrom -boot c -net user -m 256
+
+
+
+Monitor commands {{{2
+
+Display monitor
+	-monitor stdio
+
+Access monitor		Ctrl+Alt 2
+Back to guest		Ctrl+Alt 1
+
+
+Networking {{{2
+
+overview
+	http://kvm.qumranet.com/kvmwiki/Networking
+
+
+VNC
+	-vnc :0
+	Allow vnc access w/o password: -vnc 1
+
+Routing - allow instance to access net
+	-net nic -net user
+
+
+Route through tap interface {{{2
+ To  create  an  interface  for  use by a particular user, invoke tunctl
+       without the -d option:
+
+       #
+       tunctl -u someuser
+       Set ’tap0’ persistent and owned by ’someuser’
+
+       Then, configure the interface as normal:
+
+       #
+       ifconfig tap0 192.168.0.254 up
+       #
+       route add -host 192.168.0.253 dev tap0
+       #
+       bash -c ’echo 1 > /proc/sys/net/ipv4/conf/tap0/proxy_arp’
+       #
+       arp -Ds 192.168.0.253 eth0 pub
+
+       To delete the interface, use the -d option:
+
+       #
+       tunctl -d tap0
+       Set ’tap0’ nonpersistent
+
+SEE ALSO
+       The UserModeLinux-HOWTO  (link  to  URL  http://user-mode-linux.source‐
+       forge.net/UserModeLinux-HOWTO.html)
+
+Network bridge {{{2
+	http://compsoc.dur.ac.uk/~djw/qemu.html 
+
+Install
+ bridge-utils (for brctl, to manipulate bridges)
+ uml_utilities (for tunctl, to manipulate taps)
+
+- start qemu with "-net nic -net tap". If you run more than one guest,
+you will need to set distinct MAC addresses as in "-net nic,mac=XX:XX:XX:XX:XX:XX"
+- Iptables not needed
+
+Working bridge config:
+
+Command:
+qemu -k en-us -hda <img> -net nic -net tap,ifname=tap0,script=no
+
+guest configures nic with dhcp - /etc/qemu-ifup not needed
+
+interfaces file:
+	auto lo
+
+	iface lo inet loopback
+	iface eth0 inet manual
+
+	auto br0
+	iface br0 inet dhcp
+		hostname via
+	   pre-up /usr/sbin/tunctl -u andmalc -t tap0
+	   pre-up ifconfig tap0 up
+	   bridge_ports all tap0
+	   post-down ifconfig tap0 down
+	   post-down tunctl -d tap0
+
+
+USB {{{2
+
+Use USB devices
+	usb_add in monitor
+		info usbhost
+		usb_add host:<device id as shown in previous>
+
+KVM / Qemu {{{1
+Setup {{{2
+
+For accelerator support, add user to kvm group
+
+Improve i/o
+	http://blog.bodhizazen.net/linux/improve-kvm-performance/
+
+Packages
+	with h/w support: qemu-kvm
+	w/o h/w support: qemu
+
+From Debian Readme kvm-qemu
+	check for processor flags in /proc/cpuinfo.
+
+	For AMD CPUs "svm" flag should be listed.  For Intel CPUs, it's "vmx".
+	The following command:
+
+	 egrep '^flags.*(vmx|svm)' /proc/cpuinfo
+
+	will output nothing if these extensions are either not present of not
+	enabled.
+
+	Almost all AMD CPUs after and including Athlon X2-64 supports virtualization,
+	including most Durons.  Modern Opteron, AthlonII, Phenom and Phenom II
+	have it too.
+
+	For Intel CPUs things are not this simple.  Even in latest Core2 Duo and
+	Core2 Quad series there are models without VT support.  If in doubt check
+	Intel documents about your CPU and Wikipedia articles, for example
+	http://en.wikipedia.org/wiki/List_of_Intel_Core_2_microprocessors.
+
+	Note that in addition to the CPU itself, the BIOS of the system should
+	have support for these extensions too, and it should be enabled.  It is
+	NOT POSSIBLE for now to turn the extensions on if they're not enabled in
+	BIOS or BIOS has no support.  The only option in this case is to
+	update the system BIOS.
+
+kernel support {{{2
+
+From Debian Readme kvm-qemu
+	KVM requires kernel modules that enables the use of the above mentioned
+	extensions to be present and loaded.  For AMD CPUs it is kvm_amd.ko, and
+	for Intel CPUs it is kvm_intel.ko.  The startup script in this package
+	ensures that the appropriate module is loaded during system startup.
+
+	Kernel includes the necessary modules since 2.6.22 version.
+
+	In order to run this version of KVM, your system should be running at least
+	a 2.6.24 kernel.  However, using a 2.6.28 or more later kernel is highly
+	recommended.
+
+startup {{{2
+
+Boot from CD or iso
+	-boot d
+	-cdrom 	path to CD device or file
+
+Allow graphical installer, e.g. Ubuntu: option -std-vga
+
+run the image as follows :
+	qemu -hda xp.raw -cdrom /dev/cdrom -boot c -net user -m 256
+
+Test a bootable USB drive
+	qemu -usb /dev/sdb
+
+
+
+console/serial {{{2
+
+Run from console
+	in /etc/inittab uncomment 's1:12345:respawn:/sbin/agetty -L ttyS0 9600 vt100'
+	qemu -nographic -hda blah.img -append "console=ttyS0 root=/dev/hda1 ro"
+
+1. In guest enable serial console in /etc/inittab and in /boot/grub/menu.lst
+	menu.lst
+		serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
+		terminal --timeout=10 serial console
+		Add to kopt: console=ttyS0,115200n8 console=tty0
+
+2. Run qemu with -nographic option
+or 
+kvm ... -serial unix:/tmp/console.socket,server,nowait ...
+
+In -nographic, Ctrl-a c to toggle monitor
+
+Remote qemu:
+	option: append "console=ttyS0 root=/dev/hda1 ro"
+	in guest /etc/inittab: s1:12345:respawn:/sbin/agetty -L ttyS0 9600 vt100 
+
+Installing Debian
+	At install prompt
+		install console=ttyS0,9600,n8
+		show serial console - ^+M+3
+
+Networking {{{2
+
+overview
+	http://kvm.qumranet.com/kvmwiki/Networking
+
+Read this:
+1/10
+http://groups.google.ca/group/linux.debian.user/browse_frm/thread/9cb11244ffe6f695?hl=en#
+
+Easy ssh into client
+	start Qemu with -redir tcp:2222::22
+	ssh localhost -p 2222
+
+VNC
+	-vnc :0
+	Allow vnc access w/o password: -vnc 1
+
+Routing - allow instance to access net
+	-net nic -net user
+
+
+Route through tap interface {{{3
+ To  create  an  interface  for  use by a particular user, invoke tunctl
+       without the -d option:
+
+       #
+       tunctl -u someuser
+       Set ’tap0’ persistent and owned by ’someuser’
+
+       Then, configure the interface as normal:
+
+       #
+       ifconfig tap0 192.168.0.254 up
+       #
+       route add -host 192.168.0.253 dev tap0
+       #
+       bash -c ’echo 1 > /proc/sys/net/ipv4/conf/tap0/proxy_arp’
+       #
+       arp -Ds 192.168.0.253 eth0 pub
+
+       To delete the interface, use the -d option:
+
+       #
+       tunctl -d tap0
+       Set ’tap0’ nonpersistent
+
+SEE ALSO
+       The UserModeLinux-HOWTO  (link  to  URL  http://user-mode-linux.source‐
+       forge.net/UserModeLinux-HOWTO.html)
+Network bridge {{{3
+	http://compsoc.dur.ac.uk/~djw/qemu.html 
+
+Install
+ bridge-utils (for brctl, to manipulate bridges)
+ uml_utilities (for tunctl, to manipulate taps)
+
+- start qemu with "-net nic -net tap". If you run more than one guest,
+you will need to set distinct MAC addresses as in "-net nic,mac=XX:XX:XX:XX:XX:XX"
+- Iptables not needed
+
+Working bridge config:
+
+Command:
+qemu -k en-us -hda <img> -net nic -net tap,ifname=tap0,script=no
+
+guest configures nic with dhcp - /etc/qemu-ifup not needed
+
+interfaces file:
+	auto lo
+
+	iface lo inet loopback
+	iface eth0 inet manual
+
+	auto br0
+	iface br0 inet dhcp
+		hostname via
+	   pre-up /usr/sbin/tunctl -u andmalc -t tap0
+	   pre-up ifconfig tap0 up
+	   bridge_ports all tap0
+	   post-down ifconfig tap0 down
+	   post-down tunctl -d tap0
+
+
+Network boot {{{3
+
+http://alien.slackbook.org/dokuwiki/doku.php?id=slackware:qemu
+
+
+
+Xorg.conf for guest {{{2
+
+Section "Monitor"
+  Identifier  "Monitor0"
+  HorizSync   20.0 - 50.0
+  VertRefresh 40.0 - 80.0
+EndSection
+
+Section "Device"
+  Identifier "Device0"
+  Driver     "vesa"
+EndSection
+
+Section "Screen"
+  Identifier   "Screen0"
+  Device       "Device0"
+  Monitor      "Monitor0"
+  DefaultDepth 16
+  Subsection "Display"
+    Depth 16
+    Modes "1680x1050"
+  EndSubsection
+EndSection
+
+
+Docs {{{2
+
+KVM howtos
+	http://www.linux-kvm.org/page/HOWTO
+
+Quickemu {{{1
+
+https://github.com/wimpysworld/quickemu
+
+quickemu
+	--vm	<conf file>
+	--snapshot info		show all snapshots plus disk info
+	--snapshot create,apply,delete <tag>
+	--display spice
+			enables copy/paste & file sharing
+			requires spicy client, Debian pkg spice-client-gtk 
+			install spice-vdagent, spice-webdavd in guest
+	--display none
+			headless
+
+
+
+

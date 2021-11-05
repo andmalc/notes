@@ -1,0 +1,35 @@
+
+Fedora pkgs
+brightnessctl
+grim - screenshots
+    bindsym $mod+Print exec grimshot copy area
+wofi - menu
+wl-clipboard
+clipman - clipboard manager
+	update present config if not using dmenu
+
+mako # notification daemon
+
+Launch under systemd
+    Display Manager
+        modern dm's will recognise files at usr/share/wayland-sessions/
+
+
+Systemd integration
+    https://github.com/alebastr/sway-systemd
+
+Started by sway-session.target
+
+
+Config
+
+/etc/systemd/logind.conf
+    IdleAction=suspend
+    IdleActionSec=30min
+
+
+Layout
+    Create terminal on one side, tabbed windows on other
+    1. switch to vertical split
+    2. create new window on side to be tabbed
+    3. switch to tabbed mode Mod W

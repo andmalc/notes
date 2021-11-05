@@ -1,0 +1,30 @@
+Definitions
+	margin		space around an element
+	padding		space between border and content
+
+
+/* Spacers */
+.vertical10 		{ line-height: 10px; }
+.vertical5 			{ line-height: 5px; }
+.vertical2 			{ line-height: 2px; }
+.vertical1 			{ line-height: 1px; }
+
+/* More spacers - 0 text-indent is to turn off centering */
+p.stb { text-indent: 0; margin-top: 0.83em }
+p.mtb { text-indent: 0; margin-top: 2.17em }
+p.ltb { text-indent: 0; margin-top: 3.08em }
+
+
+/* Borders and Lines */
+/* padding is distance between box content and the inner edge of the border */
+/* 
+.outerBox {	border : 1px solid #CCCCCC;	padding : 1px;	background-color : #FFFFFF;	}
+.linerule {	padding : 0px;	}
+
+/* Section Colors */
+
+.homeBackground		{ background-color: #EBF0F8; }
+.financeBackground	{ background-color: #C3C3E3; }
+.newsBackground		{ background-color: #F4D592; }
+
+

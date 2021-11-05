@@ -1,0 +1,70 @@
+
+tips
+	Iterate over py-dbi cursor:
+		Traditional method:
+			row=cursor.fetchone()
+			while row! = None:
+				print "%14s, %15s, %8s, %25s" % tuple(row)
+				row=cursor.fetchone()
+		New method:
+			for row in iter(cursor.fetchone, None):
+				print ...
+
+	Result Set without pre-allocating list size
+		Therefore, use an iterator to build up the list. This will not call
+		__len__(). Instead, the list will continually be appended to, until the
+		iterator raise StopIteration. The list may be re-allocated multiple
+		times, as the number of records retrieved exceeds the allocation unit
+		size of lists. But this will likely still be lower cost than your SQL
+		count().  
+
+		The object returned from the __iter__() method should have a .next()
+		method which returns the next row in your result set. So if you have
+		implemented a .next() on your result set object, define your
+		__.iter__() method as follows 
+
+		class ResultSet:
+			def next(self):
+				"Pseudocode"
+				result = databasecursor.fetchone()
+				if result:
+					return result
+				else:
+					raise StopIteration
+
+			def __iter__(self):
+				return self
+
+	dbtuple example
+		def fetchrows(cursor):
+		  rows = cursor.fetchall()
+		  desc = dtuple.TupleDescriptor(map(lambda x: (string.lower(x[0]),) + x[1:],
+											cursor.description))
+		  for i in range(len(rows)):
+			rows[i] = dtuple.DatabaseTuple(desc, rows[i])
+		  return rows
+
+
+	QueryToDictList: example
+		def QueryToDictList(cursor):
+			"""QueryToDict(cursor)
+			Execute query on the supplied cursor and return the result as a list of
+			dictionaries, using the cursor description as the keys in each dict"""
+			result = []
+			rows = cursor.fetchall()
+			for currow in rows:
+				rowdict = {}
+				for curcol in range(0,len(cursor.description)):
+					rowdict[cursor.description[curcol][0]] = currow[curcol]
+				result.append(rowdict)
+			return result
+
+		With this, you would do something like:
+			sorted_result = QueryToDictList(cursor)
+		and then you could use sorted_result as desired, either:
+			sorted_result[6]['Street']
+		or
+			for x in sorted_result:
+				do stuff with x['Street']
+		or 
+			newlist = filter(testfunc, sorted_result)

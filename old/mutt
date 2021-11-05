@@ -1,0 +1,141 @@
+Gmail inbox
+mutt -f  imaps://andmalc@imap.gmail.com:993
+
+Docs
+	Sven Guckes home page -various docs
+	Complete local mail setup tutorial
+		http://homepage.ntlworld.com/lativy/articles/debian-mutt/	
+
+Mailbox/folder selection
+	.   show mailboxes with new messages
+	<Tab> toggle show files or folders
+	s/u   subscribe/unsubscribe
+	T   toggle subscribed/all
+	$	sync mailbox
+	from cmd line - show mailboxes
+		mutt -f=<tab>	zsh only
+
+Mailbox Shortcuts
+	! -- refers to your $spoolfile (incoming) mailbox 
+	> -- refers to your $mbox file 
+	< -- refers to your $record file 
+	- or !! -- refers to the file you've last visited 
+	~ -- refers to your home directory 
+	= or + -- refers to your $folder directory 
+	@alias -- 
+		default save folder as determined by the address of the alias 
+
+Message Index 
+		l		limit - enter filter patterN
+		j		move to next undeleted
+		=, Home		Go to top
+		*, End		Go to end
+		C		Copy message to file/mailbox
+		z,Z		Page down, up
+		L/M/H	last/middle/top of tage (like vim)
+	Status flags	
+		flag	message is:
+		N		new
+		*		tagged
+		r		message has been replied to
+		D		marked for deletion
+	Clear Flags
+		T		to me & cc'ed to others
+		C		cc'ed to me
+		F		from me
+	tagging
+		t		tag
+		\e-t	tag thread
+		T		tag by pattern
+		;		apply action to tagged
+		n		find next tagged - first apply /~T
+		^T (Ctrl+T) untag matching pat or <space> for all
+		fields to search for patterns
+			http://www.sendmail.org/~ca/email/mutt/manual-4.html
+			~T		search pattern to match tagged messages
+			~f <name>	mail from
+			~s <subj>	subject
+	threads
+		^N		goto next
+		^R		mark read
+
+
+Pager (displays message body)
+	a create alias from sender
+	^B  run urlview to extract url's in message
+	T	toggle show quoted
+	S	skip past quoted
+
+Input Field editing
+	Ctrl+
+		A,E         Move beginning, end of line
+		F,B         Move one char forward, back
+		U           Delete whole line
+		K           Delete line to end
+		W           Delete previous word
+		G           Abort
+	Arrow keys      History
+
+
+Config Files
+	.muttrc:
+		auto_view text/html
+	.mailcap
+		text/html; lynx -dump -force_html %s; copiousoutput
+		text/htm; lynx -dump -force_html %s; copiousoutput
+		message/html; lynx -dump -force_html %s; copiousoutput
+		message/htm; lynx -dump -force_html %s; copiousoutput
+
+Config commands
+	format:
+		set [no]variable[=value] [variable ...]
+		toggle|unset|reset variable
+		unhook [ * | hook-type ]
+	multiple IMAP accounts: use : see manual.txt
+		account_hook
+	change settings according to mailbox
+		folder-hook [!]regexp command
+		e.g.
+			folder-hook '!'
+				! is shortuct for $spoolfile
+			folder-hook . set 
+				'.' is default: use because var is not unset when leaving
+				mailbox
+	map key to command
+		bind context f command 
+
+	folder
+		Mailbox location, default: ~/Mail
+
+	Move read messages to a mailbox
+		mbox-hook pat mailbox 
+
+	Change configuration according to mailbox being read 
+		folder-hook pat command
+		e.g. set threads in a mailing list box
+
+
+
+Lists
+		cause Mail-Followup-To header to be added to ensure that replies go to
+		list, since will receive them anyway.
+
+		S+l	reply to list
+
+
+Secure Access
+	If users allowed to start imap server, can do ssh tunnell.  Otherwise (and
+	more general solution) - ssh port forwarding or SSL imaps
+
+
+Utilities
+	Compatible Address utilities
+		abook
+
+		The little brother's database (lbdb) 
+			hooks nicely into mutt ('set query_command="lbdbq %s"') and
+			supports a number of modules on the backend.  Perhaps you would
+			want to approach it from that angle?:
+
+
+	urlscan - Press Ctrl+B to open URL in browser

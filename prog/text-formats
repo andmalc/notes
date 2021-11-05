@@ -1,0 +1,31 @@
+
+asciidoc
+
+json {{{1
+
+jo - command line app, formats input as json
+    https://github.com/jpmens/jo
+    
+
+jq
+    transform structured data 
+    https://stedolan.github.io/jq/
+
+Python glom for nested data like json
+https://github.com/mahmoud/glom
+
+
+yaml {{{1
+
+Docs:
+https://www.digitalocean.com/community/tutorials/an-introduction-to-cloud-config-scripting
+
+Lint with yamllint
+
+Key/value format:
+    key: value #need space after :
+
+
+
+http://yaml-online-parser.appspot.com/
+https://docs.saltstack.com/en/latest/topics/yaml/

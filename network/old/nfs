@@ -1,0 +1,26 @@
+
+Tutorial
+	https://help.ubuntu.com/community/SettingUpNFSHowTo
+
+Server
+
+Install
+	nfs-kernel-server
+	portmap
+
+/etc/exports
+	<dir exported> <client IP>(<options>)
+	minimal example
+		/home/andmalc/share *(sync)
+
+
+Client
+
+Install
+	nfs-common ?
+
+mount in fstab
+	192.168.0.100:/var/nfs  /mnt/nfs/var/nfs  nfs  rw,sync,hard,intr  0 0
+T/S
+	mount hangs:	restart portmap on server
+

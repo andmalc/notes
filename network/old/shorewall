@@ -1,0 +1,14 @@
+
+Configuration files
+	zones
+		fw      firewall
+		net     ipv4
+	interfaces
+		net	eth0	detect	dhcp
+	policy
+		$FW             net             ACCEPT
+		net             all             DROP            info
+		all             all             REJECT          info
+	rules
+		ACCEPT  net:209.82.15.245 $FW           tcp     ssh
+

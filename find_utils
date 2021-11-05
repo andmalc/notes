@@ -1,0 +1,158 @@
+
+whatis database		Short description of commands - must know command name
+whereis			Search for command, not just on path
+which or type		Show full path of first matching command in path
+
+
+Find {{{1
+
+find [pathnames] [conditions]
+
+Default is current directory
+May search multiple paths.  
+
+multiple conditions are 'AND'ed
+Conditions may be separated as alternatives by '-o' 
+negated with '\!' (example ... \! -name "thing*")
+Group to indicate order of evaluation with \( \)
+		adjacent:	AND
+		-o		    OR
+		! exp		NOT
+
+Time specifcation 
+	24 hour periods
+		-atime (last read), -mtime (modification), -ctime (last change of
+		owner or permissions) 
+	minutes
+		-amin, cmin, mmin
+    
+    #   exactly
+    +   more than
+    -   less than
+
+	Examples:
+		find -mtime 7 - modified seven days ago
+		find -mtime -1 - modified within last day 
+            also: -mtime 0
+		find -ctime +3  - changed more than 3 days ago
+		find / -amin +2 -amin -6
+			modified between 6 and 2 minutes ago
+
+
+-exec command {} \;
+Run command, from the starting directory, on each file found
+
+
+-mount, -xdev	Don't descend into directory trees on other filesystems
+-maxdepth n 
+
+-name, -iname
+    Use quoted wildcards to search for pattern 
+        find . -name \*.o
+    
+-path	
+* Name search for whole name, therefore must use wildcards if looking 
+for a substring.
+* Match on following 'path/fn' (ie uses complete path), starting at base
+path.
+Example: Find files in current dir:
+    find . -path './kt[0-9]'
+
+-size n[c]
+Size in blocks (512 byte blocks) or, with 'c' - characters
+
+Examples: 
+find /usr/src -name '*.c' -size +100k -print		
+find . -atime +5 \(-name "*.o" -o -name "*.tmp"\)
+find /usr \! -path '/usr/src/*' \! -path '/usr/doc/*' -iname 'libg*' -print
+find -path './*' -- all files in current directory
+find . -name \*.pdf | grep -v "^\./Docs/Prog"   Find the pdf files not in the Docs/Prog subdirectory of the current directory.
+	
+Finding by type:
+- type
+    b	block file
+    c	character file
+    d	directory
+    f	plain file (avoids /proc)
+    l	symbolic link
+    p	named pipe
+    s	socket
+
+
+Find contents of files
+ find . -name '*.[ch]' | xargs grep -l thing
+
+
+Execute Commands on Found Files
+---------------------------------
+From least to most efficient:
+
+-exec cmd [args] '{} \;'  
+    {} stands for a filename arg; ';' indicates the end of args to cmd.
+    use -ok instead of -exec to be prompted
+
+find ... | xargs -J (take whole file list) X cmd_name X (X's deliminate the 
+command) arg
+    e.g. (move all pdf's not in ./pdf dir to the ./pdf dir)
+	find . -name "*.pdf" -print | grep -v "^\./pdfs/" | xargs -J X mv X ./pdfs/
+	find <path> -type f | xargs chmod 0644
+
+	xargs method recommended because runs only one instance of action command.
+
+
+
+Locate {{{1	
+
+Match filename patterns:  if pat contains no metacharacters, pat can match any part of filename.
+
+Try also: 'slocate' (?)
+
+fd {{{1
+
+https://github.com/sharkdp/fd
+sudo dnf copr enable keefle/fd
+Debian pkg: fd-find
+
+fd <pattern> <path>
+fdfind . -E fishd.localhost -E fish_variables .config/fish/
+
+fzf  {{{1
+
+command-line fuzzy finder written in Go
+https://github.com/junegunn/fzf
+
+Options
+    -q  query mode - use with search operators
+    -f  filter - same as query but non-interactive
+    -m  multi select with Shfit Tab
+    -i  cases insensitive
+    -e  exact match
+
+New Keybindings installed with Fisher from https://github.com/jethrokuan/fzf
+	Find file       Ctrl f
+	Search hist     Ctrl r
+	Cd into sub dirs    Alt o
+	Cd into hidden dirs    Alt Shift o
+	Edit            Ctrl o
+    xdg-open app    Ctrl g
+
+Search after command
+	Zsh
+		less notes/**<Tab>
+	Fish shell
+		Control T to launch.  Last token is root dir for search
+		less notes<ctrl-t>
+
+
+Preview files
+    fzf --preview='head -10 {+}'
+
+Extended Search Mode
+    'word1 word2'   filter on both words
+    'word           exact match
+
+
+history | fzf > .config/fish/config.fish
+history | fzf | fish
+
+

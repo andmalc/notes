@@ -1,0 +1,148 @@
+
+https://bconnelly.net/posts/working_with_csvs_on_the_command_line/
+
+Filter with multiple includes and includes
+https://superuser.com/questions/537619/grep-for-term-and-exclude-another-term
+
+
+Program types:
+- Filters
+    Take arbitrary input from file or stdin and usually modify and output same data
+    e.g. grep, sort, sed, awk
+    Historically took data via keyboard ?
+
+-   Others
+    Take data of specific types as input. Output data is not related.
+    May not take data on stdin.  Only recognize command line args (argv)
+    eg. rm, kill
+
+cat - concatenate files
+    https://en.wikipedia.org/wiki/Cat_%28Unix%29#Useless_use_of_cat
+    defaults to reading from and outputing to terminal
+    cat file1 file2 > targetfile
+    cat > targetfile # type in lines below, end with c+d
+
+
+csvkit
+    https://csvkit.readthedocs.io/en/1.0.3/
+
+cut
+    extract input on tabs into fields
+    fields: #,# or #-#
+    -f #-# field or fields to extract
+    -d  delimiter instead of tabs
+    -c  select character range by position
+
+curl
+    Download and pipe file
+        curl -s http://www.gutenberg.org/files/76/76-0.txt | head -10
+    Download and save
+        curl -s http://www.gutenberg.org/files/76/76-0.txt > file.txt
+    Json
+         curl -s https://randomuser.me/api | jq '.'
+    Login 
+         -u username:password 
+    If using shortened URL
+        -L <url>
+    Oauth Login needed: 
+        curlicue https://github.com/decklin/curlicue
+
+        
+diff 
+diff file1 file2
+    Show how to change file1 to match file2
+
+    Options
+        -c      context
+        -u      show changed lines together
+
+    tutorial in Unix Power Tools
+    sdiff   show diffs in columns
+
+
+cmp     show info in common
+
+column  display output in columns
+
+comm    shows unique and common lines in sorted lists
+
+less
+    -S  do not wrap long lines.  Can page sideways with l/r arrows
+
+paste f1 f2
+    combine contents of files into columns
+    
+sort
+    sort by column two
+        sort -k 2 <file>
+    sort by column two then by column one
+        sort -k2,2 -k1,1 <file>
+    Plus other sorting types
+
+tee
+    read from standard input and write to standard output and files
+    -a  append
+
+    seq -f "Line %g" 10 | tee lines
+
+tail
+    output last ten lines
+    -n #    last # lines
+    -n +#   ten lines starting at line #
+
+    15 lines starting at 100
+        head -n 100 | tail -n 15
+
+tr
+    translate characters
+
+    -s <char>   squeeze repeats (remove duplicate chars)
+     : '\n'     #convert colans to line breaks
+     '[:space:]' '--'
+     '[:upper:]' '[:lower:]'
+     
+uniq
+    find adjacent repeated lines 
+    sort input list to find all dups
+    -c  print count of occurances
+    -d  print dups only
+    -c  print unique only
+
+wc - counting
+    -l      lines in file
+            read lines in piped input, e.g. ls -l | wc -l 
+
+
+Example:
+
+Find most common words:
+tr '[:upper:]' '[:lower:]' | grep -oE '\w+' | sort | uniq -c | sort -nr  | head -n 30
+
+Filter lines
+    start at line number
+        tail -n +4
+    remove lines
+         < lines sed  '1,3d'
+          < lines sed -n '1,3!p'
+    subset of lines
+        sed -n '4,6p'
+        -n 6 | tail -n 3
+    every other line
+        sed -n '1~2p'
+    by pattern
+        grep -E <regex> 
+
+Edit lines
+    tr - replace or delete 
+    sed 
+
+CSV files {{{1
+
+Discussion & tools in "Data Science at the Command Line" book
+
+Scripting {{{!
+
+Copy last command into file
+    echo "!!" > filename
+
+

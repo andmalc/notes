@@ -1,0 +1,993 @@
+https://sparkylinux.org/
+
+Default text editor
+	sudo update-alternatives --config editor
+
+Minimal Gnome on Stretch
+aptitude install --without-recommends gdm3
+
+Add 32bit support
+sudo dpkg --add-architecture i386 
+Package names:  <name>:i386
+
+install deb with dependencies
+    gdebi  
+    install deb then apt-get install -f 
+
+Disable automount
+    dconf-editor - search for automount
+
+Installation {{{1
+Sources {{{2
+
+http://gulus.usherbrooke.ca/debian/
+http://debian.yorku.ca/debian/
+
+apt.conf
+/etc/apt/apt.conf or /etc/apt/apt.conf.d/something
+    APT::Default-Release "stable";
+    APT::Install-Recommends "0";
+    APT::Install-Suggests "0";
+
+Backports
+https://backports.debian.org/Packages/
+
+UnofficialRepositories
+
+Google
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    deb http://dl.google.com/linux/deb/ stable non-free
+    deb http://dl.google.com/linux/deb/ testing non-free
+
+#deb http://www.deb-multimedia.org squeeze main
+
+Debian Multimedia
+deb http://www.deb-multimedia.org testing main
+
+Installation sizes
+	debootstrip lenny 
+		before kernel - 171 M
+		after locale & purge 175M
+		after install kernel from packge +80M 257M
+
+
+
+
+general setup {{{1
+
+packages {{{2	
+
+sudo zsh vim rsync screen tree rdate yafc pmount bzip2
+zsh-static, openssh-server (w/o Recommends)
+unison
+
+
+rcconf, 
+netselect-apt,sshfs, htop, 
+	debian-goodies for checkrestart
+
+	debian-goodies for checkrestart
+	sux
+
+general
+    sudo, zsh zsh-static, ssh, vim, rsync, samba/fusesmb, screen, less, rcconf, tree
+    netselect-apt,sshfs, htop, ntp, sudo, locales
+
+admin
+    multitail
+    saidar
+    debian-goodies for checkrestart
+
+    network
+        wicd - wireless config
+        network-manager 
+
+ssh
+    In /etc/fstab
+        sshfs#USERNAME@REMOTE_HOST:REMOTE_PATH MOUNT_POINT fuse SSHFS_OPTIONS 0 0
+
+console
+    twin - windowing environment
+    rtorrent
+    audio
+        cplay
+        abcde - multi format CD ripping
+        mpd with mpc client - audio daemon with playlists - esp for remote playing
+    rss
+        raggle or newsbeuter
+    chat
+        finch (from pidgin)
+        BitlBee - multi-protocol IM thr. an irc client
+        mcabber, centerim - chat
+    video
+        mplayer -vo vesa or -vo fbdev
+
+X-win
+    x-window-system-core
+        basic X-tstream-vera
+        Window
+        install ttf-bitstream-vera
+    gdm
+        for basic Gnome w/o apps
+    window/session managers
+        xfce
+        gnome - installs apps too
+    rerun X config, e.g. after changing video card
+        dpkg-reconfigure xserver-xfree86
+
+
+config {{{2
+
+
+ssh-keygen -t rsa
+ssh-copy-id -i .ssh/id_rsa.pub rs.malcolmson.ca
+rsync -a rs.malcolmson.ca:.ssh/config .ssh
+rsync -a rs:.unison/*.prf .unison
+85  unison dotfiles
+86  rsync -a rs:.unison/common .unison
+
+deb http://mozilla.debian.net/ squeeze-backports iceweasel-release
+wget -O- -q http://mozilla.debian.net/archive.asc | gpg --import
+gpg --check-sigs --fingerprint --keyring /usr/share/keyrings/debian-keyring.gpg 06C4AE2A
+-aptitude install -t squeeze-backports iceweasel   
++  
+ 	
+
+Locales
+	as of Etch, default is UTF-8, setting in /etc/default/locale
+	Install locales, localepurge
+	dpkg-reconfigure locales -> en_US.UTF-8 or lang #112
+	run dpkg-reconfigure localepurge
+	If connecting via SSH, also need locale of locale machine!
+
+	ubuntu: locale-gen en_US.UTF-8
+	/usr/sbin/update-locale LANG=C.UTF-8
+	 locale-gen
+
+	new commeand, used by Fedora
+	localectl set-locale LANG=en_US.UTF-8
+
+	 Better than localepurge: bleachbit
+
+date/time
+	timedatectl
+    manual method:
+        unlike /etc/localtime
+        ln -s /usr/share/zoneinfo/America/Toronto /etc/localtime
+
+Install missing archive key
+	wget http://www.voyage.hk/dists/experimental/archive.key 
+		-O - | apt-key add -
+	also
+		http://www.debian-administration.org/users/mar/weblog/3
+
+dhcp client
+	send host name
+
+review alternatives
+	sudo /usr/sbin/update-alternatives --all 
+
+
+config-users {{{2
+
+Add to groups
+	cdrom, audio, plugdev, sudo
+	optional: kvm, video, netdev, powerdev, messagebus
+
+sudo
+	User_Alias ADMINS=andmalc
+	ADMINS  ALL=(ALL) ALL
+	ADMINS ALL=NOPASSWD: ALL
+	Defaults timestamp_timeout=120
+	Defaults:ADMINS timestamp_timeout=120
+
+
+if Xscreensaver installed, disable lock in
+	/etc/X11/app-defaults
+if gnome-screensaver:
+	gconf-editor /apps/gnome-power-manager/lock/use_screensaver_settings
+
+config-servers {{{2
+
+for headless servers
+	/etc/default/rcS: FSCKFIX=no > yes to prevent prompt to check fs
+
+system info {{{1
+	multitail
+	mlocate
+		update with updatedb
+	dlocate
+		update with update-dlocatedb
+	network t/s:
+		dig in dnsutils
+	saidar
+		system info summary screen
+
+
+filesystem {{{1
+	pmount - user mount in /media
+	kpartx	- create device mapper entries for partitions in a device file
+	system-config-lvm
+	encfs	encrypted filesystem
+    ncdu    ncurses util for visualizing disk space usage
+
+
+fstab
+	ext3 options
+		atime,nodiratime,errors=remount-ro
+
+recommended by Valerie Aurora
+	ext3 with noatime or relative atime if it’s available.
+	disable mount-count-dependent (-c) and time-dependent (-i) checking
+	e.g.  tune2fs -c 0 /dev/sdf1
+
+umask
+	as of Etch, set with libpam-umask (how?)
+
+network filesystem {{{2
+
+smbfs - for smb/cifs shared fs
+	mount with mount -t cifs //host/share /mount/dir -o username=myuser
+
+
+hardware {{{1
+
+Intel wifi
+    enable non-free
+    install firmware-iwlwifi
+    modprobe -r iwlwifi ; modprobe iwlwifi
+
+hardware support
+    information
+        htop
+        cat /proc/cpuinfo
+        cat /proc/acpi/processor/CPU0/power
+        discover
+        lshal - list HAL devices (auto-installed)
+        lshw & lshw-gtk - details on all hw devices
+        lsscsi
+    power
+        laptop-mode-tools			
+        gnome-power-manager
+    diagnostic
+        test memory & CPU
+            memtest86  
+            Breakin - http://www.advancedclustering.com/software/breakin.html
+            grml memtest on boot
+        test power supply
+            http://www.antec.com/Believe_it/product.php?id=ODk=
+
+Hibernate/suspend
+	uswsusp - provides s2ram and s2disk
+
+Config Laptop
+    laptop-net, ifrename, divine(?)
+	laptop-mode
+    see also: http://thinkwiki.org/wiki/Tools
+
+Video {{{2
+
+Maybe see http://smxi.org/
+
+Nvidia {{{3
+
+Debian non-accelerated
+	driver package xserver-xorg-video-nv
+	xorg.conf must include
+		Section "Module"
+			Load "glx"
+		EndSection
+
+		Section "Device"
+			Identifier  "Configured Video Device"
+			Driver "nv"
+		EndSection
+
+NVidia non-free from Debian Repo
+	compile 'nvidia' with module-assistant
+	install package nvidia-glx
+	modprobe nvidia 
+
+Power Saving {{{2
+
+install cpufreq-utils and run
+	save setting in
+		/etc/default/cpufrequtils
+		copy from docs/cpufrequits/examples if does not exist
+
+	/etc/modules
+		acpi-cpufreq 
+		cpufreq_ondemand 
+
+in /etc/sysfs.conf
+devices/platform/thinkpad_acpi/bluetooth_enable = 0 
+/bus/pci/drivers/iwl4965/0000:03:00.0/power_level = 5
+
+Sound {{{2
+	
+audio
+	cplay
+	mpd with mpc client - audio daemon with playlists - esp for remote playing
+
+Alsa
+	install alsa and alsaplayer
+	add user to audio group !!
+	reboot
+	run alsaconf
+	alsamixer
+ 	speaker-test
+	t/s http://alsa.opensrc.org/index.php/FAQ#How_can_I_check_whether_ALSA_works.3F            
+
+network {{{1
+Interface config {{{2
+
+As of Stretch
+CLI w/l setup:
+ip link set wlp1s0 up             ## bring up interface
+iw dev wlp1s0 link                ## get link status
+iw dev wlp1s0 scan | grep SSID    ## scan for access points
+wpa_supplicant -i wlp1s0 -c<(wpa_passphrase "MY_SSID" "MY_PASSPHRASE")   ## connect to WPA/WPA2 ... add '-B' to background process
+dhclient wlp1s0                   ## obtain IP address
+
+/etc/interfaces
+allow-hotplug wlp1s0
+iface wlp1s0 inet dhcp
+wpa-ssid MY_SSID
+wpa-psk MY_PASSPHRASE                                       
+dns-nameservers 8.8.8.8 8.8.4.4
+
+Once network is up, install network-manager and use its console utility nmcli.
+
+as of Etch: "allow-hotplug eth0" (no 'auto')
+	causes interfaces to be brought up by udev when available
+	"/etc/init.d/networking restart" no longer reliable
+	use 'service networking restart'
+	using 'auto' returns to previous mode - int starts at boot
+
+Client apps {{{2
+
+mosh - mobile shell
+lftp - console mult-protocol download 
+yafc - ssh/ftp client
+mtr		trace ping route
+
+firewall {{{2
+
+ferm
+	tool to maintain complex firewall rules
+	http://ferm.foo-projects.org/
+
+Name Resolution / DNS {{{2
+
+ddclient
+
+/etc/resolv.conf
+	OK for simple setups
+	lines like: nameserver 12.34.56.78
+resolvconf
+	optional in Lenny
+	only needed if frequent DNS changes or if other apps need to change this
+	/etc/resolv.conf is link to /etc/resolvconf/run/resolv.conf
+	if need to set name server info, add to stanza in interfaces file:
+		dns-nameservers 12.34.56.78 12.34.56.79
+		dns-nameservers variable only recognized if resolvconf is installed
+/etc/dhcp3/dhclient.conf
+	if need custom nameserver settings with DHCP
+		prepend domain-name-servers 8.8.8.8, 8.8.4.4;
+network-manager
+	see http://wiki.debian.org/NetworkConfiguration#Definingthe.28DNS.29Nameservers
+		
+
+mdns / Rendezvous / Bonjour {{{2
+test
+	mdns-scan
+		debugging tool only
+	getent hosts alix0.local
+
+libnss-mdns - NSS module for Multicast DNS name resolution
+	enable mdns for hosts 
+	depends on Avahi which provides 'responder' i.e. server 
+firewall
+	from libnss-mdns README
+		allow UDP traffic to the the mDNS multicast address 224.0.0.251 on port 5353
+Avahi responder
+
+clients
+	avahi-discover
+	Zero Conf Service Discovery
+		debian package for Gnome applet service-discovery-applet
+
+
+Config avahi services {{{3
+
+samba 
+	<?xml version="1.0" standalone='no'?>
+	<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+	<service-group>
+	   <name replace-wildcards="yes">%h</name>
+	   <service>
+		   <type>_smb._tcp</type>
+		   <port>139</port>
+	   </service>
+	</service-group>
+
+ssh 
+/etc/avahi/services/ssh.service
+	<service-group>
+	  <name replace-wildcards="yes">%h</name>
+	  <service>
+		<type>_ssh._tcp</type>
+		<port>22</port>
+	  </service>
+	</service-group>
+
+nfs
+	<?xml version="1.0" standalone='no'?>
+	<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+	<service-group>
+	<name replace-wildcards="yes">Music</name> ## Name
+	<service>
+		   <type>_nfs._tcp</type>
+		   <port>2049</port>
+		   <txt-record>path=/media/music</txt-record> ## path to shared Folder
+	</service>
+	</service-group>
+
+samba
+	<?xml version="1.0" standalone='no'?>
+	<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+	<service-group>
+	   <name replace-wildcards="yes">%h</name>
+	   <service>
+		   <type>_smb._tcp</type>
+		   <port>139</port>
+	   </service>
+	</service-group>
+
+
+wireless network {{{2
+
+wicd - wireless config
+	especially recommended for WPA
+	said to hold connections better than network-manager
+network-manager 
+
+network services {{{1
+
+ssh
+In /etc/fstab
+	sshfs#USERNAME@REMOTE_HOST:REMOTE_PATH MOUNT_POINT fuse SSHFS_OPTIONS 0 0
+
+nginx 
+	simple to configure web server
+	examples of Python FastCGI at wiki.nginx.org
+
+Mail {{{2
+exim
+	reconfigure: dpkg-reconfigure exim4-config
+msmtp
+	newer, similar to ssmtp?
+	cannot do local delivery, no way to forward local addresses
+
+	/etc/msmtprc:
+
+	account default
+	host smtp.gmail.com                                                                          
+	port 587                                                                                     
+	auth on                                                                                      
+	user andmalc@gmail.com                                                                       
+	password ghandi                                                                              
+																								 
+	tls on                                                                                       
+	tls_starttls on                                                                              
+	tls_certcheck off                                                                            
+																								 
+	logfile                                                                                      
+	syslog LOG_MAIL  
+
+	auto_from off
+	from andmalc@gmail.com
+
+ssmtp
+	said no longer maintained
+	/etc/ssmtp/ssmtp.conf
+																								 
+	Root=andmalc@gmail.com                                                                       
+	mailhub=smtp.gmail.com:587                                                                   
+	UseSTARTTLS=YES                                                                              
+	AuthUser=andmalc@gmail.com                                                                   
+	AuthPass=ghandi                                                                              
+	Hostname=linode.malcolmson.ca                                                                
+	FromLineOverride=YES   #Use From line in email                                                                     
+	#RewriteDomain=malcolmson.ca      
+
+console {{{2
+	screen /tmux
+	twin - windowing environment
+	rtorrent
+	rss
+		raggle 
+		newsbeuter
+		nrss
+	podcast
+		newsbeuter
+	web
+		lynx
+			no tables
+			use with -accept_all_cookies and -vikeys 
+		links2 - graphical mode
+		elinks - tabs, tables, frames
+	serial
+		cu
+
+	chat
+		finch (from pidgin)
+		BitlBee - multi-protocol IM thr. an irc client
+		mcabber, centerim - chat
+	time-management
+		remind and curses front end wyrd
+	news
+		slrn
+
+
+desktop setup {{{1
+
+X-win, wm, & x.org {{{2
+xserver-xorg
+
+lightdm
+gdm3
+	for basic Gnome w/o apps
+startx instead of a wm:
+	update-alternatives --config x-session-manager
+slim
+	lightweight session manager
+
+window/session managers
+	lxde
+		in users' .xinitrc: exec startlxde
+	xfce
+	gnome - installs apps too
+
+rerun X config, e.g. after changing video card
+	for keyboard only: dpkg-reconfigure xserver-xorg
+fonts
+	dpkg-reconfigure fontconfig-config   
+	msttcorefonts, x-ttcidfont-conf
+
+Debian desktop themes: desktop-base
+
+xrandr - configure Xorg settings
+	http://www.thinkwiki.org/wiki/Xorg_RandR_1.2
+				
+
+Touchpad {{{2
+
+https://wiki.archlinux.org/index.php/Touchpad_Synaptics
+
+
+desktop apps {{{1
+file managers {{{2
+	pcmanfm - fm for lxde
+	thunar - fm for Xfce
+		little support for removable or network drives
+
+Terminal emulators {{{2
+
+Roxterm
+mrxvt - tabbled terminal 
+terminator - split & tile terminals
+yeahconsole - drop down, no window manager deps
+
+browsers, email, RSS {{{2
+
+firefox/iceweasel
+	plugins
+		user agent switcher
+		add firefox agent when using Iceweasel
+			http://www.geticeweasel.org/useragent/
+other browsers
+	links2 - text browse but run in graphical mode with -g
+	Kazehakase
+	dillo
+
+evolution
+	gconf: /apps/evolution/mail/display/thread_expand
+		set to off for default collapsed threads
+mutt
+	plugin to view URLs urlscan
+
+raggle
+	console RSS reader
+
+organization {{{2
+
+	gcalcli
+		console access to Google Calendar, python app
+	
+movie players etc. {{{2
+
+Ubuntu docs: restricted formats
+	https://help.ubuntu.com/community/RestrictedFormats
+playing CD's
+	add to sources
+		deb http://deb-multimedia.org testing main
+		deb http://download.videolan.org/pub/videolan/debian sarge main
+	CSS (content scrambling system) support: package libdvdcss2
+
+Gui Players
+	Rhythmbox
+	Banshee
+	Listen
+
+mplayer
+	mplayer-nogui
+	recommended browser plugin: gecko-mediaplayer (mozilla-mplayer old)
+	mplayer -vo vesa or -vo fbdev
+	for Lenny
+		http://www.debianadmin.com/install-mplayer-and-multimedia-codecs-libdvdcss2w32codecs-in-debian-50-lenny.html
+
+vlc
+	VLC uses plugins for its sound, so you'll need to install one:
+	  % sudo apt-get install vlc-plugin-alsa
+
+ffmpeg
+	play mpgeg and flash (?) with ffplay
+
+ripping CDs etc.
+	Recommended
+		HandBrake
+		k9copy
+		DVDFab - under Wine
+	Uknown
+		MakeMKV 
+		thoggen 
+		ogmrip
+		shrinkta - gtk2 program for backing up DVDs
+		DVDShrink under Crossover or Wine
+	Old, not recommended
+		dvdrip - copy & squish onto a VCD or SVCD - said bad
+	CLI
+		mplayer dvdnav://4//dev/sr0 -dumpstream -dumpfile Biutiful.vob
+			4 is title #
+
+
+music player {{{2
+	console audio players
+		cplay - python based
+		cmus
+        http://tuxarena.blogspot.com/2009/04/several-powerful-console-music-players.html
+		moc and cmus 
+		reviews: http://tuxarena.blogspot.com/2009/04/cmus-review-great-ncurses-music-player.html
+		mpeg123
+		ogg123 in vorbis-tools
+	Exaile - python based, similar to Amarok but for GTK+
+	juice - console mp3 player
+	listen - python based
+
+Network players {{{2	
+
+Gnash
+	deb http://debian.jones.dk/ lenny gnash
+	install  
+		gnash gnash-common gnash-cygnal gnash-tools  mozilla-plugin-gnash
+	download YouTube videos
+		youtube-dl http://bitbucket.org/rg3/youtube-dl/wiki/Home
+
+Adobe Flash
+	libcurl3 required?
+	plugin installs into /usr/lib/adobe-flashplugin
+
+podcast player
+	icepodder - Py based, was IPodder,then Juice
+
+games {{{2
+	Go: gnugo, cgoban
+
+Misc apps {{{1
+
+
+java
+	package  default-jre
+
+system monitoring
+	zenoss - python
+	nagios
+
+system config & install
+	puppet
+
+security tools {{{1
+
+snoopy
+	monitor all commands run on a server which may be compromised
+
+hostsdeny
+	block ssh repeated login attempts
+	DENY_THRESHOLD_VALID = 5                                                                     
+	DENY_THRESHOLD_INVALID = 2                                                                   
+	DENY_THRESHOLD_ROOT = 2                                                                      
+	AGE_RESET_VALID=1d                                                                           
+	AGE_RESET_INVALID=                                                                           
+	PURGE_DENY = 15d        
+
+ufw
+	manage firewall rules 
+	used by Ubuntu Server
+
+monitor system
+	tripwire
+	logwatch
+
+utilities {{{1
+
+text {{{2
+
+convert HTML to text
+	html2text
+	Vilistextum - mutt plugin, can't handle non-UTF8 encodings
+
+From scratch from debootsrap {{{1
+
+Root partition: 300M
+
+If CF card
+    tune2fs -c 0 /dev/sdf1
+
+Installing the base system
+
+    apt-get install debootstrap
+    mount /dev/sdb1 /mnt/
+    debootstrap –arch i386 lenny /mnt/cf http://ftp.debian.org/debian
+
+Mount /proc and /sys and chroot:
+
+    mount –bind /proc /mnt/proc
+    mount –bind /sys /mnt/sys
+    chroot /mnt /bin/bash
+
+Initial file setup
+
+Create the following files:
+Check, create and/or adapt the following lines:
+
+/etc/fstab
+
+    proc /proc proc defaults 0 0
+    /dev/sda1 / ext3 noatime,errors=remount-ro,commit=120 0 1
+    tmpfs /tmp tmpfs defaults,noatime 0 0
+    tmpfs /var/tmp tmpfs defaults,noatime 0 0
+    tmpfs /var/run tmpfs defaults 0 0
+    tmpfs /var/log tmpfs defaults 0 0
+    tmpfs /var/lock tmpfs defaults 0 0
+
+/etc/hostname
+
+    debian
+
+/etc/hosts
+
+127.0.0.1    localhost.localdomain localhost
+127.0.1.1    my-machine
+
+
+/etc/resolv.conf
+
+    search *
+    nameserver your.nameserver.com
+
+/etc/network/interfaces
+
+    auto lo
+    iface lo inet loopback
+    auto eth0
+    iface eth0 inet dhcp 
+
+Install the Kernel
+
+    apt-get install linux-image-2.6.26-2-686
+
+Create /etc/modules with:
+
+    natsemi
+    hostap_pci
+    lm90
+    w83627hf
+    scx200_acb base=0×810,0×820
+    geodewdt
+
+Make it bootable!:
+
+(ignore the warnings regarding the locales)
+
+    apt-get install grub
+    #cp -r cp /usr/lib/grub/i386-pc/ /boot/grub
+    #echo “(hd0” > /boot/grub/device.map
+	modify menu.lst
+
+Change root p/w
+	passwd etc.
+
+And exist the chroot
+
+    exit
+    umount /mnt/proc
+    umount /mnt/sys
+
+    grub-install –root-directory=/mnt /dev/sdb
+
+Create /mnt/boot/grub/menu.lst with:
+
+    default 0
+    timeout 5
+    title debian-lenny
+    root (hd0,0)
+    kernel /vmlinuz root=LABEL=ROOTFS
+    initrd /initrd.img
+
+Then:
+
+    umount /mnt
+    e2label /dev/sdb1 ROOTFS
+
+Install on mini-server {{{1
+
+bzip2, bridge-utils,
+
+Voyage {{{1
+	date/time
+		rdate -n clock.isc.org
+		dpkg-reconfigure tzdata
+	rsyslog
+	To use apt-get
+		install dialog, apt-utils
+	Unable to resolve hostname when running sudo:
+		Add to /etc/hosts:
+			127.0.1.1 <hostname> (not 127.0.0.1)
+	/etc/kernel-img.conf
+		do_initrd=yes
+
+Turn off auto fdsk
+	sudo tune2fs -c 0 -L ROOT_FS /dev/sdb1
+
+Time incorrect
+	aptitude  install --reinstall tzdata
+
+Connect over serial
+	cu -l /dev/ttyUSB0 -s 38400
+
+Voyage experimental
+	http://www.voyage.hk/dists/experimental/
+
+audio {{{2
+	First install ALSA.
+	  remountrw
+	  apt-get update
+	  apt-get install alsa-base
+	  apt-get-install alsa-utils
+	  remountro
+	This added about 45M of stuff.  I suspect that I only need a few files from alsa-
+	utils.
+
+	The initial state of the sound mixer is that all volumes are 0% and are muted.  I
+	got no audio at all.  This was different to how voyage linux behaved under
+	VMware.  To turn up the volume and play sound on the Alix 3c3:
+	  amixer sset Master 100% unmute
+	  amixer sset Headphone 100% unmute
+	  amixer sset PCM 100% unmute
+	  aplay audio_file.wav
+
+Grml {{{1
+
+add user to cdrom group
+
+
+Python {{{1
+
+python-virtualenv
+	pulls in pip & python-setuptools
+virtualenvwrapper
+
+Easy Install
+http://peak.telecommunity.com/dist/ez_setup.py
+
+Setup tools -  http://pypi.python.org/pypi/setuptools
+
+		
+
+Debian Live {{{1
+
+list http://lists.debian.org/debian-live/
+manual http://live.debian.net/manual/html/
+
+setup {{{2
+
+settings in /etc/default/live-helper
+	DISTRIBUTIONS="sid"
+	MIRROR_BOOTSTRAP="http://debian.yorku.ca/debian/"
+	MIRROR_BINARY="http://debian.yorku.ca/debian/"
+	MIRROR_BINARY_SECURITY="http://security.debian.org/"
+	PACKAGES_LISTS="standard"
+	#PACKAGES_LISTS="standard rescue gnome-desktop kde-desktop xfce-desktop"
+	LH_LINUX_FLAVOURS="486"
+	LH_ARCHITECTURE="i386"
+	LH_APT="aptitude"
+	#LH_BOOTLOADER="grub"
+	LH_USERNAME="andmalc"
+	#LH_BINARY_FILESYSTEM="ext2"
+	LH_BINARY_IMAGES="usb-hdd"
+
+live-initramfs boot parameters
+	noprompt persistent live-getty
+	set
+		as kernel options from grub
+
+	run:
+		lh clean
+		lh config  --interactive shell 
+		lh build
+	copy to target filesystem
+		cp  binary/live/{vmlinuz,initrd.img,filesystem.squashfs} /media/usb/boot/live
+	install bootloader & add config to control over serial
+
+extra partitions
+	live-rw - for changes to root part
+	home-rw - for persistent home
+
+t/s log {{{2
+
+05/02/10 17:14:22
+
+In LH FAQ
+
+	How do I change default hostname or username?
+	lh_config --username myusername
+
+	How can i set boot= parameters?
+	Set LH_BOOTAPPEND_LIVE in config/binary 
+
+/etc/default/live-helper
+	LH_BOOTAPPEND_LIVE = live-getty
+=> image created does not use
+
+message from lh config
+	'P: Considering defaults defined in /etc/default/live-helper'
+	getting overriden?
+
+
+
+Macbook {{{1
+
+http://tkj.freeshell.org/debian/debian-on-macbook-pro-7.1/
+
+Keyboard {{{2
+
+Shortcuts:
+Fn+Shift+Enter = Shift+Insert
+
+Touchpad {{{2
+
+https://wiki.archlinux.org/index.php/Touchpad_Synaptics
+
+
+Xmodmap {{{2
+see also setxkbmap
+
+! Re-arringing keys to make them more Emacs & shell friendly, as well
+! as making the annoying CAPS LOCK key behave as a decent Control key
+! :-)
+!
+! Apple left  -> Meta/Alt left
+! Apple right -> Meta/Alt right
+! Alt right   -> Control right
+! Caps Lock   -> Control left
+!
+remove mod4 = Super_L
+remove mod4 = Super_R
+remove mod1 = Alt_R
+remove lock = Caps_Lock
+add mod1 = Super_L
+add mod1 = Super_R
+add control = Alt_R
+add control = Caps_Lock
+

@@ -1,0 +1,34 @@
+
+Users {{{1
+
+Create standard user & pw
+Add to sudoers
+
+Keyboard {{{1
+
+Remap keys: DoubleCommand
+
+Setup {{{2
+
+Keyboard prefs: 'Use all ', 
+Trackpad prefs: turn on all
+
+Desktop {{{2
+
+Function {{{3
+
+F2	focus on menu bar
+F3	focus on Dock
+
+Terminal {{{2
+
+Cmd Shift {}	next tab
+
+App Window {{{2
+
+Cmd up/down arrow	Page up/down
+
+
+Apps {{{1
+
+Homebrew - install posix apps

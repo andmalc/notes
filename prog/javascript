@@ -1,0 +1,119 @@
+Docs {{{1
+
+https://learnxinyminutes.com/docs/javascript/
+
+
+
+Comments:
+	single line: //
+	multi-line: /* */
+	
+Semicolons not required - auto inserted by line ends
+Boolean: true, false, !true, !false
+Equality: === true, !== false
+Comparison < > <= =>
+null - undefined
+undefinted - no value set
+
+False: false, null, undefined, Nan, 0
+True: all else including "0"
+
+
+
+Strings {{{1
+
+Strings '' or ""
+'xabdcs'.substring(0,5)
+''.length - property
+mystring += 'aa' + 'bb' //append
+
+
+Variables {{{1
+
+var someVar = 5;
+If no 'var' init in global scope
+
+Math {{{1
+
+someVar += n	//var = var + n
+someVar *= n	//var = var * n
+someVar++/--			// in/decrement 1
+
+Data Structures {{{
+
+Array	[n,y]
+	indices 0 based
+
+	functions
+		push('xx') - append
+		split(start,# of chars) - remove seq of items
+    
+
+
+Objects {key1:'blah', key2:'blah'}
+	keys are strings but quoting not needed unless spaces
+	
+	access value with
+		subscript syntax 	myObj["key"]
+		dot syntax				myObj.key
+
+	create new or change value
+		myObj.key = newval
+	
+		
+		
+Control & Logic {{{1
+
+Equivalant        =
+Not Equivalant    !=
+
+if (count == 3) {
+	// eval if count ==3
+} else if (count == 4) {
+	// eval if count == 4
+} else {
+	eval if none of above true
+}
+
+while (true) {
+	// infinte loop
+}
+
+
+do while - always runs at least once
+do {
+	a = 1
+} while x=1
+
+for (var i = 0; i < 5; i++){
+    // will run 5 times
+}
+
+Loop over obj properties
+for (var name in names) {
+	....
+}
+
+
+
+Nodejs {{{1
+
+Install with a package manager
+https://nodejs.org/en/download/package-manager/
+
+Install version 6
+	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+
+Install with nvm
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-8
+
+Install with nodeenv using pip
+https://pypi.python.org/pypi/nodeenv
+	pip install nodeenv
+	workon env
+	nodeenv -p
+
+Tools {{{1
+
+Bower package management
+npm install -g bower

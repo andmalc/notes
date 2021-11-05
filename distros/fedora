@@ -1,0 +1,458 @@
+Console switch on Thinkpad: Fn + Ctrl + Alt + #
+
+Install options {{{1
+
+Fedora Everything netinstall image can be used to install any Fedora Edition or your own set of favorite packages
+https://alt.fedoraproject.org/
+
+
+Gnome install minimal 
+sudo dnf group install gnome-desktop base-x hardware-support (for wireless)
+systemctl enable gdm.service
+systemctl set-default graphical.target
+
+Alternate WM install from server edition
+dnf groupinstall 
+    basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
+    custom-environment - ?
+    
+    Minimal-environment with Standard utils
+        Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
+        1.2GB
+
+sway + Gnome Terminal + gdm ?
+
+Install into mounted partition
+dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
+install bootloader ?
+
+
+Minimal Desktop
+    2021:
+        https://www.reddit.com/r/Fedora/comments/lobnfm/guide_fedora_gnome_minimal_install/
+    Old
+        https://www.reddit.com/r/Fedora/comments/hbc29q/ansible_playbook_for_a_minimal_fedora_workstation/
+        https://www.reddit.com/r/Fedora/comments/a6c60d/my_notes_on_a_minimal_desktop_install_of_fedora_29/
+        https://www.reddit.com/r/Fedora/comments/8245vv/i_wish_fedora_workstation_had_a_minimal_desktop/
+
+Setup new VPS {{{1
+
+Have root password
+scp id_ecdsa and id_ecdsa.pub to root home dir on server.
+ssh into server as root.
+Create .ssh dir
+Move in id* files, chmod dir 500 and files 400.
+Copy id_ecdsa.pub to authorized_keys
+
+Create andmalc user with useradd -G wheel
+Visudo and enable passwordless sudo for wheel
+
+Copy .ssh dir to andmalc
+If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
+
+sudo dnf install -y git stow micro tmux fish vim 
+
+eval `ssh-agent`
+ssh-add .ssh/id_ecdsa
+
+git clone --recursive git@github.com:andmalc/config.git
+
+
+
+
+Setup Home Dir {{{1
+
+
+git clone git@github.com:andmalc/config.git
+
+
+Fedora setup Ansible Playbook
+https://github.com/flavienbonvin/ansible-fedora-configuration
+
+https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
+
+
+Packages {{{1
+
+git vim-enhanced fish tmux mlocate ncdu stow ranger util-linux-user exa ccrypt
+
+gpg
+    ensure pinentry installed
+    set home dir:
+         set -x --path GNUPGHOME ~/.config/gnupg
+
+Desktop Setup & Apps {{{1
+
+Kitty
+    Errors when connecting from Kitty to ssh host
+        kitty +kitten ssh myserver
+
+Yubikey/U2F support
+pam-2uf u2f-hidraw-policy
+
+android-tools for adb, fastboot
+
+telegram-desktop
+dnf copr enable rommon/telegram
+
+Atom editor
+dnf copr enable mosquito/atom
+dnf install atom
+
+Brackets
+dnf copr enable dacr/brackets
+
+Chrome:
+Depends on redhat-lsb libXScrnSaver
+
+Firefox H.264 coded support
+RPMFusion repo
+ffmpeg-libs and compat-ffmpeg
+
+Fonts:
+Monospaced:
+* hack-fonts
+* levien-inconsolata-fonts
+* adobe-source-code-pro-fonts
+mozilla-fira-mono-fonts
+dejavu-sans-mono-fonts
+
+Users {{{2
+
+Show user info
+    lslogins
+
+Add user
+	useradd -G grp username 
+
+Change user group
+	usermod -a -G grp username
+
+Change shell
+	chsh -s <shell path>
+	usermod -s <shell path> username
+
+
+adm for journalctl 
+
+Home Dir {{{2
+
+gnupg & ssh dirs
+- mod 700
+
+.ssh dir
+	restorecon -R -v /root/.ssh
+
+Pull Notes, Config, Work
+git@github.com:andmalc/config.git
+
+git clone --recursive config # populates submodules
+git clone --recursive work
+git clone notes
+
+Or:
+submodule init / submodule update
+
+
+Use Stow
+/usr/bin/stow -t ~ -d config/dotfiles vim
+
+cd config/dotfiles
+for p in *; do stow -t ~ $p ; done;
+
+or symlinks
+ln -s 
+config/prog/Envs/postactivate Envs
+config/prog/Envs/postdeactivate Envs
+
+Vim:
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+BundleInstall
+
+Tmux
+While running, Leader + I to install plugins
+
+Pip
+wget https://bootstrap.pypa.io/get-pip.py
+python ./get-pip.py --user
+pip install --user powerline-status virtualenvwrapper
+ptpython or ipython
+
+pipenv
+
+Development Env:
+build-essential or 
+dnf groupinstall 'C Development Tools and Libraries'
+
+Android tools
+android-tools package
+
+Install libraries to allow 32 bit programs to run on 64 bit
+libstdc++.i686 ncurses-libs.i686 zlib.i686
+
+SSH config {{{3
+
+SSH dir
+- mod 700
+- authorized_keys file
+
+
+ssh-agent + ed25519 keys:
+https://eklitzke.org/using-ssh-agent-and-ed25519-keys-on-gnome
+
+
+System config {{{2
+
+Locale
+    localectl 
+       list-locales 
+       set-locale LANG=locale
+
+Console
+    Ctr+ Alt 2
+
+    font settings
+        /etc/vconsole.conf
+        large font: FONT="latarcyrheb-sun32.psfu.gz"
+
+
+Date/time
+	timedatectl
+         timedatectl set-timezone America/Toronto
+
+/etc/gdm/custom.conf
+AutomaticLoginEnable=True
+AutomaticLogin=andmalc
+
+/etc/systemd/journald.conf
+SystemMaxUse=   max disk usage
+
+DNS with systemd-resolved
+	configure /etc/systemd/resolved.conf
+	Enable systemd-resolved
+	symlinmk /etc/resolve.conf to /run/systemd/resolve/stub-resolv.conf
+	verify with resolvectl status
+
+Hardware config {{{2
+
+tuned - power management
+Add to profile conf
+[disk]
+alpm=min-power
+
+
+Input devices: keyboard, mouse, touchpad via Libinput
+https://www.mankier.com/4/libinput#Note
+Hotplug or manual config in /etc/X/xorg.d/
+
+
+Touchpad / Clickpad troubleshooting
+xinput --list
+xinput list-props <device #>
+gsettings list-recursively  | grep touchpad
+
+
+Desktop tweaks {{{2
+
+Arc GTK theme 
+numix icons 
+
+Tap to click
+sudo gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
+
+Solid backgrond color
+gsettings set org.gnome.desktop.background picture-options 'none'
+gsettings set org.gnome.desktop.background primary-color '#HEX'
+
+
+Dnf {{{1
+
+http://dnf.readthedocs.org/en/latest/command_ref.html
+
+Package management {{{2
+
+Dnf <options> <command> <args eg. package spec>
+    
+Pkg spec: searches are case insensitive and match on whole package name
+
+Options:
+    --exclude <pkg or pat>  exclude from install, remove, list etc.
+    --releasever 23
+    --installroot=<path>
+        dnf --installroot=<installroot> --releasever=<release> install system-release
+
+    Temporarily enable/disable a repo
+    --enablerepo <repo>     install pkg from a repo
+        --enablerepo=updates-testing fish
+    --disable <repo>
+
+Commands
+    
+    autoclean   remove orphans
+
+    history <cmd> <event ID>
+        list (default cmd)
+        undo, redo
+        1..20   show last 20 events
+
+    info        shows details
+    
+    in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
+        if /path/file given, acts like provides and installs pkg that provides file
+
+    list | ls [installed | available] [<pkg>]
+        shows name, version, repo, install status
+        no pkg summary
+        if no arg, lists installed then avail packages
+        does not sync metadata
+        see also repoquery plugin
+    
+    provides <full path of file>
+        shows pkg (installed or not) owning file
+
+    repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
+        search repos for packages
+        default output is pkg name.  Faster than 'dnf provides'
+
+        Select options - limit output set 
+        --file/-f       package owned by filej
+        --installed
+        --repo <repoid>
+        --upgrades  # pkgs providing upgrades to existing
+        --whatdepends <capability> # pkgs that depend on this one
+        --whatprovides <capability>
+        --whatrecommends <capability>
+        --whatrequires <capability>  # pkgs requiring this one
+        --whatsuggests <capability>
+
+
+        Query options - set what info displayed about each pkg
+        -l <pkg name>   list files in package
+        --depends
+        -i              info
+        --provides      pkgs providing service/cmd
+        --recommends
+        --requires <pkg>  #  show package dependencies (required by this pkg)
+
+        Show recursive dependencies
+            dnf repoquery --requires nginx --resolve --recursive
+    
+    se|search   lists name, description. 
+                    result sectioned by closeness of match
+                    no installation info
+
+    upgrade <pkg spec>
+    up|update      is alias to upgrade
+    upgrade-minimal
+        Updates each package to the latest version that provides 
+        bugfix, enhancement or fix for security issue 
+
+
+Package Groups
+    group info, list, install 
+    group name
+        case insensitive
+        format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
+
+    Show packages in a group
+        group info 'Basic Desktop'
+
+
+History
+    list
+        recent			recently added packages
+        upgrade <pkg>       avail upgrades for pkg
+        userinstalled       manually installed pkgs
+    undo
+    rollback
+
+RPM
+
+Show package of file
+    rpm -qf <path> => package name
+List files in package
+    rpm -ql <pkg>
+
+Repos {{{2
+
+Repo files in /etc/yum.d
+    fedora-release-rawhide
+    fedora-updates-testing 
+
+Manage repos
+	config-manager
+		--add <repo URL>
+		--enable | --set-enabled <repo>
+		--disable <repo>
+
+
+repoinfo - more detail than repolist
+
+repolist [enabled | disabled | --all ]
+    list repo details
+
+Other {{{2
+
+    autoremove  uninstall orphan pkgs
+    clean all   clear package cache
+
+Plugins
+http://dnf-plugins-core.readthedocs.org/en/latest/index.html
+
+    provides <path to fn>
+        shows which packages provide a file 
+        can use glob instead of exact path
+            dnf provides '*/semanage'
+
+     dnf-plugin-system-upgrade
+        upgrde to new o/s version
+
+
+rpm file - install dependencies
+yum --nogpgcheck localinstall <pkg file>
+or maybe dnf install <pkg file>
+
+Release management {{{2
+
+
+Install from specific release: 
+$releasever variable is number: 22, 23
+Copy repo file and replace var with number to get packages from other release
+Enabled = 0
+dnf --enablerepo=fedora-23 update systemd
+
+dnf system-upgrade download --refresh --releasever=24 --allowerasing
+Return to stable:
+disable testing/rawhide repos
+dnf distro-sync
+
+Install OS tree {{{1
+
+530m installed size
+dnf -y --releasever=22 --nogpg --installroot=/srv/fedora22-tree --disablerepo='*' --enablerepo=fedora groupinstall core
+
+dnf -y --releasever=23 --nogpg --installroot=/srv/f23 --disablerepo='*' --enablerepo=fedora install systemd passwd dnf fedora-release bridge-utils
+
+setenforce 0
+systemctl-nspawn -D <path to container>
+Change root password
+systemctl-nspawn -bD <path to container>
+
+
+Free up space {{{1
+
+Locales
+    localectl - verify is en_US
+    delete all folders in /usr/share/locale except for en_US
+
+Clear dnf cache in /var/cache/PackageKit
+    pkcon refresh force
+
+
+Old {{{1
+
+CPU frequency control
+https://dunterov.github.io/cpu-freq/
+	Install kernel-tools
+	Show available governors
+		cpupower frequency-info --governors

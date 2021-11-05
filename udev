@@ -1,0 +1,41 @@
+
+udev package
+	udev is a program which dynamically creates and removes device
+	nodes from /dev/. It responds to /sbin/hotplug device events and
+	requires a 2.6 kernel.
+
+udevadm
+	monitor - monitor events
+		--udev --property	Verbose device info
+		get /sys path here
+
+	trigger --action=add --verbose --subsystem-match=XXX 
+		causes reread of rules
+		may be needed even after reboot
+
+	control --reload-rules 
+		said does not work for existing devices
+
+	test </sys path>
+
+Device Info
+	udevadm info --attribute-walk --path=/sys/class/net/usbpn0
+
+Rules format
+	HAL fdi files > Udev .rules
+	Format is changed:
+		https://wiki.kubuntu.org/X/InputConfiguration
+
+udev monitors sysfs and creates nodes only as exported thr sysfs
+can write rules to make device names consistant, even after reboot
+devfs obsoleted by udev
+unlike older devfs, doesn't load modules
+docs
+	another good one
+		http://www.reactivated.net/udevrules.php#terminology
+
+hal	deprecated
+
+devicekit	renamed udisks
+	monitor hardware similar to hal
+

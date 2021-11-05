@@ -1,0 +1,134 @@
+Root filesystem backup
+https://wiki.archlinux.org/index.php/Full_system_backup_with_rsync
+rsync -aAXv --exclude={"/home/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /*
+
+
+
+-runi <dir> <dir>   compare two directories
+
+--keep-dirlinks, -K	follow symlinked dirs on destination
+
+Info
+	mailing list
+		http://news.gmane.org/gmane.network.rsync.general
+	Easy Automated Snapshot-Style Backups with Linux and Rsync
+		http://www.mikerubel.org/computers/rsync_snapshots/
+    Remote b/u's with Rsync
+        http://rootprompt.org/article.php3?article=8976
+			
+	
+src dir
+	'.' selects current dir 
+	w/o -a
+		wildcard needed for mult file selection
+		man page: won't copy directories at all
+		e.g.
+			./*	copies all in cwd
+			if zsh globdots off, won't copy dotfiles
+	with -a
+		- dotfiles always selected
+		<dirname>
+			final dir name in source is included in copied path
+		<dirname>/
+			copies all in dir but not dirname
+			e.g. rsync -a ./ dest/dir
+
+remote target directory:
+    host:dir format - dir is in home directory, 
+	multiple remote sources: host:'dir dir' dest
+
+Log results with <cmd line> >> logfile
+
+Args
+-a      Archive mode - copy recursively and preserve symbolic (not hard) links, devices, attributes, permissions, and updates modification times on changed files. (rlptgoD)
+-b      Backup replaced file (default ~ suffix)
+-r      Copy recursively (not a default)
+-t      Update modification times
+-n      Dry run - no action
+-u      update - don't overwrite newer files
+-z      Compress before sending (don't both on fast network)
+-P		= --partial + --progress
+-R      Relative paths - whole source path created on target dir
+-vv		very verbose
+--modify-window=N  Timestamp window (in seconds)
+--delete    Delete files not in source
+--exclude 'filename' | 'dirname/'
+--exclude-from FILE     Exclude patterns
+--delete-excluded		
+	deletes on target excluded files
+	implies --delete
+--include-from FILE     Include patterns (overrides Excludes)
+--backup-dir=DIR    Put old versions of files in DIR (incremental backup)
+--partial	don't delete partially transfered files (i.e. after interruption)
+			as  is the default
+
+include/exclude patterns
+	shell wildcards work
+	must match whole filename
+	Match against destination dir, so a pattern will match or not match according to how rsync is invoked:
+	for
+		rsync -a /home/me /dest 				/me/foo/bar
+		rsync -a /home/me/ /dest				/foo/bar
+		rsync -a --relative /home/me /dest		/home/me/foo/bar
+	new in 2.6
+		**/foo	matches at base
+		foo**bar matches /foo-x/y-bar and /foo-x/baz-bar
+
+	exclude file example:
+		+ /usr/
+		- /*
+		+ /usr/etc/
+		- /usr/*
+
+Examples:
+	rsync -a -e ssh --exclude="[cC]ache" -Pv andmalc andmalc@toad:'
+	snapshot backup
+		rsync -av -e ssh --exclude-from andmalc/config/backup/exclude-tar \
+			--delete-excluded  andmalc/ toad:/home/backups/andmalc.0 
+	Files from
+		-a doesn't imply recursive
+			echo ".centericq" | rsync -arn --files-from - btd:/home/andmalc/ .
+			
+
+	Recover remote files:
+		rsync -a remote:backup/data/     Lists files in remote ~/backup/data dir
+		rsync -a remote:backup/data/filenames <local destination>     Copy locally
+
+
+Example (Note source is 'all files in samba', target is dir samba):
+rsync -az -e ssh --delete ~ftp/pub/samba/ nimbus:"~ftp/pub/tridge/samba"
+
+
+Backup from Windows Share to Unix
+====================================
+Example (Note source is 'all files in samba', target is dir samba):
+rsync -a -e ssh --delete ~ftp/pub/samba/ nimbus:"~ftp/pub/tridge/samba"
+
+  Create a share in each machine, one readable from the source one 
+and one read/writable on the destination one.
+
+         Mount the two shares (both source and destination) in separate 
+directories with samba (mount -t smbfs -o username=something,password=xxxxx 
+//pc/share /directory)
+
+         Assuming the source directory is "src" and destination is "dest", 
+just execute rsync like this (merely an example, adjust parameters 
+according to your own needs):
+
+         rsync -WtrL --modify-window=2 --delete --stats --delete-after 
+/src/ /dest
+
+         IMPORTANT NOTE: the --modify-window=2 switch adds a 2-second 
+window to the file time verification done by rsync. Either by smbclient or 
+rsync's fault, when copying files to mounted windows shares, without at 
+least a 1-second window, rsync copies some files already on the destination 
+machine in the same form.  If some maintainer is reading this, please take 
+note of the bug (feature?)
+--------------------------------
+
+Windows Rsync Backup w/o Cygwin:
+rsync for NT: (old?)
+    http://samba.anu.edu.au/rsync/nt.html
+putty
+at for scheduling
+

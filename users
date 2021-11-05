@@ -1,0 +1,84 @@
+
+Modify user and groups 
+
+user* {{{1
+
+useradd, usermod, userdel, groupdel
+	low level, more control
+
+useradd [-G group] name
+	Create new user + home dir
+
+	--btrfs-subvolume-home [-i basedir] [-m to create dir needed on Debian?]
+		create user home dir as a btrfs subvolum
+		basedir defaults to /home
+
+
+usermod -aG <comma sep groupnames> user
+	append group to existing
+
+usermod -s <shell path>
+    change shell
+
+groupadd, groupmod 
+
+gpasswd
+    may be safer alt to usermod because can change only one group at a time
+	-a <username> <groupname>  
+	-a sammy wheel
+
+getend password
+	show user passwd file entry
+
+getent group 
+    show groups and members
+
+Other utils {{{1
+
+adduser 
+    high level tool, depends on perl
+    package shadow-utils
+    Fedora: adduser is symlink to useradd
+
+
+    adduser -g wheel -m andmalc
+
+    adduser <username> <groupname>
+        add user to group <groupname>
+    addgroup
+
+
+
+Display & Change Groups (old) {{{1
+
+id [user] - see info page
+	id -nG  = print user's groups with names (no ids) - same as groups cmd.
+	newgrp, sg
+		change effect group ID.  Should be member of group to change to.
+		See man pages for differences
+
+PAM
+	read Debian docs in libpam-doc package
+
+
+Usergroup writable directories
+	add users to group
+	set group-id permission on dir
+	users have umask 002
+
+Umask
+	subtracts permissions
+	set in /etc/login.defs
+		e.g.
+		files
+			umask 022 on files:
+			default file rw-rw-rw- (666)
+			umask (----w--w-)	(022)
+			renders rw-r--r--	(644)
+		dirs
+			default directory permissions 777
+			umask 022
+			777-022=755	rwxr-xr-x
+
+
+

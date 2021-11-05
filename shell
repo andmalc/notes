@@ -1,0 +1,598 @@
+Misc {{{1
+
+Next arg is a file name  "--" and not a differnt type of arg
+    git checkout <commit> -- <filename>
+
+Semicolon - command delimiter 
+
+echo 
+    -n      no newline 
+    -e      interpret backlashed control chars
+
+Redirect to file w/o write permission
+    echo blah > sudo tee file
+
+cat - reads from file
+
+echo - reads from sting
+
+Show type of shell
+    $0
+Return value of last command
+    $?
+
+Copy last command into file
+    echo "!!" > filename
+
+
+Control characters
+    man console_codes
+    interpreted by console driver and discarded before printing
+    ^[      start an escape sequence
+    ^X      interrupt escape sequence
+
+    ECMA-48 SGR sequence ESC [ parameters m sets display attributes
+        echo -e "\e[1;31m This is red text \e[0m"
+
+xargs 
+    takes a newline separated list and maps the list to a command
+    under zsh use zargs
+        autoload -U zargs
+        zargs **/*~ -- rm
+
+	Move files except for <pat>
+	ls | grep -v <pat> | xargs mv -t @
+
+Shell types {{{1
+
+Login shell
+    force: su - andmalc
+    test: echo $0 - if result is -<shell name> is login
+
+interactive, login
+    login at text console, SSH, or with su -
+non-interactive login 
+    is rare
+    Only if window manager reads /etc/profile or .profile
+interactive, non-login
+    start a shell in terminal or start a shell inside another
+    rc config files are read
+non-interactive, non-login
+    common
+    when programs run another with a script
+    .env config files read
+
+Graphical login: 
+    does not create a login shell
+    controlled by session or window manager
+
+
+Line editing {{{1
+
+^l	clear screen
+
+Notation:
+	^k = \C=k = control key + k
+	M-k = Meta (usually Alt) key + k
+	ek = Escape + k
+
+Line Editor Key Bindings
+	Emacs mode bindings
+		
+		char
+			^f	move one char forward
+			^b	move one char back
+			^d	delete char to right (also: list completions, log out)
+			BS	delete to left
+		
+		word
+			M-f	word forward
+			M-b	word back
+			^w/M-BS delete word to left
+			M-d	delete word to right
+
+		line
+			^a	beginning of line
+			^e	end of line
+			^u	kill line left
+			^k   	kill line to right
+			^u 	delete line
+			^y	yank back previous kill
+
+		history
+			^r	search past history
+				repeat for additional matches
+			^j	accept current match
+
+		completions
+			<pat>^x/	file name
+
+Customized bindings
+In .zshrc
+    Alt + arrows for word forward/back
+
+File Descriptors & Redirection {{{1
+
+Redirection
+http://en.wikipedia.org/wiki/Redirection_(Unix)
+
+Standard I/O
+Stdin, stdout, and stderr streams  numbered 0, 1, and 2.  
+Additional opened files assigned numbers starting at 3
+
+Input from stdin instead of from file
+    wc -
+
+Redirection is changing these to non-terminal
+
+E.g redirect output
+    1. Close std output descriptor (1 - terminal)
+    2. Reassign descriptor to file
+
+To specify the file with a number, place the number before the >
+	program-name 1> out.txt
+	program-name 2> errors.txt
+
+
+Input {{{2
+
+redirection operators
+< file
+<<here doc
+    <<TAG 
+    <<-TAG #ignore leading tabs in doc
+<<< "string blah"
+
+file as command input
+    cat < file
+    < file cat
+
+
+keyboard as input
+    cat
+
+Here doc with << operator
+    tr a-z A-Z <<+
+    abc
+    def
+    +
+
+Quick write to file 
+    tee myfile << blahblah
+    tee -a myfile << xxx #appends
+
+Here string (input from string) - <<< operator
+    tr a-z A-Z <<< "one two three"
+
+Output {{{2
+
+Operators
+    >   redirect output
+    >> append to file
+    >|  output and replace file if exists
+    &>  output and errors 
+    > success_file 2> error_file
+
+command output to file
+    program-name > out.txt
+    ls > directorylisting.txt
+
+
+
+Combos {{{2
+
+Redirect both stdin and stderror 
+	Traditional format: cmd logfile 2>&1
+	New format: cmd >& logfile (not with teed output)
+
+Redirect to file and show on screen
+	cmd | tee logfile 2>&1
+
+Drop errors	
+	2> /dev/null
+
+Standard out from a command in a sub-shell to a file:
+(ls -) > file
+	
+
+
+Heredoc/string {{{2
+
+cat > newfile
+Enter text
+^D
+
+cat > filename <<+
+stuff
++
+
+Append string to existing file:
+cat >> /etc/apt/apt.conf << .
+hi!
+.
+
+
+Braces, Parentheses, Brackets {{{1
+Parentheses {{{2
+Executes contents in subshell {{{3
+like ``
+
+(ls)    #return value 1 or 0
+$(ls)   #returns list of files
+
+Examples of using return value
+# 
+if grep someuser /etc/passwd ; then
+    # do something
+fi
+
+# pipe in subshell
+if ( w | grep someuser | grep sqlplus ) ; then
+    # someuser is logged in and running sqlplus
+fi
+
+Other {{{3
+
+Arithmetic expressions (( expr or statement ))
+    $ not required for variable values
+
+Grouping expressions within conditional expressions
+
+Braces {{{2
+
+List or sequence expansion
+    {1,2,3} {a-z}
+
+Variable expansion  
+    STR="hello"
+    STR2="${STR} world"
+
+Brackets [] {{{2
+Expands text as output from command
+
+Variables {{{1
+
+var     name of variable
+$var    value of variable
+        quote or escape to avoid multi words if whitespace
+
+assignment - no spaces before or after =
+    a=1 
+
+delimit variable name with curly braces {}
+
+Sourcing a file adds its variables to current
+Exporting: provides copy of var to child process, not current environment
+
+Quoting {{{1
+
+Quotes prevent shell from evaluating line before command
+
+double quoted string is evaluated for shell variables or backslash escaping.
+
+""xxx"	weak quotes 
+        permits expansion of $variables and backslashed control chars like \t for tab
+
+'xxx'	strong quotes 
+        no expansion or metacharacters
+
+
+\       At end of line - special case: removes new line char.  command - executed before rest of line.
+
+Never quote a glob or regular expression
+    for x in "~/*"; do done
+      # This loop will run once with $x set to "~/*" rather than once for every
+      # file and directory under $HOME, as was intended
+
+
+
+
+Looping {{{1
+
+
+for file in <pat>; do
+    mv $file ${<pat>}
+done
+
+For Loop
+    for x in y y y
+    do
+    ...
+    done
+
+
+Command substitution {{{1
+
+Creates child process whose standard output is piped back into shell
+    $(cmd)
+    `cmd` - obsolete format
+
+    vi $(fgrep -l malloc *.c)
+
+Completion & Expansion {{{1
+
+	${VAR}		Value of a shell variable name - curly brackets just used for clarity.
+
+
+Shell Wildcards
+	*	zero or more characters
+	?	any one character
+	~+	current working directory
+	~-	last working directory
+
+	[ab]	a or b
+	[a-b]	from a to b, inclusive
+
+	Note matched: Initial '.' in filename is not matched by wildcards
+        e.g.    ls .*rc
+
+brace expansion
+	used to generate filenames
+		cp filename{,-old}
+		cp filename{-old,}
+		cp filename{-v1,-v2}
+		touch a{1,2,3}b
+
+Completion vs. expansion: expansion of variables, filenames (via globbing), & history done first or after a <Tab>
+
+C-d 	List possible completions
+<pat>M-p  Recall last command beginning with pat
+cmd <pat>M-/ Recall last word beginning with pat.  M-/ again to get next match (good for completing long words like paths, zsh only)
+C-r<pat> Interactive history word search
+C-xu    Undo last completion
+
+
+
+
+Rename files
+	rename command
+
+	or
+		for file in <pat>; do
+			mv $file ${<pat>}
+		done
+	${<pat>} is a shell variable alteration/substitution/expansion  pattern
+	e.g.
+		echo ${foo#*.} removes file name extention from $foo
+
+Conditional Expressions {{{1
+
+[[ <EXPRESSION> ]]
+
+operators:
+    group expressions to set precedence     ()  
+    true if both expns are true             &&  
+    	0 length string
+        if test -z "$Var"
+    -e  file exists
+    -f	is regular file
+    -n	string is non-empty/non-null
+
+Bash & Zsh test {{{2
+
+[[ ]] for strings
+(( )) for numeric
+
+Is a command so requires semi-colon delimiter if followed on same line e.g. in if statement
+
+http://mywiki.wooledge.org/BashFAQ/031
+compatible with above operators
+
+advantages vs. test command
+    Use familiar ==, >=, and <= operators
+    Check a string against a regular expression with =~
+    Check a string against a glob with ==
+    Less strict about quoting and escaping
+        [[ $name = xx ]] #works even if $name contains whitespace
+
+string comparisons
+    <word> = <pat> #http://wiki.bash-hackers.org/syntax/pattern
+    operators: =, ==, !=, =^ (regex match)
+    < >     before/after -  string collation order
+
+Operator precedence (highest ⇒ lowest):
+    ( <EXPRESSION> )
+    ! <EXPRESSION>
+    <EXPRESSION1> && <EXPRESSION2>
+    conditional evaluation with && and ||
+
+
+
+If statement {{{1
+
+https://robots.thoughtbot.com/the-unix-shells-humble-if
+http://mywiki.wooledge.org/BashGuide
+
+With Bash/Zsh test command
+
+    if [[condition]]; then
+      expressions
+    elif condition; then  # optionally
+      expressions
+    else                 # optionally
+      expressions
+    fi
+
+    if [[condition]]; then echo "test stuff" ; fi
+
+
+Conditional execution
+    || OR - 2nd command executes only if 1st fails
+    &&  AND
+
+
+command
+	if returns 0 is true, else is false
+	if pipeline, uses exit status of last command	
+	! before inverts
+
+Processes {{{1
+
+Running Processes
+	Pipes always between programs. Only works with programs which expect
+	standard input (e.g. not vi).  
+	
+	Can type in with pipe character at line end:
+		echo thing is a word |
+		sed 's/word/wordzzz/'
+
+    Subshell
+        cmd_output=$(COMMANDS)
+
+Job Control
+	%n	refer to job by name or number
+	%-	previous job
+	%+	current job (in jobs list)
+	&	Run command in background, don't wait for it to complete
+
+	^c  Interrupt job
+	^z  Suspend job
+
+	EOF marker 
+		C-D on unix
+		C-Z on Windows.  
+		In Python interpreter, this causes an exit. C-C is cancel input.
+
+	bg <cmd>  Resume suspended job in background subshell (zsh only?)
+
+	kill -<signal # or name> PID or %job#
+	pkill -signal <job name>
+	pgrep <job name>
+		get PID by name
+		-f search on whole command line
+		-l list program name
+
+	Signal Names - most apps can trap first 3, KILL will always work
+	INT     Interrupt (^C) - foreground jobs only
+	QUIT    = ^\
+	TERM    Default signal
+	KILL
+	USR1	graceful restart & reread config files
+	HUP		difference from USR1?
+
+	pstree
+		-h	highlight current process
+		-G	solid lines
+		-l	display long lines
+		-p	show PID's
+		-u	show UID transitions
+
+
+Subshells:
+	All but end of a chain of pipes run in subshells.
+	cOde inside a '()' or `cmd`, including substitutions: [$=<>](cmd)
+	Backgrounded or suspended/resumed processes 
+
+	In subshell - does not affect main shell:
+	(cd /usr; ls) > file
+
+
+Running Commands
+	sh [cmd]	Run a script without having to change its access mode
+
+Environment
+    env     show or set shell environment
+
+    Env for a command
+        prep <cmd> => PID
+        cat /proc/PID/environ  | tr '\0' '\n'
+
+
+
+Command History {{{1
+
+	history [n]	Show n lines of history
+	c	clear contents of current list
+	w	write current list to history file
+
+	Format:
+	Event Designator:[Word Designator]:[Modifier]
+
+	C-p/n   recall previous/next command
+
+	Referring to previous commands and args
+		Referring to commands by sequence
+		!	start character for event designator	
+		!!	previous command
+		!-2	2 commands previous
+		!n	history event #n
+
+		Referring to commands by string contents
+		!str	Refer to most recent cmd starting with str.
+		!?str?	Refer to most recent cmd containing str.
+		
+		Referring to args by string contents
+		!?str?% Most recent arg containing str.
+		!$      Last arg of previous cmd
+
+		Append args
+		!!str   Most recent command + str
+		!(s1)s2 Append s2 to most recent command starting with s1
+		!N str  Append arg str to command #N
+
+	Modifiers:
+		p - print event, don't execute
+			!497:p
+			<edit previous>
+			!! to execute
+		[g]s/old/new	(global) substitution
+		^str^str2^	Substitute str2 for str in last line
+
+	fc command
+		no args	edit last command in vi
+		#		edit history #
+        -l      list output on std
+        -n      don't show line #s
+
+		-l # #	list commands # through #
+		-l -n	list last n commands (default 10)
+		-l s	list last command beginning with s
+		-ln n > file	save cmd# to file
+		-e vi n	edit in vi command n
+		-s [pat=rep] [cmd] reexecute cmd after substitutions
+
+	M-.     insert last arg at insertion point
+
+
+
+
+
+Key Binding {{{1
+
+
+	Changing
+		Modify in .inputrc
+		Reread .inputrc with C-X C-R
+
+		Emacs (and maybe other environments) uses identical Meta and Escape bindings.  
+		bindkey -m option: when binding an escape sequence like \eb, also bind b to Meta.
+
+		bindkey 
+		-v  vi mode
+		-e  emacs mode
+		-m  bind Meta - enabling Alt key bindings
+		'^V+<key>' <cmd>    Show character code (will show ^[ escape first)
+
+		More on binding function keys in zle:
+			http://zsh.sunsite.dk/Guide/zshguide04.html#l76
+
+
+
+
+Functions {{{1
+
+Define:
+ function fname()  #'function' is optional
+ { 
+     statements; 
+ }  
+
+Execute:
+    fname arg1 arg2
+
+Arguments: 
+    $0 = script name
+    $1 $2 =  arg1, arg2
+    $@ = all args
+
+

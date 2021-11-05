@@ -1,0 +1,148 @@
+Resources
+http://www.virtualenv.org/en/latest/index.html
+http://www.doughellmann.com/projects/virtualenvwrapper/
+file:///usr/share/doc/virtualenvwrapper/en/html/install.html#workon-home
+http://www.pip-installer.org/en/latest/
+
+Fedora Py3.8 setup
+ sudo dnf install python3.8
+ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+ python3.8 get-pip.py --user 
+ python3.8 -m pip install --user ipython
+
+
+Show sys.path 
+python3 -m site
+
+
+
+Pip {{{1
+
+python3.6 -m pip install --user pipenv
+
+pip install --user as default
+	~/.config/pip/pip.conf
+		[install]
+		user = true
+
+
+Install Python app from downloaded source
+    cd to source dir
+    pip install -e .
+
+OLD:
+    config:
+        automatically use current ENV
+            export PIP_RESPECT_VIRTUALENV=true
+        only run in virtualenv
+            export PIP_REQUIRE_VIRTUALENV=true
+    installing packages
+        If python is local, will install to .local or use --user
+        Install to virtualenv -E
+
+Venv - Py3 {{{1
+
+python3 -m venv <env name>
+. <env name>/bin/activate
+deactivate
+
+
+pipenv {{{1
+
+https://www.kennethreitz.org/essays/announcing-pipenv
+
+pipenv --python 3.6.0 install <uses requirements or Pipfile or <pkg>
+
+pipenv shell to invoke environment
+
+pyenv {{{1
+https://github.com/pyenv/pyenv/blob/master/COMMANDS.md#
+
+Build dpendencies:
+https://github.com/pyenv/pyenv/wiki/Common-build-problems
+
+pyenv list \\ lists available versions
+pyenv install <version>
+pyenv shell <version>
+
+
+
+Virtualenv  {{{1
+
+Changes $PATH to include ENV/bin
+Changes module site.py to add module search path add ENV/lib/python-x.x/site-packages
+Newly installed modules go there too.
+
+
+pip3 install virtualenv 
+    defaults to 'virtualenv --python=/usr/bin/python3 --no-site-packages'
+
+
+Virtualenvwrapper {{{1
+
+Install from repo
+    curl -O https://raw.github.com/pypa/virtualenv/master/
+    Includes pip
+            
+pip install virtualenvwrapper --install-option="--user"
+
+During install will look for first python and virtualenv on PATH
+
+http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html
+
+config:
+	export WORKON_HOME=~/Envs
+	export PIP_VIRTUALENV_BASE=$WORKON_HOME
+	export PIP_RESPECT_VIRTUALENV=true
+	source ~/.local/bin/virtualenvwrapper.sh
+
+~/Envs/postmkvirtualenv
+	auto run after a virtualenv created, e.g.
+		pip install xxxxx
+		export PYTHONPATH=
+~/Envs/postactivate
+	auto run after virtualenv activated
+
+Commands
+
+
+Env
+    mktmpenv
+    mkvirtualenv -p <path to python ver>
+    wipeenv - remove all 3rd party packages from current env
+    add2virtualenv - add path to Python path
+	rmvirtualenv - to remove a virtual environment
+
+Projects - bind a directory to env
+    mkproject <dest dir>
+    setvirtualenvproject <virt env path> <project path>  (default current dir & env)
+
+Naviation:
+	workon [environment name] - 
+	workon - to list all environments
+    cdvirtualenv
+    lsenv
+
+Packages:
+	lssitepackage - to list all installed packages for an environment
+	cdsitepackages - 
+	toggleglobalsitepackages  - toggle global site packages in python's path
+
+
+
+
+
+Editor & Prompt {{{1
+
+pyvim
+    https://github.com/jonathanslenders/pyvim
+
+ptpython
+    https://github.com/jonathanslenders/ptpython
+
+
+https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14#.qyc28z7h
+
+Py + Vim
+https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
+

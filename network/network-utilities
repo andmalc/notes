@@ -1,0 +1,79 @@
+
+netcat
+    https://www.digitalocean.com/community/tutorials/how-to-use-netcat-to-establish-and-test-tcp-and-udp-connections-on-a-vps
+    netcat <options> host startport-endport
+    package nmap-ncat
+    scan faster if use IP address instead of domain
+    options
+        -z  scan instead of opening connection
+        -v  verbose
+        -n  numeric host IP provided, DNS not needed
+
+	server: nc -l -p <port>
+	client: nc <host> <port>
+	scan: nc -vz <host> <port or port range>
+
+nmap 
+    best choice for port scanning
+    cheat sheet saved at Drive/Share/pdf
+
+    detect hosts on network
+        192.168.0.* | grep Host
+    -sn     ping scan
+    -sP      
+
+ss  socket statistics
+    like netstat but more info
+	Fedora: iproute route package
+    ss -tlw
+
+    check for listening socket
+        ss -tnlp | grep ssh
+
+
+netstat - deprecated, use ip -s, ss, ip route
+		Reports on listening daemons
+		debian package net-tools
+	show all running sessions and daemons
+		netstat -untap  
+	shows running daemons
+		netstat --tcp --udp --listening --program --numeric (ntpl)
+        netstat -pan -A inet,inet6 | grep -v ESTABLISHED    
+        netstat -tlnwp  server sockets with prog names	
+	options
+		ant		show programs bound to ports for TCP address family
+		i		interfaces
+		r		kernel routing tables
+		M		masqueraded connections
+        n       show port numbers instead of program names
+		p		show name of program
+		c		continuous display
+		t		tcp
+		l		listening servers only
+		a		show all
+
+capturing network traffic,  trace packets 
+
+	tcpdump 
+		raw info
+		Docs
+			http://www.informit.com/articles/article.asp?p=352988&seqNum=3
+            https://danielmiessler.com/study/tcpdump/
+            https://tcpdump101.com/
+		
+		e.g.
+			Test ping through firewall using tcpdump
+			https://lists.linux-foundation.org/pipermail/bridge/2005-October/004724.html
+			tcpdump -i eth2 icmp
+
+
+	ethereal (graphical) / tethereal (cmd line)
+		friendlier interface
+	
+    mtr
+
+	tshark/wireshark
+        higher level interface
+		-D	list interfaces
+		-i	interface name or # from -D
+

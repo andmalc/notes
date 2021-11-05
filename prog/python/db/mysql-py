@@ -1,0 +1,24 @@
+
+As of 12/14:
+
+Install 
+with apt-get:
+python-dev
+libmysqlclient-dev
+
+With pip
+MySQL-python
+
+import MySQLdb
+conn = MySQLdb.connect(host="localhost", user="root", passwd="XXXX", db="world")
+cursor = conn.cursor()
+cursor.execut( ... )
+cursor.fetchall( ... ) 
+
+Convert tuple of tuples to row of rows for Pandas DF: [[i for i in r] for r in rows]
+
+
+http://moderndata.plot.ly/graph-data-from-mysql-database-in-python/
+
+Docker Image:
+docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=b -p 127.0.0.1:3306:3306 mysql

@@ -1,0 +1,48 @@
+Packages to install
+
+fedora-toolbox fish fzf git neovim python3-neovim util-linux-user vim
+
+util-linux-user for chsh
+
+
+Registry
+registry.fedoraproject.org/fedora-minimal:latest
+
+Filesystem
+
+Defaults for /etc   /usr/share
+
+Writable:
+    /var
+    /etc
+
+Dnf search
+podman run -it --rm registry.fedoraproject.org/fedora:28 dnf search strace
+
+
+Sytem upgrade
+
+atomic host upgrade
+rpm-ostree upgrade
+
+
+Rollback
+
+rpm-ostree upgrade
+
+Install
+
+rpm-ostree install 
+
+
+
+Config user
+    Rename fedora user for ID 1000
+    Shell:
+        Chmod not installed but can do: sudo usermod -s yourshell yourlogin
+
+    Need selinux policy update to ssh in as user?
+
+    Bind mount home/andmalc from volume to /home
+
+

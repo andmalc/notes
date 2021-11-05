@@ -1,0 +1,94 @@
+
+Architecture {{{1
+
+Debian - https://wiki.debian.org/Multiarch/HOWTO
+dpkg --add-architecture
+apt-get update
+apt-get install package:architecture
+
+dpkg --print-architecture # amd64 for 64 bit
+dpkg --print-foreign-architectures  # i386 for 32 bit
+
+
+Drivice Driver Modules General {{{1
+
+All hardware identified by device files.  3 types:
+    Character - can handle data one character at a time, e.g. modems
+    Block - can handle larger amounts - blocks - at a time e.g. disk drives
+    Network - data sent in packets
+        File listing in /dev identifies type in left column
+- Drivers allow kernel to pass data to and from the device
+- Kernel modules can be inserted into runing kernel and removed if unneeded.
+utils
+    lsmod		List loaded modules
+    insmod		Load module
+    rmmod		Unload module
+
+kernel & udev can load 'detectable' modules (on USB & PCI buses)
+    see hotplug docs for more on how to tell if a module is detectable
+    character, block, & network protocol drivers mostly loaded on use
+
+Options {{{1
+
+Show list of options
+    modinfo -p i915
+
+Show options in effect
+    systool -m i915 -av
+
+Configure options
+	module loading statements in /etc/modprobe.d/
+
+    /etc/modprobe.d/i915.conf
+    options i915 enable_rc6=1 enable_fbc=1 semaphores=1
+
+
+
+Hardware Monitor & Conifg {{{1
+
+Show drivers in use:
+    lspci -nnk
+
+Sysfs - introduced by kernel 2.6
+
+View interrups use
+    cat /proc/interrupts
+View i/o port addresses
+    cat /proc/ioports
+List contents of virtual device space
+    ls /proc
+List devices on pci bus including pc cards
+    cat /proc/pci
+List processes using a file or filesystem
+    fuser
+Resources not in use are not listed.
+
+
+lspci
+    cat /proc/pc
+
+lsusb
+
+lscpu
+
+lsmod
+    cat /proc/modules
+
+/proc/bus/input/devices
+    input devices
+
+
+Video drivers {{{1
+
+Show Intel graphics mesa version
+    install mesa-utils package
+    glxinfo | grep OpenGL
+
+    3D acceleration working?
+    glxinfo  | grep rendering
+
+Install 32bit OpenGL graphics
+https://www.codeweavers.com/support/wiki/Diag/MissingLibGL
+
+Debugging 
+LIBGL_DEBUG=verbose <cmd>

@@ -1,0 +1,48 @@
+Report bugs: https://pagure.io/teamsilverblue/issues
+
+User data saved in ~/.var/app
+
+Remotes {{{1
+
+remote-add <options> <repo file or URL>
+flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+See packages at remote
+flatpak remote-ls flathub
+
+flatpak --user update && flatpak --user search atom
+
+Show package details
+flatpak remote-info flathub io.atom.Atom
+
+
+Install & Manage {{{1
+
+install
+    flatpak --user install flathub io.atom.Atom
+
+search
+    flatpak remote-ls --app --user flathub <pattern>
+    flatpak search <pattern>
+
+
+list
+    List installed runtimes and packages
+    -d  detailed
+
+    flatpak list -d 
+
+info
+    flatpak info --show-permissions
+    
+ps
+    list running instances and runtimes
+
+
+desktop files location
+	system
+		/var/lib/flatpak/exports/share/applications/
+	user
+		.local/share/applications/
+
+

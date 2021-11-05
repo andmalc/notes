@@ -1,0 +1,69 @@
+
+Deeper into Postgres 9.5 - New Group By Options for Aggregation
+https://compose.io/articles/deeper-into-postgres-9-5-new-group-by-options-for-aggregation
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-9-4-on-debian-8
+
+
+Commands
+    createuser
+    createdb/dropdb
+
+
+psql
+    db user
+    -d  db
+    -h  host
+    -l  list db's
+    -p  port
+    -U  connect as User
+
+    psql -l localhost -U postgres -l 
+
+    Run as:
+        sudo su - postgres
+        or with -U option, or set PGUSER
+
+Meta-commands
+
+\?  Help
+\!  <cmd> Run shell command or temp enter shell session
+\x  Expanded display 
+\c[onnect] [DBNAME|- USER|- HOST|- PORT|-]
+\conninfo   connection info
+\copy
+\crosstabview
+
+\d <pat>    describe table etc.
+
+Listing
+    dl   list databases
+    dn  list schemas
+    dt  list tables
+    du  list roles (was groups)
+    dp  list tables with access privilages
+\e <fn> edit 
+\h <cmd>    help with SQL command
+
+
+g or ;			end input
+o       send query results to a file or pipe
+H       toggle HTML mode
+
+Table design
+    Timestamp:      colname TIMESTAMP DEFAULT now()
+
+Datatypes
+	boolean, bool - value may be unquoted true/false
+	character(n), char(n) - fixed length string, padded with spaces
+	character varying(n), varchar(n) - string up to length n
+	text - variable length string, unlimited length (PG specific but found in some other db's) 
+	integer, int - signed, 4 byte number
+	float (8 bytes), real (4 bytes) - floating point integers
+	numeric/decimal(precision,scale) - precision is to left of decimal point, scale to right
+	serial - auto-incrementing number (PG specific)
+	date, time, time (with tz), timestamp, interval
+
+	NULL - no value set
+	values - enclose in single quotes (incl. numbers)
+	

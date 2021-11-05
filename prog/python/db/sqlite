@@ -1,0 +1,20 @@
+
+Pysqlite - Python bindings for sqlite cross-platform mini-db.
+	pysqlite.sourceforge.net
+SQL Lite
+	http://www.hwaci.com/sw/sqlite/
+
+
+Use under py 2.4 or 2.5
+
+try:
+  from sqlite3 import dbapi2 as sqlite # python 2.5
+except:
+  try:
+    from pysqlite2 import dbapi2 as sqlite
+  except:
+    print 'This program requires pysqlite2\n',\
+          'http://initd.org/tracker/pysqlite/'
+    sys.exit(1)
+
+

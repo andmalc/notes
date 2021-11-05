@@ -1,0 +1,74 @@
+Assets = Liabilities + Equity (aka book value)
+
+Assets: cash, inventory, building, equipment, receivables
+Liabilities: owed to others: bills, credit balances, loans
+Equity: claims owners have on assets based on their portion of the ownership.
+
+
+Credit Balances
+The ending amount found on the right side of a general ledger account
+Normal for Liability, Equity, Revenue accounts
+
+Debit Balance 
+The ending amount found on the left side of a general ledger account
+Normal for Asset, Expense, Loss accounts
+
+Increased by a debit: Dividends, Expenses, Assets, Losses
+Increased by a credit: Gains, Income, Revenues, Liabilities, Equity
+
+
+
+Account Types {{{1
+
+Permanent - Balance Sheet {{{2
+
+Do not close at end of accounting period
+Can be both debit and credit balances
+
+    Assets
+        Debit - blue
+        customers, cash, bank acnt.
+        current assets: 
+            cash, savings, bank account, inventory, pre-paid services
+        long term assets: land, buildings, equipment
+
+    Liability
+        Credit - yellow
+        debts, suppliers
+        current liabilities: 
+            accounts payable, sales tax collected, credit cards payable 
+        long term liabilities: loans 
+
+    equities: retained earnings, captial (money or other contributions by owner)
+
+
+Non-permanent - Financial Statement {{{2
+
+    Incoming 
+        Credit - green
+        Revenue / income accounts: 
+            sales of goods & services, sales discounts, 
+            Consulting, Support, Sales
+            sales returns, cost of goods sold: 
+                purchases, returns of purchases, discounts
+
+    Outgoing
+        Debit - red
+        expenses, services, products, saleries
+        expense and loss accounts: 
+            advertising, rentals, bank charges, insurance, rent
+ 
+Transactions {{{1
+
+Has origin and destination, affects two or more accounts. 
+The journal entry records the whole transaction in one place; then each piece is recorded in the accounts that are affected by the transaction.
+
+
+Balances {{{1
+
+Real time value of all incoming and outgoing Transactions that are posted on an Account
+
+Balances cleared at end of accounting period and amounts 'transfered' to owner's equity.
+
+
+

@@ -1,0 +1,30 @@
+
+Virtual Hosts
+
+NameVirtualHost 192.168.150.2
+<VirtualHost *>
+DocumentRoot /var/www/localhost
+</VirutalHost>
+<VitualHost 192.168.150.2>
+    servername www.bigdog1.com
+    DocumentRoot /var/www/bigdog2
+</VirtualHost>
+<VitualHost 192.168.150.2>
+    servername www.bigdog2.com
+    DocumentRoot /var/www/bigdog2
+</VirtualHost>
+
+WebDAv
+
+Alias /~steve123 /home/steve123/public_html
+<Location /~steve123>
+    DAV On
+    AuthType Digest
+    AuthName "webdav-public_html"
+    AuthDigestFile /home/steve123/digest-password
+    Require valid-user
+</Location>
+
+See http://www.debian-administration.org/articles/285
+
+

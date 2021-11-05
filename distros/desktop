@@ -1,0 +1,138 @@
+
+Copy paste general
+	Clipboards based on selections
+		primary selection
+			Selected text is auto copied to primary selection
+			Paste with middle mouse click or Shift Insert (not all apps)
+        clipboard
+            selected text copied to clipboard after explicit copy command (Ctrl C)
+		cut buffers
+			added by an explicit copy command
+			xlipboard will add after each copy
+	tips
+		Middle-click in Mozilla - loads a URL in the X Primary
+
+    Some clipboard managers or applications will overwrite the primary contents with the clipboard contents when you perform an explicit copy.
+
+Old {{{1
+
+xrandr	shows X state, driver info
+
+xinput list 
+	connected device info
+xinput list-props <device #>
+	e.g.  xinput set-prop 12 "libinput Scroll Method Enabled" 0, 1, 0
+
+
+
+Authorize user connections
+	xhost +
+	xhost -
+		insecure method, but can use temporarily
+	export DISPLAY=:0.0; xauth -merge ~<xserver-user>/.Xauthority
+
+utilities
+    xsel - recommended
+        Tmux buffer => clipboard
+             tmux show-buffer | xsel -ib
+        
+    xclip
+        -o > file   #paste clipboard to file
+        xclip -o | tee <file>   #paste clipboard
+
+    xcb
+    xcutsel *
+
+Startup Process {{{2
+
+Xsession man page: http://www.wlug.org.nz/Xsession%285%29
+
+Main server process either XSession or ? (depends on display manager settings)
+Configure startup process other than XSession:
+	xdm: edit xdm/xdm-config
+	startx:	xinit/xinitrc
+
+XSession
+	XSession not started by user but wthin environment set up by any of: 
+	startx, xdm, xinit, or a display manager.
+	Arguments: failsafe, default, or program
+		program
+			- ignored if no Xsession.options files is present
+			- usually is name of window manager (in $PATH)
+	Confirms existance of script dir Xsession.d and sources scripts there.  
+	These files determine:
+		- argument processing
+		- resource merging
+		- startup programs - e.g. client to launch as controlling process
+			- use program arg
+			- elif run script '.[Xx]session' to start initial clients if in 
+			option in Xsession.options.
+			- elif look for first of /usr/bin/x-session-manager, 
+			/usr/bin/x-window-manager, or /usr/bin/x-terminal-emulator
+			- else abort with error
+		- starting ssh-agent if specified in Xsession.options
+		- exec'ing X session in shell or within ssh-agent
+
+
+xinit	
+	- run by startx with client & server args:
+		xinit [ [ client ] options ] [ - [server] [display] options]
+	- Used instead of xdm for systems requiring more flexibility.
+	- Loads resoures, starts clients, calls global Xsession script 
+	- Needs client to start system specified either on command line or in 
+	.xinitrc or (last choice) /usr/lib/X11/xinit/xinitrc.
+
+	.xinitrc script permissions: must be 700
+		see examples for this & .xsession in xfree86-common doc dir
+		format:
+			# Startup X stuff
+			exec client &
+			[exec] wm
+
+Xsession.options
+	option defaults?
+	options
+		use-ssh-agent
+			if ssh-agent is avail and no agent process is running, invoke X session by exec'ing ssh-agent with the startup command.
+		allow-user-xsession
+			use .xsession startup script in user home dir.  Invoke with 'sh' 
+			if file not executable.
+			- default is no
+
+
+Run 2nd X session under different user
+	switch to console Ctrl+Alt+F1
+	login as other user
+	startx -- :1
+	switch to Ctrl+Alt+F8
+	or under gnome 2.4, 'new login' under application/system tools
+
+XServer Config {{{2
+
+	xorg.conf file (cf XF86config - older config utility)
+		Options: case insensitive, values must be quoted, no value = "on"
+	xf86cfg     newer graphical configuration
+
+
+xset
+	temporarily set various user preference settings: dpms options, font path, 
+	mouse settings etc.
+	'xset q' - display all setttings
+
+
+X11 Fonts {{{2
+
+	X servers can obtain fonts from directories in file system (local to server), font servers (from network location), or both.
+	standard location for fonts: /usr/share/fonts
+	standard renderer is freetype2
+		used by all KDE and GTK2/Gnome apps using fontconfig
+		provides apps with antialiasing, autohinting and sub-pixel rendering
+
+	fontconfig 
+		provides listing/matching
+		config: dpkg-reconfigure fontconfig-config or by changing links in /etc/fonts/conf.d
+
+	outline vs. bitmapped fonts
+		outline preferred, size is scalable
+
+

@@ -1,0 +1,177 @@
+How it fits in
+	a thread on infrascture
+		http://tinyurl.com/5uzhz
+
+	
+Docs
+	http://www.openldap.org/doc/admin22/
+	http://www.tldp.org/HOWTO/LDAP-HOWTO.html
+	Debian Wiki on LDAP Auth
+		http://wiki.debian.net/index.cgi?LDAPAuthentication
+	Directory Services in depth
+		http://www.daasi.de/staff/norbert/thesis/html/node3.html
+	article series
+		http://networking.earthweb.com/article.php/1570651
+	Recent (?) Howto for Debian
+		http://people.debian.org/~torsten/ldapnss.html		
+	Recommened guide for Woody
+		http://homex.subnet.at/~max/ldap/index.php
+
+Utils
+	directory-administrator
+		easy LDAP directory admin
+		http://diradmin.open-it.org/index.php
+
+General
+	lookup of directory values by keys
+	key to directory base (aka root node) often site domain name
+	distinguished name (dn) used as key
+
+General parameters:
+	bindmethod: SASL method prefered
+	binddn 
+		dn to authenticate against
+		used as value of -D param for utils below
+	credentials parameter needed also
+	saslmech (SASL mechanism)
+		authcid		- authorization identity
+		credentials
+	rootdn
+		specifies 'root' entity/user of db
+	rootpw
+		enter literal or generate HASHH with slappassword util
+	suffix
+		specifies that a DN with this suffix will be passed to this backend.	
+		equal to the root of the directory
+BDB specific directives
+
+Basic slapd.conf
+	  database bdb
+      suffix "dc=<MY-DOMAIN>,dc=<COM>"
+      rootdn "cn=Manager,dc=<MY-DOMAIN>,dc=<COM>"
+      rootpw secret
+      directory /usr/local/var/openldap-data		
+
+LDIF files
+	entries separated by blank lines
+		first line: dn key
+		must contain objectClass attr
+	
+Utilities
+	gen
+		-D binddn
+
+	slappasswd
+		-s <password to hash> 
+		create hashed pw to as value of rootpw
+	ldapadd
+		runs "ldapmodify -a"
+		-f <ldif file> -x -D <rootdn> -w <passwd>
+	ldapsearch
+		-x -b <search base i.e. suffix> <search terms> 
+	ldapdelete
+		<search term>
+	ldapmodify
+		-b -r -f <ldif>
+		ldif example/
+			dn: cn=Modify Me, o=University of Michigan, c=US 
+			changetype: modify 
+			replace: mail 
+			mail: modme@terminator.rs.itd.umich.edu 
+			- 
+			add: title 
+			title: Grand Poobah 
+			- 
+			add: jpegPhoto 
+			jpegPhoto: /tmp/modme.jpeg 
+			- 
+			delete: description 
+
+	Migration Tools at /usr/share/migrationtools
+		edit migrate_common - default suffix & mail domain
+		extended_schema enables organizationalPerson & inetOrgPerson obj classes
+		migrate_all_online 
+
+Example LDIF Entries
+	# Domain entry
+	dn: dc=ahania,dc=com
+	objectclass: dcObject
+	objectclass: organization
+	o: Exponential Consulting
+	dc: ahania.com
+
+	# Manager entry
+	dn: cn=Manager,dc=ahania,dc=com
+	objectclass: organizationalRole
+	cn: Manager
+
+	#Address book entry
+	 # John Smith, addressbook, example.com
+    dn: cn=John Smith,ou=addressbook,dc=example,dc=com
+    cn: John Smith
+    sn: Smith
+    mail: johnsmith <at> example.com
+    telephoneNumber: 402-132-5435
+    o: The Smith Company
+    fileAs: Smith, John
+    objectClass: top
+    objectClass: person
+    objectClass: organizationalPerson
+    objectClass: inetOrgPerson
+    objectClass: evolutionPerson
+
+	big example
+		DISC hosting
+			http://sourceforge.net/docman/display_doc.php?docid=22055&group_id=104960
+	
+Authentication
+	See docs in OpenLDAP Admin guide
+	carried out by 'bind' operation
+	purposes
+		Authenticate users querying info db
+		Authenticate users to other services e.g. login, mail via PAM
+	types
+		anonymous
+			if no DN given
+		simple
+			client sends DN & clear text passwd
+			can hide passwd with TLS/SSL
+		SASL - Simple Authentication and Security Layer
+			slapd uses Cyrus SASL 
+				mechanisms
+					Digest-MD5, External, GSSAPI
+
+			
+
+	Debian
+		libpam-ldap
+		libnss-ldap (Name Service Switch)
+			replace /etc/passwd 
+		autofs-ldap ?
+
+		
+
+Notes
+
+Getting Samba to authenticate off LDAP
+at 17:53 on Thursday, 16 Sep 2004 | [computers]
+
+First ensure you've added the samba LDAP schema to slapd.conf then add something like these to smb.conf [global] section:
+
+  security = USER
+  passdb backend = LDAPsam:LDAP://localhost
+  LDAP suffix = "dc=domain,dc=com"
+  LDAP user suffix = "ou=People"
+  LDAP admin dn = "cn=root,dc=domain,dc=com"
+  encrypt passwords = yes
+
+Then:
+
+smbpasswd -w <LDAP-admin-dn-secret> (defined in slapd.conf)
+
+You must have a Unix user account in LDAP already, well, at least something with an objectClass of posixAccount or so i think.
+
+Then smbpassd -a <username> just does the right thing and manipulates the object for you.
+
+The only thing i've noticed is that there is a new entry in the LDAP tree representing the sambaDomainName. I didnt ask it to create this, it did it for me.
+

@@ -1,0 +1,428 @@
+Troubleshooting
+https://freedesktop.org/wiki/Software/systemd/Debugging/
+
+
+Show monitored services, sorted by system, client slices, shows PIDs
+    systemctl [--user] status
+
+systemctl list-jobs
+    list jobs that did not complete on boot
+
+systemctl --failed
+    systemctl list-dependencies sshd
+
+Short list of running units.  Does not work with 'status'
+    systemctl -t <type>     
+
+Follow a unit's output, since last boot, by high priority
+    journalctl -fu <unit> -b -p 3
+
+List running or failed services & their status
+	systemctl list-units [--user] --type=[target | unit type]  #this is default command
+    systemctl list-units -t service --all 
+    systemctl -t service -a
+
+List or search installed units & status
+	list-unit-files [--user] [<pat>]
+
+Find PIDs   ps -aux
+
+
+User Info
+    Show display manager, window manager, Wayland/X, units in user session, log
+        loginctl list-sessions
+        loginctl session-status <my session> or
+        loginctl session-status $XDG_SESSION_ID
+
+    
+View user units at /usr/lib/systemd/user
+
+
+Unit Types {{{1
+
+https://www.freedesktop.org/software/systemd/man/systemd.unit.html#
+
+
+Locations
+    /usr/lib/systemd
+
+Mount Units
+https://www.freedesktop.org/software/systemd/man/systemd.mount.html
+
+
+Path Units
+https://www.freedesktop.org/software/systemd/man/systemd.path.html
+
+
+Service units 
+    own processes as shown by systemctl status
+    processes started in cgroups which allow systemd to manage associated proceses together
+        
+
+Target Units
+    used to link other units together to describe a system state
+    units may be services or other targets
+    AllowIsolate =yes option indicates is boot target
+    .wants directory - contains units started with target
+        e.g. /usr/lib/systemd/system/multi-user.target.wants
+
+    starts then monitors services via 'service units'
+
+Unit Files {{{1
+
+configure system resources such as processes and file system
+    
+locations
+    /etc/systemd/system|user
+    /run/systemd/system|user
+    /user/lib/systemd/system|user
+    ~/.local/share/systemd/user/ - for packages installed in home dir
+    ~/.config/systemd/user  
+
+Sections [xxx]
+    Unit & Install sections - common options
+    Other sections specific to unit type, e.g. [Service] for .service type
+
+unit fle commands {{{2
+
+systemctl-delta
+    shows all overrides
+
+edit <unit>
+    creates 'override.conf' in /etc/systemd/system/<unit name>
+    reloads unit when done
+
+    --full <unit>
+        edits entire unit file
+    --runtime
+        temporary edits lost on reboot
+
+daemon-reload
+
+list-unit-files
+
+
+
+
+systemctl {{{1
+options {{{2
+    -t/--type   unit type
+    -H <host> (uses SSH)
+    -M <container>
+    --user
+    --failed
+
+    with reboot
+        --firmware-setup
+        --boot-loder-menu=<timeout in seconds>
+
+Unit commands {{{2
+
+start, restart, stop, restart, reload, status <runtime> [service | socket]
+
+
+reload
+    reload changed config without restarting service
+
+reboot cmds:
+    reboot, rescue, emergency
+
+kill <name>
+    use this instead of legacy kill command - cleans up dependent processes
+
+
+list-dependencies <unit>
+    Shows units required and wanted by the specified unit
+    target units are recursively expanded
+    
+list-jobs
+    check for stuck jobs 
+
+list-timers
+
+list-sockets --show-types
+
+
+show - for machine use or debugging
+    no arg 
+        shows systemd version, vars
+
+    Lists units pulled in by a given target.
+    systemctl show -p "Wants" multi-user.target 
+
+    Show dependent services & other targets
+     systemctl show -p "After" sshd.service     
+
+    systemctl show --property=Environment docker
+
+
+system commands {{{2
+
+suspend, hibernate, reboot, halt
+switch-root 
+
+list-machines
+
+Monitoring {{{1
+
+journal-brief
+    http://cyberelk.net/tim/2015/10/19/journal-brief/
+
+
+Show monitored services, sorted by system, client slices
+    systemctl status
+
+Failed services
+    systemctl --failed
+    systemctl reset-failed
+
+Top for systemd slices
+    systemd-cgtop
+
+Show contents of cgroups
+    systemd-cgls
+
+Boot speed stats
+    systemd-analyze
+
+journalctl {{{1
+
+-b / -b -1		this boot only / last boot
+-f			follow
+-r          reverse (newest entries first)
+-n x        newest 10 or x
+-e          open at end/most recent entries of log
+--no-pager  don't pipe to pager
+
+Filtering {{{2
+
+filters:
+-k          kernel output
+-p err      priority - show at this level or above
+            emerg, altert, crit, err, warning, notice, info, debug
+-r /usr/sbin/sshd	same with path to exec
+-u [--user] or --user-unit  logs for unit name
+
+
+filter by date/time
+--since "1 hour ago" | today 
+--until "2015-01-11 03:00"
+
+Filtering on field 
+<field name>=<val> [ <field name>=<val> ]
+Same field name specified more than once = OR
+Different field names = AND
+
+journalctl _UID=70 (AND) _SYSTEMD_UNIT=avahi-daemon.service (OR) _SYSTEMD_UNIT=crond.service
+PRIORITY=3
+_UID=1000
+_SYSTEMD_UNIT
+
+Manage Logs {{{2
+
+log
+--disk-usage    show size
+--vacuum-size=1G
+--vacuum-time=1year
+
+/etc/systemd/journald.conf
+SystemMaxUse=   max disk usage
+
+Other {{{1
+
+lsns
+    list namespaces
+
+Lists the targets that will include the service
+     ls /etc/systemd/system/*.wants/sshd.service
+
+hostnamectl
+    -M containername
+    set-hostname 'name'
+
+
+timedatectl
+    list-timezone
+    set-timezone America/Toronto
+
+systemd-cgls
+    show processes in control groups
+
+isolate <unit>
+	start specified unit and stop all others.  
+	.target sufflix assumed
+
+	Boot to target unit: add to kernel parameters systemd.unit=multi-user.target
+
+	systemctl isolate multi-user (or just init 3)
+	systemctl isolate graphical (or default.target or init 5)
+	systemctl set/get-default  <target name>
+
+
+systemd-inhibit <cmd>
+	prevent sleep while cmd runs
+
+
+Per User instance {{{1 
+
+https://wiki.archlinux.org/title/Systemd/User
+
+Config at
+    .config/environment.d/#-name/
+        VAR=value
+
+Manage environment variables 
+    import-environment --user
+    set-environment --user
+    show-environment --user
+
+Users / Logind {{{1
+
+
+logind 
+	list-sessions/users/seats
+
+    etc/systemd/logind.conf
+        Configure sleep/hibernate timeout and which buttons activate
+    etc/systemd/sleep.conf
+        [Sleep]
+        SuspendState=freeze
+
+Reload logind.conf
+    systemctl kill -s HUP systemd-logind
+
+Logind.conf
+    allow settings here to override Gnome power manager (does not work with external monitor connected)
+       LidSwitchIgnoreInhibited=no  ???? - review man page on this
+
+PAM config via logind
+
+Per user temp folder
+    /run/user/$UID
+    created on login, destroyed on logout
+
+
+
+
+
+Container networking {{{2
+
+--port=<host #>:<cont #>
+	map port in cont. to host
+--network-interface=
+	assign inf. on host to container.  Host cannot use.
+--network-veth
+	virtual interface 
+--network-bridge
+	virtual interface, bridged
+
+examples {{{2
+
+-xb -D /  #ephemeral snap of root
+ -b -D /var/lib/container/mycontainer --template=/var/lib/container/fedora21 # tree using template
+--template=/    #use host root dir as template 
+
+networking {{{1
+
+systemd-networkd
+    Config files in /etc/systemd/network/
+
+networkctl 	
+	noarg	lists network interfaces
+	status  shows info for interface #
+    reload  reload config
+    up/down <pat>
+
+Setup
+    Create .network files for interfaces
+    examples at /usr/lib/systemd/network
+    networkctl reload
+    networkctl status
+
+systemd-resolved
+
+resolvectl
+    check service status: resolvectl status
+    check DNS function: resolvectl query google.com 
+
+Config /etc/systemd/resolved.conf
+    Provides Cloudflare or Google DNS by default
+    Usually does not need editing
+
+Setup:
+    start/enable systemd-resolved.service
+    ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+
+Targets / Runlevels {{{1
+
+
+systemctl list-dependencies graphical.target | grep target
+
+kernel arg at boot
+    systemd.unit=runlevel3.target
+     systemd.unit=rescue.target 
+
+start networking while rescue mode
+    start network-online.target 
+
+
+wireless with networkd {{{2
+
+https://forum.manjaro.org/t/how-to-use-systemd-networkd-to-manage-your-wifi/1557
+
+# /etc/systemd/network/wireless.network
+[Match]
+Name=wl*
+
+[Network]
+DHCP=yes
+RouteMetric=20
+IPv6PrivacyExtensions=true
+## to use static IP uncomment these instead of DHCP
+#DNS=192.168.1.254
+#Address=192.168.1.87/24
+#Gateway=192.168.1.254
+
+# /etc/wpa_supplicant/wpa_supplicant-wlp1s0.conf
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=wheel
+update_config=1
+eapol_version=1
+ap_scan=1
+fast_reauth=1
+
+sudo systemctl disable networkmanager
+sudo systemctl stop networkmanager
+
+sudo -i
+rm /etc/resolv.conf
+systemctl enable systemd-networkd
+systemctl enable wpa_supplicant@wlp1s0
+systemctl enable systemd-resolved
+systemctl start systemd-networkd
+systemctl start wpa_supplicant@wlp1s0
+systemctl start systemd-resolved
+ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+set +o history
+sudo wpa_passphrase <ESSID> <passphrase> >> /etc/wpa_supplicant/wpa_supplicant-wlp1s0.conf
+set -o history
+
+
+
+kernel arg at boot
+    systemd.unit=runlevel3.target
+     systemd.unit=rescue.target 
+
+start networking while rescue mode
+    start network-online.target 
+Launch graphical desktop sessions {{{1
+
+modern dm's will recognise .desktop files at usr/share/wayland-sessions/
+
+
+Systemd-boot {{{1
+
+See notes/boot
+

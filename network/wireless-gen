@@ -1,0 +1,12 @@
+
+Tests {{{1
+	wlanconfig ath0 list scan
+	iwlist ath0 scan <= interface must be up
+
+Drivers {{{1
+
+new mac80211 API aka SoftMac
+	uses iw to configure instead of wireless-tools
+		http://linuxwireless.org/en/users/Documentation/iw
+
+

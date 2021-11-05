@@ -1,0 +1,16 @@
+
+Docs
+	offical howto
+		http://openvpn.sourceforge.net/howto.html
+
+Install
+	kernel
+		network devices
+			tun/tap driver
+	make device node
+		mkdir -p /dev/net (if needed)
+		mknod /dev/net/tun c 10 200
+
+On reboot
+	modprobe tun
+	echo 1 > /proc/sys/net/ipv4/ip_forward

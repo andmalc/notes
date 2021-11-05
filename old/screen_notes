@@ -1,0 +1,167 @@
+Resources {{{1
+
+Screen Home Pages:
+	http://savannah.gnu.org/projects/screen/
+Tutorial/Intro
+	Sven Guckes setup and ultimate example screenrc 
+		www.guckes.net/screen/intro.php3
+Mailing List
+	http://news.gmane.org/gmane.comp.gnu.screen.user
+	screen-users@gnu.org
+
+GNU documentation - older version but well organized
+http://sunsite.ualberta.ca/Documentation/Gnu/screen-3.9.4/screen.html
+RC File {{{1
+
+Startup {{{1
+
+ls  list current user's detached sessions
+Start screen after power failure, etc.
+	screen -A -x -RR
+Start remote
+	 ssh -t user@h... screen -e '^Ee' -a -x -R mysession
+send commands to running screen session screen -X <cmds> - try using -r for reattach run nested screen
+	-m
+start in daemon mode, detached
+	-dmS <name>
+resizable
+	-M
+adapt to new window sizes (ie after a reattacting)
+	-A
+
+In current window: alias M='screen -X title mutt; mutt'
+
+Key Bindings {{{1
+
+M   Monitor - reports when a screen has either started or stopped activity
+\	Kill all and terminate screen
+
+Sub windows or panes
+	S	split window
+	F	Resize the window to the current region size.
+	tab  Switch to next region
+	X	Kill current region/pane
+Windows
+	c	Create new window with shell and switch
+	k	Destroy current window
+	w	List windows in message line
+	"	full screen window list
+	:windowlist -m	recently used sorted
+	a	Switch to previous window
+	n/p Switch to next/previous window
+	<space> Switch to next window
+DD	power logout - detach screen & logout
+
+
+Commands {{{1
+
+command starting with 'def' (default) set for all screens.
+e.g. 'defmonitor on' turns on monitoring for all screens
+
+Caption
+	:caption [always/splitonly] string (see String Escapes)
+
+Escape
+	:escape
+	default C-a: ^Aa
+
+Hardstatus Line (at bottom)
+	Escape code is ^% or ^E
+	:hardstatus
+	on/off - on by default is terminal is set to support this, otherwise use:
+	[always]lastline|message <status string>
+		lastline - reserves last line
+		message - use screen's message facility
+		alwayslastline|alwaysmessage - use even if hs is terminal supported
+	<status string> - set or, if blank, display curren
+
+	status line flags
+		*	current
+		!	bell in background window
+		@	activity in monitored background window
+
+	:hstatus/defhstatus <status string> -
+
+Give a window a different number:
+:number #  (if a window is using this #, windows will swap #'s)
+
+Titles
+	:shelltitle - enter base title for all sessions
+	:title Enter title
+
+:reset | Z
+restore all settings to defaults
+
+sessionname <string> - label this session for 'screen -list'
+
+select <#>  - switch to screen #
+
+shelltitle <string> - use in alternative .screenrc to name session?
+
+windows - show all windows in statusline
+wrap [on/off]
+
+Copy/Paste Text (good for web pages) {{{1
+
+[ or <Esc>   Start cut/scrollback session 
+(space) mark text (vi movement keys)
+(space again) end marking text
+]   Paste buffer
+Copy cut buffer (register .) to a named register
+	paste . x with x={a .. z}
+a	typed before final <space>, append mode
+c/C	set left/right margin of copy block
+H/M/L	move to top, middle, lower edge of window
+y/Y		mark from start of line/whole line
+>	set second mark and copy to screen exchange file
+x	exchange first mark position & current cursor postition
+
+
+Buffers
+	paste, readbuf, register
+
+	paste buffers a-z
+		:paste . a #copy cut buffer to another register
+		:paste a
+
+:resize 
+	+/-N = increase/decrease region size
+	=/max/min   equalize, maximize,minimize region height[s]
+
+scrollback {{{1
+	View scrollback without view 'slipping' back after few seconds: 
+		enter copy mode with <esc> + [
+
+	termcapinfo xterm|xterms|xs ti=\E7\E[?47l
+		Add to screenrc to enable scrollback. Use within a terminal emulator other
+		than xterm (e.g. gnome-terminal) Do not use xterm's alternate window buffer
+		by adding lines to scrollback bfr.
+	under Putty
+		in Features control panel tick 
+			'Disable switching to alternate terminal screen'
+
+String Escapes {{{1
+   % is escape char except in a window's hs line - ^%
+
+	hardstatus lastline %-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<
+	caption splitonly %?%F%{.R.}%?%3n %t%? [%h]%?
+
+Running daemons {{{1
+
+Run daemon and log output:
+screen -dmS test my_interactive_program
+screen -S test -p 0 -X hardcopy /tmp/my_dump 
+
+
+Multi User {{{1
+	permissions
+		chmod u+s /usr/bin/screen
+		chmod 755 /var/run/screen
+	special screenrc
+		session conference
+		multiuser on
+		addacl <username>, etc
+	attach with
+		screen -s <first user>/conference
+
+

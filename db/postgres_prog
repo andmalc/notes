@@ -1,0 +1,25 @@
+Python Interfaces
+	pyPgSQL   
+		for win32 (active as of 9/01).  Installs PySQL.py etc. into root of
+		Python installation.  See source for doc.
+	PoPy - DBI 2.0, best choice, (zope prod ZPoPyDA).  Rumor of win32 port
+	psycopg
+	ZmxODBC
+
+Connection
+	Python DBI 2.0
+		o = psycopg.connect("dbname=template1 ...")
+		o.set_isolation_level(0)
+		c = o.cursor()
+		c.execute("CREATE DATABASE xxx ...")
+
+
+Zope
+	Zope db connection string for remote dbs:
+		database@hostname:port username
+
+ODBC:
+	FAQ on pgsl site
+	Section in Developers' manual
+	mailing list pgsql-odbc
+	Pgsl and Access together: www.scw.org/pgaccess/faq.html

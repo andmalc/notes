@@ -1,0 +1,55 @@
+
+Run commands in threaded daemon {{{1
+
+#!/usr/bin/env python
+import os
+import signal
+import time
+from subprocess import Popen
+from threading import Thread
+
+SSH_SERVER_NAME = 'servername.example.com'
+DAAP_SERVER_NAME = 'localhost'
+REMOTE_DAAP_PORT = 3689
+LOCAL_DAAP_PORT = 3689
+SHARE_NAME = 'iTunes Share Name'
+
+pids = []
+
+def start_ssh():
+    c = Popen(['ssh', SSH_SERVER_NAME, '-g', '-N', '-L', '%d:%s:%d' % (
+        LOCAL_DAAP_PORT, DAAP_SERVER_NAME, REMOTE_DAAP_PORT
+    )])
+    pids.append(c.pid)
+    c.wait()
+
+def start_proxy():
+    c = Popen(['dns-sd', '-R', SHARE_NAME, '_daap._tcp.', 'local',
+               str(LOCAL_DAAP_PORT)])
+    pids.append(c.pid)
+    c.wait()
+
+
+def main():
+    print 'Starting up...'
+    try:
+        try:
+            for task in start_ssh, start_proxy:
+                t = Thread(target=task)
+                t.setDaemon(True)
+                t.start()
+            while 1:
+                time.sleep(30)
+        except KeyboardInterrupt:
+            pass
+    finally:
+        for pid in pids:
+            try:
+                os.kill(pid, signal.SIGTERM)
+            except OSError:
+                pass
+        print 'Shut down'
+
+if __name__ == '__main__':
+    main()
+

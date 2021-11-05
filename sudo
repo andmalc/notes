@@ -1,0 +1,65 @@
+Docs
+	http://www.aplawrence.com/Basics/sudo.html
+
+sudo 
+	-u user
+    -l list allowed commands
+	-H	set HOME to home of target user (default root)
+		avoids overwriting files in HOME of calling user
+
+manage PATH
+	Add path to secure_path in sudoers
+	sudo env "PATH=$PATH:/home/andmalc/.local/bin" (quotes required)
+
+	These may not work depending on policies in sudoers
+		sudo --preserve-env=PATH cmd
+
+Admin
+	consider making an admin type account with a strong password and doing 'sudo -u <admin user>'
+
+
+Sudoers Syntax {{{1
+
+user 	machine=(effective user) [NOPASSWD:] command [, (user)  ...]
+user computer = (another-user) command(s)
+
+sudo ALL=NOPASSWD: ALL
+
+Aliases (refer to lists items): {{{1 
+	Syntax 
+		Alias_Name NAME=val[,val] [: NAME ... ]
+	Type = one of: 
+		User_Alias, Runas_Alias, Cmnd_Alias, Host_Alias
+	Examples:
+		User_Alias WEBMASTERS=joe,joe1,joe2
+		Runas_Alias DAEMONS=bind,www.smmsp,ircd 
+		Host_Alias WEBSERVERS=www.thing.net
+		Cmnd_Alias APACHE=/usr/local/apache/bin/apachectl
+
+Options {{{1
+	No password
+		johnny localhost = NOPASSWD: /usr/bin/du
+		ADMIN ALL=(ALL) NOPASSWD: /bin/mount, /sbin/halt, /sbin/reboot,
+			/usr/bin/smbmount, /usr/bin/smbumount, PASSWD: /bin/rm, /usr/bin/aptitude,
+			/usr/bin/screen, /usr/bin/vim, /bin/chown, /bin/chmod
+	Password prompt interval
+		Time in minutes.  Negative number = no prompt till reboot
+		Defaults:johnny timestamp_timeout=0
+
+	Other per user options like password timeout
+		Defaults:andmalc timestamp_timeout=60, env_delete+="BOOP", runas_default=linda
+
+	password timeout is timeout while typing password
+
+	For running X programs
+		Defaults env_reset,env_keep+="DISPLAY XAUTHORITY"
+
+
+Examples:
+	/usr/share/doc/sudo/examples/sudoers
+
+	User has root access on machine1:
+		auser machine1.org=(ALL) ALL
+	User can run specific commands as <user> (how?)
+		auser mail.dom.org=(mailman) /usr/bin/whatever,/usr/bin/thing
+

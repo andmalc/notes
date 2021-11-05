@@ -1,0 +1,31 @@
+
+Service Location Protocol {{{1
+	frequently used for locating printers
+	supported by Mac until OSX 10.1
+	UDP port 427
+	used by HP Network Device Rediscovery Service hpqnrs08.exe
+
+Zeroconf {{{1 
+	less strict
+	
+	Derivations
+		Bonjour
+			closed-source, c 2002
+			UDP port 5353
+			'small number' of VPN clients will block
+			Win app: mDNSResponder.exe
+		Avahi
+			open source fork of Bonjour	
+
+services {{{2
+http://www.dns-sd.org/ServiceTypes.html
+
+Printing 
+	Spooler (more commonly known as "LPR printing" or "LPD printing")
+	Protocol http://www.ietf.org/rfc/rfc1179.txt
+	Bonjour Printing http://developer.apple.com/networking/bonjour/BonjourPrinting.pdf
+
+Universal Plug and Play (UPnP) {{{1 
+	uses SOAP for message passing
+	maybe supported by Intel due to heavier processing requirements
+

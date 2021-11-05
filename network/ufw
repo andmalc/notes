@@ -1,0 +1,15 @@
+
+
+https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
+
+sudo ufw app list
+sudo ufw allow OpenSSH
+sudo ufw enable
+sudo ufw status
+
+
+Postgresql
+sudo ufw allow from any to any port 5432
+
+
+

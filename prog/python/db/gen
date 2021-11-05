@@ -1,0 +1,32 @@
+
+Recommended connectivity
+	Python DB-API v2.0 + an abstraction layer such as PDO
+		not completely portable
+		may be most helpful when queries are complex
+	mxODBC
+		Windows - requires DB-specific ODBC drivers (not a problem)
+		Linux - 
+			ODBC driver vendors best choice, Free TDS not fast or reliable but 
+			OK for simple queries
+	Connect to MS SQL Server
+		Windows only - http://adodbapi.sourceforge.net/
+		Cross-plat - http://sourceforge.net/projects/pymssql/
+
+
+DBI 2.0 
+	objects
+		
+	basics
+		import module
+		cx = module.connect("db", [autocommit=1])
+		cu = cx.cursor()
+		cu.execute("select foo from bar")
+		cu.execute("update foo set bar=5 where blarg=3")
+		cx.commit() 
+        connection named parameters
+            db="",user="",host="",passwd=""
+
+
+		
+
+

@@ -1,0 +1,125 @@
+# Group list by chunks
+L=[3,6,2,9,8]
+for i in range(0,len(L),3):
+    print i,L[i:i+3]
+    0 [3, 6, 2]
+    3 [9, 8, 10]
+    #Or
+    zip(*[iter(L)]*3)
+    thing
+
+Pretty print dictionary
+    print(json.dumps(d2,indent=1,sort_keys=True))
+
+Data structures {{{1
+
+Tuples:
+Immutable therefore idea as data records
+
+Unpacking:
+	* prefix when argument to function:
+		tup =(1,2)
+		myfunction(*tup) => myfunction(1,2)
+
+
+Other data types {{{2
+DateTime
+
+Basic ::
+
+    today=datetime.date.today()
+
+Generate Days Between ::
+
+        from __future__ import generators
+
+        import mx.DateTime
+
+        def date_span_gen(d1, d2):
+            """Return an iterator for the dates between d1 and d2."""
+            if d2 <= d1:
+                raise RuntimeError("d2 (%s) must be later than d1 (%s)." % (d2, d1))
+            diff = d2 - d1
+            for d in range(diff.days):
+                yield (d1 + mx.DateTime.RelativeDateTime(days=d))
+
+        num_days = 30
+        d1 = mx.DateTime.now()
+        d2 = d1 + mx.DateTime.RelativeDateTime(days=num_days)
+
+        for d in date_span_gen(d1, d2):
+            print d
+
+
+I/O {{{1
+
+Read from prompt {{{2
+
+instead of, use:
+	raw_input(): use sys.stdin.readline()
+	input(): use eval(sys.stdin.readline())
+
+file reading {{{2
+   
+Files
+	make a list of lines in file
+		lines_list = list(fileobj)
+		lines_list = fileobj.readlines()
+		lines_list = fileobj.read().splitlines() # remove '\n'
+
+if args[0]=='-': 
+	for line in iter(sys.stdin.readline, ""): 
+
+Text {{{1
+
+String Services {{{2
+
+re
+   replace
+      re.sub(pat,replacement,text)
+
+   return list of all matches
+      re.findall(pat,text)
+
+string processing {{{2
+		non-printing chars
+			\n line feed
+            \t tab
+
+Codecs {{{2
+
+Open filename in r+ mode using UTF-8 encoding
+	import codecs
+	filename='blah'
+	fc=codecs.open(filename,encoding='utf-8',mode='r+') 
+
+
+			print "You said!", line  
+
+
+Web {{{1
+
+Instant web server
+	runs on port 8000
+	python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"
+		
+Network {{{1
+
+Scapy http://www.secdev.org/projects/scapy/
+   use instead of tcpdum, ethereal etc.
+   tutorial using
+      http://www.ibm.com/developerworks/aix/library/au-pythocli/
+
+SNMP & Python tutorial
+   http://www.ibm.com/developerworks/aix/library/au-netsnmpnipython/
+
+
+Internet Services {{{1
+Getting Data from URL's {{{2
+
+urllib2
+
+ex.
+for line in urllib2.urlopen(url):
+   do thing to line
+

@@ -1,0 +1,627 @@
+
+
+General {{{1
+
+All modern disks use LBA addressing vs. cylinder-head-sector
+blocks = sector
+
+legacy MBR
+    512 bytes long, stored at LBA 0
+    contains boot loader e.g Grub and partition table (primary & extended but not logical)
+    limitation of 4 primary partitions & 2TB disk
+
+Protective MBR
+    Feature of GPT disks
+    Occupies space of legacy MBR by writing a special partition type EEh
+    Prevents legacy utilities from overwriting GPT table
+    Indicates to new utilities that disk is GPT.
+
+
+GPT GUID Partition Table
+    Stores partition info as GUID's (= UUID in Linux) instead of by order
+    GPT header is in LBA 1
+    GPT header has a pointer to the partition table, or Partition Entry Array, typically LBA 2
+
+    PARTLABEL       partition name - saved in GPT 
+                    vs. LABEL which is saved in fs.
+    PARTUUID        globally unique partition ID saved in GPT
+                    vs. UUID which is shorter ID for for distinguishing filesystems on disk 
+
+
+
+block sizes
+    https://wiki.archlinux.org/index.php/Advanced_Format
+
+    Old 512 bytes, New 4096 / 4kb
+
+    Show:
+        fdisk -l /dev/sda
+        or
+        cat /sys/class/block/sdb/queue/physical_block_size 
+        cat /sys/class/block/sdb/queue/logical_block_size 
+
+    New disks show 512 byte logical for compatibility
+    Use parted align-check to confirm alignment
+    
+    gpt - always use to create parts
+    make 4k fs
+        mkfs.ext4 -F -b 4096 
+
+
+Partition General {{{1
+
+Name vs. Label
+    Label saved in fs
+    Name saved in GPT table
+
+Partitiion Type GUID
+https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs
+    show 
+        lsblk -p -o NAME,PARTTYPE
+
+Type Codes
+https://askubuntu.com/questions/703443/gdisk-hex-codes
+
+Largely not used under Linux except:
+    distro installers may use as a guide 
+    libparted translates to flags
+    systemd uses as fallback if not in fstab
+    used by Discoverable Partitions Spec
+    protect Linux partitions from Windows or Mac installers
+
+
+Gdisk partition codes
+https://sourceforge.net/p/gptfdisk/code/ci/master/tree/parttypes.cc#l337
+    8300    Linux filesystem (generic type)
+    EF00    ESP 
+    8302    Home
+    8303    Linux root
+    8200    Linux swap
+    8303    Linux x86 root
+    8312    Systemd use home
+    EA00    Systemd XBOOTLDR partition
+    8e00    Linux LVM
+
+Disk & Partition Tools {{{1
+
+https://wiki.archlinux.org/index.php/Persistent_block_device_naming
+
+Disk overview
+	udiskctl status
+
+Block devices
+
+lsblk		tree of disks, parts, mount points
+            tree display for lvm lv's
+	
+	-f		shows fs info: labels, UUIDs, % usage
+            best overview of devices and filesystems
+
+
+blkid		shows partition PARTUUIDs (PART_ENTRY_NAME) and PARTUUID (PART_ENTRY_UUID) 
+            shows types but omits for 8300 linux generic
+			preferred for showing contents of block devices
+            -p  probe - shows changes such as PARTLABEL since last boot
+
+
+gdisk, cgdisk
+    http://www.rodsbooks.com/gdisk/
+    like parted/cfdisk for gpt disks
+    change partition labels
+    no lvm info
+
+    specifying partition sizes
+        1G = position 1G from start of disk
+        +1G = 1G relative to end of previous partition
+        -1G = 1G back from end
+
+
+    show GPT info + fs label
+        -p -o name,parttype,partlabel,label
+
+    Wipe all partitions
+        gdisk <dev>
+        x, z
+
+util-linux: sfdisk, cfdisk, fdisk, lsblk
+    http://karelzak.blogspot.ca/
+    share some commands like --wipe
+
+
+
+Partitioning {{{1
+
+parted/gparted
+    both libparted front ends
+	can resize ext2 & 3 partitions but start point can't move.
+	gparted can move start point
+	has lost partition rescue feature
+    less reliable than gdisk/cgdisk but is ctem-aware
+    better to use this only for resizing etc.
+    'flags' based on partition type GUIDs.
+
+    print info - shows disk and partition details
+        parted <dev> p
+
+gpart
+	find lost partitions
+
+partx -v -a <disk>
+    show paritions with sector info
+    tell kernel about partitions
+
+Other tools {{{1
+dd
+    http://www.noah.org/wiki/Dd_-_Destroyer_of_Disks 
+    
+	bs option
+		=2048 for compatibility with desktop disk utilities like Gnome Disks
+		=4M generally recommended by Fedora: 
+	status=progress 
+
+	Test device speed.  fdatasync causes command to sync before end so result is accurate
+	Increase count if disk is very fast and command finishes quickly and so to get more accurate average
+	dd bs=1M count=256 if=/dev/zero of=test conv=fdatasync status=progress bs=1M
+
+	pipe compressed image to dd
+		unzip -p | dd etc.
+
+dd alternatives
+    cat image.iso | pv >/dev/sdb
+
+testdisk
+    http://www.cgsecurity.org/wiki/TestDisk_Step_By_Step
+
+Wipe device
+    wipefs -a
+
+wipe partition table: mklablel msdos | gpt
+
+
+Filesystems {{{1
+FS Info {{{2
+
+Devices and mounts
+
+df -Th
+    Device, fs type, size, used, %used, mount points.
+    No partition or fs name/label
+
+findmnt     	show mounted filesystems
+    --df/-D     show space used
+    --fstab/-s  show only from fstab
+    -S <dev>    show on device
+    --target/-T <dir>   show only for mount dir
+    -l          list format output
+    e.g. -s -D  list mounted by fstab, show space used
+    --verify 
+
+
+lsblk -f    overview of devices and filesystems
+            
+
+Directory/file usage
+
+du 
+    use nnn instead
+    tutorial
+        https://www.rootusers.com/13-du-disk-usage-command-examples-in-linux/
+    -c      show grand total
+    -hs * | sort -h - sort by human readable size
+    -schx /*	shows disk space used by subdirs
+
+ncdu
+    curses disk usage
+
+nnn
+    S to show directory totals
+
+FS Labels {{{2
+
+e2label / e2fsprogs		for extX
+btrfs filesystem label /dev/XXX <label>  #using btrfs-progs
+swaplabel -L <label> /dev/XXX
+
+Get/set partition unique GUID or Partition label (not filesystem label) with gdisk
+
+In fstab:
+    fstab can use partition labels or UUIDs or filesystem labels or UUID
+    Labels (aka tags) preferred over UUIDs as readable, portable (see man mount)
+    PARTUUID=8C208C30-4E8F-4096-ACF9-858959BABBAA /data ext4 user,defaults 0 0
+    PARTLABEL=blah etc.
+
+
+FS Attributes {{{2	
+
+change times
+	atime
+		access time
+		time of read (including backups) 
+		permissions changes don't affect
+	mtime   
+		change to file data
+	ctime   
+		change to file data, permissions, or ownership (most
+		inclusive)
+
+Mounting {{{2
+
+udisksctl mount/umount -b /dev/sdd
+    mounts to /run/media/user
+    shows mount point on success
+    may not require root pw depending on polkit policies (?)
+
+Removable disk options: noatime,noauto
+
+fstab entry fields
+    device  
+        prefer fslabels, UUIDs or PARTUUIDs over kernel name descriptors which are changable
+    mount directory
+    fs type
+    options
+        e.g.noatime,noauto,nofail
+    dump
+        check with dump util - usually 0
+    fsck
+        boot time fs check order
+        root = 1 except for btrfs=0
+        others = 2
+        disable = 0 
+
+Resizing {{{2
+
+Changing volumes
+	with ext2 filesystems
+		e2fsadm - 
+			resize physical or LVM volumes and filesystems (using lvextend and
+			ext2online)
+		ext2online - resize online (mounted) ext2 fs. Requires kernel patch. 
+		resize2fs 
+            resize offline ext2 fs.
+            default enlarges fs to fill partition, do after growpart
+	LVM
+		pvresize - resize vg on a device
+
+growpart
+    resize vol to take all available room
+    fedora: in cloud-utils-growpart package
+
+
+ExtX {{{2
+
+Resize
+    e2fsadm - 
+        resize physical or LVM volumes and filesystems (using lvextend and
+        ext2online)
+    ext2online - resize online (mounted) ext2 fs. Requires kernel patch. 
+
+Journals:
+    Add/Remove
+        tune2fs -j /dev/xxx<n>
+        tune2fs -O ^has_journal /dev/xxx<n>
+
+
+btrfs {{{2
+
+Layout ideas:
+https://btrfs.wiki.kernel.org/index.php/SysadminGuide
+
+subvol gen
+	subvols not included in parent snapshots 
+
+
+Make fs on device or partition
+	/sbin/mkfs.btrfs - in btrfs-tools
+		mkfs.btrfs -L mylabel /dev/disk
+	new fs has a top level volume with ID 5.
+	top level vol is automatically mounted unless default is changed
+	
+
+btrfs subvolume
+    create <path>
+		is accessed like normal directory
+		does not need mounting
+    list <path>
+    set-default <ID> <path>
+    show <path>
+    snapshot <source> <dest>[/<name>
+
+	create subvol as direct child of top level
+		mount top level subvol
+			mount -t btrfs -o subvolid=5 <device> /mnt/@
+		create subdir
+			btrs subvolume create /mnt/@/toplevel
+
+Mounting
+	mount btrfs formatted device 
+		mount -t btrfs <device> <mnt point>
+	mount existing subvol at new mount point
+		mount -t btrfs -o subvol=subvolname /dev/sda2 /mnt/new_subvol 
+		mount -t btrfs -o subvolid=### /dev/sda2 /mnt/new_subvol 
+	recommended mount options
+		Willi Mutschler
+			ssd,noatime,space_cache,commit=120,compress=zstd,discard=async
+		fedora35
+			compress=zstd:1
+	
+	fstab entry
+		LABEL=testbtrfs  /btrfs defaults,subvolid=269 0 0
+
+
+Make snapshot
+	btrfs subvolume snapshot 
+	btrfsctl -s /mnt/btrfs/snapshot_of_root /mnt/btrfs 
+
+btrfs filesystem 
+    label
+		show label
+			/dev/XXX or mnt point
+		change label
+			<device or mnt point> <newlabel>
+
+    df
+        usage info
+    resize
+        resize <size> | max <mounted fs>
+    show
+        shows usage info maybe more accurate than df
+
+
+btrfs balance - distribute data after new vol added
+    start /
+
+btrfs device
+    add <dev> <dev> | <mount point of existing fs e.g. '/'>
+
+Disble copy on write
+	file	chattr +C
+	mountpoint	nodatacow
+
+Move fs between disks
+	sudo btrfs subvolume snapshot -r @home @home-ro
+	sudo btrfs send @home-ro | sudo btrfs receive /mnt/btrfs/
+	sudo btrfs subvolume snapshot /mnt/btrfs/@home-ro /mnt/btrfs/@home
+	Edit /etc/fstab with new UUID of mount point /home
+
+Swap file
+
+cd /path/to/swapfile
+truncate -s 0 ./swapfile
+chattr +C ./swapfile
+btrfs property set ./swapfile compression none
+Add to /etc/fstab
+
+
+LVM {{{1
+docs {{{2
+
+Rearranging partitions example:
+http://microdevsys.com/wp/linux-lvm-resizing-partitions/
+
+
+terms {{{2
+
+PV/physical volume
+    partition or disk
+    create first
+
+vg - volume group
+    collection of Logical Volumes and Physical Volumes into one administrative unit
+
+lv - logical volume
+    visible as a standard block device
+    equivalent to a partition
+extents: smallest possible allocation size
+    pe - physical extents
+    le	logical extent - will be same size as pe's for vg
+
+Snapshot
+- Used mainly as ro backup of changing original.  Data copied to snapshot before changed in original 
+
+Thinly-Provisioned Snapshot Volumes
+- snapshots without preset size
+
+
+PV/physical volume {{{2
+
+Initialize a disk or partition to use in a physical vol.
+    pvcreate <dev> [<dev> ...]
+
+Info
+    pvs --partial --verbose
+        Shows pv's in vg
+
+    pvdisplay --maps
+        shows physical layout of volume
+
+    blkid
+        shows lv's including thin plus mount points
+
+	fdisk -l    shows lv sizes
+
+pvremove
+
+pvscan
+vgscan
+
+pvresize - resize vg on a device
+
+
+VG/volume group {{{2
+
+composed of 1 or more PV's, optionally already initialized with pvcreate
+
+Create - also makes devices into pv's if not already
+    vgcreate vg_name /dev/hda1 /dev/hdb
+
+Change
+    Extend existing vg
+        vgextend vgname pvdevpath  
+    Remove pv
+        vgremove  
+        vgreduce vgname pvpath - remove additional pvs
+        pvremove 
+        or?
+        vgchange -a n vg_name
+
+Info
+    vgs     easier to read than lvdisplay
+    vgdisplay
+    
+
+Activate vg 
+    'vgchange -a y' or reboot
+
+LV/logical volume {{{2
+
+Create 
+    lvcreate [-n name] [-L size(kmg) -l sizeLE] vgName [vgpath]
+        size
+            -l	size in Physical Extents
+            -L	size in MB or GB
+        create lv using all space in vg
+            -l 100%VG
+        create lv using all free space in vg
+            -l 100%FREE
+        snapshot
+            -s origin [name|path]
+            lvcreate -s /dev/mapper/vgmain-root26 -L 10G -n root26bak
+        thin vols
+            -T --thin
+            -V --virtualsize    
+
+Info
+    lvs         shows snapshot space
+                easier to read than lvdisplay
+    lvdisplay   does not show snapshot space
+    lsblk -f    shows tree of vg and lv's
+
+Resize  
+    lvreduce
+        -L #G (reduce to # GB) or -#G (reduce by #GB)
+        -r  reduce filesystem.  Use this, not resize2fs!
+
+    lvresize
+
+
+Thin Volumes {{{2
+
+man lvmthin
+
+Create pool
+    lvcreate -T -L3G extra_vg/thin_pool1
+
+Create pool, leaving 5% for metadata
+    lvcreate -T -l 95%FREE  vg/thinpool
+
+Create pool & vol
+    lvcreate -T -L3G extra_vg/thin_pool1 -V2G --name thin_vol1
+
+Create vol in existing pool
+    lvcreate -n ThinLV -V VirtualSize --thinpool VG/ThinPoolLV
+
+Snapshot
+    lvcreate -n SnapLV -s VG/ThinLV (do not spec. size)
+
+Check pool usage: 
+    lvdisplay pool, 'Allocated pool data'
+    lvs 
+
+lvm.conf
+    thin_pool_autoextend_threshold = 100 disables
+
+Free space after files in vol deleted
+    fstrim -v <mount point>
+
+
+Utilities {{{2
+
+Access LVM on disk from rescue disk
+    lvmdiskscan (newer?)
+    pvscan 
+	vgscan
+	vgchange -ay
+
+
+
+
+Files: loopback and as device {{{1
+
+
+File for use as loop devices - img
+	create file 
+		qemu-img
+		dd if=/dev/zero of=/home/you/cryptfile bs=1M count=500
+        truncate -s 10G lvm.img
+    
+	create file using head
+        head -c 100MB /dev/zero >image.iso
+
+
+Creating a device from a file
+
+    losetup <dev> <file>
+    losetup -f --show lvm.img
+    or use qemu-img convert
+
+Mounting filesystems within files
+
+	mount iso
+		udisksctl loop-setup -r -f image.iso
+		udisksctl umount -b /dev/loop0 
+		udisksctl loop-delete -b /dev/loop0
+
+	umount -b /dev/loop0 
+
+    print partition table
+         fdisk -l -u file.img
+
+	kpartx  - create device mapper entries for partitions in a device file
+
+	multiply starting cyclinder number * 512, e.g. 63 * 512 = 32256
+    mount -o loop,offset=32256 image.img mnt	
+
+Backup an image file - size is < 1/3
+	tar c --sparse -f img.bak.tar img.img 
+
+Sparseify raw image file
+    cp --sparse=always 
+
+
+LVM or partitions vs. image storage {{{1
+
+    create lvm vg in file
+        pvcreate /dev/loop0
+        vgcreate lxc /dev/loop0
+
+lvm-based 
+    Benefits vs image-based: less disk i/o & may use lvm snapshots
+
+    Use a volume group with unallocated space
+    Create a logical volume
+        lvcreate -L20G -n vm11 vg0
+    Use with virt-install
+        --disk path=/dev/vg0/vm11
+
+    Convert image to lv of same size
+        qemu-img convert ~/vm10.qcow2 -O raw /dev/vg0/vm10
+Old {{{1
+
+
+sfdisk - partition table reporting
+        by default uses sectors, not obsolete cylinder etc.
+        -s  [<device - partition or disk>]    
+            show disk/partition size
+        -l [options] <dev>
+        -D  DOS compatibility - free 512 free at part beginning
+        -L  ignore irrelevant to Linux
+        --wipe-partitions always|never|auto
+        no options 
+            - enters repr mode
+            - "," to wipe all and create new whole device partition
+
+cfdisk (obsolete)
+	said (by the fdisk man page) to be reliable and better
+	than fdisk
+	'maximize' option creates incompatibility with Windows?
+	print/sector command shows partitions in hd order

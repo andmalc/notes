@@ -1,0 +1,246 @@
+Data Analysis {{{1
+structured {{{2
+
+- observations and characteristics
+Qualitative
+Quantitative
+    Discreet
+        can take only certain values, can be counted
+    Continuous
+        range of values
+        Eg. time, temperature, measured qualities
+
+Structured data levels:
+    nominal
+        
+Unstructured {{{2
+
+free form text
+must be preprocessed to be understood
+
+
+Create df's {{{1
+Read data from file {{{2
+https://www.shanelynn.ie/python-pandas-read_csv-load-data-from-csv-files/
+
+index_col='Date
+read_csv()
+
+Date parameters parse_dates, date_parser, dayfirst, keep_date
+
+nrows - # rows from top to read
+skiprows - rows or ranges of rows to skip
+usecols - which cols to import
+sep - separator char
+na_values - values to interpret as missing
+    na_values=['.', '??']
+
+dtype - set column datatypes 
+    dtype={"name": str, "age": np.int32}
+
+Which cols to read as dates
+parse_dates=['Date','birth_date']
+
+set existing column as Index
+    df.set_index("col name", drop=<bool>)
+        drop
+            preserve orig column
+            default True
+
+
+Gen {{{1
+
+Info:
+    shape
+    index
+    columns => Index obj
+    describe 
+    qualitative data: counts, freq (most common value), unique etc.
+    quantitative data: min,max,mean etc.
+
+Data types (Pandas/Python)
+    object/string
+    int64/int
+    float64/float
+    datetime64/datetime (must import)
+
+Type info:
+    dtypes  basic data type info
+    info() extended data type info
+
+Data Structures {{{1
+
+Index
+    list of axis labels
+    Usually 0-based number but can be datetime
+
+Series
+    Index by slice,list, or index val
+    s[:3]
+    s[[4,2,1]]
+    s['label']
+
+    Missing label: KeyError or get method to set default
+
+Operations between Series
+    result is union of indexes.  
+    if not found in any one Series, result is marked missing 'Nan'.
+
+DataFrame
+    Args
+        data - list of dicts, numpy array
+            [{'a': 1, 'b': 2}, {'a': 5, 'b': 10, 'c': 20}]
+        columns = list - sets order of columns
+        dtype - optionally with column names
+            np.zeros((2, ), dtype=[('A', 'i4'), ('B', 'f4'), ('C', 'a10')])
+        index
+
+    More constructors
+        http://pandas.pydata.org/pandas-docs/stable/getting_started/dsintro.html
+
+
+Selecting columns & rows {{{1
+
+df[col label][row index or slice]  
+df[row index or slice]  
+df[[col,col]][rows]  
+df.<col name> - attribute access
+
+Single col returns Series of values
+
+':' indicates all
+
+s[['i1','i2','i3']]	select multi rows by index
+
+Last row:
+number_of_rows = df.shape[0]
+    df.loc[number_of_rows -1] #last row, returns Series
+    df.tail(n=1) #returns df
+    df.iloc[-1]  #only with iloc method
+
+head/tail(n=#)   first/last n observations, default 5
+
+
+https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
+
+df.iloc {{{2
+
+Integer index only
+
+df.iloc[row selector,col selector]
+df.iloc[index for single row]  
+df.iloc[:,index for single col]  
+
+df.iloc[:,[2,4,-1]]  #all rows, three non-contigious columns
+
+df.loc {{{2
+Access using Labels, Index or Boolean Series
+
+df.loc[[rows], [columns]] 
+    e.g
+        df.loc['val'] # row matching val in Index column
+        df.loc['val','Col']
+        df.loc[:,Col] # returns Index & Col
+
+Row filter with Boolean Series
+    Should have same length as row index
+    Filter will return all True rows
+
+Conditional returning Boolean Series
+    JoeSeries = df['first_name'] == 'Joe'
+    df.loc[JoeSeries] # Allow rows where Joe = First Name
+    df.loc[df['first_name'] == 'Joe'] # Same on one line
+    df.loc[df['first_name'] == 'Joe', ['First Name','Last Name'] # Same with specific columns
+
+Conditional Examples:
+data.loc[data['first_name'] == 'Antonio', 'city':'email'] # cols in range
+data.loc[data['email'].str.endswith("hotmail.com")]   
+data.loc[data['first_name'].isin(['France', 'Tyisha', 'Eric'])]   
+data.loc[data['company_name'].apply(lambda x: len(x.split(' ')) == 4)] # 4 word company name
+
+df.loc[Joe & Ed] # Intersection of two Series
+
+Update values
+df.loc[data['platform'] == 'iPhone','platform'] = 'XXX'
+
+
+Filtering {{{1
+
+Applying filter to columns returns a boolean index as a Series
+Apply index to df to select records for which index reads True
+
+Example
+    df[df['Col'] == 'val'  - filter on col=val  
+
+.isin(['val','val'])]  
+.where(df.col == 'x') - inserts NaN for non-matches
+str.contains('str') - string in value
+
+Mask  
+mask = np.logical_and(df.CatA=='a', df.CatB=='e')  
+df[mask][:5]  
+
+Filter method
+    Filter on row or column labels
+    https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filter.html
+
+
+
+Grouping {{{1
+
+result = df.groupby(['Col', 'Col'])[['col to aggregate','col2']].aggregate_func()
+
+grouped = df.groupby('Col')
+grouped.aggregate(myfunc)  - any function
+grouped.agg([np.mean,len])  
+
+Counts
+<col>.
+    value_counts()  Group by count, default desc sort
+    
+grouped['Col'].nunique() - count of unique values
+grouped.count() - applies count to all numeric columns
+
+Ranges {{{1
+
+Under Py3 range func returns generator.  Must be converted to a list.
+
+df.iloc[:,list(range(3))]
+
+Slice syntax
+    df.iloc[:,0:6:2]  # every other first five columns
+
+
+Create columns {{{1
+
+data['new'] = 2     - 2 is value of all rows
+df['new']= df['age'] > 7
+
+df.assign 
+    return copy of data
+
+
+Functions {{{1
+
+# conditionally sets col value to 'blahblah'
+def func(r):
+    if r == 'blah':
+        return 'blahblah'
+
+df[<col>] = df[<col>].apply(func)
+
+Func with extra args, first is element
+def func(e,x):
+	return e > x
+
+
+	
+df.apply(func, args=(x,))
+
+df.apply(func), axis=1) - apply func elementwise, axis=0 (rows) is default
+
+
+
+
+
+

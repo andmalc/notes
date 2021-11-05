@@ -1,0 +1,53 @@
+
+ansible <hostname or address pattern> -m <module> -a <args>
+
+Options
+    -m <mod>    module name
+    -i <fn>     hosts file
+    -a          args for module
+    -l <host>   limit to one host
+    
+    -vv     verbose
+    -vvv    extra verbose for ssh issues
+
+    --check check playbook syntax
+
+   --become-user otheruser [--ask-become-pass]
+
+   connect as root then become user andmalc 
+        -u root -b --become-user andmalc
+
+ansible-playbook 
+    --syntax-check
+
+
+Inventory file
+
+Define localhost
+localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env python"
+
+
+Modules
+    command & shell
+        take list of args
+        don’t use the key=value form
+
+    copy    copy file from local to remote
+            args: src=<path dest=<path>
+
+    setup   gather info 
+            args: filter=<key>
+
+
+
+    dnf     Fedora
+            args: dnf: name=httpd state=latest
+
+
+Local actions
+    playbook:
+        hosts: localhost
+    single task:
+        local_action: command arg arg
+
+

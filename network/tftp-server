@@ -1,0 +1,44 @@
+
+Buffalo router
+	DD-WRT v24 RC-4 10/07
+	Login root, pw vex
+	WAN 192.168.0.1
+	LAN gateway 192.168.69.1
+
+	Setup / Basic Setup
+		DHCP Sever - disabled - to allow DNSMasq options in Services
+		Use DNSMasq for DHCP - checked
+		Use DNSMasq for DNS - checked
+	
+	Services/Services
+		DNSMasq
+			Enabled
+			Local DNS yes
+
+		ssh on - login user is 'root', pw vex
+
+
+	Admin/Mangement
+		Remote mngmt off
+		CIFS mount off
+
+	Tutorial on using DNSMasq as DHCP server at DD-WRT wiki - includes tftp serving
+	http://www.dd-wrt.com/wiki/index.php/DNSMasq_as_DHCP_server
+	See settings at bottom of http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html
+
+	ltsp settings
+		option root-path "192.168.57.252:/opt/ltsp/i386";
+		filename "/ltsp/i386/pxelinux.0";
+		next-server 192.168.69.12;
+	dnsmasq.conf
+		dhcp-option=17,"/opt/ltsp/ubuntu_6.10_i386/"
+		dhcp-boot=file1.fff;file2.fff
+
+
+
+WRT54GL
+	DD-WRT v24 RC-4 10/07
+	Login admin, pw vex
+	LAN IP 192.168.69.2
+	Wireless mode: client-bridge
+	

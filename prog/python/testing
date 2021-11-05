@@ -1,0 +1,16 @@
+
+Unittest
+	http://www.voidspace.org.uk/python/articles/introduction-to-unittest.shtml
+
+	Discover & run
+		http://somethingaboutorange.com/mrl/projects/nose
+
+Doctest
+	http://docs.python.org/library/doctest.html
+
+Mockups
+
+http://pypi.python.org/pypi/MiniMock/1.0
+
+http://pypi.python.org/pypi/testfixtures
+

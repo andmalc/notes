@@ -1,0 +1,31 @@
+
+Built in pdb
+http://pymotw.com/2/pdb/
+
+Tools
+	ipdb	IPython debugger
+	pudb	Graphical ascii debugger
+	pdbpp (pip install)
+	ptpdb   based on prompt-toolkit
+
+
+import pdb; pdb.set_trace();
+
+Start debugging:
+
+try:
+    line_that_causes_exception()
+except:
+    while True:
+        exec(raw_input('>>> '))
+
+
+No change to source:
+	Create file .pdbrc
+	contents: break awesome.py:15
+	run: python -m pdb awesome.py 
+
+Debug conditionally:
+	break awesome.py:15, x < 5
+
+

@@ -1,0 +1,118 @@
+mkosi {{{1
+
+https://github.com/systemd/mkosi
+http://0pointer.net/blog/mkosi-a-tool-for-generating-os-images.html
+
+command verbs
+	build (default)
+	summary
+	boot [nspawn settings]
+	ssh		ssh to host booted with boot or qemu
+
+Command line only options
+	--directory=, -C	switch to directory 
+    -i/-incremental		incremental build 
+
+Options
+    -d				distribution to install
+    -p				comma separated list of packages
+
+    --esp-size		defaults to 256M.  Only if --bootable
+    --format / -t   format: directory, tar, gpt_btrfs etc.
+    --root-size		defaults to 1G
+    --home-size		defaults to no home
+    --password		root pw
+					read from mkosi.rootpw
+    --qcow2			encode image in Qemu Qcow2 format.  
+					instead of container virtualization, VM virtualization used
+					* shell & bootable not available - qemu required to boot*
+	Host
+		NetworkVeth=, --network-veth
+		Ssh=, --ssh		
+
+	Output
+		-b				UEIF bootable
+		-o/--output     image name
+		OutputDirectory=, --output-dir=, -O, mkosi.output
+						where to place all generated artifacts 
+		-f				overwrite image name on subsequent builds
+		KernelCommandLine=, --kernel-command-line=
+
+		
+
+Rebuild and boot
+    mkosi -if && systemd-nspawn -bi image.raw
+
+mkosi.default example
+
+    [Distribution]
+    Distribution=fedora
+    Release=24
+
+    [Output]
+    Format=raw_btrfs
+    Bootable=yes
+	KernelCommandLine=xxx
+	Qcow2=
+
+    [Packages]
+    # The packages to appear in both the build and the final image
+    Packages=fish,stow,neovim
+
+
+systemd-nspawn {{{1 
+
+-i,image=		image file
+
+Exec
+-b,--boot,Boot		boot
+-u,--user,User		User (???)				
+
+User Namespacing Options
+-U		user namespacing
+        files created have owner <machine name>-<User ID within container>, e.g mymachine-0
+
+Networking Options
+-n, --network-veth,VirtualEthernet		Create a virtual Ethernet link ("veth") between host and container
+
+
+-D/--directory <dir> for root
+-M <machine>  user defined container name
+ --template=<dir>
+    use fs in dir as template 
+
+-x, --ephemeral
+    create snapshot, remove after done
+
+Exmple session
+    systemd-nspawn -U -i image_file
+    systemd-nspawn -UM -D dir
+        gets root shell
+        passwd to set password
+    systemd-nspawn -U -b [-M machine | -D dir]
+        boot and login 
+
+Kill within session: Ctrl+ 3*]
+
+Manage machines {{{1
+
+
+machinectl
+    list-images
+    login, shell, reboot, poweroff, status <container>
+    bind <machinename> <source path> [<dest path in cont>]
+
+networking
+https://gist.github.com/frafra/02696ed4121772dd38674d5cb0bb1fa6
+
+Run container under SELinux
+	semanage fcontext -a -t svirt_sandbox_file_t "/path/to/container(/.*)?"
+	restorecon -R /path/to/container/
+
+Containers as services {{{2
+
+https://blog.selectel.com/systemd-containers-introduction-systemd-nspawn/
+
+Container as service - must be in /var/lib/machines
+systemctl start systemd-nspawn@mycontainer.service
+

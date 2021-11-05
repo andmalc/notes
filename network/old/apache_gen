@@ -1,0 +1,82 @@
+
+docs
+	http://www.onlamp.com/pub/a/apache/2004/05/28/apacheckbk.html
+
+
+
+Running
+=========
+
+From Console
+-----------
+
+-f <file>       Specify configuration file
+-n 'service name'   Use configuration of installed service (NT)
+-k shutdown     (from another console window)
+-t              Test config file
+
+init.d/apache
+	force-reload
+
+
+file permissions
+	strategy
+		Apache user is unprivilaged 
+			owns nothing
+			write permissions
+				may be necessary for DAV directories
+				some CGI programs require this
+			reads content directories as an 'other' user
+			why? because cgi programs can do whatever Apache can do
+			e.g
+				useradd -c "httpd owner" -d /dev/null -s /bin/false -u httpd
+
+		set permissions on content directories
+			content owner:
+				useradd -c "Web Server" -d /var/www/ -g web -s /bin/false -u web
+			content editors:
+				members of www-data, web etc. group
+			content directories must be executable and readable by Apache user
+				e.g. 775
+			content files must be readable by Apache user
+				e.g. 664
+			parent directories must be executable by Apache user
+				e.g. 701
+			for public_html dirs in home directories
+				home dirs 701
+				public_html dirs 705
+				content files 644
+
+authentication
+	basic
+		htpasswd utility 
+			htpasswd /home/andmalc/
+
+Virtual Hosts
+
+	Types:
+		IP Based Virtual Hosts		Each VH gets its own IP address
+		Name Based VH				One IP for all hosts
+
+	Handling of Requests
+		First listed VH is default - handles requests for unlisted hosts
+		First VH entry ServerName and DocumentRoot 
+			become the server default and hide entries in main config file.
+
+
+utilities
+	
+	siege
+		.  siege - Http regression testing and benchmarking utility
+		Siege is an regression test and benchmark utility. It can stress test a
+		single URL with a user defined number of simulated users, or it can
+		read many URLs into memory and stress them simultaneously. The program
+		reports the total number of hits recorded, bytes transferred, response
+		time, concurrency, and return status. Siege supports HTTP/1.0 and 1.1
+		protocols, the GET and POST directives, cookies, transaction logging,
+		and basic authentication. Its features are configurable on a per user
+		basis.
+	
+
+
+

@@ -1,0 +1,81 @@
+
+Wireless connectors {{{1
+
+from http://www.yawarra.com.au/wf-intro.php
+http://www.wisp-router.com/wri/items.asp?Cc=Standard&iTpStatus=0&Tp=&Bc=pictures: http://www.radiolabs.com/products/cables/cable.php
+
+Pictures of N-type, RSMA, MC connectors
+http://wireless.gumph.org/content/3/7/011-cable-connectors.html
+
+Tips
+http://binarywolf.com/249/connectors.htm
+
+It's important to make sure you have compatible connectors on your card,
+pigtail and antenna. The wireless card connectors are usually u.fl (or I-PEX),
+MMCX or MCX. The antenna connectors are generally of type N, SMA or TNC.
+Connectors can also be male or female (you need a matching pair) and straight
+or reverse polarity (you need the same polarity). All of our wireless cards
+have u.fl compatible connectors and our pigtails and antennas are either N-type
+or reverse SMA.
+
+Wireless card connectors
+	u.fl
+	MC, MMCX
+
+Antenna connectors (largest > smallest)
+	reverse polarity models have female center pin
+	N-type
+		for outdoor antennas, larger - male about 2 cm
+		antenna is male side (?)
+		- N-Type Male has threads on the inside with a solid (male) center pin. This is the connector to use to mate with most outdoor antennas and access points. 
+		Wireless adapters
+	TNC
+		home Access points
+	SMA
+		RSMA common
+			SMC flat panel antenna, female connector
+		PCI wireless cards
+		antenna is male side (?)
+
+	MC / Lucent
+		PCMCIA cards
+
+Wireless cards {{{1
+
+Ubiquity XtremeRange2 
+	http://ubnt.com/products/xr2.php
+	bought 4/08
+	Antenna connect single MMCX
+	driver at:
+		http://ubnt.com/support/xr2.php
+
+	Antenna will be 'B' in software
+	Avoid using without an antenna
+	Said to work well: 18 volts 800ma power adapter with POE
+	Most important to use grounding cable with omni antennas as most do not have DC grounding
+
+
+Compex WLM54 200mW 802.11b/g miniPCI
+	part WLM54GP23 but WLM54G23 on company site
+	chipset Atheros AR2413
+	connector U.FL 
+		probably as shown here http://www.mini-box.com/s.nl/it.A/id.460/.f
+		on board is U.FL
+		adapter other end N-type female, Straight (RSMA?), 
+		antenna will be N-type male
+
+	correct info? http://squitter.com/products/telecom/WLM54GP23.htm
+
+
+Unex CM9-GP
+		802.11a/b/g AR5004X (AR5213 + AR5112)
+		Madwifi compatible
+
+
+Antenas {{{1
+2.4 GHz
+
+5 GHz
+said: NS5 will have more bandwidth and less interference
+Could do distance with this and network cable to uplink port of home router
+

@@ -1,0 +1,44 @@
+
+docs
+	Openssl.org - Config file format
+		http://www.openssl.org/docs/apps/req.html#CONFIGURATION_FILE_FORMAT
+    Postfix TLS guide
+        http://www.postfix.org/TLS_README.html
+
+files
+    Maybe together in pem file or separate:
+        Certificate - identifies host, self-signed or by public CA
+        Private key - restrict access
+
+Test validity of cert file:
+    openssl verify -purpose sslserver <file>
+
+generate private key
+	- RSA keys do encryption + signing, DSA signing only
+	- Omit -des3 for blank passphrase ::
+		openssl genrsa -des3 -out privkey.pem 2048
+
+
+create request cert
+	openssl req -new -key privkey.pem -out -days 360 cert.csr
+if passphase: remove it:
+	sudo openssl rsa -in cakey.pem -out  cacert.csr 
+
+
+OR/ gen priv key and request cert in one step
+	openssl req -config openssl.cnf -new -days 360 -keyout cacert.pem -out vbrew.csr
+
+info
+	show a server's cert
+		openssl s_client -port 443 -host your.server
+
+utilities
+	ssl-cert package 
+	- wrapper for openssl req
+	- generates a openssl.conf::
+		/usr/sbin/make-ssl-cert /usr/share/ssl-cert/ssleay.cnf <output-name>
+
+	/usr/sbin/apache2-ssl-certificate
+		also wrapper for openssl req
+		puts cert in /etc/apache2/ssl/
+

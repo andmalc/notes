@@ -1,0 +1,213 @@
+
+	apachectl configtest or
+	-t option
+	-S	test vhost config
+
+Files
+	/etc/apache2/
+		apache2.conf
+			main common directives
+		ports.conf
+			which ports & IP addresses to listen to
+		http.conf
+			backwards compatibility
+			3rd party modules via apxs2
+		conf.d/
+			miscellaneous snippets
+		modules-available
+			a2enmod & a2dismod to en/disable
+		sites-available
+			virtual host configs - don't have to match hostname
+			default is for default host
+			a2ensite & a2dissite to en/disable
+
+Directives
+
+binding
+	Listen [IP]:<port>
+		Specify which port(s) and if specified, addresses to listen on for
+		incoming connections. If address not specified, will listen on all interfaces 
+
+scope limiters
+	limit scope of directives by enclosing in sections
+	wildcards: *,?,[abc]
+	...Match directives take regexs
+
+	Filesystem space
+		 <Directory>, <DirectoryMatch>, <Files>, <FilesMatch>, 
+	Webspace - for non-filesystem resources only
+		 <Location> <LocationMatch> 
+			directives apply to a portion of the URL path
+			e.g.
+				<Location /thing>
+					applies to requests for 
+						<host>/thing
+						<host>/thing123
+						<host>/thing/subdir
+	How sections merged
+		Order: Directory, Files, Location
+		If directives conflict/overlap, later ones take precedence
+			 
+mapping filesystem paths to locations
+	Document Root directive
+		sets '/' for requests
+	paths outside of Document Root path
+		filesytem symbolic links
+			followed only if FollowSymLinks or SymLinksIfOwnerMatch in effect
+		aliases
+			<Alias location fs_path>
+			ScriptAlias same + all content at target path treated as CGI scripts
+		UserDirs
+			if mod_userdir loaded and UserDir declaration, enables ~username access.
+			default directory is ~/public_html (not user home dir)
+
+content negotiation
+	DirectoryIndex <default index.html>
+		DrectoryIndex: sets the file that Apache will serve if a directory
+		is requested.
+		The index.html.var file (a type-map) is used to deliver content-
+		negotiated documents.  The MultiViews Option can be used for the
+		same purpose, but it is much slower.
+		e.g.
+			DirectoryIndex index.html index.html.var
+	type-maps
+		files containing stanzas mapping files to content type preference
+		requires
+			AddHandler type-map .var
+		suggests
+			DirectoryIndex index.html.var
+
+	MultiViews 
+		allows alternate representations of a resource according to browser
+		preferences (e.g. language) by choosing between files in a directory
+		with common beginnings but differing ends
+
+Options
+	Indexes
+
+Modules
+	list compiled-in modules
+		-l option
+	load additional modules
+		directive: LoadModule
+		if checking presence of a loadable module with IfModule, its LoadModule
+		directive must be first
+		modules-available
+			symlinks in modules-enabled point to .load (& .conf if available) files here
+	mod_dir
+		enables directory listings (which require a trailing '/') even if
+		request doesn't include one
+	mod_dav_fs - webdav
+		see also Tortoise manual
+			http://tinyurl.com/3rbm7
+		requires
+			Dav On (in a container)
+			DavLockDB /var/lock/apache2/DAV
+				(doesn't seem to be needed under Debian)
+				directory must be writable by the Apache user & group
+			apache user must have *full* permissions on fs directory
+
+Home Directories
+	UserDir <default public_html>
+		enables mapping of ~username requests to a directory
+		name of directory appended to response to ~username request
+
+Virtual Hosts
+	NameVirtualHost	IP#[:port] or *[:<port>] 
+		Designates an IP address for name-virtual hosting
+		usually just use '*'
+	
+	VirtualHost section with a address:port attribute matching the arg for NameVirtualHost 
+		VirtualHost *
+
+		essential configs:
+			An IP address to bind to - can use fqn but IP# recommended
+				really essential?
+			ServerName - use fqn
+			DocumentRoot <path with no final />
+
+		example
+			NameVirtual Host *
+			<VirtualHost *>
+				ServerName xx.com
+				ServerAlias www.xx.com
+				DocumentRoot /var/www
+				<Directory *>
+					stuff
+				</Directory>
+			</VirtualHost>
+
+	UserDirs
+		UserDir <dir name>
+			makes dir available as ~<username> unless absolute path given
+			make dir www-data readable
+			'disable root' recommended
+		cgi
+			<Directory /home/*/cgi-bin/>
+				Options ExecCGI
+				SetHandler cgi-script
+			</Directory>
+		allow users to alter config
+			AllowOverride to specify options changed in a .htaccess
+
+
+CGI
+	CGI processing done by builtin mod_cgi handler.  Files are handled if 
+	identified as having type application/x-httpd-cgi.  Files aquire this type 
+	if either:
+	* are in a ScriptAlias directory.
+	* have an extentsion defined by the AddType directive.  	
+
+	To trigger execution of scripts based on filename extention:
+		* 'Options +ExecCGI' must be set for the directory locations if outside
+		'ScriptAlias' directory.
+		* The AddHandler directive for the file extension must be set 
+		e.g. 'AddHandler cgi-script cgi pl py'
+		
+	ON Unix, all CGI files are parsed for 'schebang' line ('#!cmd') at top
+	of file.  Must give full path to executable.
+
+	Environment
+		server run as unprivilaged user (www, nobody)
+
+		no $PATH in server env
+	Related directives
+		ScriptAlias <virtual location> <directory> 
+			Designates a directory whose content is executed instead of being sent 
+			to the client as a file
+			ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+
+Directives
+	order of application
+		1. Directories, shortest paths first
+		2. Directories in Virtual Hosts
+		3. Locations
+		4. Files
+	filesystem 
+		these applied regardless of how request made e.g. case variations, from
+		a script
+		Directory <path>
+			enclosed directives apply to path and subdirectories
+		Files <filename pattern>
+			enclosed directives apply to all matching files in any directory
+	urls in requests
+		Location <pat>
+			applies when pat found anywhere in request URL
+		Alias, SciptAlias <url> <path>
+			map URL paths to special locations, usually outside DocumentRoot
+
+Misc
+	AllowOverride <directives>
+		which directives may be redefined in a .htaccess file
+		e.g
+			AllowOverride Options
+		would allow an .htaccess file
+			Options +ExecCGI
+	DirectoryIndex  
+		Follow with a space-seperated list of file names that will be sent 
+		when only the directory name is given in the URL. (e.g. index.html, 
+		index.htm, default.html etc.)
+	AddHandler vs. SetHandler - 
+		1st takes file ext. arg and maps ext to a handler.  SetHandler sets 
+		handler for all files in its context.
+

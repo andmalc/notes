@@ -1,0 +1,10 @@
+WGET
+
+wget [OPTIONS] [URL]
+
+-m          Mirror site
+-m -L       Mirror site, copy only relative links
+-N          Don't download if timestamp of local file matches. (matched timestamp also indicates entire file is downloaded)
+
+-c [file]   Resume an interrupted file download (must be supported by server)
+-t [#]      Retry failed download # times

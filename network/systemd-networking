@@ -1,0 +1,44 @@
+
+Hostname
+/etc/hostname
+
+systemd-networkd
+Config files in /etc/systemd/network/
+
+networkctl
+    no arg          brief summary
+    status <pat>    summary
+    reload
+        reload config
+    up/down <pat>
+
+Debug link 
+    SYSTEMD_LOG_LEVEL=debug udevadm test-builtin net_setup_link /sys/class/net/ens7
+
+Name resolution:
+systemd-resolved
+Status: resolvectl
+
+Config /etc/systemd/resolved.conf
+    Provides Cloudflare or Google DNS by default
+    Usually does not need editing
+
+Setup:
+    start/enable systemd-resolved.service
+    ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    check status: resolvectl status
+
+
+Local names and DNS override /etc/hosts
+
+Resolve name at IP
+    <IP> <host or domain name> <aliases>
+
+Default route: 0.0.0.0
+
+Loopback interface
+    IPv4 127.0.0.1
+    IPv6 ::1
+
+
+

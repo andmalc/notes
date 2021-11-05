@@ -1,0 +1,128 @@
+
+Fedora package name: gnupg2
+Requires pinentry
+
+
+Use alternate config home
+    set -x --path GNUPGHOME ~/.config/gnupg
+    gpg --homedir=/media/something -K
+
+Troubleshooting
+    Kill gpg-agent
+        killall gpg-agent
+
+
+Generate ed25519 compat keys
+    Ed25519 is protocol for digital signature
+    X25519 protocol for encryption
+
+    gpg --expert --full-gen-key
+        choose 9, 1
+
+    add Curve25519 for ssh auth
+        gpg --expert --edit-key 
+        11 for Authentication
+        Toggle Authentication
+        save
+        1 for Curve25519
+        save
+
+http://www.pps.univ-paris-diderot.fr/~jch/software/pgp-validating.html
+https://fedoramagazine.org/gpg-using-your-key/
+
+
+Verify only recipient can read:
+    Encrypt the file or message with the recipient's public key
+
+I want the recipient to be able to verify it came from me
+    sign the file or message with your private key
+
+I want to verify the identity of a person who apparently sent a file or message
+    Verify the signature using the sender's public key.
+
+I want someone to send me a message or file only I can view.
+    Have the sender encrypt the file or message with your public key
+
+
+    
+Create key
+    gpg2 –full-gen-key
+
+Show keys 
+    --list-keys
+
+Send key to server
+    gpg2 --keyserver keys.fedoraproject.org --send-key 5D50C86C
+
+
+Encrypt a document
+	for specific user
+        gpg2 -r recipient --encrypt | -e <data>
+	conventional or symetric, w/o public key
+		gpg --symmetric  <filename>
+
+Decrypt a document
+	needed: private key to which doc was encrypted
+        gpg <input fn>
+        gpg2 -o - <input fn>    Output to std
+        gpg2 -o <output fn> <input fn>    Output to file, specify name
+
+
+Export key
+    Binary format:
+        gpg --output <fn> --export <ID>
+    ASCII Armor format
+        Allows gpg format message to be copied/pasted in plain text
+        gpg --armor --export <ID or email> > filename.asc
+
+
+
+Sign documents
+	gpg --output doc.sig --sign doc   #doc is compressed and signed
+	gpg --output doc.sig --detach-sig doc  #detached compressed signuture file created.
+	gpg --clearsign doc #clearsigned - creates doc.asc in two part body + signature format
+	
+Manage keys in keychain
+	Master key is for creating signatures and collects signatures of others who have confirmed my identity.  
+	gpg 
+        --edit-key name
+        --list-keys
+	uid <name>
+		select a uid for editing
+		> sign
+		> check
+
+Verifying signatures - validates the origin and verifies the integrity of document
+Verify a detached signature
+	gpgv file.sig
+		prints ID of signing key and attempts to check
+		against key in keyring.
+		If key not available, retreive from keyserver:
+	gpg --keyserver pgp.mit.edu --recv-keys 621CC013
+		now gpgv will verify that pubkey in chain signed this file
+		To verify that this key is genuine, check user home page or search web for key and name to find matches or see if signed by known good signatures.
+
+Key types (left column in --edit-key display)
+    pub     Public Master signing key
+    sub     Public subordinate key
+    sec     Private master private key
+    sbb     Private subordinate key
+
+    May add multiple User IDs for signing.
+    Change subordinate keys (used to do encryptions) occasionally - if broken, all data encrypted with it is exposed and key must be revoked.  Avoid changing public master since this is how key is identified. 
+
+    Certificate - a pub key signed to verify origin and defeat tampering
+        Subkeys and User IDs automatically signed
+
+    Validating other keys
+
+
+
+#Multiple file input.  GPG compresses it's input:
+tar -c comNotes | gpg -ear douggorley > comNotes.tar.gz.asc
+
+Create message without saving to file (end with C-d)
+gpg --output encrypted_file -e -r User
+
+
+

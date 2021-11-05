@@ -1,0 +1,75 @@
+
+current 9/06 Debian utils:
+	wodim - front end to cdrkit utils
+	cdrkit is fork of cdrtools
+	cdrtools = cdrecord/mkisofs/cdda2wav
+
+wodim - write iso's
+cdrecord - package is now just a link to wodim
+mkisofs - create iso's
+growisofs - writing to a CD/DVD
+dvdrip - copy & squish onto a VCD or SVCD
+readcd (part of cdrecord package)
+    run with dev spec and no options to get speed info
+isodump, isoinfo, & isovfy utilities on knoppix
+
+Procedures
+---------
+copy your cd into an image file:
+    dd if=/dev/cdrom of=RedHat60.img
+verify copied image
+    Method 1: compare sums:
+        sum -r /dev/cdrom
+        sum -r RedHat60.img
+    Method 2: compare checksums:
+        cksum /dev/cdrom
+        cksum RedHat60.img
+    Method 3: compare contents manually
+        mount /mnt/cdrom
+        mkdir /tmp/RH60CD
+        mount -t iso9660 RedHat60.img /tmp/RH60CD -o loop
+        diff -r /tmp/RH60CD /mnt/cdrom
+        Broken links indicated with 'target not found'
+
+make a permanent mount point for an image on disk
+    iso.img /home/ftp/pub/distro/i386 iso9660 defaults,loop,ro   0 0
+
+Make a new image from disk contents
+    cd_dir will be root of CD   
+    mkisofs options -o filename.iso cd_dir [cd_dir]     or
+    mkisofs options cd_dir > filename.iso
+
+    options
+        -R  use RockRidge extentions -r  as above, but modify permissions to 
+            make globally readable and owned by root
+        -f follow symbolic links in src
+        -graph-points - graft paths at points other than at root directory
+            foo/bar=../file
+            foo/bar=/a/dir/somewhere
+        -M <path>   Merge to an existing iso file
+        -M <SCSI device> Merge to cdrom (see man page)
+        -o <file>   Output file name
+        -path-list <file>   list of paths to include
+        -x path  - exclude path (can use globbing)
+
+Remaster/alter an iso
+    mount -o loop -t iso9660 iso dir
+    cp -a dir/* someotherdir
+    <do something>
+    mkisofs -pad -l -r -J -v -V "gnoppix" -b CREDATIV/boot.img -c CREDATIV/boot.cat -hide-rr-moved -o gnoppix-0.5.4-1-en.iso /somewhere_else
+    for knoppix english version use
+        -b KNOPPIX/boot-en-img
+
+
+DVDs
+        utils
+                regionselect
+    regionset - view and modify the region code of DVD drives
+    Regionset is a small utility which displays and sets the
+    region/zone setting of a DVD drive, allowing it to decrypt the
+    DVD's sold in this geographical zone. Hardware vendors often limit
+    the number of such modifications, but it is necessary to set it at
+    least once with a brand new drive.
+
+
+vim: ts=4

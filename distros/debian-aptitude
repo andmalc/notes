@@ -1,0 +1,36 @@
+Online manual
+http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/
+
+Search expressions
+	
+	i	installed package
+	n	contained by name of package - regex	
+	e	exact match name of package
+	s	section
+	D<expn> pkgs depending on <matched by expn>
+	R<[recommends, suggests etc]>
+
+
+
+Flags
+	L	reinstall
+	M	mark as auto installed
+	R	run dpkg-reconfigure
+
+commands in gui
+	U mark all upgradable to be upgraded
+	R reconfigure package
+	l invoke display filter 
+	Ctrl + g abort command
+	
+commands
+	search
+	install <pkgname(s)>
+		append -, +, _, or = to remove, install, purge or hold
+
+
+Tasks
+	remove all packages with 'name'
+		aptitude remove '~<name>'
+
+Ctrl+space	active menubar

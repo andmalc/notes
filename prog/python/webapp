@@ -1,0 +1,10 @@
+
+WSCGI {{{1
+
+Response
+	is callable
+	returns iterable
+
+werkzeug {{{1
+
+

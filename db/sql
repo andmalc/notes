@@ -1,0 +1,176 @@
+Quotes {{{1
+
+single quotes to enclose strings including column aliases
+quotes preserve case in Aliases
+double quotes for identifiers, e.g. column nams
+
+Order {{{1
+
+Select
+From
+Where
+Group by
+Having
+Order by
+
+Selecting {{{1
+
+
+derived columns
+generated using data in same row
+
+Distinct syntax
+	Select Distinct
+		matches unique values
+		if more than one col, selects unique pairs
+
+
+Filtering {{{1
+
+  Logical operators.  Used in conditional statements
+    like    match similar values, case sensitive
+    ilike   case insensitive,
+            '&' wildcard
+                
+    in        where <col> in (1,2,3)
+    between   rows within range, inclusive
+              requires AND
+              where <col> between 5 and 10
+    and       satisfy two conditions
+    or        either or both of two conditions
+    not       does not match a condition
+              negate any conditional statement
+              
+    is null   no data
+              fields with just spaces are not null
+    is not null
+  
+  Comparison operators
+    if alpha operands use alphabetical ordering
+    
+     =, <> or !=, <=, >=  comparisons
+                equal, not equal, less than or equal, greater than or equal
+
+Sorting {{{1
+
+order by <col> [desc][, <col2>]
+  
+Ascending order is default: a-z 1-x
+
+
+Aggregation {{{1
+
+Count
+    count of matching rows
+    count(*) includes null rows, count(<col>) does not
+    works with non-numeric cols
+
+Sum
+    numeric cols only
+    nulls = 0
+    cannot sum vals in same row
+
+Max/min
+
+Avg 
+    average of numeric values
+    nulls ignored, not treated as 0
+
+Group By 
+
+    Allows aggregation of part of query
+    Order of cols does not affect result
+        SELECT  year, month,count(*) as count
+        FROM table
+        group by year, month
+
+Having
+    filter on aggregate cols
+		SELECT year, month,
+		MAX(high) AS month_high
+		FROM tutorial.aapl_historical_stock_price
+		GROUP BY year, month
+		HAVING MAX(high) > 400
+		ORDER BY year, month
+
+
+Misc {{{1
+
+Tip - use select distinct to explore a new dataset
+    count(distinct x) to find col with few distinct values and so 
+    suitable for grouping during analysis.
+
+        SELECT COUNT(DISTINCT month) AS unique_months
+
+
+  --      Comment
+  /* */   Multi line comment
+
+
+Reference {{{1
+
+Tables
+    Create
+        CREATE TABLE <name> (list of create definitions)
+        Create definition: col_name type constraints
+        contraints: [NOT NULL | NULL] [DEFAULT default_value] [AUTO_INCREMENT] [PRIMARY KEY]
+  
+        create table aname (first varchar(10), last varchar(20));
+    Join
+        SELECT title, artist
+          FROM album JOIN track
+                 ON (album.asin=track.album)
+         WHERE song = 'Alison'
+              
+
+Data
+    Insert
+        INSERT INTO <table> [(name, age)] VALUES ('value', 23);
+
+Select statements
+    <tables or expressions>
+    Examples
+        Filtering data with WHERE and Condition List
+        Condition List is a boolean expression:
+                wrong: name = 'France' or 'USA'
+                right: name = 'France' or name = 'USA'
+        e.g.
+                SELECT name , region FROM cia
+                        WHERE area < 2000 AND gdp > 5000000000
+        Filter on a list
+                SELECT name FROM cia
+                        WHERE name IN ('Sri Lanka', 'Ceylon', 'Persia', 'Iran')
+        Use wildcard
+                '%' = shell wildcard '*'
+                '_' = shell '?'
+                MS Access uses * and ?
+        Filter for values in a range
+                ... WHERE population BETWEEN # AND #
+
+Joins
+    self
+        http://tinyurl.com/24rvv
+ANSI:
+SELECT T1.KEY, T1.LINK,
+    CASE WHEN T1.LINK = 0 THEN T1.TEXT
+      ELSE T2.TEXT END AS Message
+  FROM MyTable T1
+    INNER JOIN MyTable T2 ON T2.KEY = T1.LINK
+
+
+
+Wildcards
+		- The equivalent to "*" is "%"
+		- The equivalent to "?" is "_"
+		   rather than "something".
+
+		  select * from some_table where name like 'B%';
+
+  		If you need case insensitivity, you might use:
+  		  select * from some_table where lower(name) like 'b%';
+
+  		To search for a field 3 characters long, you might try:
+  		  select * from another_table where some_column like '___';
+
+
+

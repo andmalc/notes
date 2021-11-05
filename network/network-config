@@ -1,0 +1,117 @@
+
+Network Manager {{{1
+
+nmcli
+    General status
+        g or gen
+
+    Devices
+        dev
+
+List available wifi connections
+    dev wifi list
+
+Connection
+    
+    nmcli device wifi connect <SSID|BSSID> password "pw"
+
+    List created
+        conn show
+
+    Create wifi connection
+        conn add type wifi con-name "conn-name" ifname wlp1s0 ssid "ssid"
+        conn modify conn-name wifi-sec.key-mgmt wpa-psk
+        conn modify conn-name wifi-sec.psk password 
+
+    Delete con
+        con delete <id>
+
+    Connect to network
+        con up <connection/profile name>
+
+    Edit conn
+        c mod <id>
+         c edit id <ssid>
+
+    Change DNS
+        con mod 'System eth0' ipv4.dns "8.8.8.8 8.8.4.4"
+
+iwd (Net Wireless Daemon) {{{1
+
+manage with iwctl
+https://wiki.archlinux.org/title/Iwd#iwctl
+
+
+
+ip - iproute {{{1
+
+Debian package iproute2
+can supercede net-tools apps ifconfig, route, arp, though essential when > 1 route
+
+http://teknixx.com/new-linux-networking-commands/
+
+ip address - protocol address management
+	add
+		ip addr add 192.168.1.1/24 dev eth0
+	del
+        ip a del dev <device>
+	show
+        ip a s dev eth0
+    
+    list,ls,l
+
+ip link
+	set, s
+        dev [interface] 
+            up/down
+            name <new name>
+
+ip route
+    show
+        ip r s 
+
+ip tunnel
+
+
+ip n | neighbour
+    show level 2 info - like arp
+
+ip neighbour - neighbour/arp table management
+	establish bindings between protocol addresses and link layer addresses for hosts sharing the same physical link.
+	abbreviateions: neigh, n
+	add, change, replace, delete, flush, show
+
+
+
+Display/Add/Remove Routes {{{1
+
+ip route - routing table management
+	add
+		ip route add 10.0.0/24 via 193.233.7.65
+	add NAT 
+		NAT the address 192.203.80.144 to 193.233.7.83 before forwarding
+		ip route add nat 192.203.80.142 via 193.233.7.83
+	chg
+		ip route add 10.0.0/24 via 193.233.7.65 dev eth1
+	del
+	show, list, ls
+		all - list all tables
+		ip route ls all 
+	flush, f
+
+	ip route - shows route
+	ip route del <paste entire route line from above>
+	ip route add default via <gateway IP> - set default gw
+
+ss - display sockets {{{1 
+
+part of iproute package
+replaces netstat
+
+-l      display all listening sockets
+-t      display listening TCP sockets
+-p      show process using sockets
+
+
+
+

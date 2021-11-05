@@ -1,0 +1,55 @@
+Voip service based in Montreal
+	http://voip.ms/
+		Belleville #'s
+
+SIP Client recommended
+	http://www.3cx.com/
+		android version
+
+TS les.net DID
+	Incomng call to 6137712366
+		forwarded to Ekiga - answered but clunk sound and hangs up - ok after quitting Gizmo
+		forwarded to cell - OK
+		forwarded to Gizmo - OK
+		
+
+Hw setup options:
+
+	1. Use softphone (X-Lite, or one of proprietary, such as Skype or
+	VoipDiscount). Then WRT54GL is the only device that you need. You can
+	optionally set up QoS on it - and you are all set. That will conclude your
+	VoIP project, but doesn't make the router "a VoIP box". The drawbacks - you
+	have to be near your computer with headsets/microphone and your computer
+	must be on to send or receive calls. I think there are also some USB or
+	BlueTooth phones that you can use with such setup.
+
+	2. Use WRT54GL <==> ATA configuration. ATA is analog telephone adapter,
+	such as Sipura/Linksys SPA. That's the setup that I am using - suites my
+	needs perfectly. Or, you can use  Router/ATA combo such as the one that you
+	linked to.
+
+	3. Have some SIP or Asterisk client running on a router, and USB/BT as
+	interface to a BT phone. OpenWRT comes with OpenSER and Asterisk, so if you
+	go for it - share your experience. I haven't seen anybody running such
+	configuration, so I was afraid to be the first to try. There are a few
+	routers with USB port, such as Asus models or Linksys WRTSL54GS
+
+ENUM RFC 3761 is a protocol the uses the Internet DNS system to
+translate E.164 (i.e. ordinary) telephone numbers into IP
+addressing schemes (like SIP, H323 or Email)
+
+Stores: 
+voipdepot.ca
+atlasvoice.com
+
+Local Providers:
+Unlimitel - recommended on TAUG, prices may be higher, is on peers list
+
+Managed DNS with SRV records
+- NoIP
+
+freeworlddialup.com
+- free VoIP 
+- interoperates with other networks
+
+

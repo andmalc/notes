@@ -1,0 +1,117 @@
+Listing {{{1
+
+ls {{{2
+
+Options
+    t   newest modification at top 
+    R   recursive
+    C   list in columns
+    A   hidden but omit ./..
+
+Tips
+    ls -RC  recursive in columns 
+    ls -AFC - Show types, hidden but not ./.., in columns
+
+
+
+Attributes {{{1
+
+ownership
+    user & users imply noexec, nosuid, & nodev unless subsequently
+    overriden 
+        e.g. -o user[s],exec,suid
+    "auto, uid=500, gid=100" 
+        take all ownership of files in mounted partition.
+
+
+Stickiness
+	Files 
+		executable & sharable file which is not immediately discarded from swap 
+			after execution.  Only root can create.
+	Directories "+t"
+		only file owner and write or delete
+		used in common directories when write access granted thr. group
+
+setuid & setguid
+	Files
+		setuid	
+			Set-user-on-execution bits
+			eg chmod +s ...  => -rwsr-xr-x
+	Directory "g+s"
+		setguid	
+			all files created in dir have group of dir
+				1. change dir ownership to group
+				2. set group write permissions on dir
+				3. chmod g+s or leading 2, chmod 2xxx
+			file moved in not affected, files copied are
+    
+File & Dir Permissions {{{1
+
+File Permissions
+    r 4  read
+    w 2  write
+    x 1  execute
+	X	execute only if a dir or already executable
+    t   executable and sticky
+    T   sticky but not executable
+    s   setuid or setguid and executable
+    S   setuid or setguid but not executable
+
+Directory Permissions
+    r	show files in directory listing
+    w	change directory contents
+    x	access by name (executable, as in access with a program)
+		this permission sufficient to 'see through' if path known
+    t   sticky
+    s   setuid and guid
+		set guid: sudo chmod g=rxs <dir>
+
+restricting access
+	in /home - chmod * 700. No need for restrictive permissions on subdirs
+	in adduser.conf
+		DIR_MODE=700
+
+
+Mode Octal {{{1
+
+Modes are absolute (using octal numbering) or symbolic
+
+File
+	600		personal
+	644, 664	readonly for group or world
+
+Directory 
+	700		personal
+	750		group read
+	775		group access, world read
+	701		others can execute dirs but not read in them, 
+			ie could do a listing further in
+			- this might be for a personal dir with a public_html subdir
+
+Special modes
+    4000    set user ID on execution
+    2000    set group ID on execution
+    1000    sticky bit
+umask	restricts access - subtracted from default mode
+
+Groups: 
+    Password file contains entry (at end of line) for user's default group.  
+    Additional group membership in groups file.
+
+Links {{{1
+
+Update symbolic links: https://opensource.com/article/21/11/update-linux-file-system-link
+
+
+Utilities {{{1
+
+fzf
+    vim (fzf --height 40%) - fish
+    vim $(fzf --height 40%) - zsh
+
+exa
+    ls replacement
+
+
+
+

@@ -1,0 +1,11 @@
+Front ends
+	pgadmin3 - graphical frontend
+
+Apache authentication
+	libapache2-mod-auth-pgsql
+
+Debian pg extras
+	for the extras => postgresql-contrib-8.1
+
+
+

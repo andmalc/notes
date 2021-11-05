@@ -1,0 +1,285 @@
+Docs {{{1
+
+https://gist.github.com/virtualstaticvoid/1024546
+
+	iptables tutorial
+		http://www.faqs.org/docs/iptables/
+	Masquerading Made Simple HOWTO
+		http://tldp.org/HOWTO/Masquerading-Simple-HOWTO/index.html
+	NAT howto
+		http://www.netfilter.org/documentation/HOWTO//NAT-HOWTO.html
+
+Ubuntu tutorial
+	https://help.ubuntu.com/community/IptablesHowTo
+
+another tutorial
+	http://bodhizazen.net/Tutorials/iptables/
+	http://www.novell.com/coolsolutions/feature/18139.html
+
+OpenVZ tutorial - guest access
+	http://wiki.openvz.org/Using_NAT_for_container_with_private_IPs
+
+http://www.linuxhomenetworking.com/wiki/index.php/#Ch14_Linux_Firewalls_Using_iptables
+http://www.dd-wrt.com/wiki/index.php/Iptables
+
+kernel modules
+	NAT - iptables_nat
+
+Initial config {{{1
+net.ipv4.conf.default.forwarding=1
+net.ipv4.conf.all.forwarding=1
+
+save/restore scripts 
+	iptables-save > /etc/iptables-save
+	cat /etc/iptables-save | iptables-restore
+
+Config {{{1
+
+iptables user space utility  {{{2
+	iptables [-t table] -ACDI CHAIN rule-specification -j <target>
+		manage whole chains 
+			-L - List the rules in a chain.
+			-N - Create a new chain.
+			-X - Delete an empty chain.
+			-P - Change the policy for a built-in chain.
+			-F - Flush the rules out of a chain.
+			-Z - Zero the packet and byte counters.
+		manage rules in a chain
+			-A	<chain> append rule to end of chain
+			-I <chain> <#> insert rule at beginning or at #th position
+			-D <chainwhere> <#> delete rule
+			-R	replace chain
+
+set default policies  {{{2
+	only built-in chains have policies
+	suggested
+		iptables -P INPUT DROP
+		iptables -P OUTPUT ACCEPT
+		iptables -P FORWARD DROP
+
+Specify source & destination IP addresses {{{2
+	-s	source.  If not specified or '0' is 'any source'
+	-d	destination
+	-p	protocol
+
+	inversion
+		invert source, destination, or protocol with '!'
+		-s ! <source IP> - not from source
+
+	IP address ranges in source
+		<address>/<netmask>
+		<address>/<# signifcant bytes (default 32)>
+		
+
+Specify interfaces {{{2
+	-i	incoming interface (never for OUTPUT)
+	-o	outgoing interface (never in INPUT)
+	<interface name>+  any starting with name
+
+Specify state match {{{2
+	-m <state[,state]>
+		NEW
+		ESTABLISHED
+		RELATED
+		INVALID
+
+Rule Targets {{{2
+	packet tested against each rule in a chain.  If none match, policy applied
+	Built-in Terminal targets (end a chain)
+		ACCEPT
+			allow to pass through fw
+		DROP
+			block packet w/o responding - stealth mode
+		REJECT
+			drop packet, with an explanatory response to the client
+			default response is 'icmp-port-unreachable
+			use --reject-with '<message>' to send an alternative message:
+				icmp-net-unreachable
+				icmp-host-prohibited
+				tcp-reset
+	other targets (not terminal, packet continues until handled by policy)
+		REJECT, LOG, MARK, MASQUERAGDE, MIRROR, REDIRECT, TCPMSS
+
+Manage Rules {{{1
+
+Delete rules:
+iptables  -L -t nat  --line-numbers (shows line #'s for each rule)
+iptables -t nat -D PREROUTING  (line#) 
+
+Conection tracking {{{2
+	flags packets as any of:
+		NEW - outgoing or incoming SYN packet
+		ESTABLISHED - 
+			matches connection after first (ACK) & following
+			reception of the first reply to a NEW packet
+		RELATED - created by an ESTABLISHED packet, e.g. an FTP data connection
+	purpose
+		Previously, we often had to open up all ports above 1024 to let all
+		traffic back into our local networks again. With the state machine in
+		place this is not necessary any longer, since we can now just open up
+		the firewall for return traffic and not for all kinds of other traffic.
+
+
+Tables: mangle, filter, & nat {{{1
+	default is filter
+Traversal {{{2
+	Origin is network:
+		Preroute
+			Mangle PREROUTING 
+			NAT PREROUTING 
+		<Routing decision>
+		Either:
+			Input:
+				Mangle INPUT
+				Filter INPUT
+		Or:
+			Forward:
+				Mangle FORWARD
+				Filter FORWARD
+			Postroute
+				Mangle POSTROUTING
+				NAT POSTROUTING
+	Origin is local:
+		Output:
+			Mangle OUTPUT
+			NAT OUTPUT
+			Filter OUTPUT
+		Postroute
+			Mangle POSTROUTING
+			NAT POSTROUTING
+
+ 
+	Mangle table {{{2
+		not used much
+		built-in chains: 
+			INPUT
+			PREROUTING
+			FORWARD
+NAT table {{{2
+alters packets' source & destination fields
+
+built-in chains
+	PREROUTING
+		Mostly used for DNAT
+		avoid using for filtering as may be bypassed
+		for 'port-forwarding' redirection to a host on LAN
+		changes destination field
+	OUTPUT
+		matches outbound local packets
+		applies before routing
+	POSTROUTING
+		target SNAT
+		allows hiding of a local network behind a firewall
+		changes source address field - this specified in rule
+	POSTROUTING - for dynamic interface
+		target MASQUERADE
+		like SNAT, but checks for current IP address to assign to packet
+		connection tracking done here
+			New packet from localhost
+				state set to NEW by Output chain
+				upon response, state set to ESTABLISHED
+			New packet from another host
+				state set to NEW upon arrival
+
+Examples
+	SNAT
+	-t nat -A POSTROUTING -s $NET_PRV -o $IF_PUB -j SNAT --to $IP_PUB
+
+	Filter table {{{2
+		Filter out packets according to contents
+		Packets are handled by only one chain and directed to a chain according
+		to the packet's destination
+		built-in chains:
+			INPUT
+				for traffic entering system to an interface on the local machine
+			OUTPUT
+				for traffice originating on the local system
+			FORWARD
+				for traffic between interfaces 
+		user chains:
+			a user chanin can be applied to only one table
+Examples {{{1
+
+From http://m.linuxjournal.com/article/9521
+
+#Initial setup {{{2
+echo "Enabling IP forwarding"
+echo "1" > /proc/sys/net/ipv4/ip_forward
+echo "Enabling Proxy ARP"
+echo "1" > /proc/sys/net/ipv4/conf/eth1/proxy_arp
+
+#routing {{{2
+echo "Route to 192.168.9.0/24 is through eth0"
+/sbin/route add -net 192.168.9.0/24 eth0
+
+echo "The default gateway is eth1"
+/sbin/route add default eth1
+
+#On machines on LAN:
+#echo "Add default route through the gateway"
+#/sbin/route add default gw 192.168.9.253 eth0
+#echo "192.168.9.0/24 is directly reachable"
+#/sbin/route add -net 192.168.9.0/24 eth0
+
+#policies: {{{2
+# Default policy is Forward Accept, wide open both ways {{{3
+/sbin/iptables -P FORWARD ACCEPT
+
+echo "Flush existing rules"
+/sbin/iptables -F
+
+# policy is drop all {{{3
+echo "Set the default policy to drop packets"
+/sbin/iptables -P INPUT DROP
+/sbin/iptables -P OUTPUT DROP
+/sbin/iptables -P FORWARD DROP
+
+
+
+Old examples {{{1
+	-N thing_chain 
+	-A thing_chain -s 127.0.0.1 -p icmp -j DROP
+	-t nat -A POSTROUTING -o ppp0 -j MASQUERADE 
+	-t nat -D POSTROUTING 1
+	-A INPUT -j LOG --log-level=6 --log-prefix="thing"
+	-A INPUT -p tcp --dport ssh -j ACCEPT
+Example script
+	from OpenVPN docs
+		http://openvpn.sourceforge.net/howto.html
+
+# Generated by iptables-save v1.2.6a on Wed Apr 24 10:19:55 2002
+*filter
+:INPUT DROP [1:229]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
+-A FORWARD -i eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT 
+-A FORWARD -i eth1 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT 
+-A OUTPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT 
+COMMIT
+# Completed on Wed Apr 24 10:19:55 2002
+# Generated by iptables-save v1.2.6a on Wed Apr 24 10:19:55 2002
+*mangle
+:PREROUTING ACCEPT [658:32445]
+:INPUT ACCEPT [658:32445]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [891:68234]
+:POSTROUTING ACCEPT [891:68234]
+COMMIT
+# Completed on Wed Apr 24 10:19:55 2002
+# Generated by iptables-save v1.2.6a on Wed Apr 24 10:19:55 2002
+*nat
+:PREROUTING ACCEPT [1:229]
+:POSTROUTING ACCEPT [3:450]
+:OUTPUT ACCEPT [3:450]
+-A POSTROUTING -o eth0 -j SNAT --to-source 195.233.192.1 
+COMMIT
+# Completed on Wed Apr 24 10:19:55 2002
+
+Uses {{{1
+
+iptables rules for ssh
+	allow incoming access to local sshd
+		iptables -A INPUT -p tcp --dport ssh -j ACCEPT	
+
+

@@ -1,0 +1,316 @@
+Terms  {{{1
+
+OVMF
+    UEFI firmware for vms
+
+
+Def of machine from man machinectl
+
+    Virtual Machines (VMs) that virtualize hardware to run full operating system (OS) 
+    instances (including their kernels) in a virtualized environment on top of the host OS.
+
+    Containers that share the hardware and OS kernel with the host OS, in order to 
+    run OS userspace instances on top the host OS.
+
+    The host system itself
+
+
+virtual machine operating system (OS) disk image formats
+    raw 
+        exportable to other emulators
+        sparse - not on FAT
+    qcow2
+        reduce file size on all fs
+        contain snapshots
+        some downloadable qcow images intended for OpenStack and may need removing cloud-init to boot
+    iso
+    vdi
+
+Virt Tools Overview {{{1
+
+https://www.virt-tools.org/
+
+virt-manager
+	deprecated, use Cockpit instead
+	https://fedoramagazine.org/create-virtual-machines-with-cockpit-in-fedora/
+	https://fedoramagazine.org/reconfiguring-virtual-machines-with-cockpit/
+
+kvm - kernel virtual machine
+	 loadable kernel module, kvm.ko, that provides the core virtualization infrastructure and a processor specific module, kvm-intel.ko or kvm-amd.ko.
+
+Using KVM, one can run multiple virtual machines running unmodified Linux or Windows images. Each virtual machine has private virtualized hardware: a network card, disk, graphics adapter, etc.
+
+qemu
+	user mode
+	runs kvm or Xen vms
+	cross platform
+
+libvirt
+	toolkit to manage virtualization platforms
+	supports kvm, qemu, xen, etc. 
+	api used by various apps
+	daemon libvirtd
+	cli virsh
+
+libguestfs
+	Debian, Centos,RHEL: libguestfs-tools pkg
+	Fedora: guestfs-tools
+
+
+libvirt {{{1
+
+Overview 
+https://www.redhat.com/sysadmin/build-lab-quickly
+
+    1. locate cqow2 file to install
+        https://docs.openstack.org/image-guide/obtain-images.html
+    2. download and move to /var/lib/libvirt/images
+    3. virt-customize to set hostname, root pw, ssh key etc.
+    4. virt-install to add to kvm env.
+    5. virsh domifaddr to get IP address & ssh to access 
+
+
+Need to grant qemu root access?
+https://www.redhat.com/sysadmin/libguestfs-manage-vm
+
+virt-install {{{2
+
+Create new KVM, Xen, or Linux container guests using the libvirt hypervisor management library.
+
+--cd
+    installation iso
+
+--disk
+    storage
+    size arg: size=#
+
+--import
+    use existing image file, location specified by --disk
+
+--install
+    list available distros wiht osinfo-query os command in  libosinfo-bin package
+    Not working yet
+
+--os-type
+    get from output of osinfo-query
+
+Import qcow2 image to kvm 
+
+sudo virt-install \
+--name vm01 \
+--memory 1024 \
+--vcpus 1 \
+--import \
+--disk /var/lib/libvirt/images/image.qcow2 \
+--os-variant fedora34 \
+--noautoconsole
+--cloud-init
+    ssh-key=<file>
+    root-password-generate=on #generates & displays root pw
+    root-password-file=<path to file>
+
+
+Install option
+    boot os intaller
+
+sudo virt-install \
+      --name fedora33-vi \
+      --memory 2048 \
+      --vcpus 2 \
+      --install fedora33 \
+      --cloud-init  ssh-key=/home/andmalc/.ssh/id_ecdsa.pub \
+      --disk size=10 \
+      --os-variant fedora33
+
+Install from dist installer iso
+
+virt-install \
+      --name fedora35 \
+      --memory 2048 \
+      --vcpus 2 \
+      --cloud-init  ssh-key=/home/andmalc/.ssh/id_ecdsa.pub \
+      --disk size=10 \
+      --os-variant fedora33 \
+      --cdrom fedora-35_beta//Fedora-Workstation-Live-x86_64-35_Beta-1.2.iso
+
+Old {{{3
+	--virt-type 
+		kvm, qemu, xen, or kqemu
+	--disk opt=val, 
+		options
+			path=path
+				storage at path created if doesn't exist, size required
+			size in GB
+			pool
+				libvirt storage pool to create storage on, size required
+			vol
+				existing libvirt storage 'poolname/volname'
+			sparce
+				default is true - don't allocate storage fully
+	--location, -l
+		Location of install source, e.g.
+		directory path
+		distro source
+			 http://ftp.us.debian.org/debian/dists/etch/main/installer-amd64/
+	--import
+		Skip install, create guest from existing image.
+		Use first device via --disk or --file
+	--cdrom=CDROM, -c
+	--connect
+		change default connect type which is:
+			xen if running xen kernel
+			qemu:///system if non-xen and root
+			qemu:///session if non-xen and non-root
+	--livecd
+		use with --nodisks
+	--nodisks
+		for booting live CD
+	--network=<type>, -w <type>
+		types are:
+			bridge:<br name>
+			network:<name>
+				name as create by virsh
+				use if outbound interface is dynamic or wireless
+				default name is 'default'
+				NATed
+			user
+				SLIRP network for unprivileged qemu guest
+	--nographics
+		text console on first serial port
+		default if display var not set
+	--os-variant=os_variant
+		debianlenny,debiansqueeze, generic26
+	--os-type=os_type
+		linux, windows, etc.
+	--ram=#, -r
+		RAM memory in MB
+	--sdl
+	--serial pty
+		serial console access enabled by default
+	--vnc
+		default if display var set
+
+
+Install from CD:
+virt-install \
+	--connect qemu:///system \
+	--virt-type kvm \
+	--name demo \
+	--ram 200 \
+	--disk path=demo.img,size=3 \
+	--network bridge:br0 \
+	--vnc \
+	--os-variant debianlenny
+	--cdrom=debian-testing-i386-netinst.iso 
+
+Create qemu guest from existing device:
+virt-install \
+    --name demo \
+    --ram 200 \
+    --connect qemu:///system \
+    --disk path=/dev/main/sid \
+    --import \
+    --os-variant debiansqueeze
+
+
+
+virtual-builder {{{2
+
+http://libguestfs.org/virt-builder.1.html
+
+virt-builder fedora-34 --root-password passwod:blah -o fedora.img
+
+Root not needed
+Downloads full distibution release then caches
+
+virt-customize {{{1
+
+Customize qcow2 download - remove cloud-init
+sudo virt-customize 
+            -a <image file>  \
+            -d  <existing domain name> \
+             --hostname vm01.test.lab \
+             --root-password password:blah \
+             --ssh-inject 'root:file:labkey.pub' \
+             --uninstall cloud-init \
+             --selinux-relabel
+
+
+virsh {{{1
+
+virsh - no args
+    shell for controlling vms
+    list --all
+    start
+    reboot
+    shutdown
+    edit 
+        e.g. edit --network hostonly
+
+    domifaddr <domain>
+        show IP address
+
+Remove domain
+    virsh destroy <domain>
+    virsh undefine --nvram  <domain>
+
+Copy file into VM
+    virt-copy-in -d ubuntu myfile /etc/default
+
+virsh --connect qemu:///system <cmd> <guestname>
+	list --all
+        list running & inactive domains
+
+
+virt-viewer --connect qemu+ssh://root@play.malcolmson.ca/system demo2
+	start
+	shutdown
+	destroy - force shutdown
+	suspend
+	resume
+
+Create new vm from existing domain definition
+alternative to virt-clone
+    virsh dumpxml domain > vm.xml
+    virsh define vm.xml 
+
+
+Access as non-root
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
+
+
+
+Graphical Virt {{{2
+
+double mouse issue:
+guest settings in Virt-manager, add Hardware, Input, Evtouch USB Graphics Tablet
+
+Enable shared clipboard & higher resolution for Ubuntu guest:
+Install spice-vdagent
+SPICE_VDAGENTD_EXTRA_ARGS=-X in /etc/defalt/spice-vdagentd
+sudo virt-copy-in -d ubuntu spice-vdagentd /etc/default/
+
+Ubuntu resolution on HP monitor 1600x1200 4:3
+
+
+storage {{{1
+
+Default storage location: /var/lib/libvirt/images 
+
+virt-sparsify
+    reduce file size after files deleted
+    qcow2 or raw
+
+virt-resize
+    resize disk images
+
+virsh pool-refresh
+
+Other virt apps {{{1
+
+Vagrent {{{2
+
+
+
+

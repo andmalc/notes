@@ -1,0 +1,35 @@
+Regular Expressions
+=====================
+
+	Usage: any match in an input line is said to be a match (ie for the whole line)
+
+.	Matches any single character
+^/$	Match empty string at beginning/end of line
+\b \B	At edge/not at edge of word
+
+?	Optional, matched at most once (\= in vi)
+*	Matched 0 or more times
++	Matched one or more times
+
+\ indicated forms (\ turns on special meaning)
+	{n}	Matched n times
+	{n,}	n or more times
+	{,n}	at most n times
+	{n,m}	at least n, but not more than m times
+	\< \>	Match empty string at beginning/end of word
+	\( \) \1 Remember match, mark with digit, match when found again.
+
+|	Infix operator - match regex on either side
+
+Character Classes
+	Named classes of characters: (in [:...:])
+	alnum, alpha, cntrl, digit;graph, lower, print, punct,
+	space, upper, xdigit.
+
+	\w = [[:alnum:]]
+	\W = [^[:alnum:]]
+
+	In character class, ^ is NOT
+
+
+

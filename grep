@@ -1,0 +1,72 @@
+Filtering tool
+
+grep pat path 
+
+options
+    -c pat	Count occurences of pattern
+    -i	case insensitive search
+	-w	match whole words
+	-s	dont print access denied messages, etc
+	-l  only list matching files
+    -A# show # lines following match
+    -r	recursive - search subdirectories
+	-v  exclude match
+
+    -o  print only matched part of line, matches on separate lines
+
+     -E, --extended-regexp
+
+Pattern Matching {{{1
+
+Pattern matching with regex, not shell syntax
+Will match anywhere on a liine
+
+^/$   beginning/end of line (anchors)
+
+Bracket expressions
+    [abc]  match if any character 
+    [^abc]  don't match if any 
+
+Character classes
+    [:upper:]
+
+Find alternatives:
+grep 'str1\|str2' filename
+
+Repitition
+    *   zero or more times
+    extended 
+        +       one or more 
+        {n}     num of repititions
+        {n,n}   range
+
+Grouping
+    ()  Enclose group.  Escape if not extended
+
+
+Egrep
+	Extended searching.  
+	Quote expression and surround each regex with () and use:
+	+	1=> occurances
+	?	0<>1 occurances
+	|	OR operator
+
+	-f	Search for list of patterns in a file
+	
+
+Tips {{{1
+
+Exclude blank lines and comments 
+grep  "^[^# "]
+
+excluding files under zsh
+	grep -irl thing (*~*html)(.)
+
+Match whole words, print each on separate line
+    grep -oE '\w+' 
+
+Alternatives {{{1
+
+ack, ag, fzf
+
+

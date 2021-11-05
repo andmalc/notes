@@ -1,0 +1,224 @@
+
+Docs {{{1
+
+Reading Data from Sheets via SpreadsheetApp: Best Practice
+https://sites.google.com/a/newvisions.org/scripts_resources/technical-blog/readingandwritingdatainsheetsviaspreadsheetapp
+
+
+
+
+Cell & Range references {{{1
+
+
+A:A     An entire column
+B:D     contiguous cols.
+B2:D    contiguous cols starting with row
+
+2:2     entire row
+B2:2    row starting with col.
+2:5     contiguous rows
+B2:5    contiguous rows starting with col.
+
+$A$1    Absolute cell ref     
+
+Sheet + Range
+  'Sheet Name'!A1:B2  #single quotes around sheet name with space
+
+
+Reference & Connect Ranges
+{A1:C5}   read-only reference
+          ARRAYFORMULA('myseet'!A:O)
+
+{rng,rng} combine ranges with equal row counts horizontally
+{rng;rng} combine ranges with equal column counts vertically
+
+Reference range in external file
+=importrange("<ss key from URL>","sheet!A:D")})
+
+ArrayFormulas {{{1
+
+write a formula once, and apply it to an entire row or column
+arg must be a range, not a cell
+write a formula as you normally would (e.g. VLOOKUP, rewrite any individual cells (A2) as ranges (A2:A)
+use instead of copy/paste to populate an entire column
+
+Shortcut Ctrl+Shift+Enter
+
+Cell Formats {{{1
+
+Blank cells are always 'string' format, even when number format applied.
+
+Alignments:
+    str     left
+    number  right
+    boolean centre
+
+Text {{{1
+
+Concatenate strings
+  concat(str1,str2) - 2 args only
+  aspersand: =A1 & "blah"
+
+Count non-blank text values
+  counta
+
+Split text
+  split(<str>,”<sep>”)
+
+Convert number into text or date formats
+  text
+
+Escape " CHAR(34)
+    https://en.wikipedia.org/wiki/List_of_Unicode_characters
+
+Regex
+=REGEXEXTRACT(A1,"\d+")
+  REGEXMATCH
+  REAGEXREPLACE
+
+
+Dates {{{1
+
+Get numeric version of date by switching cell format to number
+
+functions
+  return date value
+    today       today's date
+    today()-#   # days in past
+    
+    date(yyyy-mm-dd)  returns date value
+ 
+  take date value
+    month   number for month (7=July)
+    day     day of month
+    weekday number for day of week (4=Wednesday)
+    year    year portion of date
+
+
+examples
+  =DATE(YEAR(TODAY()), MONTH(TODAY()), 1)
+    first day of month
+
+
+Functions {{{1
+
+FIXED(val, # of decimals, thousands sep)
+    if thousands sep is blank - shows sep
+
+IFERROR(test, val)
+    returns test if true or val
+
+unique(rng1, rng2...)
+    return unique rows in rng1 AND in optional other ranges.
+
+
+
+VLookup
+  Search for key in column
+  vlookup(key cell or column, source rng, index of cols to return, if_sorted)
+  If search range is 2 dimensional, forumula will return same
+  Multi columns index format {1,2,3,4}
+
+  Source Range
+    use absolute cell refs
+    if_sorted: 
+        match on interval
+        make sure column really is sorted to avoid wrong matches
+
+
+  Make lookup table by placing search cell to left of forumla
+    https://productforums.google.com/forum/#!msg/docs/WOWhf-lGxmo/z7Pec8exAQAJ
+
+HLookup
+  Search for key in row
+
+
+Filtering
+
+httpsabazroberts.wordpress.com/2016/10/26/google-sheets-functions-filter/#gafe
+
+
+Queries{{{1
+
+query('tab'!range, "select statement with 'quoted string'", [# of header rows, guessed if ommitted])
+  
+Visualization query language
+  https://developers.google.com/chart/interactive/docs/querylanguage
+
+  conditional statements
+    where
+        contains
+        matches
+            regex
+        like
+            % wildcard
+
+  comparisons
+    <>
+
+
+Aggregate
+    avg, sum, count
+  
+    =QUERY('Data Sheet'!A1:B6;"select A, sum(B), count(B) group by C")
+    select F, sum(G) where E != ‘’ group by F label ‘total retweets’
+
+Sorting
+    order by count(B) desc
+
+Filtering
+    Not null: <col> !=''
+
+Label column
+    label count(B) 'count'
+
+Dates
+    date in string
+    "select A where B > date '2017-02-22'"
+
+    date in cell
+        https://youtu.be/LFZnSY0YdwU?list=PLv9Pf9aNgemvr7NVz4bMr7TEQgiENfUgs
+
+        "select X where D > date '" & text(B1,"yyyy-mm-dd") & "'" (best way?)
+
+
+
+
+
+Join multiple ranges horizontally with arrayformula syntax
+  Use Col# format to reference columns
+  Use importrange if either range in external sheet
+  If error, run importrange on its own to prompt for access permission
+
+  =QUERY({range1,range2},"select Col1, Col3"
+
+  
+
+Apps Script {{{1
+
+
+Base JavaScript API
+Google Apps Script a subset of ECMAScript / JavaScript 1.8
+
+Loop {{{2
+
+function testLoop() {
+  
+  var array = [
+    1,2,3,4,5
+    ];
+
+    Logger.log("forEach:");
+    array.forEach(function (item,idx,arr) {
+      Logger.log(item + " " + idx + " " + arr);
+      });
+      }
+
+Functions {{{2
+
+Event handlers
+    http://code.google.com/googleapps/appsscript/guide_events.html
+Simple handlers: run as executing user
+Triggers / Installable handlers:
+    run as installing user
+    document does not have to be open

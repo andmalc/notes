@@ -1,0 +1,28 @@
+
+Flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+
+
+Power 
+	tuned
+		systemctl enable tuned
+		tuned-adm profile powersave
+
+Networking
+    RHEL 8 networking docs: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/index
+
+    nmtui 
+        - text gui for nmcli
+        - pkg NetworkManager-tui
+        
+DNS
+	manual set DNS server
+	Two methods:
+
+		disable systemd-resolvd management by deleting symlinked version of resolv.conf
+		create static file and add DNS=<server IP> lines
+
+		Remove Auto DNS in Network Manger ipv4 tab
+		set global server in /etc/systemd/resolved.conf
+

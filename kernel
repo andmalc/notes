@@ -1,0 +1,65 @@
+
+kernel {{{1
+source {{{2
+
+Debian 
+	http://kernel-handbook.alioth.debian.org/ch-packaging.html
+	linux-image-2.6.26-2-686 - binary
+	linux-headers-2.6.26-686
+
+	 apt-get source linux-image-2.6-686
+	 	installs source package linux-latest-2.6
+	 	unpacks to <pkg name>/debian/changelog, rules etc.
+		no src directory
+
+	apt-get source linux-source-2.6.29 
+		installs control files + src into 'linux-2.6-2.6.29'
+	aptitude install linux-source-2.6.32 
+
+patching {{{2
+
+Debian
+	install linux-patch-debian-2.6.xx (however, description for linux-source pkg indicates patches applied)
+	then when compiling (e.g. for xen ):
+		make-kpkg --added-patches xen clean
+		make menuconfig
+		make-kpkg --added-patches xen kernel-image
+
+headers {{{2
+
+Install with 'module-assistant prepare'
+/usr/src/linux/include/linux
+    should be version.h if kernel has been built	
+/usr/include/linux
+    libc headers - not for running kernel
+
+
+kernel compile gen {{{2
+
+Debian
+	requirements
+		make-kpkg utility from kernel-package package
+		change /etc/kernel-img.conf to example in docs.
+		libncurses5-dev
+		fakeroot
+	docs:
+		http://tldp.org/HOWTO/Kernel-HOWTO/quick_steps.html
+		debian kernel HOWTO
+			http://newbiedoc.sourceforge.net/system/kernel-pkg.html
+		http://kernel-handbook.alioth.debian.org/ch-common-tasks.html
+	commands
+		see 'make help'
+		make mrproper
+			recommended first step - removes old dependencies and .o files
+		copy in existing .config 
+		make oldconfig
+		make menuconfig 
+		fakeroot make-kpkg clean
+		fakeroot make-kpkg --initrd --append-to-version=.033007 kernel_image kernel_headers
+
+	create an initrd
+		install initramfs-tools
+		update-initramfs -c -k <kernel version>
+		update-initramfs -c -k '2.6.18-3.686'
+
+

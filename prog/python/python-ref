@@ -1,0 +1,446 @@
+
+
+attributes ref as obj.ref
+methods - callable attributes 
+no distinction betwen method & data attributes as in other languages
+references to non-existant attributes is a semantic error and not caught by the compiler, instead raises an exception
+
+find names
+    If no such attribute in local name space, parent name spaces searched.
+    lookup order
+        by __getattribute__ if defined
+        in instance dictionary: d.__dict__
+        in class dictionary: d.__class__.__dict>>
+        in first super class's ns, second super class's ns, in ns of super's parents
+        by __getattr__
+    special attributes
+        __dict__	
+            A dictionary or other mapping obj used to store an object's (writable) attributes.
+        __class__	
+            The class to which a class instance belongs.
+        __bases__	
+            The tuple of base classes of a class object. 
+            isinstance function (types module) - return base class
+show names
+    dir
+        namespace inspection 
+        Works for any object with attributes.
+    vars
+        Dump Obj Local Name Space 
+        Returns dict mapping of local names and values.  
+        Contrast dir(s) which returns a list of names.
+    locals
+        ?
+
+Kinds of Built-in Types {{{1 
+	see Standard Type Hierarchy in Ref
+	sequences
+		ordered sets indexed by non-negative numbers
+		think of index as offsets (i.e. why start at 0)
+		tuples:
+			'write-protect' data
+			parentheses optional except where commas have other meanings or to show nesting
+			faster than lists so use when data not changing
+			can be dictionary keys (though not with list items)
+		Dictionaries
+			unordered, mutable mapping i.e. key/values pairs indexed on keys
+			keys can be any hashable type, values anything
+			don't support sequence ops depending on order (slicing, concatenation, etc.)
+	Callables
+		functions, generators, types (list,dict,tuple) callable as of 2.2
+		classes, and methods & class instances callable if class provides __call__ method
+	Other types:
+		None, Boolean
+	Numeric Types
+		integers, long integers, floating point numbers, and complex numbers
+
+Operations with built-in types {{{1
+	All types {{{2
+		Truth Testing
+			any object can be tested for truth value for use in an if or while
+			condition or as operand of the Boolean operations. 
+		Boolean Operations (Ascending priority)
+		   	Or:	x or y		if x is false then y, else x 	
+		   	And: x and y	if x is false then x, else y		
+		   	Not: not x		if x is false then 1 else 0		
+		Comparisons
+		   	Have higher priority than Booleans.  
+			Use expression operators: <, >, <=, >=, ==, and <> and != (both 'not equal').  
+			'is','is not': compare object identities (rarely used).
+		Conversion to String
+		   	str function and no longer ``
+	General sequence ops  {{{2
+		slicing (incl. indexing),
+			indexing returns object referenced
+			slicing returns a new list/tuple
+			string together index ops to address nested data
+			assignment to an index: deletes obj & inserts new obj 
+			assignment to a slice:
+				deletes slice & replaces with new seq
+				delete items from a list by assigning an empty list to the slice
+		arranging
+			concatenation ('+'), extending ('+='), multiplication/repitition ('*') 
+		comparison ('in' and 'not in')
+			startswith, endswith, count, sort 
+			min, max functions
+		   	Comparisons of Lists: If b is a slice of a, then b < a
+		To lists
+			split, splitlines
+		From lists
+			join, 
+		Misc
+			len function,   
+	String operations {{{2
+		find index
+			index, find, rfind,
+		find/replace
+			  replace, translate
+		case methods
+			upper, lower, swapcase, capitalize (cap first letter), title (cap all 1st letters)
+		test char type
+			isupper, islower, istitle, isalpha, isalnum, isdigit, isspace
+		justify (pad) and remove whitespace and EOL's
+			ljust, rjust, centre, strip, lstrip
+		Formatting 
+			Character Sequences 
+				% is string conversion operator.
+				%s	string
+				%d	decimal (not floating)
+				%f	floating point
+			Sequence formatting modifiers 
+				%[(name)][width][.precision]code
+
+			comma suppresses newline after output (space separates items):
+
+	Tuples & Lists {{{2
+	Lists 
+		Methods
+			Lists have special attribute 'methods' (tuples don't)
+			s.append(x)		
+				Appends new element x to s (equivalent to s + [x]
+				shortcut +
+			s.extend(x)		
+				Appends new list x to s (same as 'list1 += list2')
+				changes list in place
+				shortcut +=
+				faster than l1 + l2
+			s.insert(i,x)		Inserts x at index i
+			s.pop(i)
+				Returns element at i and removes from list or
+				if no i given, removes last.
+			s.remove(x)		
+				In place removal.
+				Searches for first x and removes it.
+				ValueError if x not in list
+
+				for i in l:
+					if i == 3: l.remove(i)
+			s.reverse()		Reverses items in place
+			s.sort([cmpfunc])	
+				Sorts items in place, cmpfunc is comparison function.
+		making lists
+			range function
+				range(n1,n2 [,stride]) -> [n,n1 ...]
+				XRange	Returned by xrange(i,j,k)
+			List Comprehensions 
+				Create a list of tuples where each tuple element is drawn from 
+				another list and each list element satisfies some property.
+				syntax
+					[mapping-expression for element in source-list if filter-expression]
+					examples:
+						bigmuls=[(x,y) for x in xs for y in ys if x * y > 25]
+						
+			Zip - join corresponding elements from multiple lists
+				Dict from list of keys and list of values:
+					keys = (1,2,3,4)
+					vals = 'a b c d'.split()
+					dct = dict(zip(keys,vals))
+
+		Tuple 
+			Parentheses not required except for singletons.
+			Tuples have no methods 
+			Ops: indexing, slicing, repitition, concatenation & iteration/membership 
+	Dictionaries {{{2
+		factory function
+			dict 
+				make from pairs
+					dict([[1,2],[3,4]])
+					dict(name='andrew',age=41) - new in py 2.3
+		methods
+			len(d)		Returns # of items in m
+			d[k]		Returns the item of m with key k
+			d[k]=x		Sets m[k] to x
+			del d[k]	Removes m[k] from m
+			clear()	Removes all items from m
+			pop(k[,d]) -> v
+				remove specified key and return it's value or return
+				default value if given, else return KeyError
+			copy()	Makes a copy of m
+			fromkeys(iterable)
+				new in 2.3 - need examples
+			get(k [,f]) Returns m[k] if found, otherwise f
+			has_key(k) Returns True if m has key k, False otherwise
+			items()	Returns a list of (key, value) pairs
+			keys()	Returns a list of key values
+			update(b)	Adds all object from b to m
+			setdefault 
+				dict.setdefault(key, []).append(value)
+				dict.setdefault(key,{})[newkey]=val
+				class repo:
+					 data={}
+					 def addtopic(self,topic,content):
+						self.data.setdefault(topic,[]).append(content)
+			values()	Return a list of all values in m
+	Modules
+		Importing a module runs its code, but only once without a reload(mod).
+		m.__dict__		Dict associated with module
+		m.__doc__		Module documentation string
+		m.__name__		
+		m.__file__
+		m._path__		Fully qualified package name
+
+	Iterables {{{2
+
+	
+	Files {{{2
+		open
+			open(fn,mode)
+				modes:
+				'r' 	read-only
+							is default but should always specify text or binary
+							- this avoids Windows/Unix portability problems
+				'rb'	binary
+				'w'		write (repalce existing file)
+				'r+' 	read/write mode
+	Callables {{{2
+			b.__doc__
+			b.__name__
+			b.__self__		
+		Function attributes
+			f.funct_defaults Tuple containing default args
+			f.funct_globals  Dict defing the global namespace
+		Method attributes
+			m.im_self		Instance associated with method (None if unbound)
+		Class attributes
+			c.__dict__
+			c.__module__
+			c.__bases__		Tuple containing base classes.
+			c.__init__		Called to create instances
+
+Functions/Methods {{{1 
+	Calling functions
+		f(...)			function call
+	Methods
+		Calling a method of built-in types as a 'unbound method'
+			a = ['tic', 'tac']
+			list.__len__(a) 	-> 2 
+	Parameters
+		Args
+			Two types: positional and keyword.
+			passing
+				as of Python 2.0, same format for function definition and invokation.  
+				func(required args, *extra args, **keyword args)
+			call with named list/dict:
+				arglist=[1,2,3]
+				argdict={'a':1, 'b':2}
+				funct(*arglist, **argdict)
+			Scope
+				Unqualified names (x) are looked up by scope.
+				Qualified names (object.x) use object namespaces.
+				Order of scope lookup: Local, Global, Built-in
+				Assignment makes names local
+			Default args
+				value of default arguments evaluated at point of function definition
+				names defined as default arg perisist after function returns 
+				This is significant for mutable objects:
+					def f(a, l=[]):
+						l.append(a)
+						return l
+				will return a larger list each time its called.
+				To avoid this:
+						def f(a, l=None):
+							if l=None:
+								l=[] etc.
+
+Built-In Functions {{{1
+	library documention: built-in functions
+		http://www.python.org/doc/current/lib/built-in-funcs.html
+    str, list
+	apply(f,tuple,dict)  
+		deprecated - use function(*args, **kw)
+	filter(f,seq) -> list, tuple, or string
+		returns items in seq for which f is True	
+	map(f, seq) -> list
+		returns list of results of applying func to seq
+		if f is None, return a list of tuples if >1 seq
+
+Control structures {{{1
+	'else' clause in 'for' or 'while' loops:  run if loop not exited by a 'break'.
+	Difference between break and return:
+		Break exists the enclosing loop
+		Return (without an expression argument) exists from a function.
+
+	Exceptions {{{2
+		try:
+			1/0
+		except ZeroDivisionError, e:
+			print e
+
+		The first "argument" in the except clause is the exception class, 
+		The second one is an optional name, which will be used to bind the
+		actual exception instance that has been raised.  
+
+		multiple exception
+			enclose in brackets - don't confuse with 'except ZeroDivisionError, e' above
+			except (IndexError, ValueError):
+
+
+Standard Library {{{1
+	sre, regex {{{2
+		docs
+			http://www.python.org/doc/lib/re-syntax.html
+			http://effbot.org/zone/re-sub.htm#strip-html
+			OnLamp Regex Best Practices
+				http://www.onlamp.com/pub/a/onlamp/2003/08/21/regexp.html
+			DevShed page on grouping
+				http://www.devshed.com/c/a/Python/String-Manipulation/3/
+		flags
+			\b	word boundary
+				matches zero-length start/end of word
+			\d	digit
+			\s	whitespace
+			\w+	all alphanumeric strings (excl. punctuation,spaces)
+			\A,\Z match empty string at beginning/end of whole string
+		special characters
+			basic
+				|	alternation
+				^/$	beginning/end of line
+				* qualifier - zero or more of preceeding
+			extended
+				+	> 1 *
+				?	0-1
+				{#} # of occurences
+			backreferences
+				unescaped parantheses indicate grouping 
+				initial pat group, backreference
+					(pat) \1
+				as above, named
+					(?P<name><pat>) (?P=<name>) 
+				group(0) is concatenation of all groups
+					match=re.match('(Th)(ere)','There is a word')
+					match.group(0)	=>  'There'
+		methods
+			search(pat,str,maxsplit=0)
+			findall(pat, str)	
+				Find all occurences -> list
+			finditer(pat, str) 
+				findall, return an iterator which returns a match obj for each match
+			re.sub(pattern(?flags), replacement, string, [, count])
+				ex. re.sub("Z(?i)", " ", "ThisziszaZtest") = 'This is a test'
+		tips
+			backslash must be doubled to escape, even within a raw string
+
+	Sys module {{{2
+		Attributes:	
+			stdin		standard input stream "file".  
+			stdout		standard output stream "file"	
+			stderr		standard error stream
+			argv		command line argument list
+
+Debugger - pdb {{{2
+
+
+http://tinyurl.com/5jhne4
+
+Running
+	Place these in if __name__ == "__main__":
+		pdb.run(str_statement[, globals[, locals]])
+		pdb.runeval(expression[, globals[, locals]])
+		pdb.runcall(fnc, args)
+	From IPython prompt
+		http://ipython.scipy.org/doc/manual/ipython.html#using-the-python-debugger-pdb
+		%run -d myscript - breakpoint set at line 1
+		%run -d -b40 myscript - breakpoint set at line 40
+		Must then enter 'c' to run program to first bp
+
+	In code
+		add import pdb;pdb.set_trace() 
+		Will start debug at exception
+
+Commands
+	Enter		repeat last
+	step, s		execute next line
+				if next line if function, step inside it
+	next, n		go to next line in current function or till returns
+	list, l		list 5 lines above & below
+	break, b	set breakpoint at fn
+	continue,c	continue to next bp
+	where, w	print stack trace - shows how fcn was called
+	up,	u		navigate up in stack
+
+
+
+
+Ideas & Tasks {{{1
+    Classes
+        class A:
+          def __init__(self, name):
+            self.name = name
+          def __str__(self):
+            return self.__class__.__name__ + ':' + self.name
+	Files
+		make a list of lines in file
+			lines_list = list(fileobj)
+			lines_list = fileobj.readlines()
+			lines_list = fileobj.read().splitlines() # remove '\n'
+    OS-Files
+        os:
+            listdir, mkdir, remove
+        os.path:
+            join, isdir, exists, getmtime
+    Interface
+        Read from prompt
+            instead of, use:
+                raw_input(): use sys.stdin.readline()
+                input(): use eval(sys.stdin.readline())
+	Filters
+		filter wrapper code example:
+			http://mail.python.org/pipermail/tutor/2001-December/010852.html
+		d.has_keys as filter function
+			keys = ['baz', 'faz']
+			d = {'phoo': 1,  'bar': 2, 'baz': 10}
+			valid_keys = filter(d.has_key, keys)
+		with re's
+			for line in lines:
+				if re.match(pat, line):
+					matchedlines.append(line)
+		in list comprehensions
+			[re.sub('a','ZZZ',item) for item in L if 'a' in item]
+		filter lines (>= Python 2.2)
+			filter(isCond, open(filename))
+		HTML -> text
+			http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52281
+			http://effbot.org/zone/librarybook-index.htm
+	Instant web server
+		runs on port 8000
+		python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"
+		
+Introspection {{{1
+	getattr function
+		getattr(module,method,default_method)
+			returns a function as specified by string 'method'	
+			acts as a dispatcher
+
+string processing {{{1
+		non-printing chars
+			\n line feed
+            \t tab
+
+file reading {{{1
+   
+if args[0]=='-': 
+	for line in iter(sys.stdin.readline, ""): 
+			print "You said!", line  
+
+
+vim:ts=4 sw=4 foldmethod=marker

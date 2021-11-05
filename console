@@ -1,0 +1,73 @@
+
+console 
+    traditionally physical input/output device =  teleprinter 
+    provides a way for the kernel and other processes to 
+        receive text input from the user, typically entered with keyboard 
+        send text output to the user, typically on a computer monitor
+
+     teleprinter = tty 
+
+    console listens on stdin for character input and sends to shell or program running in shell
+
+Linux system console 
+    internal to the Linux kernel
+    the device which receives all kernel messages and warnings and which allows logins in single user mode
+
+    two main implementations, differ in how to draw characters
+        legacy text mode
+            works with VGA and previous video types
+        current framebuffer
+            graphic hardware-independent abstraction layer
+            able to show graphics, eg logos while booting
+
+virtual consoles 
+    consoles that are logically separate, but which access the same physical keyboard and display
+    created after boot complete, each runs a getty process which runs /bin/login
+
+terminal emulator
+    program that emulates a video terminal within some other display architecture
+    in graphical env, listens for mouse input which it encodes in byte sequences and passes on to stdin of shell or programming running in it.
+    does not understand mouse input, only useful when passed on to ncurses app which can process it.
+
+textmode virtual terminals (teletype terminals - tty's)
+    Ctrl-Alt-F1 etc.
+
+Pseudoterminal PTY
+    under ssh, local to machine but creates slave terminal on remote machine
+
+Job Control
+	suspend command puts shell in background, but can't suspend a login shell
+
+
+Terminal Control
+	\[     begin a sequence of non-printing characters, which could be used to embed a terminal con­ trol sequence into the prompt
+	\]     end a sequence of non-printing characters
+
+	stty 
+		commands for changing size, colours, correcting hung terms .
+		-a				List control characters
+		cols/rows #		Change width/height of terminal
+		sane Ctrl+J		Reset hung terminal
+
+	setterm	 Control colors, power saving etc.
+	xset	 Similar, in x
+
+Terminal command keys
+	^V + control char	send contro char + sequence to driver literally			
+	^V ^[			Start a terminal command (xterm or 'linux' console)	
+	^C			interrupt
+	^D			end of file
+	^W			kill (erase) word
+	^U			kill (erase) line
+    ^s          Stop output
+    ^q          Resume output
+
+Virtual Terminals (tty's)
+	S Pg up & Pg down	Screen up and down in terminal screen
+	Left M+ lr arrow keys	Cycle through virtual terminals
+	kbd_mode -a		Reset keyboard for all consoles to ASCII mode
+
+Secondary Prompts
+	shown after delete newline (\), open quote (' or "), or a pipe (|)
+
+

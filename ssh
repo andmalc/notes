@@ -1,0 +1,192 @@
+Troubleshoot connecting:
+https://docs.digitalocean.com/products/droplets/resources/troubleshooting-ssh
+    username wrong or wrong permissions:
+        $HOME dir   700 or 755
+        $HOME/.ssh  700
+
+    host disk out of space
+    host user account dir 
+        missing or restricted access to ~/.ssh 
+        authorized_keys file wrong permissions: should be 600
+
+
+Google Cloud 
+    instance with OS Login
+        username is username_gmail_com
+
+# Gloud with OS Login enabled
+# username andmalc_gmail_com
+# run to see which keys in account profile: gcloud compute os-login describe-profile
+# https://cloud.google.com/compute/docs/instances/ssh
+# https://cloud.google.com/compute/docs/instances/managing-instance-access#add_oslogin_keys
+~
+~
+
+
+
+Web-based command line
+	http://code.google.com/p/shellinabox/
+
+https://stribika.github.io/2015/01/04/secure-secure-shell.html
+https://blog.g3rt.nl/upgrade-your-ssh-keys.html
+
+Reverse ssh tunnel
+autossh -M 10900 -fN -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "PasswordAuthentication=no" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R 42222:localhost:22 home
+
+
+Change port on Fedora/Centos
+    semanage port -a -t ssh_port_t -p tcp 2292
+    firewall-cmd --zone=public --permantent --add-port=2292/tcp
+
+
+
+command {{{1
+
+ssh user@host [-p port] -L<port#>:localhost:<port#>
+
+Options
+	p	change passphrase
+	f	run command without shell
+	D	dynamic, app-level port forwarding
+		used now for Socks4 server
+			ssh -D 1080 my.box.com
+	L	forward ports
+		e.g. SMTP & POP3
+		set AllowTcpForwarding 'yes' in sshd_config
+			ssh -N -L <local port #>:localhost:<remote port #> username@remote-server
+	N	no command - good for port forwarding 
+	X	forward local connection to X display server to remote session
+		DISPLAY variable set by ssh will point to server machine and with a
+		number greater than 0 to refer to a 'Proxy' server created on remote
+		side.		
+		AllowXForwarding must be 'yes' in remote sshd_config
+	a	forward local connection to authentication agent to remote
+
+Keys {{{1
+
+Change passphrase
+	ssh-keygen -t <type> -p
+
+
+Display fingerprint
+	ssh-keygen -lf <pub key file name>  # SHA256 format - new
+	ssh-keygen -E md5 -lf <pub key file name>  # MD5 format - old
+
+
+Key formats:
+MD5 32 bit  41:0e:07:a1:5d:89:32:e1:42:30:70:ff:91:6e:d4:1f
+SHA 40 bit  2048 SHA256:gfno3KCYssX6XgdaJki/VbDcQpgiUM9+Qzgn+uJsbI8 
+
+Convert public key to MD5 fingerprint:
+    Echo <content of public key> | base64 -d | md5sum
+
+OpenSSH key format + convert to PEM
+http://blog.oddbit.com/2011/05/08/converting-openssh-public-keys/
+
+    public key
+        ssh-keygen -e -m pem -f .ss/keyfile
+    private key
+        openssl rsa -in ~/.ssh/id_rsa -outform pem > id_rsa.pem
+
+
+escapes {{{1
+
+Default escape: Enter + ~ + .
+Config option is EscapeChar (could change to %)
+Terminate connection	.
+Suspend connection		^Z
+Port forward term		C
+List forwarded			#
+	only shows if connection is in use.
+	Instead run 'netstat -tpln' from local host
+Override escape			~ (i.e. ~~)
+
+
+Port Forwarding  {{{1
+
+http://unix.stackexchange.com/questions/46235/how-does-reverse-ssh-tunneling-work
+https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
+
+-L Answer on local side, deliver to local
+-R answer on remote side, delivers to local
+-R <remote port>:localhost:<local port>
+
+Format: ssh -L <local port>:<server host>:<server port> [<jump host if used>]
+If port forwarded on same host as ssh server, <server host> is localhost
+
+
+Client Config
+LocalForward 2001 localhost:143
+
+Server sshd_config
+AllowTcpForwarding yes
+
+Docs {{{1
+
+Run remote Python script.  Note strong quotes to protect $HOME.
+	ssh vex.net 'env PYTHONPATH=$HOME/lib/python python -c "import mytest"'
+
+File Transfer (w/o scp)
+ssh uid@remotehost 'cat > /path/to/dest' < /path/to/source
+cat .ssh/id_dsa.pub | ssh user1@remote \
+	 "cat - >>.ssh/authorized_keys"
+
+Login/Password config {{{1
+
+Disable password login:
+	sshd_config: PasswordAuthentication no
+	/etc/pam.d/ssh: disable unix passwords
+
+Disable root login except for restrictions
+    sshd_config: PermitRootLogin forced-commands-only
+    authorized_keys: command="rdiff-backup --server --restrict-read-only /",from="workstation",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <rest of public key>
+    If other use attempted, login fails with passphrase & password prompts
+
+utils {{{1
+
+ssh-agent
+	run: 
+        ssh-agent zsh
+        eval `ssh-agent` (old)
+	kill and unset env vars: 
+        eval `ssh-agent -k`
+
+ssh-add
+	run: ssh-add <key>
+	if no arg to ssh-add, adds default keys
+	l	list fingerprints of added identitites
+	L	list full public keys of added identitites
+	D	delete all identities
+
+related programs  {{{1 
+
+scp
+	wildcards for remote path: may need to quote or escape
+	-p	preserve permissions and timestamps
+	do not use to copy trees as links copied as target files
+	instead:
+		tar cf - /usr/local/bin | ssh server.example.com tar xf -
+
+sftp
+	login to remote host
+		sftp -oPort=2222 localhost 
+	
+sshfs
+	mount
+sudo sshfs {{user id}}@{{server}}:{{remote share}} {{local mount point}} \
+-o idmap=user -o allow_other -o uid={{local user id}} -o gid={{local group id}}
+
+fstab entry:
+sshfs#btd: /home/andmalc/mnt/btd fuse uid=1000,gid=1000,user 0 0
+
+rssh
+	scp/sftp only access
+
+bgtunnel
+    Python util for forwarding SSH connections to localhost
+
+techniques {{{1
+
+bypass fw by running on SSL handshake port 443
+
+

@@ -1,0 +1,12 @@
+
+Plugins such as for SNMP in nagios-plugins-standard 
+
+Monitors
+	Desktop monitor, python
+		http://nagstamon.sourceforge.net/
+		Debian package
+		said good
+	 Nagios Checker 
+		Firefox plugin
+		https://addons.mozilla.org/de/firefox/addon/3607
+

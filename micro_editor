@@ -1,0 +1,29 @@
+
+Keys
+help defaultkeys
+Ctrl X like Ctrl k when no selection
+
+Switch panes	Ctl W
+prev/next tab	Alt ,/.
+find next		Ctrl N
+
+
+Options
+
+diffgutter
+paste and smartpaste
+colorschemes
+
+
+Pipes
+
+micro | cat - outputs to cat when buffer is closed
+ifconfig | cat - sends output to micro
+
+
+Regex capture groups are now supported in the replace command. Examples:
+> replace "(foo)" "$1-bar"
+> replace "(foo)" "${1}-bar"
+> replace "(?P<group>foo)" "$group-bar"
+> replace "(?P<group>foo)" "$group-bar"
+> replace "(?P<key>\w+):\s+(?P<value>\w+)$" "$key=$value"

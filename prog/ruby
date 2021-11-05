@@ -1,0 +1,39 @@
+
+Rubygems setup
+    install ruby
+    download tgz from https://rubygems.org/pages/download
+    ruby setup.rb --destdir = (root of /usr/bin).  
+    gem executable in <dest dir>/usr/bin.  Move to ~/bin
+    gem install <gem name>.  Gem executable in ~/.bin
+
+Install gems:
+gem install --user-dir -V tumuxinator
+
+Uninstall all 
+sudo gem uninstall -i /usr/local/share/gems --all
+
+statement modifiers
+	puts 'Somethign' if condition == true
+	square = val*val while val < 1000
+
+arrays
+	make w/o quoting values
+		a = %w( ant bee cat dog elk )
+
+regex
+	~= match operator
+
+code blocks
+	code between braces {} or 'do' & 'end'
+	|<val>| in block is argument name
+	
+
+iterators
+	methods that return successive elements from a collection
+		['dog','cat'].each { |pet| puts pet }
+
+files
+	read from stdin
+		line = gets
+		gets also stores line in $_
+	

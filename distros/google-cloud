@@ -1,0 +1,41 @@
+
+gcloud utility
+https://cloud.google.com/sdk/docs/install
+
+gcloud components update
+
+Set default project and zone
+    gcloud config set project <NAME OF PROJECT>
+    gcloud config set compute/zone us-central1-a
+
+
+Compute instances
+    gcloud compute instances list
+    gcloud compute instances start <instance>
+    gcloud compute ssh
+    gcloud compute scp <local file> <instance:><path>
+
+
+Cloudshell
+    gcloud cloud-shell ssh
+    gcloud cloud-shell get-mount-command <mnt point>
+        show mount command for sshfs mount
+
+
+Copy files
+    gcloud compute copy-files myapp.aci coreos:~ 
+
+Add ssh key
+gcloud compute project-info add-metadata \
+--metadata-from-file sshKeys=~/.ssh/andmalc.pub
+
+
+Create instance with cloud-config in file:
+gcloud compute instances create \
+snappy-test \
+--image-project ubuntu-snappy \
+--image ubuntu-core-devel-v20141215 \
+--metadata-from-file user-data=cloud.cfg
+
+
+

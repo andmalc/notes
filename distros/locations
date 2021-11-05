@@ -1,0 +1,14 @@
+
+Desktop appliction files
+	Flatpak
+		desktop files
+			/var/lib/flatpak/exports/share/applications
+		runtime
+			~/.var/app
+	
+	Gnome / xdg?
+		desktop files
+			~/.local/share/applications/
+
+
+

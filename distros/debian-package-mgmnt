@@ -1,0 +1,210 @@
+Trusty sources
+	http://gulus.usherbrooke.ca
+	http://debian.yorku.ca/debian/
+
+Utilities
+	find fastest mirror
+		netselect-apt
+
+aptitude {{{1
+	tips: http://newbiedoc.berlios.de/wiki/Aptitude_-_using_together_with_Synaptic_and_Apt-get
+	actions
+		install -sf - check if broken or confused by apt-get/synaptic use, and if so, run:
+		keep-all - recover from mass-removal
+		download <pkg> - download  only
+			then dpkg --unpack <pkg>
+				or dpkg --xtract <pkg> <dir>
+	options
+		--purge-unused - remove no longer required packages
+		-R - without recommendeds 
+	shortcuts in interactive mode
+		C - show package changelog
+		l - limit display based on search pattern
+	Searching
+		aptitude search '?depends(python-gdata) - shows rdepends
+		~G - search on tag name
+    Select Release version
+         aptitude -t lenny-backports install “package”
+
+
+Howtos {{{1
+List files in installed package
+	dpkg -L <pkg name>
+
+Find available packages
+	dpkg -l '*pkgname*' 
+
+List installed packages
+	dpkg -l | fgrep ii
+	List with easier to read spacing
+		COLUMNS=200 dpkg -l|grep whatever
+
+List installed packages from backports (before upgrading dist)
+	COLUMNS=200 dpkg -l | grep bpo
+
+List installed packages from non-Debian (e.g.backports) sources
+	aptitude search '!~Odebian~i'  #~O is 'origin'
+
+List manually installed
+	aptitude search '~i!~E' | grep -v "i A" | cut -d " " -f 4 
+
+Find out what package a file belongs to:
+	web
+		search http://www.debian.org/distrib/packages#search_contents
+		is equivalent to zgreping dists Contents-i386.gz file
+	apt-file
+		note: date for this maybe no longer being maintained
+		before using: update
+		search
+			e.g for binaries
+			apt-file search bin/name
+
+find obscure phrases:
+	apt-cache search name
+		- searches just names and descriptions, hard to know which pkg 
+		provides the binary
+	search installed pks only:
+		dpkg-query -S filename
+
+Freeing disk space
+	Remove from /var/cache/apt/archives obsolete package versions
+		apt-get autoremove
+		apt-get autoclean
+		localepurge
+	Find packages with no dependencies
+		deborphan 
+		debfoster - use provided debfoster2aptitude 
+
+Unpack a deb w/o installing
+	ar x <deb>
+	dpkg-deb -x 
+
+
+Show dependencies {{{1
+
+Reverse deps (what depends on this package)
+	apt-cache rdepends <pkg name>
+
+dpkg {{{1
+	files
+		/var/lib/dpkg/
+			status file - info on status of packages available on system
+			available file - 
+				info on packages available on system, built from Packages.gz
+	package states
+		config-files, half-configured, half-installed, installed,
+		not-installed, unpacked, deinstall (ie selected for removal), purge
+	options
+		--configure -a 
+			resume aborted configuration
+		--install	Install package
+		--list 'name'	List installation status of packages matching 'name' or
+			if none. lists all installed
+		-l 'name' <pat>	
+			List packages matching name (use shell wildcards)
+			shows all available in repos
+		-r	remove
+			can use with --force-depends and then reinstall to fix broken
+		-r -B | --auto-deconfigure
+			 Re circular dependencies: 
+				"apt is installing the packages in the wrong order.  A file 
+				moved from the python2.3 deb to the python deb, so apt needs 
+				to remove the python2.3 deb before it can install the python 
+				deb.  Except the python deb depends on the python2.3 deb.  
+				Fun, huh?
+				Simply installing the packages yourself using the 
+				--auto-deconfigure flag (which dpkg happily pointed out to 
+				you) solves the problem.
+		-L --listfiles <pkg name>  List files in package
+		-p --print-avail <name>	
+			Info info on pkg
+		---status,--get-selections  
+			Full list of selections (install, remove etc.)
+		
+resume aborted configure
+    dpkg --configure -a
+
+Source Format {{{1
+Steps to create deb from sources {{{2
+
+1. Get and build deps
+	apt-get source -t sid <pkg name> - acquire and unpack source package
+	apt-get build-dep <pkg name> - same for deps
+
+	aptitude build-dep <pkg name>/unstable
+		don't have default-release in apt.conf when running this
+
+2. Build deb
+	install dpkg-dev
+	build:
+		debuild -i -us -uc -b
+	specify compile options:
+		DEB_BUILD_OPTIONS="--enable-gui --enable-radio" fakeroot debuild
+
+Other utils {{{2
+
+apt-build
+	http://julien.danjou.info/article-apt-build.html
+
+dget utility - d/l debs or sources in .dsc format
+	http://www.debian-administration.org/articles/504
+	in devscripts package
+	download .deb file (and all uninstalled dependencies):
+		dget -x <pkgname>
+	download .dsc file
+		dget -x <URL to filename.dsc> 
+	cd python...
+	debuild
+
+debuild 
+	in devscripts package
+	runs dpkg-buildpackage plus does other things?
+
+
+Debianize source from non-debian sources {{{1
+
+dh-make
+	tut: http://forums.debian.net/viewtopic.php?f=16&t=38976
+	follow with dpkg-buildpackage
+
+Tutorial on creating debs from Python source
+http://74.125.95.132/search?q=cache:6ENqKLdDGTsJ:content10.wuala.com/contents//manatlan/Documents/from_py_to_deb.pdf+man+dh-make+-perl&cd=12&hl=en&ct=clnk&client=iceweasel-a
+
+Apply patches {{{1
+
+apt-get source gnome-panel
+cd gnome-panel-2.8.3
+patch -p0 -l < debian/maintfiles/remove_debian_menu.patch
+debchange -i --nmu
+apt-get build-dep gnome-panel
+debuild -us -uc 
+
+Build Environments {{{1
+
+Chroot 
+
+	If errors 
+		FATAL -> Could not set non-blocking flag Bad file descriptor
+		/dev/null - permission denied
+	=> filesystem must not be mount nodev
+
+sbuild
+	https://help.ubuntu.com/community/SbuildLVMHowto
+
+pbuilder
+	http://www.netfort.gr.jp/~dancer/software/pbuilder-doc/pbuilder-doc.html
+	build a package from debian sources
+	can specify distribution
+
+qemubuilder
+	qemubuilder --create --distribution <sid etc.>
+
+Report Bugs {{{1
+
+Manage bugs by email
+	http://www.debian.org/Bugs/server-control
+
+Followup existing bug
+	send email to <bug#>@bugs.debian.org
+	in reportbug, enter package name, 'y', select bug
+
