@@ -4,6 +4,8 @@ OS concepts {{{1
 Processes
     all have environments - set of key/value mappings
     normally a new process is forked from parent and inherits environment
+	associated with program code which is loaded from disk
+
 
 Sockets
     Socket is the API's abstraction for a IP-port pair. It handles the network and transfer layer of communication. It can be thought of as a application's interface to the network.
@@ -11,17 +13,16 @@ Sockets
 
 System Info utils {{{1
 
-http://www.binarytides.com/linux-commands-hardware-info
+conky
+	shows memory, cpu, filesystem usage
 
 uname - processor type, kernel type etc
-
 
 kernel boot messages
     dmesg	
 
 Virtual Memory
     view all memory usage with 'cat /proc/meminfo'
-
 
 lspci
     cat /proc/pc
@@ -34,7 +35,14 @@ lspci
         cat /proc/modules
 
 process info
-    proc/PID/cmdline, cwd, environ etc.
+	top/htop
+
+control groups
+	systemd-cgtop - resource usage
+	systemd-cgls - view as a tree
+
+
+http://www.binarytides.com/linux-commands-hardware-info
 
 
 Processes {{{1

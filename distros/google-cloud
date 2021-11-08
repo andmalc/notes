@@ -4,14 +4,22 @@ https://cloud.google.com/sdk/docs/install
 
 gcloud components update
 
-Set default project and zone
-    gcloud config set project <NAME OF PROJECT>
-    gcloud config set compute/zone us-central1-a
+config
+	Set default project and zone
+		gcloud config set project <NAME OF PROJECT>
+		gcloud config set compute/zone us-central1-a
+	show config
+		gcloud config configurations list
 
 
 Compute instances
     gcloud compute instances list
     gcloud compute instances start <instance>
+
+ssh
+	add instance to ~/.ssh/config
+		gcloud compute config-ssh
+
     gcloud compute ssh
     gcloud compute scp <local file> <instance:><path>
 

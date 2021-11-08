@@ -1,0 +1,27 @@
+systemct service bluetooth start
+
+/etc/bluetooth/main.conf
+	Policy section
+		AutoEnable=true		always enable BT adapter after reboot
+
+bluetoothctl
+	power on
+	agent on
+	scan on
+	pair <mac address>
+	connect <mac address>
+	trust <mac address>
+		auto connect
+
+	paired-devices 
+	devices
+		same?
+
+
+Brydge keyboard
+D2:57:BE:DE:B1:27
+
+Galaxy Buds
+B4:1A:1D:0E:7C:BB
+
+

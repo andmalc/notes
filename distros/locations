@@ -1,4 +1,9 @@
 
+Systemd services
+	User
+		~/.config/systemd/user/default.target.wants/xxxx
+
+
 Desktop appliction files
 	Flatpak
 		desktop files

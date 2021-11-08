@@ -22,6 +22,10 @@ List running or failed services & their status
     systemctl list-units -t service --all 
     systemctl -t service -a
 
+Show active control groups
+	systemd-cgtop - resource usage
+	systemd-cgls - view as a tree
+
 List or search installed units & status
 	list-unit-files [--user] [<pat>]
 
