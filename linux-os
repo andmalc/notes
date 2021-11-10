@@ -21,25 +21,23 @@ uname - processor type, kernel type etc
 kernel boot messages
     dmesg	
 
+process info
+	top/htop
+	pstree
+
+control groups
+	systemd-cgtop - resource usage
+	systemd-cgls - view as a tree
+
 Virtual Memory
     view all memory usage with 'cat /proc/meminfo'
 
 lspci
     cat /proc/pc
-
     lsusb
-
     lscpu
-
     lsmod
         cat /proc/modules
-
-process info
-	top/htop
-
-control groups
-	systemd-cgtop - resource usage
-	systemd-cgls - view as a tree
 
 
 http://www.binarytides.com/linux-commands-hardware-info

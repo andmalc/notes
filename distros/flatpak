@@ -2,6 +2,11 @@ Report bugs: https://pagure.io/teamsilverblue/issues
 
 User data saved in ~/.var/app
 
+Point to WAyland socket
+	flatpak [--user] run --socket=wayland your-app
+		socket = /run/user/<user id>/wayland-0
+
+
 Remotes {{{1
 
 remote-add <options> <repo file or URL>

@@ -1,5 +1,8 @@
 Overview {{{1
 
+Reasons for current grub layout
+https://fedoraproject.org/wiki/Changes/UnifyGrubConfig
+
 Firmware on system board selects bootable media
 	BIOS - obsolete
 	UEFI firmware: select media and *.efi file to run
@@ -156,6 +159,8 @@ Systemd boot {{{1
 
 sample config files at /usr/share/systemd/bootctl
 
+To read
+https://man.archlinux.org/man/systemd-gpt-auto-generator.8
 
 Repair Windows not booting
     https://unix.stackexchange.com/questions/610779/pop-os-systemd-boot-cant-detect-windows

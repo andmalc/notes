@@ -1,5 +1,8 @@
-eval (ssh-agent -c)
 
+https://developerlife.com/2021/01/19/fish-scripting-manual/
+
+
+eval (ssh-agent -c)
 
 Kill ring
 	Ctrl K	kill to line end
@@ -94,22 +97,24 @@ Variables {{{1
 https://fishshell.com/docs/current/#variables
 
 set
-    set <options> <var name> <value>
+ set <options> <var name> <value>
 
-	 options
-		 -a --append
-		 --path
-			  treat as path var
+ options
+	 -a --append
+	 --path
+		  treat as path var
 
-		-q --query
-			status = 0 if var set, = 1 not set
-			set -q var (not $var)
+	-q --query <var> ...
+		return status = 0 if var initialized, 1 for each not
+		set -q var (not $var)
+
+	-x  exported 
+		default scope is local and exported to child processes
 
 	scope options
 		-g  global outside block.  This is default outside function or block
 		-U Universal - saved in fish_variables file
 		-l  local within current block and children but not child functions
-		-x  local and exported to child processes but not global
 		-gx exported global 
 			use for environment vars in cofig.fish
 
@@ -182,18 +187,35 @@ else
 end
 
 Tests {{{1
-compare strings or numbers or check file properties (whether a file exists or is writeable etc.
-See man test
 
-Double quote var with test
-    test -z "$XDG_DATA_HOME"
+test command 
+	boolean expression, returns 0 for true, 1 for false
+	see man test
+	invert: not test
 
--n  test if $var expands to non-empty string
+	test $myname = andrew
+	test (count one two ) -lt 3  => returns 0
 
-Variable tests with set - $ or quotes not needed
+	-e		file exists
+	-d		directory exits
+	-n		true if "$var" expands to non-empty string
+	-z		true if empty string
+	
+	operators
+		eq			numeric equivalence
+		=/!=	string equivalence
+
+Variable checking: set -q vs test -z
+	set -q	return status adds 1 for each arg not initialized
+				return 0 means set to value or empty
+
+	set GIT_STATUS (git status --porcelain)
+	if set -q $GIT_STATUS ; echo "No changes in repo" ; end
+	if test -z "$GIT_STATUS" ; echo "No changes in repo" ; end
+
 is var set (including set to empty string)?
-        set -q myvar
-    is first element of list var set?  Is false if var is not a list.
+	  set -q myvar  ($ not needed)
+is first element of list var set?  Is false if var is not a list.
         set -q var[1]
 
 

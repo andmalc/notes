@@ -17,3 +17,12 @@ Desktop appliction files
 
 
 
+$WAYLAND_DISPLAY
+	This tells Wayland clients which Wayland compositor to connect to. 
+	Normally the name of a socket in XDG_RUNTIME_DIR and set to 1 or 0.
+	e.g. $XDG_RUNTIME_DIR/wayland-* 
+
+$XDG_RUNTIME_DIR
+	/run/user/<user id>
+
+
