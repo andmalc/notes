@@ -306,8 +306,19 @@ btrfs {{{2
 Layout ideas:
 https://btrfs.wiki.kernel.org/index.php/SysadminGuide
 
-subvol gen
-	subvols not included in parent snapshots 
+btrfs filesystem 
+    label
+		show label
+			/dev/XXX or mnt point
+		change label
+			<device or mnt point> <newlabel>
+
+    df
+        usage info
+    resize
+        resize +nG | -nG | max <mounted fs>
+    show
+        shows usage info maybe more accurate than df
 
 
 Make fs on device or partition
@@ -318,7 +329,9 @@ Make fs on device or partition
 	
 
 btrfs subvolume
-    create <path>
+	subvols not included in parent snapshots 
+    
+	create <path>
 		is accessed like normal directory
 		does not need mounting
     list <path>
@@ -352,20 +365,6 @@ Make snapshot
 	btrfs subvolume snapshot 
 	btrfsctl -s /mnt/btrfs/snapshot_of_root /mnt/btrfs 
 
-btrfs filesystem 
-    label
-		show label
-			/dev/XXX or mnt point
-		change label
-			<device or mnt point> <newlabel>
-
-    df
-        usage info
-    resize
-        resize <size> | max <mounted fs>
-    show
-        shows usage info maybe more accurate than df
-
 
 btrfs balance - distribute data after new vol added
     start /
@@ -377,6 +376,9 @@ Disble copy on write
 	file	chattr +C
 	mountpoint	nodatacow
 
+Copy file with COW
+	cp --reflink=always source target
+
 Move fs between disks
 	sudo btrfs subvolume snapshot -r @home @home-ro
 	sudo btrfs send @home-ro | sudo btrfs receive /mnt/btrfs/
@@ -384,16 +386,17 @@ Move fs between disks
 	Edit /etc/fstab with new UUID of mount point /home
 
 Swap file
-
-cd /path/to/swapfile
-truncate -s 0 ./swapfile
-chattr +C ./swapfile
-btrfs property set ./swapfile compression none
-Add to /etc/fstab
+	cd /path/to/swapfile
+	truncate -s 0 ./swapfile
+	chattr +C ./swapfile
+	btrfs property set ./swapfile compression none
+	Add to /etc/fstab
 
 
 LVM {{{1
-docs {{{2
+gen {{{2
+
+flexible system because works at block level.  Underlying filesystems not affected.
 
 Rearranging partitions example:
 http://microdevsys.com/wp/linux-lvm-resizing-partitions/
@@ -402,7 +405,8 @@ http://microdevsys.com/wp/linux-lvm-resizing-partitions/
 terms {{{2
 
 PV/physical volume
-    partition or disk
+    one or more partitions or disk
+	one parition per PV preferred for simplicity of admin 
     create first
 
 vg - volume group
@@ -424,20 +428,20 @@ Thinly-Provisioned Snapshot Volumes
 
 PV/physical volume {{{2
 
-Initialize a disk or partition to use in a physical vol.
-    pvcreate <dev> [<dev> ...]
 
-Info
-    pvs --partial --verbose
-        Shows pv's in vg
+pvcreate <dev> [<dev> ...]
+	Initialize a disk or partition to use in a physical vol.
 
-    pvdisplay --maps
-        shows physical layout of volume
+pvs --partial --verbose
+	Shows summary of pv's in vg
 
-    blkid
-        shows lv's including thin plus mount points
+pvdisplay --maps
+	shows physical layout of volume
 
-	fdisk -l    shows lv sizes
+blkid
+	shows lv's including thin plus mount points
+
+fdisk -l    shows lv sizes
 
 pvremove
 
@@ -503,10 +507,21 @@ Resize
 
     lvresize
 
+Snapshots {{{2
+
+Creates new r/w block device
+Can do on live system
+Allocate enough space to avoid being disabled when full
+
 
 Thin Volumes {{{2
 
 man lvmthin
+
+thin pool LV created from vg phyical storage and size can be increased.
+snapshot LV's 
+- draw on storge in thin pool LV and share data blocks with other snapshots
+- are allocated virtual space which can be increased.
 
 Create pool
     lvcreate -T -L3G extra_vg/thin_pool1
