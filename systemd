@@ -162,7 +162,7 @@ show - for machine use or debugging
 
 system commands {{{2
 
-suspend, hibernate, reboot, halt
+suspend, hibernate, reboot, poweroff
 switch-root 
 
 list-machines

@@ -1,0 +1,16 @@
+
+nix-shell
+	-I					 nixpkgs revision
+	-p					install package
+	--packages / -p		<pkg attribute names>
+
+	#!-scripts
+		-i				chain interpreter
+
+
+
+nix-env 
+	-qaP <pkg>			pkg search
+
+
+

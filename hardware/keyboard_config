@@ -9,9 +9,19 @@ https://sw.kovidgoyal.net/kitty/faq.html#how-can-i-assign-a-single-global-shortc
 
 Utils 
 
-fish_key_reader
-
 loadkeys - load keyboard translation tables
+
+
+Backspace cannot be used in combination with other keys
+	https://github.com/fish-shell/fish-shell/issues/3730
+
+Alt escape \e
+	is case sensitive
+
+Control escape \e
+	not case sensitive
+
+
 
 
 Chromebook - map Delete to  Right Alt + BS

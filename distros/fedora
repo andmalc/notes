@@ -5,6 +5,9 @@ Install options {{{1
 Fedora Everything netinstall image can be used to install any Fedora Edition or your own set of favorite packages
 https://alt.fedoraproject.org/
 
+Fedora 35 disk size 3.5G but almost 8G after update
+
+
 
 Gnome install minimal 
 sudo dnf group install gnome-desktop base-x hardware-support (for wireless)

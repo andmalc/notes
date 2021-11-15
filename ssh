@@ -133,6 +133,9 @@ cat .ssh/id_dsa.pub | ssh user1@remote \
 
 Login/Password config {{{1
 
+Prevent host key checking for logins to localhost
+NoHostAuthenticationForLocalhost yes
+
 Disable password login:
 	sshd_config: PasswordAuthentication no
 	/etc/pam.d/ssh: disable unix passwords

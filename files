@@ -101,6 +101,7 @@ Groups:
 Links {{{1
 
 Update symbolic links: https://opensource.com/article/21/11/update-linux-file-system-link
+	ln -vfns <target> <link>
 
 
 Utilities {{{1
