@@ -86,26 +86,23 @@ Line Editor Key Bindings
 			BS	delete to left
 		
 		word
-			M-f	word forward
-			M-b	word back
-			^w/M-BS delete word to left
+			M-f	move word forward
+			M-b	move word back
+			^w/M-BS 
+				M-BS	kill last word | delete word to left
+				^w		kill last path component
 			M-d	delete word to right
 
 		line
 			^a	beginning of line
 			^e	end of line
 			^u	kill line left
-			^k   	kill line to right
-			^u 	delete line
+			^k  kill line to right
 			^y	yank back previous kill
 
 		history
 			^r	search past history
 				repeat for additional matches
-			^j	accept current match
-
-		completions
-			<pat>^x/	file name
 
 Customized bindings
 In .zshrc

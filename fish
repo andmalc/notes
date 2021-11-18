@@ -7,7 +7,7 @@ eval (ssh-agent -c)
 Kill ring
 	Ctrl K	kill to line end
 	Ctrl Y	restore line
-	Alt Y	restores more from history
+	Alt Y		restores more from history
 
 
 History {{{1
@@ -47,10 +47,22 @@ PATH
 
 Key Bindings
 https://fishshell.com/docs/current/cmds/bind.html
-    fish_key_reader - outputs bind statement for key
 
-    bind
-        -k <term> search for existing binding
+Keybinding {{{2
+
+Add bindings to fish_user_key_bindings function
+
+fish_key_reader - outputs bind statement for key
+
+bind
+	-k <term>	search for existing binding
+	-K		show special key names
+
+
+man bind
+	list of special input names e.g. beginning-of-line
+
+bind \x7F 'backward-kill-bigword'
 
 Tab Completion {{{1
 
