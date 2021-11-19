@@ -1,24 +1,30 @@
 
 Fedora pkgs
+
+install sway\*
+
 brightnessctl
 grim - screenshots
     bindsym $mod+Print exec grimshot copy area
-wofi - menu
-wl-clipboard
-clipman - clipboard manager
-	update present config if not using dmenu
+
+Launcher
+	wofi
+		config by uncommenting lines in config
+
+Status bar at bottom
+	waybar
+
+clipboard manager
+	clipman
+	wl-clipboard (?)
+
+Display management
+	kanshi
+		https://sr.ht/~emersion/kanshi/
+
 
 mako # notification daemon
 
-Launch under systemd
-    Display Manager
-        modern dm's will recognise files at usr/share/wayland-sessions/
-
-
-Systemd integration
-    https://github.com/alebastr/sway-systemd
-
-Started by sway-session.target
 
 
 Config
@@ -33,3 +39,26 @@ Layout
     1. switch to vertical split
     2. create new window on side to be tabbed
     3. switch to tabbed mode Mod W
+
+
+Launching {{{1
+
+From .bashrc
+	if [ "$(tty)" = "/dev/tty1" ]; then
+		export PATH=$PATH:~/bin
+		export `gnome-keyring-daemon --start --components=ssh`
+		exec sway > $XDG_RUNTIME_DIR/sway.log 2>&1
+	fi
+
+lightdm - display manager (not really needed)
+
+Launch under systemd
+	Systemd integration
+		https://github.com/alebastr/sway-systemd
+
+    Display Manager
+        modern dm's will recognise files at usr/share/wayland-sessions/
+
+
+Started by sway-session.target
+

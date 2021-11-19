@@ -5,8 +5,12 @@ Install options {{{1
 Fedora Everything netinstall image can be used to install any Fedora Edition or your own set of favorite packages
 https://alt.fedoraproject.org/
 
-Fedora 35 disk size 3.5G but almost 8G after update
+Fedora 35 
+	standard install: disk size 3.5G but almost 8G after update
+	install from Everything + gnome-shell  = 2.5G
 
+Packages to remove
+	cups-client (removes all printing)
 
 
 Gnome install minimal 
@@ -85,6 +89,8 @@ gpg
          set -x --path GNUPGHOME ~/.config/gnupg
 
 Desktop Setup & Apps {{{1
+
+Keyboard driven browser: qutebrowser
 
 Kitty
     Errors when connecting from Kitty to ssh host

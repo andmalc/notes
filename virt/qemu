@@ -474,4 +474,10 @@ quickemu
 
 
 
+Bridged neworking
+	add to vm config
+		bridge=<bridge name, usually virbr0
 
+	May need to do
+		crete /etc/qemu/qemu-bridge-helper
+		chmod u+s /usr/lib/qmeu/qemu-bridge-helper

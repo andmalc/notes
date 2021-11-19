@@ -39,8 +39,22 @@ Change port on Fedora/Centos
     firewall-cmd --zone=public --permantent --add-port=2292/tcp
 
 
+Login/Password config {{{1
 
-command {{{1
+Prevent host key checking for logins to localhost
+	NoHostAuthenticationForLocalhost yes
+
+Disable password login:
+	sshd_config: PasswordAuthentication no
+	/etc/pam.d/ssh: disable unix passwords
+
+Disable root login except for restrictions
+    sshd_config: PermitRootLogin forced-commands-only
+    authorized_keys: command="rdiff-backup --server --restrict-read-only /",from="workstation",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <rest of public key>
+    If other use attempted, login fails with passphrase & password prompts
+
+
+Command {{{1
 
 ssh user@host [-p port] -L<port#>:localhost:<port#>
 
@@ -130,20 +144,6 @@ File Transfer (w/o scp)
 ssh uid@remotehost 'cat > /path/to/dest' < /path/to/source
 cat .ssh/id_dsa.pub | ssh user1@remote \
 	 "cat - >>.ssh/authorized_keys"
-
-Login/Password config {{{1
-
-Prevent host key checking for logins to localhost
-NoHostAuthenticationForLocalhost yes
-
-Disable password login:
-	sshd_config: PasswordAuthentication no
-	/etc/pam.d/ssh: disable unix passwords
-
-Disable root login except for restrictions
-    sshd_config: PermitRootLogin forced-commands-only
-    authorized_keys: command="rdiff-backup --server --restrict-read-only /",from="workstation",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <rest of public key>
-    If other use attempted, login fails with passphrase & password prompts
 
 utils {{{1
 

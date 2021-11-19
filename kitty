@@ -1,0 +1,13 @@
+
+
+
+Themes
+
+List
+	https://github.com/dexpota/kitty-themes
+Test theme
+	kitty @ set-colors -a themes/themename.conf
+
+Add kitty-terminfo to ssh login
+	kitty +kitten ssh myserver
+

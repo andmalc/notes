@@ -6,9 +6,13 @@ Default text editor
 Minimal Gnome on Stretch
 aptitude install --without-recommends gdm3
 
-Add 32bit support
-sudo dpkg --add-architecture i386 
-Package names:  <name>:i386
+
+Usermod missing 
+	Run "sudo -" to add /sbin to PATH
+
+Tasksel menu during install
+	Select standard utilites for man plus ?
+	can run later with tasksel --new-install
 
 install deb with dependencies
     gdebi  

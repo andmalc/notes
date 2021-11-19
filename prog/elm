@@ -1,0 +1,19 @@
+
+
+Collections
+
+List
+	immutable collection
+	all elements of same type
+	manage using functions from List module
+		get 1st element
+		get lenght
+		iterate over elements
+
+Record {key="val", ...}
+	record is a collection of named fields, each with an associated value
+	fields are immutable
+	values may have mixed types
+
+Tuple (val, ...)
+	like Record but no key

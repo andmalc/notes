@@ -14,6 +14,10 @@ manage PATH
 	These may not work depending on policies in sudoers
 		sudo --preserve-env=PATH cmd
 
+	alternative with su to preserve user env
+		su		preserves env
+		su - 	env of new user
+
 Admin
 	consider making an admin type account with a strong password and doing 'sudo -u <admin user>'
 

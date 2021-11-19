@@ -288,18 +288,9 @@ insert text from buffer or register into cmd or search
 Edit Modes {{{1
 Normal mode {{{2
 
-To normal mode from insert
-    c-[, c-c
-
-Run normal or command mode commands from Insert mode
-    ctrl+v[Escape key]:command
-   
-Change, continue in Insert mode
-    s           change char
-    S           delete line
-
-
-Insert mode {{{2
+Edit & remain in Normal mode
+	r<char>	replace char
+	r<CR>		insert line break
 
 Enter Insert mode
 	i			Insert- enter text before cursor
@@ -309,6 +300,25 @@ Enter Insert mode
 	I			insert text before first non-blank in line
    gi       go to last edit and insert
 	gI			insert text at column 1
+	s/S		change char/whole line
+
+Repeat last edit: .
+
+Repeat change on multi lines (e.g. commenting all)
+1. Visual block mode C-v and select lines
+2. I  (Insert mode from start of line)
+3. Make change
+4. Esc
+
+
+Insert mode {{{2
+
+To normal mode from insert
+    c-[, c-c
+
+Run normal or command mode commands from Insert mode
+    ctrl+v[Escape key]:command
+   
 
 Edit
    deletions
@@ -338,17 +348,6 @@ t<marker>
 	Edit until marker
 
 
-Repeating {{{2
-
-
-Repeat last edit: .
-Repeat last edit: .
-
-Repeat change on multi lines (e.g. commenting all)
-1. Visual block mode C-v and select lines
-2. I  (Insert mode from start of line)
-3. Make change
-4. Esc
 
 
 Cursor Movement {{{1
