@@ -474,7 +474,7 @@ quickemu
 
 
 
-Bridged neworking
+Bridged neworking - could not get working!  Use virt-manager instead
 	add to vm config
 		bridge=<bridge name, usually virbr0
 

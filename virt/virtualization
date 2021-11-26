@@ -238,14 +238,20 @@ sudo virt-customize
 
 virsh {{{1
 
+Fedora pkg: libvirt-client
+
 virsh - no args
     shell for controlling vms
-    list --all
-    start
-    reboot
-    shutdown
-    edit 
-        e.g. edit --network hostonly
+
+	commands:
+		list --all
+		start
+		reboot
+		shutdown
+		destroy
+		rename
+		edit 
+			e.g. edit --network hostonly
 
     domifaddr <domain>
         show IP address
@@ -274,9 +280,14 @@ alternative to virt-clone
     virsh dumpxml domain > vm.xml
     virsh define vm.xml 
 
+Connections
+	Access as non-root
+		export LIBVIRT_DEFAULT_URI=qemu:///system
+		or set in ~/.config/libvirt/libvirt.conf
 
-Access as non-root
-export LIBVIRT_DEFAULT_URI=qemu:///system
+	ssh alias
+		add host in .ssh/config
+		alias in libvirt.conf uri_aliases = [ "tp530=qemu+ssh://tp530/system" ]
 
 
 

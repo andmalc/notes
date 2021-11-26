@@ -12,7 +12,9 @@ List available wifi connections
     dev wifi list
 
 Connection
-    
+
+Saved in:  /etc/NetworkManager/system-connections/<name>.nmconnection 
+
     nmcli device wifi connect <SSID|BSSID> password "pw"
 
     List created

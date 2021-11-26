@@ -22,7 +22,11 @@ $WAYLAND_DISPLAY
 	Normally the name of a socket in XDG_RUNTIME_DIR and set to 1 or 0.
 	e.g. $XDG_RUNTIME_DIR/wayland-* 
 
-$XDG_RUNTIME_DIR
-	/run/user/<user id>
+XDG dirs
+	https://wiki.archlinux.org/title/XDG_user_directories
+	read from ~/.config/user-dirs.dirs
+
+	$XDG_RUNTIME_DIR
+		/run/user/<user id>
 
 

@@ -1,48 +1,3 @@
-Misc {{{1
-
-Next arg is a file name  "--" and not a differnt type of arg
-    git checkout <commit> -- <filename>
-
-Semicolon - command delimiter 
-
-echo 
-    -n      no newline 
-    -e      interpret backlashed control chars
-
-Redirect to file w/o write permission
-    echo blah > sudo tee file
-
-cat - reads from file
-
-echo - reads from sting
-
-Show type of shell
-    $0
-Return value of last command
-    $?
-
-Copy last command into file
-    echo "!!" > filename
-
-
-Control characters
-    man console_codes
-    interpreted by console driver and discarded before printing
-    ^[      start an escape sequence
-    ^X      interrupt escape sequence
-
-    ECMA-48 SGR sequence ESC [ parameters m sets display attributes
-        echo -e "\e[1;31m This is red text \e[0m"
-
-xargs 
-    takes a newline separated list and maps the list to a command
-    under zsh use zargs
-        autoload -U zargs
-        zargs **/*~ -- rm
-
-	Move files except for <pat>
-	ls | grep -v <pat> | xargs mv -t @
-
 Shell types {{{1
 
 Login shell
@@ -66,6 +21,98 @@ Graphical login:
     does not create a login shell
     controlled by session or window manager
 
+
+Processes {{{1
+
+Running Processes
+	Pipes always between programs. Only works with programs which expect
+	standard input (e.g. not vi).  
+	
+	Can type in with pipe character at line end:
+		echo thing is a word |
+		sed 's/word/wordzzz/'
+
+    Subshell
+        cmd_output=$(COMMANDS)
+
+Job Control
+	%n	refer to job by name or number
+	%-	previous job
+	%+	current job (in jobs list)
+	&	Run command in background, don't wait for it to complete
+
+	^c  Interrupt job
+	^z  Suspend job
+
+	EOF marker 
+		C-D on unix
+		C-Z on Windows.  
+		In Python interpreter, this causes an exit. C-C is cancel input.
+
+	bg <cmd>  Resume suspended job in background subshell (zsh only?)
+
+	kill -<signal # or name> PID or %job#
+	pkill -signal <job name>
+	pgrep <job name>
+		get PID by name
+		-f search on whole command line
+		-l list program name
+
+	Signal Names - most apps can trap first 3, KILL will always work
+	INT     Interrupt (^C) - foreground jobs only
+	QUIT    = ^\
+	TERM    Default signal
+	KILL
+	USR1	graceful restart & reread config files
+	HUP		difference from USR1?
+
+	pstree
+		-h	highlight current process
+		-G	solid lines
+		-l	display long lines
+		-p	show PID's
+		-u	show UID transitions
+
+
+Subshells:
+	All but end of a chain of pipes run in subshells.
+	cOde inside a '()' or `cmd`, including substitutions: [$=<>](cmd)
+	Backgrounded or suspended/resumed processes 
+
+	In subshell - does not affect main shell:
+	(cd /usr; ls) > file
+
+
+Running Commands
+	sh [cmd]	Run a script without having to change its access mode
+
+Environment
+    env     show or set shell environment
+
+    Env for a command
+        prep <cmd> => PID
+        cat /proc/PID/environ  | tr '\0' '\n'
+
+
+
+Misc {{{1
+
+
+Move files except for <pat>
+	ls | grep -v <pat> | xargs mv -t @
+
+Command Args {{{1
+
+Next arg is a file name  "--" and not a differnt type of arg
+    git checkout <commit> -- <filename>
+
+xargs 
+    takes a newline separated list and maps the list to a command
+    under zsh use zargs
+        autoload -U zargs
+        zargs **/*~ -- rm
+
+Semicolon - command delimiter 
 
 Line editing {{{1
 
@@ -108,7 +155,7 @@ Customized bindings
 In .zshrc
     Alt + arrows for word forward/back
 
-File Descriptors & Redirection {{{1
+Files, File Descriptors & Redirection {{{1
 
 Redirection
 http://en.wikipedia.org/wiki/Redirection_(Unix)
@@ -117,18 +164,24 @@ Standard I/O
 Stdin, stdout, and stderr streams  numbered 0, 1, and 2.  
 Additional opened files assigned numbers starting at 3
 
-Input from stdin instead of from file
-    wc -
-
-Redirection is changing these to non-terminal
-
-E.g redirect output
-    1. Close std output descriptor (1 - terminal)
-    2. Reassign descriptor to file
-
 To specify the file with a number, place the number before the >
 	program-name 1> out.txt
 	program-name 2> errors.txt
+
+	both out and error to file
+		 ls blah > tmp/error 2>&1
+
+Copy last command into file
+    echo "!!" > filename
+
+Redirect to file w/o write permission
+    echo blah > sudo tee file
+
+Input from stdin instead of from file
+    wc -
+
+cat - reads from file
+echo - reads from sting
 
 
 Input {{{2
@@ -247,20 +300,6 @@ Variable expansion
 Brackets [] {{{2
 Expands text as output from command
 
-Variables {{{1
-
-var     name of variable
-$var    value of variable
-        quote or escape to avoid multi words if whitespace
-
-assignment - no spaces before or after =
-    a=1 
-
-delimit variable name with curly braces {}
-
-Sourcing a file adds its variables to current
-Exporting: provides copy of var to child process, not current environment
-
 Quoting {{{1
 
 Quotes prevent shell from evaluating line before command
@@ -282,20 +321,6 @@ Never quote a glob or regular expression
       # file and directory under $HOME, as was intended
 
 
-
-
-Looping {{{1
-
-
-for file in <pat>; do
-    mv $file ${<pat>}
-done
-
-For Loop
-    for x in y y y
-    do
-    ...
-    done
 
 
 Command substitution {{{1
@@ -352,6 +377,20 @@ Rename files
 	e.g.
 		echo ${foo#*.} removes file name extention from $foo
 
+Variables {{{1
+
+var     name of variable
+$var    value of variable
+        quote or escape to avoid multi words if whitespace
+
+assignment - no spaces before or after =
+    a=1 
+
+delimit variable name with curly braces {}
+
+Sourcing a file adds its variables to current
+Exporting: provides copy of var to child process, not current environment
+
 Conditional Expressions {{{1
 
 [[ <EXPRESSION> ]]
@@ -395,6 +434,20 @@ Operator precedence (highest ⇒ lowest):
 
 
 
+Looping {{{1
+
+
+for file in <pat>; do
+    mv $file ${<pat>}
+done
+
+For Loop
+    for x in y y y
+    do
+    ...
+    done
+
+
 If statement {{{1
 
 https://robots.thoughtbot.com/the-unix-shells-humble-if
@@ -423,155 +476,60 @@ command
 	if pipeline, uses exit status of last command	
 	! before inverts
 
-Processes {{{1
-
-Running Processes
-	Pipes always between programs. Only works with programs which expect
-	standard input (e.g. not vi).  
-	
-	Can type in with pipe character at line end:
-		echo thing is a word |
-		sed 's/word/wordzzz/'
-
-    Subshell
-        cmd_output=$(COMMANDS)
-
-Job Control
-	%n	refer to job by name or number
-	%-	previous job
-	%+	current job (in jobs list)
-	&	Run command in background, don't wait for it to complete
-
-	^c  Interrupt job
-	^z  Suspend job
-
-	EOF marker 
-		C-D on unix
-		C-Z on Windows.  
-		In Python interpreter, this causes an exit. C-C is cancel input.
-
-	bg <cmd>  Resume suspended job in background subshell (zsh only?)
-
-	kill -<signal # or name> PID or %job#
-	pkill -signal <job name>
-	pgrep <job name>
-		get PID by name
-		-f search on whole command line
-		-l list program name
-
-	Signal Names - most apps can trap first 3, KILL will always work
-	INT     Interrupt (^C) - foreground jobs only
-	QUIT    = ^\
-	TERM    Default signal
-	KILL
-	USR1	graceful restart & reread config files
-	HUP		difference from USR1?
-
-	pstree
-		-h	highlight current process
-		-G	solid lines
-		-l	display long lines
-		-p	show PID's
-		-u	show UID transitions
-
-
-Subshells:
-	All but end of a chain of pipes run in subshells.
-	cOde inside a '()' or `cmd`, including substitutions: [$=<>](cmd)
-	Backgrounded or suspended/resumed processes 
-
-	In subshell - does not affect main shell:
-	(cd /usr; ls) > file
-
-
-Running Commands
-	sh [cmd]	Run a script without having to change its access mode
-
-Environment
-    env     show or set shell environment
-
-    Env for a command
-        prep <cmd> => PID
-        cat /proc/PID/environ  | tr '\0' '\n'
-
-
-
 Command History {{{1
 
-	history [n]	Show n lines of history
-	c	clear contents of current list
-	w	write current list to history file
+history [n]	Show n lines of history
+c	clear contents of current list
+w	write current list to history file
 
-	Format:
-	Event Designator:[Word Designator]:[Modifier]
+Format:
+Event Designator:[Word Designator]:[Modifier]
 
-	C-p/n   recall previous/next command
+C-p/n   recall previous/next command
 
-	Referring to previous commands and args
-		Referring to commands by sequence
-		!	start character for event designator	
-		!!	previous command
-		!-2	2 commands previous
-		!n	history event #n
+Referring to previous commands and args
+	Referring to commands by sequence
+	!	start character for event designator	
+	!!	previous command
+	!-2	2 commands previous
+	!n	history event #n
 
-		Referring to commands by string contents
-		!str	Refer to most recent cmd starting with str.
-		!?str?	Refer to most recent cmd containing str.
-		
-		Referring to args by string contents
-		!?str?% Most recent arg containing str.
-		!$      Last arg of previous cmd
+	Referring to commands by string contents
+	!str	Refer to most recent cmd starting with str.
+	!?str?	Refer to most recent cmd containing str.
+	
+	Referring to args by string contents
+	!?str?% Most recent arg containing str.
+	!$      Last arg of previous cmd
 
-		Append args
-		!!str   Most recent command + str
-		!(s1)s2 Append s2 to most recent command starting with s1
-		!N str  Append arg str to command #N
+	Append args
+	!!str   Most recent command + str
+	!(s1)s2 Append s2 to most recent command starting with s1
+	!N str  Append arg str to command #N
 
-	Modifiers:
-		p - print event, don't execute
-			!497:p
-			<edit previous>
-			!! to execute
-		[g]s/old/new	(global) substitution
-		^str^str2^	Substitute str2 for str in last line
+Modifiers:
+	p - print event, don't execute
+		!497:p
+		<edit previous>
+		!! to execute
+	[g]s/old/new	(global) substitution
+	^str^str2^	Substitute str2 for str in last line
 
-	fc command
-		no args	edit last command in vi
-		#		edit history #
-        -l      list output on std
-        -n      don't show line #s
+fc command
+	no args	edit last command in vi
+	#		edit history #
+	-l      list output on std
+	-n      don't show line #s
 
-		-l # #	list commands # through #
-		-l -n	list last n commands (default 10)
-		-l s	list last command beginning with s
-		-ln n > file	save cmd# to file
-		-e vi n	edit in vi command n
-		-s [pat=rep] [cmd] reexecute cmd after substitutions
+	-l # #	list commands # through #
+	-l -n	list last n commands (default 10)
+	-l s	list last command beginning with s
+	-ln n > file	save cmd# to file
+	-e vi n	edit in vi command n
+	-s [pat=rep] [cmd] reexecute cmd after substitutions
 
-	M-.     insert last arg at insertion point
+M-.     insert last arg at insertion point
 
-
-
-
-
-Key Binding {{{1
-
-
-	Changing
-		Modify in .inputrc
-		Reread .inputrc with C-X C-R
-
-		Emacs (and maybe other environments) uses identical Meta and Escape bindings.  
-		bindkey -m option: when binding an escape sequence like \eb, also bind b to Meta.
-
-		bindkey 
-		-v  vi mode
-		-e  emacs mode
-		-m  bind Meta - enabling Alt key bindings
-		'^V+<key>' <cmd>    Show character code (will show ^[ escape first)
-
-		More on binding function keys in zle:
-			http://zsh.sunsite.dk/Guide/zshguide04.html#l76
 
 
 
@@ -593,3 +551,16 @@ Arguments:
     $@ = all args
 
 
+Bash
+	Return value of last command	$?
+	Show type of shell $0
+
+Control Characters {{{1
+
+man console_codes
+interpreted by console driver and discarded before printing
+^[      start an escape sequence
+^X      interrupt escape sequence
+
+ECMA-48 SGR sequence ESC [ parameters m sets display attributes
+	echo -e "\e[1;31m This is red text \e[0m"

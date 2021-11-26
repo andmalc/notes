@@ -2,18 +2,37 @@ Report bugs: https://pagure.io/teamsilverblue/issues
 
 User data saved in ~/.var/app
 
+Runtimes in /var/lib/flatpak/runtimes
+	derived runtimes use hard links to source to save space
+	use 'du -hs' to see space used
+
 Point to WAyland socket
 	flatpak [--user] run --socket=wayland your-app
 		socket = /run/user/<user id>/wayland-0
 
+Manage permissions: Flatseal
+
+Applications {{{1
+
+list
+	show installed apps and runtimes
+
 
 Remotes {{{1
 
-remote-add <options> <repo file or URL>
-flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+remotes
+	list configured remotes
 
-See packages at remote
-flatpak remote-ls flathub
+remote-add <options> <repo file or URL>
+	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+flatpak search
+	search packages at remotes
+
+List packages at remote - not a search
+	flatpak remote-ls flathub
+
+
 
 flatpak --user update && flatpak --user search atom
 

@@ -4,7 +4,7 @@ https://fedoraproject.org/wiki/FirewallD#Dynamic_firewall_with_Firewall
 Design {{{1
 
 firewall-cmd or firewall-config (graphical) 
-    front ends to firewalld service which uses iptables command to control netfilter in kernl
+    front ends to firewalld service which uses nftables command to control netfilter in kernl
 
 Zones
     applied per interface.  Can set in Network Manager 

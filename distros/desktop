@@ -1,4 +1,11 @@
 
+Display Manager
+	change
+		install new DM
+		systemctl endable <new DM> 
+			outputs error with name of old DM service.
+		disable old DM and enable new one
+
 Copy paste general
 	Clipboards based on selections
 		primary selection

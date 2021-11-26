@@ -321,31 +321,36 @@ Commands
 
     repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
         search repos for packages
-        default output is pkg name.  Faster than 'dnf provides'
+        default output is pkg name and version.  Faster than 'dnf provides'
+
+		Query options - set what info displayed about each pkg
+			-l <pkg name>   list files in package
+			--depends
+			-i              info
+			--provides      pkgs providing service/cmd
+			--recommends
+			--requires <pkg>  #  show package dependencies (required by this pkg)
 
         Select options - limit output set 
-        --file/-f       package owned by filej
-        --installed
-        --repo <repoid>
-        --upgrades  # pkgs providing upgrades to existing
-        --whatdepends <capability> # pkgs that depend on this one
-        --whatprovides <capability>
-        --whatrecommends <capability>
-        --whatrequires <capability>  # pkgs requiring this one
-        --whatsuggests <capability>
+			--installed
+			--repo <repoid>
+			--file/-f   list packages providing a file
+			--upgrades  # pkgs providing upgrades to existing
 
+			Capability arg, e.g. webserver
+			--whatdepends <capability> # pkgs that depend on this one
+			--whatprovides <capability>
+			--whatrecommends <capability>
+			--whatrequires <capability>  # pkgs requiring this one
+			--whatsuggests <capability>
 
-        Query options - set what info displayed about each pkg
-        -l <pkg name>   list files in package
-        --depends
-        -i              info
-        --provides      pkgs providing service/cmd
-        --recommends
-        --requires <pkg>  #  show package dependencies (required by this pkg)
+			Show recursive dependencies
+				dnf repoquery --requires nginx --resolve --recursive
 
-        Show recursive dependencies
-            dnf repoquery --requires nginx --resolve --recursive
-    
+		Output group names:
+			--groupmember list groups containing spec
+   
+
     se|search   lists name, description. 
                     result sectioned by closeness of match
                     no installation info
