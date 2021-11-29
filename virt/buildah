@@ -15,28 +15,33 @@ Perist container after logout
 
 
 Images {{{2
-Commands {{{3
 
-build 
-    Build image from Dockerfile
-    Runs Buildah in background
+images
+	lists images
 
-    build -t podbuilt .
+subcommand image
 
-load 
-    Load image from an archive
-    -i filename
+	build 
+		Build image from Dockerfile
+		Runs Buildah in background
 
-login <URL>
-    login to container registry
+		[image] build -t podbuilt .
 
-save 
-    Save image to an archive
-    save -o myhttp.tar --format oci-archive myhttpd
+	load 
+		Load image from a local saved archive
+		-i filename
 
+	login <URL>
+		login to container registry
+	
+	pull
 
-tag
-    Add an additional name to a local image
+	save 
+		Save image to an archive
+		save -o myhttp.tar --format oci-archive myhttpd
+
+	tag
+		Add an additional name to a local image
 
 Image storage {{{3
 
@@ -83,8 +88,10 @@ export
 mount
     Mount a working container’s root filesystem
 
-ps
-    list containers
+Listing containers
+	ps | ls [-a/--all]
+	also containers ps | ls
+    list containers, defaults to running
 
 start
     start stopped container
@@ -235,8 +242,18 @@ buildah run -v /var/roothome:/root:rslave fedora-working-container bash
 
 Toolbox {{{1
 
-Create custom container
-	toolbox create --image <image ID or name> <new container name>
+create 
+	Create custom container.  Name is same as image plus image tag if exists
+	-d/--distro	+ -r/--release
+		specify distro to use, otherwise default's to host's
+	-i/--image
+		specify image to use
+
+		toolbox create --image <image ID or name> <new container name>
+
+list [-c/--containers | -i/--images]
+	lists containers & images
+
 
 Image Registries {{{1
 
