@@ -240,36 +240,56 @@ virsh {{{1
 
 Fedora pkg: libvirt-client
 
+Guest config:
+	Install on guest for extra virsh capabilities: qemu-guest-agent
+		e.g. 
+			virsh domifaddr --mode=agent <domain>
+			virsh snapshot-create --quiesce
+	Enable connect by 'virsh console' cmd
+		systemctl enable serial-getty@ttyS0.service
+
+
 virsh - no args
     shell for controlling vms
 
 	commands:
 		list --all
-		start
-		reboot
-		shutdown
-		destroy
-		rename
+		console
+			connect via serial 
 		edit 
 			e.g. edit --network hostonly
 
+		up/down
+			start
+			reboot
+			resume
+			shutdown
+			suspend
+			destroy - force shutdown
+			undefine --nvram  <domain> - remove shutdown domain
+	
+
+
 Remote Connections
-	virsh --connect qemu:///system <cmd> <guestname>
+	-c/--connect + URI + cmd
+	works with virsh, virt-viewer, virt-install, virt-manager
 
-	qemu+ssh://tp530/system
+		qemu:///system	
+			connect to local hypervisor (default)
+		qemu://hostname-or-ip/system
+			connect to remote hypervisor
+		virsh uri
+			show default URI
 
-	Access as non-root
-		export LIBVIRT_DEFAULT_URI=qemu:///system
-		or set in ~/.config/libvirt/libvirt.conf
+		Access as non-root
+			export LIBVIRT_DEFAULT_URI=qemu:///system
+			or set in ~/.config/libvirt/libvirt.conf
 
-	ssh alias
-		add host in .ssh/config
-		alias in libvirt.conf uri_aliases = [ "tp530=qemu+ssh://tp530/system" ]
+		ssh alias
+			add host in .ssh/config
+			alias in libvirt.conf uri_aliases = [ "tp530=qemu+ssh://tp530/system" ]
 
 
-Remove domain
-    virsh destroy <domain>
-    virsh undefine --nvram  <domain>
 
 Copy file into VM
     virt-copy-in -d ubuntu myfile /etc/default
@@ -282,21 +302,22 @@ Create new vm from existing domain definition
     virsh define vm.xml 
 
 
-
-virt-viewer 
-	remote connect
-		--connect qemu+ssh://root@play.malcolmson.ca/system demo2
-	start
-	shutdown
-	destroy - force shutdown
-	suspend
-	resume
-
 networking {{{2
+
+virsh 
+	net-list --all
+	net-info <net name>
+
 
 Types
 	default NAT using IP masquerading 
 		configured using firewall rules
+		uses bridge virbr0
+		address assignment via dnsmasq run by libvirt
+	
+		Show IP address
+			domifaddr [--mode=agent] <domain>
+			net-dhcp-leases <net name>
 	
 	Routed eg DMZ 
 		creates subnet for guests
@@ -306,19 +327,20 @@ Types
 	Bridged
 		uses created bridge, not default virbr0
 
-virsh 
-	net-list --all
-	net-info <net name>
+		show IP addresses
+			if in arp table: 
+				ip n
+			if not
+				virsh domiflist => guest MAC address
+				nmap -sP <network> | grep -B3 <MAC>
+			if qemu-guest-agent is installed on guest
+				virsh domifaddr  --domain yourvmname --source agent
 
-default / NAT network 
-	uses bridge virbr0
-	address assignment via dnsmasq run by libvirt
 
-	Show IP address
-		domifaddr <domain>
-		net-dhcp-leases <net name>
 
-Name resolution with nss-switch
+
+
+Name resolution with nss-switch (not working )
 	https://red.ht/3FVQ0A4
 	pkg: libvirt-nss
 
@@ -348,11 +370,3 @@ virt-resize
     resize disk images
 
 virsh pool-refresh
-
-Other virt apps {{{1
-
-Vagrent {{{2
-
-
-
-

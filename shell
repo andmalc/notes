@@ -126,30 +126,30 @@ Notation:
 Line Editor Key Bindings
 	Emacs mode bindings
 		
-		char
-			^f	move one char forward
-			^b	move one char back
-			^d	delete char to right (also: list completions, log out)
-			BS	delete to left
-		
-		word
-			M-f	move word forward
-			M-b	move word back
-			^w/M-BS 
-				M-BS	kill last word | delete word to left
-				^w		kill last path component
-			M-d	delete word to right
+	char
+		^f/^b	move one char forward/back
+		^d	delete char to right (also: list completions, log out)
+		BS	delete to left
+	
+	word
+		M-f	move word forward
+		M-b	move word back
+		M-BS	kill last word | delete word to left
+		^w		kill last path component
+		^-DEL	delete word to right (not in Fish)
+		M-d		delete word to right
 
-		line
-			^a	beginning of line
-			^e	end of line
-			^u	kill line left
-			^k  kill line to right
-			^y	yank back previous kill
 
-		history
-			^r	search past history
-				repeat for additional matches
+	line
+		^a	beginning of line
+		^e	end of line
+		^u	kill line left
+		^k  kill line to right
+		^y	yank back previous kill
+
+	history
+		^r	search past history
+			repeat for additional matches
 
 
 
