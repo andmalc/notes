@@ -253,34 +253,11 @@ virsh - no args
 		edit 
 			e.g. edit --network hostonly
 
-    domifaddr <domain>
-        show IP address
+Remote Connections
+	virsh --connect qemu:///system <cmd> <guestname>
 
-Remove domain
-    virsh destroy <domain>
-    virsh undefine --nvram  <domain>
+	qemu+ssh://tp530/system
 
-Copy file into VM
-    virt-copy-in -d ubuntu myfile /etc/default
-
-virsh --connect qemu:///system <cmd> <guestname>
-	list --all
-        list running & inactive domains
-
-
-virt-viewer --connect qemu+ssh://root@play.malcolmson.ca/system demo2
-	start
-	shutdown
-	destroy - force shutdown
-	suspend
-	resume
-
-Create new vm from existing domain definition
-alternative to virt-clone
-    virsh dumpxml domain > vm.xml
-    virsh define vm.xml 
-
-Connections
 	Access as non-root
 		export LIBVIRT_DEFAULT_URI=qemu:///system
 		or set in ~/.config/libvirt/libvirt.conf
@@ -290,6 +267,60 @@ Connections
 		alias in libvirt.conf uri_aliases = [ "tp530=qemu+ssh://tp530/system" ]
 
 
+Remove domain
+    virsh destroy <domain>
+    virsh undefine --nvram  <domain>
+
+Copy file into VM
+    virt-copy-in -d ubuntu myfile /etc/default
+
+
+
+Create new vm from existing domain definition
+	alternative to virt-clone
+    virsh dumpxml domain > vm.xml
+    virsh define vm.xml 
+
+
+
+virt-viewer 
+	remote connect
+		--connect qemu+ssh://root@play.malcolmson.ca/system demo2
+	start
+	shutdown
+	destroy - force shutdown
+	suspend
+	resume
+
+networking {{{2
+
+Types
+	default NAT using IP masquerading 
+		configured using firewall rules
+	
+	Routed eg DMZ 
+		creates subnet for guests
+		virtual switch on host connects to LAN
+		allows incoming connections but not from LAN without routing table config
+	
+	Bridged
+		uses created bridge, not default virbr0
+
+virsh 
+	net-list --all
+	net-info <net name>
+
+default / NAT network 
+	uses bridge virbr0
+	address assignment via dnsmasq run by libvirt
+
+	Show IP address
+		domifaddr <domain>
+		net-dhcp-leases <net name>
+
+Name resolution with nss-switch
+	https://red.ht/3FVQ0A4
+	pkg: libvirt-nss
 
 
 Graphical Virt {{{2

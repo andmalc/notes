@@ -25,6 +25,8 @@ $WAYLAND_DISPLAY
 XDG dirs
 	https://wiki.archlinux.org/title/XDG_user_directories
 	read from ~/.config/user-dirs.dirs
+	set with xdg-user-dirs-update -set <dir, e.g. DOWNLOAD>
+		list of valid dir names in man page
 
 	$XDG_RUNTIME_DIR
 		/run/user/<user id>

@@ -26,3 +26,14 @@ DNS
 		Remove Auto DNS in Network Manger ipv4 tab
 		set global server in /etc/systemd/resolved.conf
 
+
+Server setup
+
+	Cockpit
+		pkg name: cockpit
+		config
+			systemctl enable --now cockpit.socket
+			firewall-cmd --add-service=cockpit --permanent
+		
+		For VMs
+			cockpit-machines

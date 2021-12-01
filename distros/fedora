@@ -92,6 +92,8 @@ Desktop Setup & Apps {{{1
 
 Keyboard driven browser: qutebrowser
 
+Gnome Settings pkg: gnome-control-center
+
 Kitty
     Errors when connecting from Kitty to ssh host
         kitty +kitten ssh myserver
@@ -275,10 +277,7 @@ gsettings set org.gnome.desktop.background primary-color '#HEX'
 
 
 Dnf {{{1
-
-http://dnf.readthedocs.org/en/latest/command_ref.html
-
-Package management {{{2
+dnf commands {{{2
 
 Dnf <options> <command> <args eg. package spec>
     
@@ -316,7 +315,7 @@ Commands
         does not sync metadata
         see also repoquery plugin
     
-    provides <full path of file>
+    provides | wp <file name>
         shows pkg (installed or not) owning file
 
     repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
@@ -340,6 +339,7 @@ Commands
 			Capability arg, e.g. webserver
 			--whatdepends <capability> # pkgs that depend on this one
 			--whatprovides <capability>
+				same as 'dnf provides'?
 			--whatrecommends <capability>
 			--whatrequires <capability>  # pkgs requiring this one
 			--whatsuggests <capability>
@@ -380,7 +380,15 @@ History
     undo
     rollback
 
-RPM
+dnf examples {{{2
+
+List files in package
+	dnf wp <any file in package> => pkg name
+	dnf rq -l <pkg name> => lists all files in pkg
+
+
+
+RPM {{{2
 
 Show package of file
     rpm -qf <path> => package name

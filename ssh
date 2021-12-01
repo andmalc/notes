@@ -44,6 +44,8 @@ Login/Password config {{{1
 Prevent host key checking for logins to localhost
 	NoHostAuthenticationForLocalhost yes
 
+	UserKnownHostsFile /dev/null
+
 Disable password login:
 	sshd_config: PasswordAuthentication no
 	/etc/pam.d/ssh: disable unix passwords
