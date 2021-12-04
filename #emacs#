@@ -33,12 +33,12 @@ Scroll
 	M-v/C-v,Pgup/Pgdown	scroll up/down
 
 Windows
-	C-x 
-		0		delete win
-		1		delete other wins
-		2		split win below
-		3		split win right
-		o		switch to other win
+    C-x
+0 delete win 1 delete other wins
+
+2		split win below
+	3		split win right
+	o		switch to other win
 
 
 char
@@ -83,6 +83,9 @@ history
 Lisp
 	M-:	eval exp
 
+	List source file *.el
+	     eval   C-x C-e
+
 	Scratch buffer
 		enter List exp
 		pointer after closing braket
@@ -90,3 +93,5 @@ Lisp
 
 Customization
 	customize-group
+
+Hello joe lah

@@ -3,6 +3,17 @@ Flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
+Firefox Flatpak
+	kb shortcut to run in new window
+	   Settings/Keyboard/Customize Shortcuts
+	   Launchers - disable Launch web browser
+	   Custom Shortcuts - add Firefox 'flatpak run org.mozilla.firefox --new-window'
+
+Gnome Tweaks
+      Windows
+	Focus on Hover
+	Raise on Hover
+
 
 Power 
 	tuned
@@ -15,7 +26,16 @@ Networking
     nmtui 
         - text gui for nmcli
         - pkg NetworkManager-tui
-        
+
+	Wake-on-LAN
+		https://wiki.archlinux.org/title/Wake-on-LAN#Enable_WoL_on_the_network_adapter
+		server: nmcli con mod enp0s25  802-3-ethernet.wake-on-lan magic
+		ip link <eth> to show MAC address
+		client: 
+			Debian pkg wakeonlan
+			wakeonlan <MAC address of server>
+
+
 DNS
 	manual set DNS server
 	Two methods:
