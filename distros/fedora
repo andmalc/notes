@@ -9,6 +9,8 @@ Fedora 35
 	standard install: disk size 3.5G but almost 8G after update
 	install from Everything + gnome-shell  = 2.5G
 
+	Silverblue  - approx 9GB
+
 Packages to remove
 	cups-client (removes all printing)
 
@@ -319,7 +321,7 @@ Commands
         shows pkg (installed or not) owning file
 
     repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
-        search repos for packages
+        search repos packages or files matching provided file or command 
         default output is pkg name and version.  Faster than 'dnf provides'
 
 		Query options - set what info displayed about each pkg
