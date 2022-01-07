@@ -10,7 +10,11 @@ Fedora 35
 	install from Everything + gnome-shell  = 2.5G
 
 Packages to remove
+	libreoffice\* (700M)
 	cups-client (removes all printing)
+
+Pop_OS 21.10
+	5.7GB with Freedesktop flatpak runtime and removing libreoffice
 
 
 Gnome install minimal 
@@ -315,12 +319,21 @@ Commands
         does not sync metadata
         see also repoquery plugin
     
-    provides | wp <file name>
-        shows pkg (installed or not) owning file
+    provides | wp 
+	<file name>
+		shows pkg (installed or not) owning file
+	<cmd or keyword>
+		matching package names or descriptions
 
     repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
         search repos for packages
-        default output is pkg name and version.  Faster than 'dnf provides'
+        default output is pkg name and version matching either pattern matching full path or package name  
+	Faster than 'dnf provides'
+	
+	e.g
+		dnf repoquery '*/locate' #full path matching pat
+		dnf repoquery --installed kitty\* #pkg name pattern 
+
 
 		Query options - set what info displayed about each pkg
 			-l <pkg name>   list files in package

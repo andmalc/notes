@@ -1,4 +1,30 @@
 
+Silverblue 
+	packages to install in overlay
+		fish kitty kitty-terminfo
+ 
+Toolbox
+	Fish shell as default
+		env SHELL=/var/home/andmalc/.nix-profile/bin/fish toolbox enter
+
+	Cannot set locale error
+		Install in toolbox: glibc-langpack-en
+
+
+
+Default Gnome user folders - remove
+	 .config/user-dirs.dirs
+		XDG_DOWNLOAD_DIR="$HOME/Downloads"
+		XDG_TEMPLATES_DIR="$HOME/"
+		XDG_PUBLICSHARE_DIR="$HOME/"
+		XDG_DOCUMENTS_DIR="$HOME/"
+		XDG_MUSIC_DIR="$HOME/"
+		XDG_PICTURES_DIR="$HOME/"
+		XDG_VIDEOS_DIR="$HOME/"
+		XDG_DESKTOP_DIR="$HOME"
+	run  xdg-user-dirs-update and delete unwanted dirs
+
+	
 Flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 

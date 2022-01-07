@@ -36,16 +36,17 @@ getent group
 Other utils {{{1
 
 adduser 
-    high level tool, depends on perl
-    package shadow-utils
-    Fedora: adduser is symlink to useradd
+	high level tool, depends on perl
+ 	package shadow-utils
+	Ubuntu: installed by default
+	Fedora: adduser is symlink to useradd
 
 
-    adduser -g wheel -m andmalc
+	adduser -g wheel -m andmalc
 
-    adduser <username> <groupname>
-        add user to group <groupname>
-    addgroup
+	adduser <username> <groupname>
+	add user to group <groupname>
+	addgroup
 
 
 
