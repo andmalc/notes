@@ -9,6 +9,8 @@ Fedora 35
 	standard install: disk size 3.5G but almost 8G after update
 	install from Everything + gnome-shell  = 2.5G
 
+	Silverblue  - approx 9GB
+
 Packages to remove
 	libreoffice\* (700M)
 	cups-client (removes all printing)
@@ -326,9 +328,9 @@ Commands
 		matching package names or descriptions
 
     repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
-        search repos for packages
+        search repos packages or files matching provided file or command 
         default output is pkg name and version matching either pattern matching full path or package name  
-	Faster than 'dnf provides'
+		Faster than 'dnf provides'
 	
 	e.g
 		dnf repoquery '*/locate' #full path matching pat
