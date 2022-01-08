@@ -52,6 +52,11 @@ Session Managers
         save and load configs
 
 
+Misc {{{1
+
+=   Choose which buffer to paste
+
+
 Windows {{{1
 
 ,       rename window
@@ -61,7 +66,7 @@ Windows {{{1
 
 Switch/Move windows
     arrow   move to other window or pane
-    l       last window
+    l (or | ?)      last window
     1,2,3   move to window #
     n/p     switch to next/previous window
     w       choose window interactively
@@ -76,7 +81,7 @@ Options
 
 
 Panes  {{{1
-
+o         Select the next pane in the current window (?)
 -|      split-window: create new pane from vert/horiz split
 x       kill pane
 q       show pane #'s
@@ -107,6 +112,8 @@ split-window - really split pane
     shortcuts
         -   split window vertical (modified from ")
         |   split window horizontal (modified from %)
+        " Split horizontally (?)
+        % Split vertially (?)
 
 join-pane
     Merge two windows into 2 panes
@@ -122,8 +129,8 @@ join-pane
 
 resize-pane
     z   zoom
-    Ctrl + up,down, left, right
-    M+arrow  (rapid for multiple times)
+    Ctrl + arrow
+    M+arrow  (rapid for 5 times)
 
 swap-pane -DU [-s src]
     -U  numerically previous pane (show #'s with q)
@@ -175,7 +182,7 @@ Commands
 
 Key Bindings {{{1
 
-list-keys [-T <keymap>]
+? or list-keys [-T <keymap>]
 
 
 Plugins {{{1
