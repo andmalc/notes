@@ -2,8 +2,6 @@ Packages to install
 
 fedora-toolbox fish fzf git neovim python3-neovim util-linux-user vim
 
-util-linux-user for chsh
-
 
 Registry
 registry.fedoraproject.org/fedora-minimal:latest
@@ -22,7 +20,6 @@ podman run -it --rm registry.fedoraproject.org/fedora:28 dnf search strace
 
 Sytem upgrade
 
-atomic host upgrade
 rpm-ostree upgrade
 
 
@@ -30,11 +27,15 @@ Rollback
 
 rpm-ostree upgrade
 
+ostree admin upgrade --allow-downgrade --deploy-only --override-commit=<commit id>
+
 Install
 
 rpm-ostree install 
 
 
+Remove deployment
+	ostree admin undeploy
 
 Config user
     Rename fedora user for ID 1000
@@ -44,5 +45,18 @@ Config user
     Need selinux policy update to ssh in as user?
 
     Bind mount home/andmalc from volume to /home
+
+
+Install OS tree
+
+530m installed size
+dnf -y --releasever=22 --nogpg --installroot=/srv/fedora22-tree --disablerepo='*' --enablerepo=fedora groupinstall core
+
+dnf -y --releasever=23 --nogpg --installroot=/srv/f23 --disablerepo='*' --enablerepo=fedora install systemd passwd dnf fedora-release bridge-utils
+
+setenforce 0
+systemctl-nspawn -D <path to container>
+Change root password
+systemctl-nspawn -bD <path to container>
 
 

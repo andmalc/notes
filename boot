@@ -36,6 +36,7 @@ Docs:
 https://wiki.archlinux.org/index.php/EFISTUB
 https://wiki.debian.org/UEFI
 https://wiki.gentoo.org/wiki/Efibootmgr#Configuration
+https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
 
 Firmware locates ESP EFI System Partition via its GUID partition type signature.
 

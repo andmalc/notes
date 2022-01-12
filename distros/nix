@@ -1,6 +1,7 @@
 
 Install
-https://nixos.org/manual/nix/stable/#chap-quick-start
+	https://nixos.org/manual/nix/stable/#chap-quick-start
+
 bash <(curl -L https://nixos.org/nix/install)
 source $HOME/.nix-profile/etc/profile.d/nix.sh
 add above to .bashrc

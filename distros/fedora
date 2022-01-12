@@ -1,140 +1,61 @@
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
+
 Console switch on Thinkpad: Fn + Ctrl + Alt + #
 
 Install options {{{1
 
-Fedora Everything netinstall image can be used to install any Fedora Edition or your own set of favorite packages
-https://alt.fedoraproject.org/
-
 Fedora 35 
 	standard install: disk size 3.5G but almost 8G after update
-	install from Everything + gnome-shell  = 2.5G
+	Everything 
+		"Minimal Install" with Admin tools & Standard selected = 900M
+		gnome-shell (basic Gnome w/o apps)  = 730M
+		Sway 280M
+		Total install with 
+			Gnome & Firefox < 2G
+			Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
+
 
 	Silverblue  - approx 9GB
+	Fedora IoT <4G
 
-Packages to remove
-	libreoffice\* (700M)
-	cups-client (removes all printing)
-
+	Installation groups
+		basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
+    
 Pop_OS 21.10
 	5.7GB with Freedesktop flatpak runtime and removing libreoffice
 
 
-Gnome install minimal 
-sudo dnf group install gnome-desktop base-x hardware-support (for wireless)
-systemctl enable gdm.service
-systemctl set-default graphical.target
-
-Alternate WM install from server edition
-dnf groupinstall 
-    basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
-    custom-environment - ?
-    
-    Minimal-environment with Standard utils
-        Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
-        1.2GB
-
 sway + Gnome Terminal + gdm ?
+Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
+
+Alternate install {{{2
 
 Install into mounted partition
 dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
 install bootloader ?
 
+Free up space {{{1
 
-Minimal Desktop
-    2021:
-        https://www.reddit.com/r/Fedora/comments/lobnfm/guide_fedora_gnome_minimal_install/
-    Old
-        https://www.reddit.com/r/Fedora/comments/hbc29q/ansible_playbook_for_a_minimal_fedora_workstation/
-        https://www.reddit.com/r/Fedora/comments/a6c60d/my_notes_on_a_minimal_desktop_install_of_fedora_29/
-        https://www.reddit.com/r/Fedora/comments/8245vv/i_wish_fedora_workstation_had_a_minimal_desktop/
+Packages to remove
+	libreoffice\* (700M)
+	cups-client (removes all printing)
 
-Setup new VPS {{{1
+Locales
+    localectl - verify is en_US
+    delete all folders in /usr/share/locale except for en_US
 
-Have root password
-scp id_ecdsa and id_ecdsa.pub to root home dir on server.
-ssh into server as root.
-Create .ssh dir
-Move in id* files, chmod dir 500 and files 400.
-Copy id_ecdsa.pub to authorized_keys
-
-Create andmalc user with useradd -G wheel
-Visudo and enable passwordless sudo for wheel
-
-Copy .ssh dir to andmalc
-If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
-
-sudo dnf install -y git stow micro tmux fish vim 
-
-eval `ssh-agent`
-ssh-add .ssh/id_ecdsa
-
-git clone --recursive git@github.com:andmalc/config.git
+Clear dnf cache in /var/cache/PackageKit
+    pkcon refresh force
 
 
+Config {{{1
+
+Enable graphical session
+	systemctl enable gdm.service
+	systemctl set-default graphical.target
 
 
-Setup Home Dir {{{1
-
-
-git clone git@github.com:andmalc/config.git
-
-
-Fedora setup Ansible Playbook
-https://github.com/flavienbonvin/ansible-fedora-configuration
-
-https://fedoraproject.org/wiki/Unified_Extensible_Firmware_Interface
-
-
-Packages {{{1
-
-git vim-enhanced fish tmux mlocate ncdu stow ranger util-linux-user exa ccrypt
-
-gpg
-    ensure pinentry installed
-    set home dir:
-         set -x --path GNUPGHOME ~/.config/gnupg
-
-Desktop Setup & Apps {{{1
-
-Keyboard driven browser: qutebrowser
-
-Gnome Settings pkg: gnome-control-center
-
-Kitty
-    Errors when connecting from Kitty to ssh host
-        kitty +kitten ssh myserver
-
-Yubikey/U2F support
-pam-2uf u2f-hidraw-policy
-
-android-tools for adb, fastboot
-
-telegram-desktop
-dnf copr enable rommon/telegram
-
-Atom editor
-dnf copr enable mosquito/atom
-dnf install atom
-
-Brackets
-dnf copr enable dacr/brackets
-
-Chrome:
-Depends on redhat-lsb libXScrnSaver
-
-Firefox H.264 coded support
-RPMFusion repo
-ffmpeg-libs and compat-ffmpeg
-
-Fonts:
-Monospaced:
-* hack-fonts
-* levien-inconsolata-fonts
-* adobe-source-code-pro-fonts
-mozilla-fira-mono-fonts
-dejavu-sans-mono-fonts
-
-Users {{{2
+Users {{{1
 
 Show user info
     lslogins
@@ -152,7 +73,39 @@ Change shell
 
 adm for journalctl 
 
-Home Dir {{{2
+Setup new VPS {{{1
+
+Have root password
+scp id_ecdsa and id_ecdsa.pub to root home dir on server.
+ssh into server as root.
+Create .ssh dir
+Move in id* files, chmod dir 500 and files 400.
+Copy id_ecdsa.pub to authorized_keys
+
+Create andmalc user with useradd -G wheel
+Visudo and enable passwordless sudo for wheel
+
+Copy .ssh dir to andmalc
+If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
+
+sudo dnf install -y git stow micro tmux fish vim 
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
+
+eval `ssh-agent`
+ssh-add .ssh/id_ecdsa
+
+git clone --recursive git@github.com:andmalc/config.git
+
+
+
+
+Home Dir {{{1
+
+
+git clone git@github.com:andmalc/config.git
+
+Fedora setup Ansible Playbook
+https://github.com/flavienbonvin/ansible-fedora-configuration
 
 gnupg & ssh dirs
 - mod 700
@@ -189,23 +142,6 @@ BundleInstall
 Tmux
 While running, Leader + I to install plugins
 
-Pip
-wget https://bootstrap.pypa.io/get-pip.py
-python ./get-pip.py --user
-pip install --user powerline-status virtualenvwrapper
-ptpython or ipython
-
-pipenv
-
-Development Env:
-build-essential or 
-dnf groupinstall 'C Development Tools and Libraries'
-
-Android tools
-android-tools package
-
-Install libraries to allow 32 bit programs to run on 64 bit
-libstdc++.i686 ncurses-libs.i686 zlib.i686
 
 SSH config {{{3
 
@@ -238,6 +174,7 @@ Date/time
          timedatectl set-timezone America/Toronto
 
 /etc/gdm/custom.conf
+[daemon]
 AutomaticLoginEnable=True
 AutomaticLogin=andmalc
 
@@ -269,10 +206,43 @@ xinput list-props <device #>
 gsettings list-recursively  | grep touchpad
 
 
-Desktop tweaks {{{2
+Packages {{{1
 
-Arc GTK theme 
-numix icons 
+git neovim fish tmux mlocate ncdu stow ranger exa ccrypt
+
+gpg
+    ensure pinentry installed
+    set home dir:
+         set -x --path GNUPGHOME ~/.config/gnupg
+
+Pip
+wget https://bootstrap.pypa.io/get-pip.py
+python ./get-pip.py --user
+pip install --user powerline-status virtualenvwrapper
+ptpython or ipython
+
+Desktop {{{1
+
+Keyboard driven browser: qutebrowser
+
+Gnome Settings pkg: gnome-control-center
+
+Yubikey/U2F support
+pam-2uf u2f-hidraw-policy
+
+android-tools for adb, fastboot
+
+Firefox H.264 coded support
+RPMFusion repo
+ffmpeg-libs and compat-ffmpeg
+
+Fonts:
+Monospaced:
+* hack-fonts
+* levien-inconsolata-fonts
+* adobe-source-code-pro-fonts
+mozilla-fira-mono-fonts
+dejavu-sans-mono-fonts
 
 Tap to click
 sudo gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
@@ -465,29 +435,6 @@ dnf system-upgrade download --refresh --releasever=24 --allowerasing
 Return to stable:
 disable testing/rawhide repos
 dnf distro-sync
-
-Install OS tree {{{1
-
-530m installed size
-dnf -y --releasever=22 --nogpg --installroot=/srv/fedora22-tree --disablerepo='*' --enablerepo=fedora groupinstall core
-
-dnf -y --releasever=23 --nogpg --installroot=/srv/f23 --disablerepo='*' --enablerepo=fedora install systemd passwd dnf fedora-release bridge-utils
-
-setenforce 0
-systemctl-nspawn -D <path to container>
-Change root password
-systemctl-nspawn -bD <path to container>
-
-
-Free up space {{{1
-
-Locales
-    localectl - verify is en_US
-    delete all folders in /usr/share/locale except for en_US
-
-Clear dnf cache in /var/cache/PackageKit
-    pkcon refresh force
-
 
 Old {{{1
 

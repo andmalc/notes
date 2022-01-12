@@ -4,17 +4,20 @@ Fedora pkgs
 install sway\*
 
 brightnessctl
-grim - screenshots
-    bindsym $mod+Print exec grimshot copy area
+
+screenshots
+	grim - screenshots
+		bindsym $mod+Print exec grimshot copy area
 
 Launcher
 	wofi
 		config by uncommenting lines in config
 
-Status bar at bottom
+Status bar
 	waybar
 
 clipboard manager
+	CopyQ (package or flatpak com.github.hluk.copyq)
 	clipman
 	wl-clipboard (?)
 
@@ -23,25 +26,30 @@ Display management
 		https://sr.ht/~emersion/kanshi/
 
 
-mako # notification daemon
 
 
+mako - notification daemon
 
-Config
+
+Config {{{1
 
 /etc/systemd/logind.conf
     IdleAction=suspend
     IdleActionSec=30min
 
 
-Layout
-    Create terminal on one side, tabbed windows on other
-    1. switch to vertical split
-    2. create new window on side to be tabbed
-    3. switch to tabbed mode Mod W
-
 
 Launching {{{1
+
+Display Manager
+modern dms including gdm will recognise files at usr/share/wayland-sessions/
+
+	lightdm - display manager (not really needed)
+
+Launch under systemd
+	Systemd integration
+		https://github.com/alebastr/sway-systemd
+	Started by sway-session.target
 
 From .bashrc
 	if [ "$(tty)" = "/dev/tty1" ]; then
@@ -50,15 +58,13 @@ From .bashrc
 		exec sway > $XDG_RUNTIME_DIR/sway.log 2>&1
 	fi
 
-lightdm - display manager (not really needed)
-
-Launch under systemd
-	Systemd integration
-		https://github.com/alebastr/sway-systemd
-
-    Display Manager
-        modern dm's will recognise files at usr/share/wayland-sessions/
 
 
-Started by sway-session.target
+Using {{{1
+
+Layout
+    Create terminal on one side, tabbed windows on other
+    1. switch to vertical split
+    2. create new window on side to be tabbed
+    3. switch to tabbed mode Mod W
 
