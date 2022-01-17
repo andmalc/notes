@@ -14,13 +14,6 @@ useradd [-G group] name
 		basedir defaults to /home
 
 
-usermod -aG <comma sep groupnames> user
-	append group to existing
-
-usermod -s <shell path>
-    change shell
-
-groupadd, groupmod 
 
 gpasswd
     may be safer alt to usermod because can change only one group at a time
@@ -30,8 +23,23 @@ gpasswd
 getend password
 	show user passwd file entry
 
+groups {{{1
+
+usermod -aG <comma sep groupnames> user
+	append group to existing
+
+groupadd, groupmod 
+
 getent group 
     show groups and members
+
+
+shell {{{1
+
+usermod -s <shell path>
+    change shell
+
+lchsh $USER
 
 Other utils {{{1
 

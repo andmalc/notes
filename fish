@@ -115,6 +115,7 @@ set
 	 -a --append
 	 --path
 		  treat as path var
+		  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
 
 	-q --query <var> ...
 		return status = 0 if var initialized, 1 for each not
@@ -230,6 +231,12 @@ is var set (including set to empty string)?
 is first element of list var set?  Is false if var is not a list.
         set -q var[1]
 
+Other test expressions
+	is item in list?
+		contains item $list
+
+
+
 
 
 Functions {{{1
@@ -290,6 +297,11 @@ read foo
 Other Builtins {{{1
 
 cdh
+
+contains
+	test if a word is present in a list
+	returns 0 on true, 1 on false
+
 count
     status false if 0
 

@@ -1,4 +1,3 @@
-Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
 
 # Podman
 
@@ -66,7 +65,7 @@ Push to Docker.io
     buildah push echo docker.io/andmalc/echo:blog
 
 
-## Containers
+### Containers
 
 attach
     attach to running container
@@ -108,10 +107,13 @@ top
 
 
 ### run
-https://github.com/containers/libpod/blob/master/docs/podman-run.1.md
+
+[man](https://github.com/containers/libpod/blob/master/docs/podman-run.1.md)
+
 
 run command in a new container 
-run <container> <options> -- <cmd> 
+	`run <container> <options> -- <cmd>`
+
 
 Options
 
@@ -142,7 +144,7 @@ in production
     runc - lightweight universal run time container,
     containerd - complete container lifecycle runtime, uses runc
     CRI-O 
-
+%%%%
 
 
 
@@ -261,6 +263,7 @@ create
 list [-c/--containers | -i/--images]
 	lists containers & images
 
+Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
 
 # Image Registries
 
