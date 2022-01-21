@@ -224,6 +224,7 @@ ptpython or ipython
 Find and Search
 	fzf
 	ripgrep
+	fd-find
 
 
 Desktop {{{1
