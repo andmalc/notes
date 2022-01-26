@@ -1,37 +1,12 @@
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
-Fedora pkgs
+Install & Config {{{1
 
-install sway\*
-
-brightnessctl
-
-screenshots
-	grim - screenshots
-		bindsym $mod+Print exec grimshot copy area
-
-Launcher
-	wofi
-		config by uncommenting lines in config
-
-Status bar
-	waybar
-
-clipboard manager
-	CopyQ (package or flatpak com.github.hluk.copyq)
-	clipman
-	wl-clipboard (?)
-
-Display management
-	kanshi
-		https://sr.ht/~emersion/kanshi/
-
-
-
-
-mako - notification daemon
-
-
-Config {{{1
+Fedora pkgs:  
+	install sway\*
+	brightnessctl
+	clipman, wl-clipbord
+	swaybg
 
 /etc/systemd/logind.conf
     IdleAction=suspend
@@ -43,6 +18,7 @@ Launching {{{1
 
 Display Manager
 modern dms including gdm will recognise files at usr/share/wayland-sessions/
+Integration with logind provides DBus/PolKit/power management
 
 	lightdm - display manager (not really needed)
 
@@ -60,7 +36,36 @@ From .bashrc
 
 
 
+Add ons {{{1
+
+screenshots
+	grim - screenshots
+		bindsym $mod+Print exec grimshot copy area
+
+Launcher
+	wofi
+		config by uncommenting lines in config
+
+Status bar
+	waybar
+
+clipboard manager
+	CopyQ (package or flatpak com.github.hluk.copyq)
+	clipman
+	wl-clipboard (?)
+	cliphist 
+
+Display management
+	kanshi
+		https://sr.ht/~emersion/kanshi/
+
+mako - notification daemon
+
+
 Using {{{1
+
+Scratchpad
+	Remove app: $mod-shift-space to toggle window out of floating mode
 
 Layout
     Create terminal on one side, tabbed windows on other

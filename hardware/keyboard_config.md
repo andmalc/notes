@@ -9,12 +9,27 @@ https://sw.kovidgoyal.net/kitty/faq.html#how-can-i-assign-a-single-global-shortc
 
 Utils 
 
-loadkeys - load keyboard translation tables
+load keyboard translation tables
+	loadkeys
 
+
+### kitty
+kitty +kitten show_key
+	key code output for 'send_text'
+
+ kitty --debug-input
+	use 'native_code' with map
+	`map ctrl+0x61 something`
 
 Backspace cannot be used in combination with other keys
 	https://github.com/fish-shell/fish-shell/issues/3730
 
+Modifiers
+	Terminal apps: only Ctrl and Alt available
+	Multiple mods: only Shift Alt and Ctrl Alt are reliable
+	No reliable way to distinguish single Esc press from strt of escape seq
+	
+	
 Alt escape \e
 	is case sensitive
 

@@ -21,6 +21,13 @@ Files
 	^x^s		save file
 	^x arrows	next/prev buffe
 
+Buffer
+	M </>		move to top/end of buffer
+	C-Home/End
+	M-gg #		move to line #	
+	^xk		close file
+	^x^b		list buffers in other window
+
 Windows
     C-x
 	0		delete win
@@ -40,13 +47,6 @@ Editing
 	M-w		copy/kill-region-save
 	^w		cut/kill-region
 	^x^u		upper case region
-
-Buffer
-	M </>		move to top/end of buffer
-	C-Home/End
-	M-gg #		move to line #	
-	^xk		close file
-	^x^b		list buffers in other window
 
 Scroll
 	M-r		vertical centre point 
