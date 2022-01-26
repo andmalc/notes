@@ -4,9 +4,29 @@ overview
 image server site
     https://us.images.linuxcontainers.org/
 
-vmc
-    manage VM's
-    termina vm is default
+Management
+	start in Crosh (Ctrl+Alt+T)
+	Start and log in to termina default vm.
+		vmc list
+			shows VMs.  
+			termina is defualt.
+		vmc start termina
+			starts and logs in to termina
+		or:
+		vsh termina
+			difference from above?
+
+	lxc list
+		shows containers
+	lxc start <container>
+		if doesn't work, logout and run 'vmc container termina penguin'
+
+Flatpak error 'Can't mount proc on /newroot/proc'
+	from termina prompt
+		`lxc config set penguin security.nesting true`
+		`lxc restart penguin`
+
+
 
 lxd
     manage application containers

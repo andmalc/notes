@@ -9,6 +9,7 @@ Fedora 35
 	Everything 
 		"Minimal Install" with Admin tools & Standard selected = 900M
 		gnome-shell (basic Gnome w/o apps)  = 730M
+		gdm - pulls in Gmome Control Centre + power management ? = 300M
 		Sway 280M
 		Total install with 
 			Gnome & Firefox < 2G

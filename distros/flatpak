@@ -12,12 +12,6 @@ Point to WAyland socket
 
 Manage permissions: Flatseal
 
-Applications {{{1
-
-list
-	show installed apps and runtimes
-
-
 Remotes {{{1
 
 remotes
@@ -26,38 +20,32 @@ remotes
 remote-add <options> <repo file or URL>
 	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-flatpak search
-	search packages at remotes
 
-List packages at remote - not a search
-	flatpak remote-ls flathub
+Packages {{{1
 
+Remote package name search
+	flatpak search <text in name>
+	case insensitive search for text in package names at remotes
 
-
-flatpak --user update && flatpak --user search atom
+List apps at remote
+    flatpak remote-ls --app flathub 
 
 Show package details
-flatpak remote-info flathub io.atom.Atom
-
+	flatpak remote-info flathub io.atom.Atom
 
 Install & Manage {{{1
 
 install
     flatpak --user install flathub io.atom.Atom
 
-search
-    flatpak remote-ls --app --user flathub <pattern>
-    flatpak search <pattern>
+Installed apps {{{1
 
-
-list
+List local
     List installed runtimes and packages
     -d  detailed
 
-    flatpak list -d 
-
-info
-    flatpak info --show-permissions
+Installed pkg info
+    flatpak info <pkg name>
     
 ps
     list running instances and runtimes
