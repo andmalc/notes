@@ -2,7 +2,7 @@
 https://developerlife.com/2021/01/19/fish-scripting-manual/
 
 
-eval (ssh-agent -c)
+`eval (ssh-agent -c)`
 
 Kill ring
 	Ctrl K	kill to line end
@@ -10,7 +10,7 @@ Kill ring
 	Alt Y		restores more from history
 
 
-History {{{1
+# History {{{1
 
 Insert previous last arg: Alt up
 
@@ -36,7 +36,7 @@ history - shows events newest first
     cdh                 dir history list
 
 
-Config {{{1
+# Config {{{1
 
 
 First time setup 
@@ -45,10 +45,10 @@ First time setup
 PATH
     set fish_user_paths <paths>
 
+## Keybinding {{{2
+
 Key Bindings
 https://fishshell.com/docs/current/cmds/bind.html
-
-Keybinding {{{2
 
 Add bindings to fish_user_key_bindings function
 
@@ -64,14 +64,14 @@ man bind
 
 bind \x7F 'backward-kill-bigword'
 
-Tab Completion {{{1
+# Tab Completion {{{1
 
 Accept      
 	all         Ctrl + F
 	one word    Alt right arrow
 
 
-Data Types {{{1
+# Data Types {{{1
 
 All variables are lists of strings
 Can interate over and slice
@@ -104,7 +104,7 @@ Array
 set myarray a b c
 echo $myarray[1]
 
-Variables {{{1
+# Variables {{{1
 
 https://fishshell.com/docs/current/#variables
 
@@ -138,9 +138,11 @@ set
 		list all vars or limit to var type with scope option
 		e.g. show exported global    -xg
         
+PATH
+	fish_add_path in config
+	https://fishshell.com/docs/current/cmds/fish_add_path.html
 
-
-Abbreviations {{{1
+# Abbreviations {{{1
 
 word that expands to a phrase
 are universal variables saved in .config/fish/fish_variables 
@@ -162,7 +164,7 @@ Config.fish example (usually not needed)
         # etcetera
     end
 
-Alias {{{1
+# Alias {{{1
 
 function that wraps a command
 

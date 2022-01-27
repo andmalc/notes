@@ -118,7 +118,7 @@ Create with split
     vert sba     split all buffers vertical
 
 Move Between Windows
-     C-W (twice)  Last window
+     c-w (twice)  Last window
      arrow key    move to window in direction of arrow
 		w				Move to window below (wrap)
 		W				Move to window above (wrap)
@@ -288,19 +288,18 @@ insert text from buffer or register into cmd or search
 Edit Modes {{{1
 Normal mode {{{2
 
+Enter Insert mode
+	i/a		Insert before/after cursor
+	I/A		Insert before first non-blank in line/end of line
+	o			Open line below
+	O			Open line above
+   gi       go to last edit and insert
+	gI			insert text at column 1
+	cc/C		change whole line/to end of line
+
 Edit & remain in Normal mode
 	r<char>	replace char
 	r<CR>		insert line break
-
-Enter Insert mode
-	i			Insert- enter text before cursor
-	a,A			Append, as for i 
-	o			Open line below
-	O			Open line above
-	I			insert text before first non-blank in line
-   gi       go to last edit and insert
-	gI			insert text at column 1
-	s/S		change char/whole line
 
 Repeat last edit: .
 
@@ -357,21 +356,12 @@ Character
 	h/l     left/right
 	space	move right
 
-Move to Character on same line
-   t/T	go right/left to left of char
-   f/F	as above but onto char
-
-   eg: c2t) - change within 2nd bracket
-
-repeat latest f, t, F or T N times
-   ;				
 
 Words
 	w/W	beginning of next word
 	b/B	move to beginning of current word
 	e/E	move to end of current word
 	*/#	to next/prev word under cursor
-
 
 Line
 	j/k     up/down
@@ -384,13 +374,18 @@ Sentences etc.
 ]],[[	sections, forward, backward, start of sect
 ][,[]			""				, end of sect
 
-Paragraph 
-	Top/middle/bottom   H/M/L
+Move to Character
+   t/T	go right/left to left of char
+   f/F	as above but onto char
+	repeat latest f, t, F or T: ;				
+
 
 Screen
-   Ctrl d   half screen down
-   Ctrl b   Moves screen up one page, cursor to last line
-   Ctrl f   Moves screen down one page, cursor to first line
+	Top/middle/bottom   H/M/L
+	c-u		cursor up half screen
+	c-d		cursor down half screen
+   c-b   Moves screen up one page, cursor to last line
+   C-f   Moves screen down one page, cursor to first line
 
 		
 Scrolling {{{1
