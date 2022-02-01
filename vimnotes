@@ -2,9 +2,6 @@ Edit tips:
 "object-action" selection: 
    vipd - visually select and delete para
 
-Check out:
-Completion plugin for NVim: https://github.com/Shougo/deoplete.nvim
-
 Edit command layout. [] indicates optional
     [count] {operator} {[count] motion|text object}
 
@@ -309,6 +306,18 @@ Repeat change on multi lines (e.g. commenting all)
 3. Make change
 4. Esc
 
+Edit with markers {{{2
+
+i<marker>
+	Edit within markers
+	Marker = ([{<"
+	When used with edit commands, affects text within marker pairs
+t<marker>
+	Edit until marker
+
+
+
+
 
 Insert mode {{{2
 
@@ -335,18 +344,6 @@ Indents
 ?
 	C-V    Insert next non-digit literally
 	C-O		Next one keystroke in normal mode
-
-
-Edit with markers {{{2
-
-i<marker>
-	Edit within markers
-	Marker = ([{<"
-	When used with edit commands, affects text within marker pairs
-t<marker>
-	Edit until marker
-
-
 
 
 Cursor Movement {{{1
@@ -414,18 +411,7 @@ jump to last edit & Insert
 '.    jump to last changed line    
 %     jump to corresponding item, e.g. brace to brace
 
-Marks {{{1 
-
-ma			set mark with alpha char
-
-`a			go to mark
-'ma		go to beginning of line with mark		
-
-Tags {{{1
-
-:ts /pat	tag select arg is a regex
-
-Inserting {{{1
+Insert from Clipboard or file {{{1
 
 Foolproof paste
 	:r! cat 

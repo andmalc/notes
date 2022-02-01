@@ -15,6 +15,9 @@ Desktop appliction files
 		desktop files
 			~/.local/share/applications/
 
+Environment Variables
+	/etc/environment
+	.config/environment/xxx.conf (not read by ssh session)
 
 
 $WAYLAND_DISPLAY

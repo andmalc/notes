@@ -1,6 +1,8 @@
 Troubleshooting
 https://freedesktop.org/wiki/Software/systemd/Debugging/
 
+Tutorial with live system in browser
+	https://systemd-by-example.com/
 
 Show monitored services, sorted by system, client slices, shows PIDs
     systemctl [--user] status

@@ -1,4 +1,5 @@
-https://sparkylinux.org/
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
+
 
 Default text editor
 	sudo update-alternatives --config editor
@@ -60,6 +61,17 @@ Installation sizes
 general setup {{{1
 
 packages {{{2	
+
+Alternative package managers
+	Pacstall https://github.com/pacstall
+		Install packages from source
+	Package list
+		https://github.com/pacstall/pacstall-programs/tree/master/packages
+
+	Nala https://old.reddit.com/r/linux/comments/sadehj/nala_v030_a_prettier_frontend_for_apt/
+		Improved apt
+		Finds fastest mirrors
+		Undo installs
 
 sudo zsh vim rsync screen tree rdate yafc pmount bzip2
 zsh-static, openssh-server (w/o Recommends)
