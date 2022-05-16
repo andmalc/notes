@@ -379,10 +379,9 @@ Move to Character
 
 Screen
 	Top/middle/bottom   H/M/L
-	c-u		cursor up half screen
-	c-d		cursor down half screen
-   c-b   Moves screen up one page, cursor to last line
+	c-u/d	cursor up/down half screen, cursor to first line
    C-f   Moves screen down one page, cursor to first line
+   c-b   Moves screen up one page, cursor to last line
 
 		
 Scrolling {{{1

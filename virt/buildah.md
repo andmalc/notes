@@ -1,5 +1,6 @@
 
-# Podman
+
+# Podman {{{1
 
 Examples 
 	https://www.mankier.com/1/podman-run#Examples
@@ -14,7 +15,7 @@ Perist container after logout
     Also allows sudo with rootless container
 
 
-## Images
+## Images {{{2
 
 images
 	lists images
@@ -46,7 +47,7 @@ subcommand image
 
 
 
-### Image storage
+### Image storage {{{3
 
 Default repository
 /var/lib/containers/storage
@@ -65,7 +66,7 @@ Push to Docker.io
     buildah push echo docker.io/andmalc/echo:blog
 
 
-### Containers
+## Containers {{{2
 
 attach
     attach to running container
@@ -106,7 +107,7 @@ top
     show processes running within container
 
 
-### run
+## run {{{2
 
 [man](https://github.com/containers/libpod/blob/master/docs/podman-run.1.md)
 
@@ -148,7 +149,7 @@ in production
 
 
 
-## Info
+## Info {{{2
 
 info 
     Display system info
@@ -168,12 +169,12 @@ ports <cont>
 top <container id>
     show process info: USER, Process ID, Parent Process ID
 
-# Buildah
+# Buildah {{{1
 
 https://github.com/projectatomic/buildah
 buildah <cmd> <options> <container ID>
 
-config {{{2
+## config {{{2
 
 https://github.com/projectatomic/buildah/blob/master/docs/buildah-config.md
 
@@ -191,7 +192,7 @@ config <options> <container>
 --workingdir
     
 
-## copy
+## copy {{{2
 
 Copy file into container
 buildah copy <options> <container> SRC [[...] DEST]
@@ -202,7 +203,7 @@ Options
 Example
     buildah copy --chown myuser:mygroup containerID '/myapp/app.conf' '/myapp/app.conf'
 
-commit {{{2
+## commit {{{2
 
 Saves working container to image available to run by podman or runc
 
@@ -234,7 +235,7 @@ Buildah run does not execute entrypoint
 <container ID>  mounts root fs of container, returns mnt point
 <no args>       lists mounts
 
-## Buildah Examples
+## Buildah Examples {{{2
 
 Install package in container
     buildah run $contaidner -- dnf -y install java
@@ -248,7 +249,9 @@ buildah run -v /var/roothome:/root:rslave fedora-working-container bash
     -b <bundle dir - default current>
 
 
-# Toolbox
+# Toolbox {{{1
+
+Install on Ubuntu & other distros: distrobox
 
 create 
 	Create custom container.  Name is same as image plus image tag if exists
@@ -265,27 +268,29 @@ list [-c/--containers | -i/--images]
 
 Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
 
-# Image Registries
 
-Fedora Registry
-https://registry.fedoraproject.org/
+# Misc {{{1
 
-# Topics
-Filesystem issues {{{2
+Image Registries
 
-Mount host dir into container
-chcon -Rt svirt_sandbox_file_t <dir>
-    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
+	Fedora Registry
+	https://registry.fedoraproject.org/
 
-Permissions issue fix:
-    chcon -R -h -t container_file_t /var/roothome
+Filesystem issues 
 
-Share local files with containers
-sudo chcon -R -h -t container_file_t /srv
-buildah run -v /srv:/srv:rslave fedora-working-container bash
+	Mount host dir into container
+	chcon -Rt svirt_sandbox_file_t <dir>
+	    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
+
+	Permissions issue fix:
+	    chcon -R -h -t container_file_t /var/roothome
+
+	Share local files with containers
+	sudo chcon -R -h -t container_file_t /srv
+	buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 
-## Running a server
+Running a server
 
 Pull image.
 Inspect to show metadata

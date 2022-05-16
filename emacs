@@ -19,7 +19,7 @@ App
 Files
 	^x^f		open file
 	^x^s		save file
-	^x arrows	next/prev buffe
+	^x l/r arrows	next/prev buffe
 
 Buffer
 	M </>		move to top/end of buffer
@@ -37,7 +37,7 @@ Windows
 	o		switch to other win
 
 Editing
-	^SPC ^@		set mark
+	^SPC / ^@	set mark
 	^SPC ^SPC	set mark then deactivate it
 	^u ^SPC		jump to mark
 	M-@		select following word, point remains at beginning
