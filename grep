@@ -1,6 +1,6 @@
 Filtering tool
 
-grep pat path 
+grep options pat path 
 
 options
     -c pat	Count occurences of pattern
@@ -14,7 +14,9 @@ options
 
     -o  print only matched part of line, matches on separate lines
 
-     -E, --extended-regexp
+	--exclude-dir=<dir>
+	--exclude-dir={<dir>,<dir>}
+
 
 Pattern Matching {{{1
 
