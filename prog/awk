@@ -1,8 +1,11 @@
+Docs
+	https://learning-oreilly-com.ezproxy.torontopubliclibrary.ca/library/view/sed-awk/1565922255/ch07s05.html#sedawk-ch-7-sect-5.1
 
-awk 'instructions' inputfile
 
-Instructions:
-	<pattern or condition> {action}
+awk [options] 'instructions' inputfile
+
+	Instructions:
+		[<pattern or condition>] {action}
 
 E.g.
 	awk -F, '/MA/ { print $1 }' listfile
@@ -11,12 +14,13 @@ Multilines can be entered like for sed: semicolon separted or using shell muliti
 
 Options
 	-f		script file
-    -F "x"  field separator, can be a regex
+    -F "x"  field separator, can be a regex e.g. \t for tab
 
 
 Pattern/expressions preceeding blocks {{{1
 
-If true, action in block is executed
+If true, action in block is executed on each selected input line
+If missing, action taken on each line
 
 Regex /<pat>/
     uses extended regex like egrep
@@ -27,16 +31,25 @@ Boolean expressions
 	With comparison operators -  "==", "<", ">", "<=", ">=", and "!="
 		$6 == "November" #equals
 
-	String contants in double quotes
-	Regex Metacharacters
+	Boolean operator statement
+	|| - OR
+	&& - AND
+
+	Field operators
+		$0	entire record
+		$1 etc.	field position
 
 	Match operators, used with regexes
-
 		$1 ~ /Blah/     #matches 
 		$1 !~ /Blah/     #does not match
 
+	String contants in double quotes
+
 
 Variables {{{1
+
+Set in BEGIN block
+	{ var_one = value; var_two = value }
 
 auto set:
 NF 	number of fields
@@ -55,14 +68,10 @@ ORS output record separtor. Defaults to \n
 
 Scripts {{{1
 
-BEGIN block
-    commands run before processing of lines 
+BEGIN/END blocks
+    commands run before/after processing of lines 
 
 
-
-Boolean operator statement
-|| - OR
-&& - AND
 
 
 
