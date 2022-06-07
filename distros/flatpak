@@ -20,6 +20,8 @@ remotes
 remote-add <options> <repo file or URL>
 	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+Update Gnome Software after adding a remote
+	flatpak update --appstream
 
 Packages {{{1
 
