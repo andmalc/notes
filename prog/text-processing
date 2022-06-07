@@ -1,3 +1,15 @@
+TEXT ARRANGING & TRANSFORMING UTILITIES
+
+Redirection {{{1
+
+Operators for chaining commands
+	;		process cmd on left followed by cmd on right
+	|		pipe std out of cmd on left to std in of cmd on right
+	>/>>	send/append output of cmd to file
+	<		use file on right as std in for cmd on left
+
+
+Docs {{{1
 
 https://bconnelly.net/posts/working_with_csvs_on_the_command_line/
 
@@ -5,7 +17,7 @@ Filter with multiple includes and includes
 https://superuser.com/questions/537619/grep-for-term-and-exclude-another-term
 
 
-Program types:
+Program types {{{1
 - Filters
     Take arbitrary input from file or stdin and usually modify and output same data
     e.g. grep, sort, sed, awk
@@ -23,8 +35,12 @@ cat - concatenate files
     cat > targetfile # type in lines below, end with c+d
 
 
-csvkit
-    https://csvkit.readthedocs.io/en/1.0.3/
+
+Programs {{{1
+
+Filters {{{2
+
+awk
 
 cut
     extract input on tabs into fields
@@ -32,6 +48,22 @@ cut
     -f #-# field or fields to extract
     -d  delimiter instead of tabs
     -c  select character range by position
+
+grep
+
+head/tail
+    output last ten lines
+    -n #    last # lines
+    -n +#   ten lines starting at line #
+
+    15 lines starting at 100
+        head -n 100 | tail -n 15
+
+Others {{{2
+
+csvkit
+    https://csvkit.readthedocs.io/en/1.0.3/
+
 
 curl
     Download and pipe file
@@ -72,26 +104,24 @@ less
 paste f1 f2
     combine contents of files into columns
     
-sort
+Sort	Sorts by fields, from left to right
     sort by column two
         sort -k 2 <file>
     sort by column two then by column one
         sort -k2,2 -k1,1 <file>
     Plus other sorting types
 
+
+	+<n>	Sort on field n (zero-based, from left)
+	-<n>	Don't sort on field n
+
+	-n	specify numbic sort on field
+
 tee
     read from standard input and write to standard output and files
     -a  append
 
     seq -f "Line %g" 10 | tee lines
-
-tail
-    output last ten lines
-    -n #    last # lines
-    -n +#   ten lines starting at line #
-
-    15 lines starting at 100
-        head -n 100 | tail -n 15
 
 tr
     translate characters

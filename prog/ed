@@ -1,0 +1,50 @@
+
+
+Start with asterik for command prompt
+     ed -p\*
+
+Format:
+    <line or range selection><command>
+
+Range selection
+    current line:       .
+    end of buffer       $
+    Range of lines:     #,#
+    Entire buffer:      ,/%/1,$
+    Relative            +# -#
+    Regex               g/pat/
+                        v/pat/  inverted
+
+
+Editor commands
+longer error mgs    H
+append              a / exit with .
+change              c
+copy                t
+delete              d
+join lines          j
+mark                k
+mark referal        '
+move                m
+read file           r
+read overwriting 
+    existing        e
+substitute          s
+print               p
+print with line #   n
+write/append to file w/W
+
+read output of command
+    r !ps -e
+
+
+Regex selection + command
+    g/pat/m$
+    s/old/new
+
+    with sufixes
+    p   print
+    g   match all on line
+    m#  move matched line to line #
+
+Search forward/back / ?
