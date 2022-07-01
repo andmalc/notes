@@ -127,13 +127,14 @@ Diff {{{2
 
 Changes to file contents
 
-no arg		changes to tracked files not staged
+no arg			changes to tracked files not staged
+				i.e. changes between working tree and index
 --cached cid	changes in index relative to cid
 --staged		same as --cached
 
+HEAD        	changed + staged vs. current commit
 cid             changes to tracked + newly tracked vs. cid
 cid cid         changes to tracked + newly tracked vs. cid
-HEAD        	staged vs. current commit
 HEAD\^ HEAD	show diffs between last two commits.  Prefix noglob in zsh for no ^ escape needed
     
 diff for single file
@@ -250,14 +251,8 @@ git commit -m "Revert to 56e05fced"
         git fetch origin
         git reset --hard origin/master
 
-    Reset/Restore one file from earlier commit
-	    checkout <commit ID> <file path>
-
 #Reset remote (e.g. on GitHub)
 --hard origin -f
-
-Restore a file verion before a commit
-    checkout <commit>~1 -- <file name>
 
 
 Branches {{{1
@@ -433,9 +428,19 @@ Remove files
 	rm		Deletes file/directory
 	rm --cached		Untracks files/directoires
 
+
 Unstage file
 	reset <file>
     git reset HEAD <fn>
+
+Reset/Restore file in working dir but not staged, ie from index
+	checkout <file path>
+
+Reset/Restore one file from earlier commit
+	checkout <commit ID> <file path>
+
+Restore a file verion before a commit
+    checkout <commit>~1 -- <file name>
 
 Undelete files staged but not commited:
     git checkout -- <fn>

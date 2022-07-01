@@ -2,32 +2,39 @@
 
 Console switch on Thinkpad: Fn + Ctrl + Alt + #
 
-Install options {{{1
+Install options & disk space {{{1
 
-Fedora 35 
-	standard install: disk size 3.5G but almost 8G after update
-	Everything 
-		"Minimal Install" with Admin tools & Standard selected = 900M
-		gnome-shell (basic Gnome w/o apps)  = 730M
-		gdm - pulls in Gmome Control Centre + power management ? = 300M
-		Sway 280M
-		Total install with 
-			Gnome & Firefox < 2G
-			Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
+Fedora 35 {{{2
+
+standard install: disk size 3.5G but almost 8G after update
+Everything 
+	"Minimal Install" with Admin tools & Standard selected = 900M
+	gnome-shell (basic Gnome w/o apps)  = 730M
+	gdm - pulls in Gmome Control Centre + power management ? = 300M
+	Sway 280M
+	Total install with 
+		Gnome & Firefox < 2G
+		Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
 
 
-	Silverblue  - approx 9GB
-	Fedora IoT <4G
+Silverblue  - approx 9GB
+Fedora IoT <4G
 
-	Installation groups
-		basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
+Installation groups
+	basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
     
-Pop_OS 21.10
+Pop_OS 21.10 {{{2
 	5.7GB with Freedesktop flatpak runtime and removing libreoffice
 
 
 sway + Gnome Terminal + gdm ?
 Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
+
+Boot and EFI partition sizes {{{2
+
+Fedora
+	/boot	300M, 150M on Silverblue
+	/efi	<20M
 
 Alternate install {{{2
 
@@ -209,18 +216,13 @@ gsettings list-recursively  | grep touchpad
 
 Packages {{{1
 
-git neovim fish tmux mlocate ncdu stow ranger exa ccrypt
+git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf
 
 gpg
     ensure pinentry installed
     set home dir:
          set -x --path GNUPGHOME ~/.config/gnupg
 
-Pip
-wget https://bootstrap.pypa.io/get-pip.py
-python ./get-pip.py --user
-pip install --user powerline-status virtualenvwrapper
-ptpython or ipython
 
 Find and Search
 	fzf

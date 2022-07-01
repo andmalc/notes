@@ -50,19 +50,26 @@ PATH
 Key Bindings
 https://fishshell.com/docs/current/cmds/bind.html
 
-Add bindings to fish_user_key_bindings function
-
-fish_key_reader - outputs bind statement for key
-
-bind
+fish_key_reader - outputs bind statement for key bind
 	-k <term>	search for existing binding
 	-K		show special key names
 
+bind cmd
+	bind <sequence> <comd>
+	Adds bindings using fish_user_key_bindings function
+
+	Spec sequence using escapes + key
+		\e		Alt
+		\c		Cmd
 
 man bind
 	list of special input names e.g. beginning-of-line
 
 bind \x7F 'backward-kill-bigword'
+
+# Ctrl H = backspace
+bind \b backward-delete-char 
+
 
 # Tab Completion {{{1
 
@@ -243,15 +250,20 @@ Other test expressions
 
 Functions {{{1
 
-Define      function <func name>
-                ...
-            end
+function
+	Define a function
+		function <func name>
+          ...
+		end
+	options
+		erase function from curent session but not function file   
+		--erase | -e
 
-Edit        funced [--save]
-Save        funcsave <function name>
-            functions <func name> > ~/.config/fish/functions
-Erase function from curent session but not function file   --erase | -e
-List        functions   
+funced [--save]
+	Edit a function
+
+funcsave <function name>
+
 Show function location      -D <func name>
 Show source     functions <func name>
 
