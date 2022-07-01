@@ -184,7 +184,6 @@ Key Bindings {{{1
 
 ? or list-keys [-T <keymap>]
 
-
 Plugins {{{1
 
 tpm manager

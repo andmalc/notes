@@ -23,19 +23,28 @@ Sytem upgrade
 rpm-ostree upgrade
 
 
-Rollback
+	Auto upgrade
+		/etc/rpm-ostreed.conf
+			AutomaticUpdatePolicy=check
+		rpm-ostree reload
+		systemctl enable rpm-ostreed-automatic.timer --now
 
-rpm-ostree upgrade
+
+
+Rollback
 
 ostree admin upgrade --allow-downgrade --deploy-only --override-commit=<commit id>
 
-Install
-
-rpm-ostree install 
-
+rpm-ostree rollback fedora/35/x86_64/system
 
 Remove deployment
 	ostree admin undeploy
+
+
+Reset
+	removes all overlays, overrides and initramfs
+		rpm-ostree ex reset
+
 
 Config user
     Rename fedora user for ID 1000

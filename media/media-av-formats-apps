@@ -17,6 +17,11 @@ containers {{{1
     avi (A-V Interweave)
 
 video codecs {{{1
+	HEVC Video Extensions/H.265
+		Non-free codec for better compression
+		Default in Android Photo app but can disable
+		Pay for MS Photos app support in Windows Store
+
 	H.264
 		high quality but moderate file size
 	FFmpeg

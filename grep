@@ -1,6 +1,6 @@
 Filtering tool
 
-grep pat path 
+grep options pat path 
 
 options
     -c pat	Count occurences of pattern

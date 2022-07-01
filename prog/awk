@@ -1,74 +1,26 @@
-Ed {{{1
-
-Start with asterik for command prompt
-     ed -p\*
-
-Format:
-    <line or range selection><command>
-
-Range selection
-    current line:       .
-    end of buffer       $
-    Range of lines:     #,#
-    Entire buffer:      ,/%/1,$
-    Relative            +# -#
-    Regex               g/pat/
-                        v/pat/  inverted
+Docs
+	https://learning-oreilly-com.ezproxy.torontopubliclibrary.ca/library/view/sed-awk/1565922255/ch07s05.html#sedawk-ch-7-sect-5.1
 
 
-Editor commands
-longer error mgs    H
-append              a / exit with .
-change              c
-copy                t
-delete              d
-join lines          j
-mark                k
-mark referal        '
-move                m
-read file           r
-read overwriting 
-    existing        e
-substitute          s
-print               p
-print with line #   n
-write/append to file w/W
+awk [options] 'instructions' inputfile
 
-read output of command
-    r !ps -e
+	Instructions:
+		[<pattern or condition>] {action}
 
+E.g.
+	awk -F, '/MA/ { print $1 }' listfile
 
-Regex selection + command
-    g/pat/m$
-    s/old/new
-
-    with sufixes
-    p   print
-    g   match all on line
-    m#  move matched line to line #
-
-Search forward/back / ?
-
-
-Docs 
-
-https://www.ibm.com/developerworks/linux/library/l-awk1/index.html?ca=drs-
-Basics cat /etc/passwd | awk -F: {print $1,$3,$5}
-
+Multilines can be entered like for sed: semicolon separted or using shell mulitine input.
 
 Options
-    -F "x"  field separator, can be a regex
-
-<conditional expression> {action}
-Peform action on all lines that eval to true
-If just pattern, prints all matching lines
-If just action, acts on lines
-$# in action is field #
+	-f		script file
+    -F "x"  field separator, can be a regex e.g. \t for tab
 
 
-Expressions preceeding blocks {{{1
+Pattern/expressions preceeding blocks {{{1
 
-If true, action in block is executed
+If true, action in block is executed on each selected input line
+If missing, action taken on each line
 
 Regex /<pat>/
     uses extended regex like egrep
@@ -76,23 +28,28 @@ Regex /<pat>/
 
 Boolean expressions
 
-With comparison operators -  "==", "<", ">", "<=", ">=", and "!="
-    $6 == "November" #equals
+	With comparison operators -  "==", "<", ">", "<=", ">=", and "!="
+		$6 == "November" #equals
 
-Match operators, used with regexes
-    $1 ~ /Blah/     #matches 
-    $1 !~ /Blah/     #does not match
+	Boolean operator statement
+	|| - OR
+	&& - AND
 
-Null field
-	!$<field #>
+	Field operators
+		$0	entire record
+		$1 etc.	field position
 
-Strings {{{1
+	Match operators, used with regexes
+		$1 ~ /Blah/     #matches 
+		$1 !~ /Blah/     #does not match
 
-String contants in double quotes
+	String contants in double quotes
 
-Regex Metacharacters
 
 Variables {{{1
+
+Set in BEGIN block
+	{ var_one = value; var_two = value }
 
 auto set:
 NF 	number of fields
@@ -109,33 +66,12 @@ ORS output record separtor. Defaults to \n
 
 
 
-
 Scripts {{{1
 
-BEGIN block
-    commands run before processing of lines 
+BEGIN/END blocks
+    commands run before/after processing of lines 
 
 
-If statement
 
-{ 
-  if ( $1 == "foo" ) { 
-           if ( $2 == "foo" ) { 
-                    print "uno" 
-           } else { 
-                    print "one" 
-           } 
-  } else if ($1 == "bar" ) { 
-           print "two" 
-  } else { 
-           print "three" 
-  } 
-}
-
-Boolean operator statement
-|| - OR
-&& - AND
-
-( $1 == "foo" ) && ( $2 == "bar" ) { print }
 
 
