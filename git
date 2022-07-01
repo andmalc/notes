@@ -139,8 +139,13 @@ HEAD\^ HEAD	show diffs between last two commits.  Prefix noglob in zsh for no ^ 
     
 diff for single file
 cid fn
-origin/master:./ -- <filename>
 A1234B:./ -- <filename> 
+
+diff against remote file
+	origin/master -- <filename>
+	origin/master:path/path/<filename> -- <filename>
+	@{upstream} <filename>
+
 
 log {{{2
 
