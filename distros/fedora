@@ -24,7 +24,14 @@ Installation groups
 	basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
     
 Pop_OS 21.10 {{{2
-	5.7GB with Freedesktop flatpak runtime and removing libreoffice
+
+5.7GB with Freedesktop flatpak runtime and removing libreoffice
+
+Used after 1 year
+	/	13.5G
+	/home	11.5G
+	/boot/efi	300M
+
 
 
 sway + Gnome Terminal + gdm ?
