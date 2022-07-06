@@ -69,6 +69,8 @@ Enable graphical session
 	systemctl enable gdm.service
 	systemctl set-default graphical.target
 
+Environment vars in ~/.config/environment.d
+
 
 Users {{{1
 

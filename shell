@@ -61,6 +61,25 @@ Graphical login:
     does not create a login shell
     controlled by session or window manager
 
+Config files {{{1
+
+/etc/security/pam_env.conf
+/etc/profile
+~/.pam_environment (deprecated)
+	
+	shell script read by Bourne compat login shells
+	exports PATH, USER, & other vars
+	format: VARIABLE [DEFAULT=value] [OVERRIDE=value]
+	e.g. XDG_CONFIG_HOME   DEFAULT=@{HOME}/.config
+
+/etc/environment
+	read by pam_env module
+	is shell agnostic so not scripting or globbing
+	var format var=value
+
+~/.config/environment.d/*.conf
+	systemd user env vars
+	var format var=value
 
 Processes {{{1
 
@@ -271,6 +290,16 @@ Rename files
 
 Variables {{{1
 
+Environment vs. Shell
+	Environment vars
+		control the behavior of programs and libraries
+		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME
+	
+Exporting
+	provides copy of shell var to child process environment, not current environment
+	not necessary for shell builts-ins, e.g. not necessary to export CDPATH as cd is a built-in
+
+
 var     name of variable
 $var    value of variable
         quote or escape to avoid multi words if whitespace
@@ -281,7 +310,6 @@ assignment - no spaces before or after =
 delimit variable name with curly braces {}
 
 Sourcing a file adds its variables to current
-Exporting: provides copy of var to child process, not current environment
 
 Conditional Expressions {{{1
 
