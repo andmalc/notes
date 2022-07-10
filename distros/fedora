@@ -225,7 +225,7 @@ gsettings list-recursively  | grep touchpad
 
 Packages {{{1
 
-git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf
+git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf tig
 
 gpg
     ensure pinentry installed

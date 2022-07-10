@@ -46,17 +46,6 @@ Branch
 
     Master      default name of first branch
 
-HEAD        
-    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
-        tip (last commit) of current local branch.  
-    This defines which branch is on
-    When committing, HEAD is set as parent commit
-    If earlier commit checked out, is hard link to commit ID.
-    Then in detached HEAD mode, not on branch
-
-    Detatched if is simple ref.
-    Checking out branch moves this pointer.  
-
 Tags
     lightweight
         Like commit object but ref to commits, not trees.
@@ -83,6 +72,28 @@ Remote
 
 
 Merge commits  multiple parents
+
+Revision parameters {{{1
+
+Docs: git help revisions
+
+full SHA-1 object name {{{2
+	40 byte hex string
+`
+Symbolic Reference name {{{2
+
+HEAD        
+    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
+        tip (last commit) of current local branch.  
+    This defines which branch is on
+    When committing, HEAD is set as parent commit
+    If earlier commit checked out, is hard link to commit ID.
+    Then in detached HEAD mode, not on branch
+
+    Detatched if is simple ref.
+    Checking out branch moves this pointer.  
+
+
 
 
 Repos {{{1
@@ -243,6 +254,9 @@ no arg
 	HEAD points to previous commit
 	Preserves Index and working tree changes
 	No action if <commit> not specified
+
+Undo last commit
+git reset HEAD~1
 
 Undo last commit, preserving local changes in index
 git reset --mixed HEAD~1
@@ -472,6 +486,7 @@ Change remote to new URL:
 
 Utilities {{{1
 
+tig browser
 
 vcsh	manage multiple repos
 		http://goo.gl/t2xCne
