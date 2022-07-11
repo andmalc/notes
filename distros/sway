@@ -7,11 +7,17 @@ Fedora pkgs:
 	brightnessctl
 	clipman, wl-clipbord
 	swaybg
+	waybar
+	wofi
 
 /etc/systemd/logind.conf
     IdleAction=suspend
     IdleActionSec=30min
 
+
+Fedora Wallpaper
+https://fedoraproject.org/w/uploads/3/35/F34_default_wallpaper_day.jpg
+Copy to .local/share/backgrounds/nature_wallpaper.jpg
 
 
 Launching {{{1
