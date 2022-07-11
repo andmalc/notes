@@ -181,7 +181,7 @@ wipe partition table: mklablel msdos | gpt
 Filesystems {{{1
 FS Info {{{2
 
-Devices and mounts
+Filesystems by device & mount points
 
 df -Th
     Device, fs type, size, used, %used, mount points.
@@ -198,7 +198,9 @@ findmnt     	show mounted filesystems
 
 
 lsblk -f    overview of devices and filesystems
-            
+
+duf
+	easy to read 
 
 Directory/file usage
 

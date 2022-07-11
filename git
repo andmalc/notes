@@ -11,6 +11,25 @@ Options {{{1
 
 --no-pager
 
+Revision parameters {{{1
+Docs: git help revisions
+
+full SHA-1 object name {{{2
+	40 byte hex string
+`
+Symbolic Reference name {{{2
+
+HEAD        
+	Pointer to most recent commit (aka head or tip) of current local branch.  
+    symbolic ref to /refs/heads/<branch name> 
+    defines which branch is on
+    When committing, HEAD is set as parent commit
+    If earlier commit checked out, is hard link to commit ID.
+    Then in detached HEAD mode, not on branch
+
+    Detatched if is simple ref.
+    Checking out branch moves this pointer.  
+
 Terms {{{1
 
 Repo is set of the current and past commits
@@ -32,16 +51,12 @@ Commit:
 Commit ID
     SHA-1 checksum of the commit’s contents
 
-    relative references to a commit ID: ~#
-        ~1  one commit before current
-
-
 Refs
     Simple - points to commit ID
     Symbolic - points to another ref
 
 Branch
-    movable pointer (simple ref) to tip (newest) commit of collection of commits
+    Simple ref pointer to tip of a collection of commits
     branch moved forward on each commit
 
     Master      default name of first branch
@@ -72,29 +87,6 @@ Remote
 
 
 Merge commits  multiple parents
-
-Revision parameters {{{1
-
-Docs: git help revisions
-
-full SHA-1 object name {{{2
-	40 byte hex string
-`
-Symbolic Reference name {{{2
-
-HEAD        
-    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
-        tip (last commit) of current local branch.  
-    This defines which branch is on
-    When committing, HEAD is set as parent commit
-    If earlier commit checked out, is hard link to commit ID.
-    Then in detached HEAD mode, not on branch
-
-    Detatched if is simple ref.
-    Checking out branch moves this pointer.  
-
-
-
 
 Repos {{{1
 
@@ -209,6 +201,7 @@ Add & Commit {{{1
 add <path spec>
     creates snapshot of file which is later used by commit
     -i  interactive
+	-u	updates or removes tracked files
     -n  dry run
     -p  stage subsections of a file
     -A/--all   updates index to match entire working tree. Includes untracked files.
@@ -220,58 +213,74 @@ commit
         bypasses staging, untracked files excluded
                 
 
-Reverting / Resetting {{{1
+stash
+	Removes changes to working tree files and staged changes 
+	Restore with stash pop.
+
+Resetting & Reverting {{{1
 
 https://www.atlassian.com/git/tutorials/undoing-changes
+https://opensource.com/article/18/6/git-reset-revert-rebase-commands
+
+Reset {{{2
+https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
+
+no arg
+	Unstages chanages in Index, no effect on files
+	Implies --mixed HEAD
+
+<file>
+	Unstages a file
+
+Modes
+	--soft <commit>
+		No change to index or work
+
+	--mixed [<commit>] (default)
+		Reset index but not working tree
+		
+	--hard <commit>
+		Reset the index and working tree
+	
+	--merge
+
+	--keep
+
+
+Examples 
+	Undo last commit, preserving local changes in index
+	git reset --mixed HEAD~1
+
+	Undo non-pushed commits
+		git reset origin/master
+
+	Reset to remote state
+		git fetch origin
+		git reset --hard origin/master
+
+	Reset remote (e.g. on GitHub)
+	--hard origin -f
+
+Checkout {{{2
+
+Reset/Restore one file from earlier commit
+	checkout <commit ID> <file path>
+
+Restore a file verion before a commit
+    checkout <commit>~1 -- <file name>
+
+Undelete files staged but not commited:
+    git checkout -- <fn>
+
+
+Revert {{{2
 
 revert <commit>
     generate a new commit that undoes changes in <commit> 
     applies that to the current branch.    
     Preferred over Reset because preserves history
 
-    revert HEAD~1
-        new commit undoing changes from last commit
-
-
-Reset
-https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
-
-no arg
-	Unstages chnages in Index, no effect on files
-	Implies --mixed HEAD
-
-<file>
-	Unstages a file
-
---mixed
-	Reset Index but not working tree
-	
---hard [<commit>]
-	Reset the index and changes to working tree
-
---soft HEAD~1
-	Commit is removed from branch
-	HEAD points to previous commit
-	Preserves Index and working tree changes
-	No action if <commit> not specified
-
-Undo last commit
-git reset HEAD~1
-
-Undo last commit, preserving local changes in index
-git reset --mixed HEAD~1
-
-# Move the branch pointer back to the previous HEAD
-git reset --soft HEAD@{1}
-git commit -m "Revert to 56e05fced"
-    Undo non-pushed commits
-        git reset origin/master
-    Reset to remote state
-        git fetch origin
-        git reset --hard origin/master
-
-#Reset remote (e.g. on GitHub)
---hard origin -f
+	new commit undoing changes from last commit
 
 
 Branches {{{1
@@ -446,23 +455,6 @@ Moves files		mv
 Remove files
 	rm		Deletes file/directory
 	rm --cached		Untracks files/directoires
-
-
-Unstage file
-	reset <file>
-    git reset HEAD <fn>
-
-Reset/Restore file in working dir but not staged, ie from index
-	checkout <file path>
-
-Reset/Restore one file from earlier commit
-	checkout <commit ID> <file path>
-
-Restore a file verion before a commit
-    checkout <commit>~1 -- <file name>
-
-Undelete files staged but not commited:
-    git checkout -- <fn>
 
 Ignore files
 	if already indexed:
