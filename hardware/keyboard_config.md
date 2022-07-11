@@ -12,6 +12,8 @@ Utils
 load keyboard translation tables
 	loadkeys
 
+xkbcli interactive-wayland
+	shows key identifiers 
 
 ### kitty
 kitty +kitten show_key
