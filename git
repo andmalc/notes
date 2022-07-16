@@ -312,8 +312,8 @@ Set upstream branch
     branch -b <branchname> --track origin/<remote b name>
     push --set-upstream origin gh-pages (confirmed works)
 
-Change remote branch name or create (?)
-    git push origin <branch>
+Create and push branch on remote
+    git push -u origin <branch>
 
 show-branch show all changes in branch
 

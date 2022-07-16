@@ -20,6 +20,40 @@ Jump
 
 :help a/A   help for normal mode a, Shift+A
 
+
+Variables {{{1
+
+
+set/setlocal - sets options
+	no-arg	shows non-default settings
+	all		shows all settings in categories
+	var=val	set value
+	var=+val	append val
+	var?		show value
+	var&		reset to default
+
+let -
+  assigns value to internal variable
+  environment vars (incl '~') not expanded
+  prefixes:
+	 g:    global variables
+	 b:    local buffer variables
+	 w:    local window variables
+	 t:    local tab page variables
+	 s:    script-local variables
+	 l:    local function variables
+	 v:    Vim variables.
+
+variables
+   let var-name = exp
+		set internal var
+   let $env = exp
+		set environment var
+   let @reg-name = exp
+		set register to exp
+   let &option-name = exp
+		set option local & global 
+
 Startup & Settings {{{1
 
 -u vimrc
@@ -768,32 +802,6 @@ https://sanctum.geek.nz/arabesque/advanced-vim-macros/
 		enter commands
 		q
 	play	nqq		play n times 
-
- 
-let -
-  assigns value to internal variable
-  environment vars (incl '~') not expanded
-  prefixes:
-	 g:    global variables
-	 b:    local buffer variables
-	 w:    local window variables
-	 t:    local tab page variables
-	 s:    script-local variables
-	 l:    local function variables
-	 v:    Vim variables.
-
-variables
-   let var-name = exp
-		set internal var
-   let $env = exp
-		set environment var
-   let @reg-name = exp
-		set register to exp
-   let &option-name = exp
-		set option local & global 
-
-set - 
-sets options
 
 expressions
    e ? e : e

@@ -293,16 +293,18 @@ Variables {{{1
 Environment vs. Shell
 	Environment vars
 		control the behavior of programs and libraries
-		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME
+		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME and is present in the environments of commands
 	
 Exporting
 	provides copy of shell var to child process environment, not current environment
 	not necessary for shell builts-ins, e.g. not necessary to export CDPATH as cd is a built-in
 
+Showing vars
+	echo var		shows shell vars
+	printenv var	shows environment vars
 
-var     name of variable
-$var    value of variable
-        quote or escape to avoid multi words if whitespace
+Modify command env
+	env var=value cmd
 
 assignment - no spaces before or after =
     a=1 

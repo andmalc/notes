@@ -1,6 +1,6 @@
 
 https://developerlife.com/2021/01/19/fish-scripting-manual/
-
+https://fishshell.com/docs/current/interactive.html#shared-bindings
 
 `eval (ssh-agent -c)`
 
@@ -8,6 +8,10 @@ Kill ring
 	Ctrl K	kill to line end
 	Ctrl Y	restore line
 	Alt Y		restores more from history
+
+Alt-s		prepend sudo
+Alt-up	search hist for token under cursor
+Alt-.		insert-last arg
 
 
 # History {{{1
@@ -38,16 +42,19 @@ history - shows events newest first
 
 # Config {{{1
 
-
-First time setup 
-	cp /usr/share/fish/config.fish ~/.config/fish
-
 PATH
-    set fish_user_paths <paths>
+	set fish_add_path <paths>
 
-## Keybinding {{{2
+	fish_add_path in config
+	https://fishshell.com/docs/current/cmds/fish_add_path.html
 
-Key Bindings
+fish_prompt function
+	https://fishshell.com/docs/current/cmds/fish_prompt.html#cmd-fish-prompt
+
+
+## Key bindings {{{1
+Customize {{{2
+
 https://fishshell.com/docs/current/cmds/bind.html
 
 fish_key_reader - outputs bind statement for key bind
@@ -67,15 +74,34 @@ man bind
 
 bind \x7F 'backward-kill-bigword'
 
-# Ctrl H = backspace
-bind \b backward-delete-char 
+Movements {{{2
+
+backspace	=	Ctrl H
+
+newline	=	M-Enter
 
 
-# Tab Completion {{{1
+move by word
+	stop at puncuation	=	l/r, C l/r
+	big word	=	Shift l/r
 
-Accept      
-	all         Ctrl + F
-	one word    Alt right arrow
+delete
+	word	=	C-d
+
+Completion
+	if only one possible completion
+		accept all	=	 tab, C-f
+		accept one word	=	M-r, M-f
+	if choices 
+		open pager	=	tab
+		pager search	=	Ctrl-s
+
+History
+	search for command under cursor	=	u/d
+	search for string under cursor	=	M-u/d
+
+	forward/ back in directory history
+		if on empty line	=	M l/r
 
 
 # Data Types {{{1
@@ -145,9 +171,6 @@ set
 		list all vars or limit to var type with scope option
 		e.g. show exported global    -xg
         
-PATH
-	fish_add_path in config
-	https://fishshell.com/docs/current/cmds/fish_add_path.html
 
 # Abbreviations {{{1
 
@@ -163,13 +186,6 @@ abbr -a	add
 	-e	erase
 	-s	show
 
-Config.fish example (usually not needed)
-    if status --is-interactive
-        abbr --add --global first 'echo my first abbreviation'
-        abbr --add --global second 'echo my second abbreviation'
-        abbr --add --global gco git checkout
-        # etcetera
-    end
 
 # Alias {{{1
 
