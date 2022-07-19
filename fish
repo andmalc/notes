@@ -52,57 +52,37 @@ fish_prompt function
 	https://fishshell.com/docs/current/cmds/fish_prompt.html#cmd-fish-prompt
 
 
-## Key bindings {{{1
+# Key bindings {{{1
 Customize {{{2
 
 https://fishshell.com/docs/current/cmds/bind.html
 
 fish_key_reader - outputs bind statement for key bind
-	-k <term>	search for existing binding
-	-K		show special key names
 
-bind cmd
-	bind <sequence> <comd>
+bind <sequence> <comd>
 	Adds bindings using fish_user_key_bindings function
+	-f			show function names
+	-k <term>	search for existing binding
+	-K/--key-names	show special key names
 
 	Spec sequence using escapes + key
 		\e		Alt
 		\c		Cmd
+
+	bind <seq>
+		returns binding for <seq>
+	
+	bind -k <key-name>
+		bind to special key (e.g .F12), not a sequence
+
 
 man bind
 	list of special input names e.g. beginning-of-line
 
 bind \x7F 'backward-kill-bigword'
 
-Movements {{{2
-
-backspace	=	Ctrl H
-
-newline	=	M-Enter
-
-
-move by word
-	stop at puncuation	=	l/r, C l/r
-	big word	=	Shift l/r
-
-delete
-	word	=	C-d
-
-Completion
-	if only one possible completion
-		accept all	=	 tab, C-f
-		accept one word	=	M-r, M-f
-	if choices 
-		open pager	=	tab
-		pager search	=	Ctrl-s
-
-History
-	search for command under cursor	=	u/d
-	search for string under cursor	=	M-u/d
-
-	forward/ back in directory history
-		if on empty line	=	M l/r
-
+fish_user_key_bindings function
+	can edit to add custom keybinding statements
 
 # Data Types {{{1
 

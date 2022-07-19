@@ -7,29 +7,6 @@ Fugitive http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
 https://orga.cat/posts/most-useful-git-commands
 
 
-Options {{{1
-
---no-pager
-
-Revision parameters {{{1
-Docs: git help revisions
-
-full SHA-1 object name {{{2
-	40 byte hex string
-`
-Symbolic Reference name {{{2
-
-HEAD        
-	Pointer to most recent commit (aka head or tip) of current local branch.  
-    symbolic ref to /refs/heads/<branch name> 
-    defines which branch is on
-    When committing, HEAD is set as parent commit
-    If earlier commit checked out, is hard link to commit ID.
-    Then in detached HEAD mode, not on branch
-
-    Detatched if is simple ref.
-    Checking out branch moves this pointer.  
-
 Terms {{{1
 
 Repo is set of the current and past commits
@@ -51,12 +28,16 @@ Commit:
 Commit ID
     SHA-1 checksum of the commit’s contents
 
+    relative references to a commit ID: ~#
+        ~1  one commit before current
+
+
 Refs
     Simple - points to commit ID
     Symbolic - points to another ref
 
 Branch
-    Simple ref pointer to tip of a collection of commits
+    movable pointer (simple ref) to tip (newest) commit of collection of commits
     branch moved forward on each commit
 
     Master      default name of first branch
@@ -88,35 +69,27 @@ Remote
 
 Merge commits  multiple parents
 
-Repos {{{1
+Revision parameters {{{1
 
-Example: create new repo with remote at BB
-	git init <dir>
-	git add . 
-	git commit -m 'comment'
-	git remote add bb ssh://git@bitbucket.org/andmalc/work.git
-	git push --all bb # pushes up the repo and its refs for the first time
+Docs: git help revisions
 
-	git commit -a  #all changes in working directory
-	git push -u origin master
+full SHA-1 object name {{{2
+	40 byte hex string
+`
+Symbolic Reference name {{{2
 
-remote 
-    -v          show origin details
-    add         <remote add <name> <url>
-    fetch		pull remote changes to remote tracking branch
-    clone		create local repo, remote tracking branch auto-created
-    pull		pull remote changes to remote tracking branch 
-                    and start merge = fetch+merge
-    set-url <name> <new URL>
-    push <repo> upload changes to remote.  Default repo is origin
-                <local branch name>:<remote name>
+HEAD        
+    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
+        tip (last commit) of current local branch.  
+    This defines which branch is on
+    When committing, HEAD is set as parent commit
+    If earlier commit checked out, is hard link to commit ID.
+    Then in detached HEAD mode, not on branch
 
-Set new remote
-     remote add upstream https://github.com/octocat/Spoon-Knife.git
-
+    Detatched if is simple ref.
+    Checking out branch moves this pointer.  
 
 Info {{{1
-
 Status {{{2
 
 Shows changes to tracked files and presence of untracked files in working dir
@@ -130,19 +103,14 @@ Diff {{{2
 
 Changes to file contents
 
-no arg			changes to tracked files not staged
-				i.e. changes between working tree and index
---cached cid	changes in index relative to cid
---staged		same as --cached
-
-HEAD        	changed + staged vs. current commit
-cid             changes to tracked + newly tracked vs. cid
+no arg		changed files vs. index
+--cached/staged <HEAD or cid	
+		changes in index relative to cid, defaults to HEAD
+HEAD        	changed or staged vs. current commit
 cid cid         changes to tracked + newly tracked vs. cid
-HEAD\^ HEAD	show diffs between last two commits.  Prefix noglob in zsh for no ^ escape needed
-    
+
 diff for single file
-cid fn
-A1234B:./ -- <filename> 
+	[arg]	-- <filename> 
 
 diff against remote file
 	origin/master -- <filename>
@@ -201,7 +169,6 @@ Add & Commit {{{1
 add <path spec>
     creates snapshot of file which is later used by commit
     -i  interactive
-	-u	updates or removes tracked files
     -n  dry run
     -p  stage subsections of a file
     -A/--all   updates index to match entire working tree. Includes untracked files.
@@ -213,74 +180,84 @@ commit
         bypasses staging, untracked files excluded
                 
 
-stash
-	Removes changes to working tree files and staged changes 
-	Restore with stash pop.
+Remotes {{{1
+    -v          show origin details
+    add         <remote add <name> <url>
+    clone		create local repo, remote tracking branch auto-created
+	u origi		push to upgream 
+    set-url <name> <new URL>
+    push <repo> upload changes to remote.  Default repo is origin
+                <local branch name>:<remote name>
 
-Resetting & Reverting {{{1
+Set new remote
+     remote add upstream https://github.com/octocat/Spoon-Knife.git
+
+Specify remote while pushing
+	git push -u origin master
+
+
+Example: create new repo with remote at BB
+	git init <dir>
+	git add . 
+	git commit -m 'comment'
+	git remote add bb ssh://git@bitbucket.org/andmalc/work.git
+	git push --all bb # pushes up the repo and its refs for the first time
+
+	git commit -a  #all changes in working directory
+
+
+Reverting / Resetting {{{1
 
 https://www.atlassian.com/git/tutorials/undoing-changes
-https://opensource.com/article/18/6/git-reset-revert-rebase-commands
-
-Reset {{{2
-https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
-
-no arg
-	Unstages chanages in Index, no effect on files
-	Implies --mixed HEAD
-
-<file>
-	Unstages a file
-
-Modes
-	--soft <commit>
-		No change to index or work
-
-	--mixed [<commit>] (default)
-		Reset index but not working tree
-		
-	--hard <commit>
-		Reset the index and working tree
-	
-	--merge
-
-	--keep
-
-
-Examples 
-	Undo last commit, preserving local changes in index
-	git reset --mixed HEAD~1
-
-	Undo non-pushed commits
-		git reset origin/master
-
-	Reset to remote state
-		git fetch origin
-		git reset --hard origin/master
-
-	Reset remote (e.g. on GitHub)
-	--hard origin -f
-
-Checkout {{{2
-
-Reset/Restore one file from earlier commit
-	checkout <commit ID> <file path>
-
-Restore a file verion before a commit
-    checkout <commit>~1 -- <file name>
-
-Undelete files staged but not commited:
-    git checkout -- <fn>
-
-
-Revert {{{2
 
 revert <commit>
     generate a new commit that undoes changes in <commit> 
     applies that to the current branch.    
     Preferred over Reset because preserves history
 
-	new commit undoing changes from last commit
+    revert HEAD~1
+        new commit undoing changes from last commit
+
+
+Reset
+https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
+
+no arg
+	Unstages chnages in Index, no effect on files
+	Implies --mixed HEAD
+
+<file>
+	Unstages a file
+
+--mixed
+	Reset Index but not working tree
+	
+--hard [<commit>]
+	Reset the index and changes to working tree
+
+--soft HEAD~1
+	Commit is removed from branch
+	HEAD points to previous commit
+	Preserves Index and working tree changes
+	No action if <commit> not specified
+
+Undo last commit
+git reset HEAD~1
+
+Undo last commit, preserving local changes in index
+git reset --mixed HEAD~1
+
+# Move the branch pointer back to the previous HEAD
+git reset --soft HEAD@{1}
+git commit -m "Revert to 56e05fced"
+    Undo non-pushed commits
+        git reset origin/master
+    Reset to remote state
+        git fetch origin
+        git reset --hard origin/master
+
+#Reset remote (e.g. on GitHub)
+--hard origin -f
 
 
 Branches {{{1
@@ -312,8 +289,8 @@ Set upstream branch
     branch -b <branchname> --track origin/<remote b name>
     push --set-upstream origin gh-pages (confirmed works)
 
-Create and push branch on remote
-    git push -u origin <branch>
+Change remote branch name or create (?)
+    git push origin <branch>
 
 show-branch show all changes in branch
 
@@ -455,6 +432,23 @@ Moves files		mv
 Remove files
 	rm		Deletes file/directory
 	rm --cached		Untracks files/directoires
+
+
+Unstage file
+	reset <file>
+    git reset HEAD <fn>
+
+Reset/Restore file in working dir but not staged, ie from index
+	checkout <file path>
+
+Reset/Restore one file from earlier commit
+	checkout <commit ID> <file path>
+
+Restore a file verion before a commit
+    checkout <commit>~1 -- <file name>
+
+Undelete files staged but not commited:
+    git checkout -- <fn>
 
 Ignore files
 	if already indexed:
