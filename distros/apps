@@ -108,6 +108,10 @@ Install with DNF
 
 Desktop {{{1
 
+Firefox
+	Flatpak profile dir
+		~/.var/app/org.mozilla.firefox/.mozilla
+
 PDF Viewers
     qpdfview - tabbed, annnotations
     MuPDF

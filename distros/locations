@@ -34,4 +34,9 @@ XDG dirs
 	$XDG_RUNTIME_DIR
 		/run/user/<user id>
 
+	$XDG_CACHE_HOME
+		not set on Fedora WS or SB
+		maybe not relevant to flatpaks as per app location is $HOME/.var/app/*/cache
+
+
 

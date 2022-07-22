@@ -100,6 +100,10 @@ Groups:
 
 Links {{{1
 
+ln -s or cp -s <original> <link>
+	For original and link in different dirs, cd to link dir first.
+		cp -s ../dir/file .
+
 Update symbolic links: https://opensource.com/article/21/11/update-linux-file-system-link
 	ln -vfns <target> <link>
 

@@ -11,12 +11,10 @@ options
     -A# show # lines following match
     -r	recursive - search subdirectories
 	-v  exclude match
-
     -o  print only matched part of line, matches on separate lines
-
-	--exclude-dir=<dir>
-	--exclude-dir={<dir>,<dir>}
-
+	-E, --extended-regexp
+	--exclude-dir= 
+		--exclude-dir={.mozilla,.var,.local}
 
 Pattern Matching {{{1
 

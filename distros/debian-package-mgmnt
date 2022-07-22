@@ -28,16 +28,15 @@ aptitude {{{1
 
 
 Howtos {{{1
+
+List installed packages
+	apt list --installed
+
 List files in installed package
 	dpkg -L <pkg name>
 
 Find available packages
 	dpkg -l '*pkgname*' 
-
-List installed packages
-	dpkg -l | fgrep ii
-	List with easier to read spacing
-		COLUMNS=200 dpkg -l|grep whatever
 
 List installed packages from backports (before upgrading dist)
 	COLUMNS=200 dpkg -l | grep bpo

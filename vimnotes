@@ -1,13 +1,16 @@
-Edit tips:
-"object-action" selection: 
-   vipd - visually select and delete para
+Copy selected text to file
+   1. Select text in visual mode
+   2. :'<,'>!tee out.txt
+
+
+Commands {{{1
 
 Edit command layout. [] indicates optional
     [count] {operator} {[count] motion|text object}
 
-Copy selected text to file
-   1. Select text in visual mode
-   2. :'<,'>!tee out.txt
+Edit tips:
+"object-action" selection: 
+   vipd - visually select and delete para
 
 
 Help {{{1
@@ -16,6 +19,40 @@ Jump
     C + ]/o     follow links forward/back
 
 :help a/A   help for normal mode a, Shift+A
+
+
+Variables {{{1
+
+
+set/setlocal - sets options
+	no-arg	shows non-default settings
+	all		shows all settings in categories
+	var=val	set value
+	var=+val	append val
+	var?		show value
+	var&		reset to default
+
+let -
+  assigns value to internal variable
+  environment vars (incl '~') not expanded
+  prefixes:
+	 g:    global variables
+	 b:    local buffer variables
+	 w:    local window variables
+	 t:    local tab page variables
+	 s:    script-local variables
+	 l:    local function variables
+	 v:    Vim variables.
+
+variables
+   let var-name = exp
+		set internal var
+   let $env = exp
+		set environment var
+   let @reg-name = exp
+		set register to exp
+   let &option-name = exp
+		set option local & global 
 
 Startup & Settings {{{1
 
@@ -50,7 +87,7 @@ Modeline
             " vim:ts=4 sw=4
             /* vim:set ai et sts=2 sw=2 tw=80: */   #this format when comment needs closing 
 
-Interface {{{1
+Interface settings {{{1
 
 Cursorline
    Highlights or underlines current line
@@ -85,73 +122,6 @@ Relative line numbering
     see # of line from insertion point
     set rnu 
 
-Windows & Tabs {{{1
-
-vertical = sideways
-horizontal = top to bottom
-
-New
-      n
-
-Sizing
-	Height
-		#_				height = #
-      _           full height (zoom)
-		N+,-        increase/decrease height * n
-		z{height}<CR>		resize window height (?)
-		res[ize] +-n | n
-	Width
-		n|			width = N
-      |           full width (zoom)
-		n >,<      increase/reduce with * n
-    Restore
-		=			make equal size
-
-Create with split
-    sp      horizontal split
-    vs      vertical split
-    sb      split buffer
-    sba     split all buffers horizontal
-    vert sba     split all buffers vertical
-
-Move Between Windows
-     c-w (twice)  Last window
-     arrow key    move to window in direction of arrow
-		w				Move to window below (wrap)
-		W				Move to window above (wrap)
-		j				Move to window below
-		k				Move to window above
-		b						to bottom buffer
-		t						to top buffer
-
-Closing
-      o              only - close all other windows
-		c, :close		Hide buffer - edit next window
-		q (or :q ?)		Quit editing & close window
-        :on[ly]             close all but current
-
-Rotating 
-    with move commands: 
-        Move to the side when stacked creates vertical layout
-        Move up or down when side by side to create stacked layout
-    r/R				rotate window
-
-
-                        zoom window
-layout
-		mkview [n], loadview [n]   - saves window options including folds
-
-Preview window
-    pedit <file>    open
-    C-W z           close
-
-Tabs 
-	c-w T       Move window to tab
-	gt/T        Move to next/previous tab
-	:tablonly   Close tabs, retain current window
-	:tab split      open split window into own tab and displays tab bar
-
-        
 Files/Buffers {{{1
 
 Opening, Closing, & Saving
@@ -217,71 +187,76 @@ eol styles
 		:%s/\r//g  (better)
 		also: cygwin/utils u2d & d2u
 
-Registers {{{1
+Windows & Tabs {{{1
 
-show registers
-	:reg
+vertical = sideways
+horizontal = top to bottom
 
+Ctrl w +
 
-names
-	register name prefix: "
-	"	current contents of 'unnamed register' - use for ex commands?
-	+	clipboard  
-            used by modern apps for cut/copy/paste ops selection behavior.
-            main paste register.  Not used by xterms
-	*      X-Primary register, stores current selection (CUT BUFFER0 of 8)
-            use for transfer to/from xterm
-	:      last executed cmd
-
-Normal mode syntax for using register as target of y or d or as source
-		{Visual}"n[ydp]{motion}
-				y`a				copy text from mark a to line before current line
-				"ayy	copy line into register a
-				"ad`a	cut text from mark a to current position into register a
-				"aA				Append text to buffer a
-
-copy/paste to/from reg
-	"<reg>ye	
-		copy word to reg
-	Ctrl R<reg>
-		insert text -  Insert mode
-	"<reg>p/P
-		paste before/after cursor
-	"<reg>gp/gP
-		cursor left after text
+New
+      n
 
 
-previous insertions
-  c-a (?)
-previous insertions, exit Insert mode
-  c-2 / c-@
+Create with split
+    sp      horizontal split
+    vs      vertical split
+    sb      split buffer
+    sba     split all buffers horizontal
+    vert sba     split all buffers vertical
 
-assign to a register (help 'let-@')
-   let @a=" ... " 
+Move Between Windows
+     c-w (twice)  Last window
+     arrow key    move to window in direction of arrow
+		w				Move to window below (wrap)
+		W				Move to window above (wrap)
+		j				Move to window below
+		k				Move to window above
+		b						to bottom buffer
+		t						to top buffer
 
-execute contents of register
-		@<reg name>
+Closing
+      o              only - close all other windows
+		c, :close		Hide buffer - edit next window
+		q (or :q ?)		Quit editing & close window
+        :on[ly]             close all but current
 
-paste last ex command
-    ":p
+Sizing
+	Height
+		#_				height = #
+      _           full height (zoom)
+		N+,-        increase/decrease height * n
+		z{height}<CR>		resize window height (?)
+		res[ize] +-n | n
+	Width
+		n|			width = N
+      |           full width (zoom)
+		n <,>      reduce/increase with * n
+    Restore
+		=			make equal size
 
-edit register
-		"ap
-		<edit lines>
-		"ad
+Rotating 
+    with move commands: 
+        Move to the side when stacked creates vertical layout
+        Move up or down when side by side to create stacked layout
+    r/R				rotate window
 
 
-Cmd mode register
-		:'a,'bs/thing/ThinG/
+                        zoom window
+layout
+		mkview [n], loadview [n]   - saves window options including folds
 
-	Insert (paste) register n
-		C-R"n
-		C-R C-A/C-W             insert word/Word under cursor
-	let @a=" ... " - assign to a register (help 'let-@')
+Preview window
+    pedit <file>    open
+    C-W z           close
 
-insert text from buffer or register into cmd or search
-		  ^R commands
+Tabs 
+	c-w T       Move window to tab
+	gt/T        Move to next/previous tab
+	:tablonly   Close tabs, retain current window
+	:tab split      open split window into own tab and displays tab bar
 
+        
 Edit Modes {{{1
 Normal mode {{{2
 
@@ -489,6 +464,71 @@ Convert tabs to spaces
     ts=4
     se expandtab
 	%retab!
+
+Registers {{{1
+
+show registers
+	:reg
+
+
+names
+	register name prefix: "
+	"	current contents of 'unnamed register' - use for ex commands?
+	+	clipboard  
+            used by modern apps for cut/copy/paste ops selection behavior.
+            main paste register.  Not used by xterms
+	*      X-Primary register, stores current selection (CUT BUFFER0 of 8)
+            use for transfer to/from xterm
+	:      last executed cmd
+
+Normal mode syntax for using register as target of y or d or as source
+		{Visual}"n[ydp]{motion}
+				y`a				copy text from mark a to line before current line
+				"ayy	copy line into register a
+				"ad`a	cut text from mark a to current position into register a
+				"aA				Append text to buffer a
+
+copy/paste to/from reg
+	"<reg>ye	
+		copy word to reg
+	Ctrl R<reg>
+		insert text -  Insert mode
+	"<reg>p/P
+		paste before/after cursor
+	"<reg>gp/gP
+		cursor left after text
+
+
+previous insertions
+  c-a (?)
+previous insertions, exit Insert mode
+  c-2 / c-@
+
+assign to a register (help 'let-@')
+   let @a=" ... " 
+
+execute contents of register
+		@<reg name>
+
+paste last ex command
+    ":p
+
+edit register
+		"ap
+		<edit lines>
+		"ad
+
+
+Cmd mode register
+		:'a,'bs/thing/ThinG/
+
+	Insert (paste) register n
+		C-R"n
+		C-R C-A/C-W             insert word/Word under cursor
+	let @a=" ... " - assign to a register (help 'let-@')
+
+insert text from buffer or register into cmd or search
+		  ^R commands
 
 Registers {{{1
 
@@ -762,32 +802,6 @@ https://sanctum.geek.nz/arabesque/advanced-vim-macros/
 		enter commands
 		q
 	play	nqq		play n times 
-
- 
-let -
-  assigns value to internal variable
-  environment vars (incl '~') not expanded
-  prefixes:
-	 g:    global variables
-	 b:    local buffer variables
-	 w:    local window variables
-	 t:    local tab page variables
-	 s:    script-local variables
-	 l:    local function variables
-	 v:    Vim variables.
-
-variables
-   let var-name = exp
-		set internal var
-   let $env = exp
-		set environment var
-   let @reg-name = exp
-		set register to exp
-   let &option-name = exp
-		set option local & global 
-
-set - 
-sets options
 
 expressions
    e ? e : e

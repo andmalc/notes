@@ -1,3 +1,43 @@
+Line editing {{{1
+
+^l	clear screen
+
+Notation:
+	^k = \C=k = control key + k
+	M-k = Meta (usually Alt) key + k
+	ek = Escape + k
+
+Line Editor Key Bindings
+	Emacs mode bindings
+		
+	char
+		^f/^b	move one char forward/back
+		^d	delete char to right (also: list completions, log out)
+		^h 	delete character to left
+	
+	word
+		M-f	move word forward
+		M-b	move word back
+		M-BS	kill last word | delete word to left
+		^w		kill last path component
+		^-DEL	delete word to right (not in Fish)
+		M-d		delete word to right
+
+
+	line
+		^a	beginning of line
+		^e	end of line
+		^u	kill line left
+		^k  kill line to right
+		^y	yank back previous kill
+
+	history
+		^r	search past history
+			repeat for additional matches
+
+
+
+
 Shell types {{{1
 
 Login shell
@@ -21,6 +61,25 @@ Graphical login:
     does not create a login shell
     controlled by session or window manager
 
+Config files {{{1
+
+/etc/security/pam_env.conf
+/etc/profile
+~/.pam_environment (deprecated)
+	
+	shell script read by Bourne compat login shells
+	exports PATH, USER, & other vars
+	format: VARIABLE [DEFAULT=value] [OVERRIDE=value]
+	e.g. XDG_CONFIG_HOME   DEFAULT=@{HOME}/.config
+
+/etc/environment
+	read by pam_env module
+	is shell agnostic so not scripting or globbing
+	var format var=value
+
+~/.config/environment.d/*.conf
+	systemd user env vars
+	var format var=value
 
 Processes {{{1
 
@@ -113,49 +172,6 @@ xargs
         zargs **/*~ -- rm
 
 Semicolon - command delimiter 
-
-Line editing {{{1
-
-^l	clear screen
-
-Notation:
-	^k = \C=k = control key + k
-	M-k = Meta (usually Alt) key + k
-	ek = Escape + k
-
-Line Editor Key Bindings
-	Emacs mode bindings
-		
-	char
-		^f/^b	move one char forward/back
-		^d	delete char to right (also: list completions, log out)
-		BS	delete to left
-	
-	word
-		M-f	move word forward
-		M-b	move word back
-		M-BS	kill last word | delete word to left
-		^w		kill last path component
-		^-DEL	delete word to right (not in Fish)
-		M-d		delete word to right
-
-
-	line
-		^a	beginning of line
-		^e	end of line
-		^u	kill line left
-		^k  kill line to right
-		^y	yank back previous kill
-
-	history
-		^r	search past history
-			repeat for additional matches
-
-
-
-Fish
-	Alt v	edit command in EDITOR	
-
 
 Braces, Parentheses, Brackets {{{1
 Parentheses {{{2
@@ -274,9 +290,21 @@ Rename files
 
 Variables {{{1
 
-var     name of variable
-$var    value of variable
-        quote or escape to avoid multi words if whitespace
+Environment vs. Shell
+	Environment vars
+		control the behavior of programs and libraries
+		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME and is present in the environments of commands
+	
+Exporting
+	provides copy of shell var to child process environment, not current environment
+	not necessary for shell builts-ins, e.g. not necessary to export CDPATH as cd is a built-in
+
+Showing vars
+	echo var		shows shell vars
+	printenv var	shows environment vars
+
+Modify command env
+	env var=value cmd
 
 assignment - no spaces before or after =
     a=1 
@@ -284,7 +312,6 @@ assignment - no spaces before or after =
 delimit variable name with curly braces {}
 
 Sourcing a file adds its variables to current
-Exporting: provides copy of var to child process, not current environment
 
 Conditional Expressions {{{1
 

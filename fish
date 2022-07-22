@@ -1,6 +1,6 @@
 
 https://developerlife.com/2021/01/19/fish-scripting-manual/
-
+https://fishshell.com/docs/current/interactive.html#shared-bindings
 
 `eval (ssh-agent -c)`
 
@@ -8,6 +8,10 @@ Kill ring
 	Ctrl K	kill to line end
 	Ctrl Y	restore line
 	Alt Y		restores more from history
+
+Alt-s		prepend sudo
+Alt-up	search hist for token under cursor
+Alt-.		insert-last arg
 
 
 # History {{{1
@@ -38,25 +42,38 @@ history - shows events newest first
 
 # Config {{{1
 
-
-First time setup 
-	cp /usr/share/fish/config.fish ~/.config/fish
-
 PATH
-    set fish_user_paths <paths>
+	set fish_add_path <paths>
 
-## Keybinding {{{2
+	fish_add_path in config
+	https://fishshell.com/docs/current/cmds/fish_add_path.html
 
-Key Bindings
+fish_prompt function
+	https://fishshell.com/docs/current/cmds/fish_prompt.html#cmd-fish-prompt
+
+
+# Key bindings {{{1
+Customize {{{2
+
 https://fishshell.com/docs/current/cmds/bind.html
 
-Add bindings to fish_user_key_bindings function
+fish_key_reader - outputs bind statement for key bind
 
-fish_key_reader - outputs bind statement for key
-
-bind
+bind <sequence> <comd>
+	Adds bindings using fish_user_key_bindings function
+	-f			show function names
 	-k <term>	search for existing binding
-	-K		show special key names
+	-K/--key-names	show special key names
+
+	Spec sequence using escapes + key
+		\e		Alt
+		\c		Cmd
+
+	bind <seq>
+		returns binding for <seq>
+	
+	bind -k <key-name>
+		bind to special key (e.g .F12), not a sequence
 
 
 man bind
@@ -64,12 +81,8 @@ man bind
 
 bind \x7F 'backward-kill-bigword'
 
-# Tab Completion {{{1
-
-Accept      
-	all         Ctrl + F
-	one word    Alt right arrow
-
+fish_user_key_bindings function
+	can edit to add custom keybinding statements
 
 # Data Types {{{1
 
@@ -138,9 +151,6 @@ set
 		list all vars or limit to var type with scope option
 		e.g. show exported global    -xg
         
-PATH
-	fish_add_path in config
-	https://fishshell.com/docs/current/cmds/fish_add_path.html
 
 # Abbreviations {{{1
 
@@ -156,13 +166,6 @@ abbr -a	add
 	-e	erase
 	-s	show
 
-Config.fish example (usually not needed)
-    if status --is-interactive
-        abbr --add --global first 'echo my first abbreviation'
-        abbr --add --global second 'echo my second abbreviation'
-        abbr --add --global gco git checkout
-        # etcetera
-    end
 
 # Alias {{{1
 
@@ -243,15 +246,20 @@ Other test expressions
 
 Functions {{{1
 
-Define      function <func name>
-                ...
-            end
+function
+	Define a function
+		function <func name>
+          ...
+		end
+	options
+		erase function from curent session but not function file   
+		--erase | -e
 
-Edit        funced [--save]
-Save        funcsave <function name>
-            functions <func name> > ~/.config/fish/functions
-Erase function from curent session but not function file   --erase | -e
-List        functions   
+funced [--save]
+	Edit a function
+
+funcsave <function name>
+
 Show function location      -D <func name>
 Show source     functions <func name>
 
