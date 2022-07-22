@@ -166,8 +166,11 @@ Console
     Ctr+ Alt 2
 
     font settings
+	fonts in /usr/lib/kdb/consolefonts
         /etc/vconsole.conf
-        large font: FONT="latarcyrheb-sun32.psfu.gz"
+	suggested fonts:
+		ter-28v
+		large font: FONT="latarcyrheb-sun32.psfu.gz"
 
 
 Date/time
@@ -210,6 +213,8 @@ gsettings list-recursively  | grep touchpad
 Packages {{{1
 
 git neovim fish tmux mlocate ncdu stow ranger exa ccrypt
+
+dnf group install  "C Development Tools and Libraries"
 
 gpg
     ensure pinentry installed
