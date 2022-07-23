@@ -10,11 +10,6 @@ Fedora Py3.8 setup
  python3.8 get-pip.py --user 
  python3.8 -m pip install --user ipython
 
-Pip
-wget https://bootstrap.pypa.io/get-pip.py
-python ./get-pip.py --user
-pip install --user powerline-status virtualenvwrapper
-ptpython or ipython
 
 Show sys.path 
 python3 -m site

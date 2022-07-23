@@ -124,11 +124,10 @@ https://fishshell.com/docs/current/#variables
 set
  set <options> <var name> <value>
 
- options
 	 -a --append
 	 --path
 		  treat as path var
-		  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+		  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
 
 	-q --query <var> ...
 		return status = 0 if var initialized, 1 for each not

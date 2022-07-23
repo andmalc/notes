@@ -294,7 +294,12 @@ Environment vs. Shell
 	Environment vars
 		control the behavior of programs and libraries
 		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME and is present in the environments of commands
-	
+
+	Example
+		Env var: $HOME
+		Shell var: ~
+		$HOME works in a cmd alias but tilda doesn't
+
 Exporting
 	provides copy of shell var to child process environment, not current environment
 	not necessary for shell builts-ins, e.g. not necessary to export CDPATH as cd is a built-in

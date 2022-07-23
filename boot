@@ -176,10 +176,12 @@ xbootldr partition
     use bootctl to troubleshoot
 
 /boot
-	can be in root partition as long as boot loader can access the kernel & initramfs images there.  A separate boot partition may be necessary if block devices in lvm, raid, or encrypted or if filesystem not supported.
+	can be in root partition as long as either 
+		- using systemd-boot which supports loading binaries only from EFI or Xbootldr partition
+		- boot loader can access the kernel & initramfs images there.  
+				grub supports all common setups plus btrfs
+				separate boot partition may be necessary if block devices in lvm, raid, or encrypted or if filesystem not supported.
 
-	grub supports all common setups plus btrfs
-	systemd-boot supports loading binaries only from EFI or Xbootldr partition
 
 
 boot manager eg. systemd-boot
@@ -212,11 +214,11 @@ Fedora 35
 		
 
 PopOS
-/boot in root
+	/boot in root fs
+    /boot/efi/ is ESP partition
     kernel & initrd.img
-    efi/ => part5, type ESP
-        EFI
-        loader
+		in both and in mounted /boot/efi/EFI/Pop.  
+		kernel in ESP has .efi file extension and is executable
 
 
 Asus Fedora Server
