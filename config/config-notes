@@ -4,6 +4,8 @@ Initial clone
 	Git submodule added
 	git submodule update --init --recursive
 
+Create ~/.conf-git and clone repo
+
 
 Environment {{{1
 
@@ -12,6 +14,10 @@ dotfiles/environment/.config/environment.d/10-xdg.conf
 Fish shell {{{1
 Run using fish installed by os package manager:
     
+
+	Abbr for home dir git repo
+		 abbr conf 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
+
     Set variables
         fish_add_path ~/.local/bin
         fisher_path /home/andmalc/config/dotfiles/fish/.config/fish/fisher
