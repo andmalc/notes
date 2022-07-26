@@ -10,15 +10,17 @@ Point to WAyland socket
 	flatpak [--user] run --socket=wayland your-app
 		socket = /run/user/<user id>/wayland-0
 
-Manage permissions: Flatseal
-
 Remotes {{{1
 
 remotes
 	list configured remotes
+	--show-disabled
 
 remote-add <options> <repo file or URL>
 	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+enable remote
+	flatpak remote-modify --enable flathub
 
 Update Gnome Software after adding a remote
 	flatpak update --appstream

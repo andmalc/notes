@@ -1,5 +1,20 @@
 
-Initial clone
+Home dir source control setup
+Doc: https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+
+mkdir .conf-git
+git clone --separate-git-dir=.conf-git  git@github.com:andmalc/homeconfig.git gittmp
+rsync -r -v --exclude '.git' gittmp/ $HOME
+rm -r gittmp
+
+abbr conf 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
+conf remote set-url origin git@github.com:andmalc/homeconfig.git
+
+Clone other repos
+	git clone git@github.com:andmalc/notes.git
+	git clone git@github.com:andmalc/work.git
+
+With submodules:
 	git clone --recursive git@github.com:andmalc/config.git
 	Git submodule added
 	git submodule update --init --recursive
