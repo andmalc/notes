@@ -1,0 +1,107 @@
+
+Initial clone
+	git clone --recursive git@github.com:andmalc/config.git
+	Git submodule added
+	git submodule update --init --recursive
+
+
+Environment {{{1
+
+dotfiles/environment/.config/environment.d/10-xdg.conf
+
+Fish shell {{{1
+Run using fish installed by os package manager:
+    
+    Set variables
+        fish_add_path ~/.local/bin
+        fisher_path /home/andmalc/config/dotfiles/fish/.config/fish/fisher
+
+    fisher
+        curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+        fisher config in fish config dir
+        plugins installed in .local/share/fisher
+        run fisher update to initialize or re-link packages
+
+    pkgs installed
+        fzf keybindings: jethrokuan/fzf
+        kennethreitz/fish-pipenv
+        oh-my-fish/plugin-bang-bang
+
+        #Spacefish prompt
+        https://github.com/matchai/spacefish
+
+Fish installed by Nix
+	fisher install https://github.com/lilyball/nix-env.fish
+    Change terminal app shell command to /home/andmalc/.nix-profile/bin/fish 
+    Issue: Kitty: not setting TERM var.  
+
+Tmux {{{1
+    git clone https://github.com/tmux-plugins/tpm ~/.local/share/tmux/plugins/tpm
+    prefix + I to install tpm modules
+    prefix + U to update
+
+
+Nvim {{{1
+
+Vim-Plug 
+    https://github.com/junegunn/vim-plug
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+	Reload init.vim and :PlugInstall
+
+Plugins
+	https://github.com/junegunn/vim-easy-align
+
+Plugins to check out:
+	https://github.com/airblade/vim-gitgutter
+	
+	color scheme
+		https://github.com/morhetz/gruvbox
+
+
+Micro {{{1
+
+Clipboard settings in kitty conf
+
+Sway {{{1
+
+Packages:
+
+	wofi		Wayland compat launcher
+	wl-clipboard
+	clipman		clipboard manager
+
+Copy desktop image
+	https://drive.google.com/file/d/1phsl8MqnzvvfQ1gZfwuuClNnwnBPLNdg/view
+
+Other {{{1
+
+Fzf
+    https://codeyarns.com/2017/10/24/how-to-install-and-use-fzf/
+    Install into shell 
+        ./.fzf/install 
+        decline keybindings setup.  Allow fisher package to handle this.
+
+
+Nix {{{1
+
+Install under Bash
+	curl -L https://nixos.org/nix/install | sh
+	Source
+		source $HOME/.nix-profile/etc/profile.d/nix.sh
+	Add above to .bashrc
+
+	Set following environment under under Crostini
+		XDG_DATA_DIRS=%h/.nix-profile/share:%h/.local/share:/usr/local/share:/usr/share
+		PATH=%h/.nix-profile/bin
+
+		mkdir -p ~/.config/systemd/user	
+		stow -t ~/.config/systemd/user nix-systemd-user
+	Or
+		systemctl --user edit cros-garcon.service
+	
+	Nix install under Fish??
+	Can try this sh <(curl -L https://nixos.org/nix/install) 
+
+

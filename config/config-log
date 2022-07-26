@@ -1,0 +1,14 @@
+7/13/22
+
+	Nvim config
+		Removed options
+			clipboard
+			backspace
+			mouse
+
+		Added
+			rnu
+			list
+			autoread
+			sidescroll
+
