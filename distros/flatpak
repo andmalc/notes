@@ -62,3 +62,12 @@ desktop files location
 		.local/share/applications/
 
 
+Manage permissions: Flatseal {{{1
+
+
+https://github.com/tchx84/Flatseal/blob/master/DOCUMENTATION.md
+
+View all permissions
+	flatpak info --show-permissions [app]
+
+

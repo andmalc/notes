@@ -1,0 +1,11 @@
+
+Install
+	Install 'stack' packgage
+	stack setup
+
+Repl
+	stack ghci
+
+	load existing source file
+		:l <fn>
+	

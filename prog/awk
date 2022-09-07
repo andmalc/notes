@@ -1,3 +1,8 @@
+Pattern action language
+Composed of a sequence of patterns matched against the input
+Each pattern has associated action
+
+
 Docs
 	https://learning-oreilly-com.ezproxy.torontopubliclibrary.ca/library/view/sed-awk/1565922255/ch07s05.html#sedawk-ch-7-sect-5.1
 

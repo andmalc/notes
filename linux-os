@@ -39,6 +39,12 @@ lspci
     lsmod
         cat /proc/modules
 
+Find device number for /sys
+	first column of output of lsusb.py -i
+	locate in /sys e.g.
+		/sys/bus/usb/devices/...
+	run realpath to get link origin
+
 
 http://www.binarytides.com/linux-commands-hardware-info
 
