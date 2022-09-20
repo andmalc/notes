@@ -1,0 +1,16 @@
+
+
+GPG {{{1
+
+Docs: https://developers.yubico.com/PGP/
+
+Change PINs
+	gpg --card-edit
+		admin
+		passwd
+
+
+Add keys to card
+	gpg --edit-key
+		keytocard
+	
