@@ -268,6 +268,11 @@ list [-c/--containers | -i/--images]
 
 Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
 
+# Distrobox {{{1
+
+Run command
+flatpak run io.github.luca.distrobox enter  fed36-distrobox
+
 
 # Misc {{{1
 

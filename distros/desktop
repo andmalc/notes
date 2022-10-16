@@ -13,6 +13,7 @@ Copy paste general
 			Paste with middle mouse click or Shift Insert (not all apps)
         clipboard
             selected text copied to clipboard after explicit copy command (Ctrl C)
+			paste with Ctrl or Ctrl-Shift v
 		cut buffers
 			added by an explicit copy command
 			xlipboard will add after each copy

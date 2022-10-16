@@ -42,6 +42,13 @@ Install & Manage {{{1
 install
     flatpak --user install flathub io.atom.Atom
 
+purge uninstall
+	flatpak uninstall --delete-data 
+
+remove unused
+	flatpak uninstall --unused
+	
+
 Installed apps {{{1
 
 List local

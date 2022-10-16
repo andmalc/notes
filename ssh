@@ -1,13 +1,15 @@
 Troubleshoot connecting:
-https://docs.digitalocean.com/products/droplets/resources/troubleshooting-ssh
-    username wrong or wrong permissions:
-        $HOME dir   700 or 755
-        $HOME/.ssh  700
 
-    host disk out of space
-    host user account dir 
-        missing or restricted access to ~/.ssh 
-        authorized_keys file wrong permissions: should be 600
+https://docs.digitalocean.com/products/droplets/resources/troubleshooting-ssh
+
+username wrong or wrong permissions:
+	$HOME dir   700 or 755
+	$HOME/.ssh  700
+
+host disk out of space
+host user account dir 
+	missing or restricted access to ~/.ssh 
+	authorized_keys file wrong permissions: should be 600
 
 
 Google Cloud 
@@ -20,9 +22,6 @@ Google Cloud
 # https://cloud.google.com/compute/docs/instances/ssh
 # https://cloud.google.com/compute/docs/instances/managing-instance-access#add_oslogin_keys
 ~
-~
-
-
 
 Web-based command line
 	http://code.google.com/p/shellinabox/
@@ -66,6 +65,7 @@ Options
 	D	dynamic, app-level port forwarding
 		used now for Socks4 server
 			ssh -D 1080 my.box.com
+	i	load identity private key
 	L	forward ports
 		e.g. SMTP & POP3
 		set AllowTcpForwarding 'yes' in sshd_config
@@ -77,6 +77,10 @@ Options
 		side.		
 		AllowXForwarding must be 'yes' in remote sshd_config
 	a	forward local connection to authentication agent to remote
+
+ssh-add
+	-l		lists loaded identities
+
 
 Keys {{{1
 

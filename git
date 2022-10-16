@@ -167,11 +167,10 @@ Add & Commit {{{1
 
 
 add <path spec>
-    creates snapshot of file which is later used by commit
-    -i  interactive
-    -n  dry run
-    -p  stage subsections of a file
     -A/--all   updates index to match entire working tree. Includes untracked files.
+    -n  dry run
+    -i  interactive
+		https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging
 
 commit 
     -v	show diff in commit message

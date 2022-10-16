@@ -280,7 +280,9 @@ dnf commands {{{2
 
 Dnf <options> <command> <args eg. package spec>
     
-Pkg spec: searches are case insensitive and match on whole package name
+Pkg spec:
+	case insensitive
+	match on whole package name, full path, or path with wildcard prefix *\
 
 Options:
     --exclude <pkg or pat>  exclude from install, remove, list etc.
@@ -293,7 +295,7 @@ Options:
         --enablerepo=updates-testing fish
     --disable <repo>
 
-Commands
+Sub Commands
     
     autoclean   remove orphans
 
@@ -302,27 +304,30 @@ Commands
         undo, redo
         1..20   show last 20 events
 
-    info        shows details
+    info [installed | available]   
+		shows pkg details
     
     in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
         if /path/file given, acts like provides and installs pkg that provides file
 
-    list | ls [installed | available] [<pkg>]
+    list | ls [installed | available | recent] [<pkg spec>]
         shows name, version, repo, install status
         no pkg summary
         if no arg, lists installed then avail packages
         does not sync metadata
         see also repoquery plugin
     
-    provides | wp 
-	<file name>
+	search | se <name or words from description>
+		result sectioned by closeness of match
+		no installation info
+
+    
+    provides | wp [installed | available] <file name, cmd, or description keywords>
 		shows pkg (installed or not) owning file
-	<cmd or keyword>
-		matching package names or descriptions
 
     repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
         search repos packages or files matching provided file or command 
-        default output is pkg name and version matching either pattern matching full path or package name  
+        default output is pkg name and version 
 		Faster than 'dnf provides'
 	
 	e.g
@@ -359,10 +364,7 @@ Commands
 			--groupmember list groups containing spec
    
 
-    se|search   lists name, description. 
-                    result sectioned by closeness of match
-                    no installation info
-
+    
     upgrade <pkg spec>
     up|update      is alias to upgrade
     upgrade-minimal

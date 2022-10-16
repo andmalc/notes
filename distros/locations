@@ -4,13 +4,18 @@ Systemd services
 		~/.config/systemd/user/default.target.wants/xxxx
 
 
+Flatpak
+	system apps & runtimes
+		/var/lib/flatpak/app
+		/var/lib/flatpak/runtimes
+
+User data saved in ~/.var/app/
+
 Desktop appliction files
 	Flatpak
-		desktop files
-			/var/lib/flatpak/exports/share/applications
-		runtime
-			~/.var/app
-	
+		system: /var/lib/flatpak/exports/share/applications
+		user: .local/share/applications (Same as Gnome/xdg)
+
 	Gnome / xdg?
 		desktop files
 			~/.local/share/applications/
