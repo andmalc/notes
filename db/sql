@@ -60,6 +60,8 @@ Ascending order is default: a-z 1-x
 
 Aggregation {{{1
 
+SELECT Count(<col>) etc.
+
 Count
     count of matching rows
     count(*) includes null rows, count(<col>) does not

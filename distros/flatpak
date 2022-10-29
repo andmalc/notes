@@ -19,11 +19,14 @@ remotes
 remote-add <options> <repo file or URL>
 	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-enable remote
-	flatpak remote-modify --enable flathub
+	flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 
 Update Gnome Software after adding a remote
 	flatpak update --appstream
+
+
+enable remote
+	flatpak remote-modify --enable flathub
 
 Packages {{{1
 
@@ -40,13 +43,14 @@ Show package details
 Install & Manage {{{1
 
 install
-    flatpak --user install flathub io.atom.Atom
+    flatpak --user/-u install flathub | flathub-beta io.atom.Atom
 
-purge uninstall
-	flatpak uninstall --delete-data 
+Uninstall
+	purge 
+		flatpak uninstall --delete-data 
 
-remove unused
-	flatpak uninstall --unused
+	remove unused
+		flatpak uninstall --unused
 	
 
 Installed apps {{{1

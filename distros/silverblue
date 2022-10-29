@@ -17,6 +17,18 @@ Writable:
 Dnf search
 podman run -it --rm registry.fedoraproject.org/fedora:28 dnf search strace
 
+Install overlays
+
+
+rpm-ostree install [-A (apply-live) 
+rpm-ostree apply-live
+rpm-ostree uninstall 
+
+
+Remove package in base install
+
+rpm-ostree override remove 
+
 
 Sytem upgrade
 
@@ -43,7 +55,7 @@ Remove deployment
 
 Reset
 	removes all overlays, overrides and initramfs
-		rpm-ostree ex reset
+		rpm-ostree override reset
 
 
 Config user

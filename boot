@@ -25,6 +25,9 @@ Init system
     starts all daemons etc. required by OS
     manages sytem state
 
+To Read
+https://www.theregister.com/2022/10/26/tightening_linux_boot_process_microsoft_poettering/?td=rt-3a
+
 
 Boot Firmware {{{1
 
