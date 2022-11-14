@@ -2,6 +2,11 @@ Report bugs: https://pagure.io/teamsilverblue/issues
 
 User data saved in ~/.var/app
 
+Firefox profile: 
+	var/home/andmalc/.var/app/org.mozilla.firefox/.mozilla/firefox/<profile dir>
+
+
+
 Runtimes in /var/lib/flatpak/runtimes
 	derived runtimes use hard links to source to save space
 	use 'du -hs' to see space used

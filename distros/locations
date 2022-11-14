@@ -11,6 +11,10 @@ Flatpak
 
 User data saved in ~/.var/app/
 
+Firefox profile: 
+	var/home/andmalc/.var/app/org.mozilla.firefox/.mozilla/firefox/<profile dir>
+
+
 Desktop appliction files
 	Flatpak
 		system: /var/lib/flatpak/exports/share/applications

@@ -1,0 +1,87 @@
+Help {{{1
+
+List commands by category
+	 help commands  | where category == filters
+
+Find commands 
+help commands  | find insert
+
+Files {{{1
+
+ls		table: files in dir
+open <filename>
+
+open <filename> | to <fmt>	# convert to fmt
+
+
+Selecting data {{{1
+
+first #		first # lines
+
+Nested data 
+	get <col name>[.<col name>]
+		returns values in column as a list
+		return deeper paths in nested data
+
+
+select <col name> <colname>
+	creates new table 
+
+
+Send table rows to external cmd
+	each { |it| ^echo $it }
+
+
+Data Types 
+	Strings
+		Interpolation: $"6 x 7 = (6 * 7)"
+
+	Parse string input to table
+		parse 
+		from <fmt>
+		
+
+	Lists [val val]
+		ordered seq
+		comma sep optional
+		like one col table so col methods work
+
+		slicing
+			[a b].0		first item
+			[a b c d] | range 1..2	
+
+	Records / dictionaries {key: val key: val}
+		{name: sam rank: 10}
+
+		like a one row table so table methods work
+		get <key> => <val>
+
+	Table
+		list of records.  
+		
+		--expand
+		--flatten
+		--collapse
+
+		notation
+			[[col1, col2],[val1, val2]]
+			[{name: sam rank: 10}, {name: joe rank: 12}]  # list of records
+
+		methods
+			get <index> => record
+			insert <col> <val>
+			first / last #
+			sort-by <col name>
+			reverse
+			skip #		skip rows
+
+			where <col> - Filter table
+
+
+		transpose
+
+Variables
+	Environment
+		$env.HOME
+
+
