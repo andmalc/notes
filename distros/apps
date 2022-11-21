@@ -2,9 +2,11 @@
 
 Console {{{1
 
-Autojump
-https://www.linode.com/docs/tools-reference/tools/faster-file-navigation-with-autojump/
+git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf tig visidata
 
+Cargo install
+	nu | nushell
+	du-dust - show disk space
 
 Ranger console file manager
 http://ranger.nongnu.org/
@@ -13,42 +15,17 @@ Disk space usage
     Files/dirs
         ncdu 
         nnn
+		du-dust - install with cargo
+
     Partitions/disks
         pydf
 
-Bay - cat clone with syntax highlighting and git support
-https://www.ostechnix.com/bat-a-cat-clone-with-syntax-highlighting-and-git-integration/
 
+Find and Search
+	fzf
+	ripgrep
+	fd-find
 
-wl-clipboard  - clipbord tool for Wayland
-    https://github.com/bugaevc/wl-clipboard
-
-Finding files {{{1
-
-fd - find alternative
-https://github.com/sharkdp/fd
-Fedora: fd-find
-
-    fd <pattern> [<dir tree to search>]
-    By default: 
-    - recursive
-    - ignores case, hidden files and patterns in in gitignore.  
-    - regex patterns
-
-
-fzf - command-line fuzzy finder written in Go
-https://github.com/junegunn/fzf
-
-ripgrep - Rust grep
-    https://github.com/BurntSushi/ripgrep
-    dnf copr enable carlgeorge/ripgrep
-    dnf install ripgrep
-
-    -i  ignore case
-    -v  invert 
-    -w  force matches between word boundaries
-    -g <glob>   restrict to matching files
-    -l  list matching filenames
 
 
 

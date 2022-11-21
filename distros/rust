@@ -1,0 +1,8 @@
+
+Package manger is cargo
+
+Update cargo intalled apps
+	cargo install cargo-update
+	cargo install-update [OPTIONS] [PACKAGE…]
+
+

@@ -226,9 +226,9 @@ xinput list-props <device #>
 gsettings list-recursively  | grep touchpad
 
 
+
 Packages {{{1
 
-git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf tig visidata
 
 dnf group install  "C Development Tools and Libraries"
 
@@ -238,13 +238,11 @@ gpg
          set -x --path GNUPGHOME ~/.config/gnupg
 
 
-Find and Search
-	fzf
-	ripgrep
-	fd-find
-
 
 Desktop {{{1
+
+wl-clipboard  - clipbord tool for Wayland
+    https://github.com/bugaevc/wl-clipboard
 
 Keyboard driven browser: qutebrowser
 

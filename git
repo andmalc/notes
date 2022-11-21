@@ -209,30 +209,24 @@ Reverting / Resetting {{{1
 
 https://www.atlassian.com/git/tutorials/undoing-changes
 
-revert <commit>
-    generate a new commit that undoes changes in <commit> 
-    applies that to the current branch.    
-    Preferred over Reset because preserves history
 
-    revert HEAD~1
-        new commit undoing changes from last commit
+Reset {{{2
 
-
-Reset
 https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
 
 no arg
-	Unstages chnages in Index, no effect on files
+	Unstages all, no effect on file
 	Implies --mixed HEAD
 
 <file>
-	Unstages a file
+	Unstages file
 
 --mixed
 	Reset Index but not working tree
 	
 --hard [<commit>]
-	Reset the index and changes to working tree
+	Unstages all and reverts changes to working tree
+	Tree is reverted to HEAD
 
 --soft HEAD~1
 	Commit is removed from branch
@@ -257,6 +251,28 @@ git commit -m "Revert to 56e05fced"
 
 #Reset remote (e.g. on GitHub)
 --hard origin -f
+
+
+Stash {{{2
+
+stash push <fn>
+	saves current state of file, discards changes in WT and Index
+	untracked files unaffected
+
+stash pop
+	restores most recent stash
+
+Can do reset --hard to clear WT then pop to restore stashed files
+
+
+revert <commit> {{{2
+
+generate a new commit that undoes changes in <commit> 
+applies that to the current branch.    
+Preferred over Reset because preserves history
+
+revert HEAD~1
+	new commit undoing changes from last commit
 
 
 Branches {{{1

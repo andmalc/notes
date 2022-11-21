@@ -43,7 +43,7 @@ Time specifcation
 Run command, from the starting directory, on each file found
 
 
--mount, -xdev	Don't descend into directory trees on other filesystems
+-mount, -xdev	Don't descend into directory trees on other file systems
 -maxdepth n 
 
 -name, -iname
@@ -70,10 +70,10 @@ find . -name \*.pdf | grep -v "^\./Docs/Prog"   Find the pdf files not in the Do
 	
 Finding by type:
 - type
-    b	block file
-    c	character file
+    b	block files
+    c	character files
     d	directory
-    f	plain file (avoids /proc)
+    f	plain files (avoids /proc)
     l	symbolic link
     p	named pipe
     s	socket
@@ -88,7 +88,7 @@ Execute Commands on Found Files
 From least to most efficient:
 
 -exec cmd [args] '{} \;'  
-    {} stands for a filename arg; ';' indicates the end of args to cmd.
+    {} stands for a file name arg; ';' indicates the end of args to cmd.
     use -ok instead of -exec to be prompted
 
 find ... | xargs -J (take whole file list) X cmd_name X (X's deliminate the 
@@ -109,12 +109,44 @@ Try also: 'slocate' (?)
 
 fd {{{1
 
-https://github.com/sharkdp/fd
-sudo dnf copr enable keefle/fd
-Debian pkg: fd-find
+https://github.com/sharkdp/fd#how-to-use
+pkg: fd-find
 
 fd <pattern> <path>
-fdfind . -E fishd.localhost -E fish_variables .config/fish/
+	finds files and directories matching pattern in any portion of path or filename
+	caes insensitive by default
+
+	.		match all in path
+	-p		match against full path
+				fd -p  'notes/.*/fedora'
+
+	-g		globbing instead of regex
+			globbing syntax: https://docs.rs/globset/latest/globset/#syntax
+				fd -p -g  '**/fedora'
+
+	-e		file extension
+
+	-E/--exclude	
+			exclude pat
+			takes glob arg
+				fd -E '*.bak'
+
+	-x / --exec	pipe results to cmd
+				runs each result separately (in parallel). 
+				fd -e zip -x unzip
+
+				fd -e jpg -x convert {} {.}.png
+					{} is placeholder for result
+
+	-X/--exec-batch
+			run external cmd once with all results as args (xargs not needed)
+			fd . -X rg <pat> 
+
+	-H		include hidden files
+	-I		include ignored files
+
+
+
 
 fzf  {{{1
 
@@ -129,7 +161,7 @@ Options
     -e  exact match
 
 New Keybindings installed with Fisher from https://github.com/jethrokuan/fzf
-	Find file       Ctrl f
+	Find X      Ctrl f
 	Search hist     Ctrl r
 	Cd into sub dirs    Alt o
 	Cd into hidden dirs    Alt Shift o

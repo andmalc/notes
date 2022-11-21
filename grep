@@ -1,4 +1,4 @@
-Filtering tool
+Grep {{{1
 
 grep options pat path 
 
@@ -16,7 +16,19 @@ options
 	--exclude-dir= 
 		--exclude-dir={.mozilla,.var,.local}
 
-Pattern Matching {{{1
+Tips 
+
+Exclude blank lines and comments 
+grep  "^[^# "]
+
+excluding files under zsh
+	grep -irl thing (*~*html)(.)
+
+Match whole words, print each on separate line
+    grep -oE '\w+' 
+
+
+Regex Pattern Matching {{{1
 
 Pattern matching with regex, not shell syntax
 Will match anywhere on a liine
@@ -54,19 +66,18 @@ Egrep
 	-f	Search for list of patterns in a file
 	
 
-Tips {{{1
 
-Exclude blank lines and comments 
-grep  "^[^# "]
+Ripgrep {{{1
 
-excluding files under zsh
-	grep -irl thing (*~*html)(.)
+-l/--files-with-matches
+	show filenames of matches, suppress content
 
-Match whole words, print each on separate line
-    grep -oE '\w+' 
+Pipe to cmd
+	rg pat | xargs cmd
 
 Alternatives {{{1
 
 ack, ag, fzf
+
 
 
