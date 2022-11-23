@@ -28,46 +28,33 @@ Match whole words, print each on separate line
     grep -oE '\w+' 
 
 
-Regex Pattern Matching {{{1
-
-Pattern matching with regex, not shell syntax
-Will match anywhere on a liine
-
-^/$   beginning/end of line (anchors)
-
-Bracket expressions
-    [abc]  match if any character 
-    [^abc]  don't match if any 
-
-Character classes
-    [:upper:]
-
-Find alternatives:
-grep 'str1\|str2' filename
-
-Repitition
-    *   zero or more times
-    extended 
-        +       one or more 
-        {n}     num of repititions
-        {n,n}   range
-
-Grouping
-    ()  Enclose group.  Escape if not extended
-
-
-Egrep
-	Extended searching.  
-	Quote expression and surround each regex with () and use:
-	+	1=> occurances
-	?	0<>1 occurances
-	|	OR operator
-
-	-f	Search for list of patterns in a file
-	
-
 
 Ripgrep {{{1
+
+File arg
+	defaults to recursive starting at current dir
+
+	ignores:
+		hidden files
+		files matched by globs in gitignore, .ignore, and .rgignore files
+		symbolic links
+
+	override ignores
+		-.		search hidden
+		--no-ignore	
+		--follow/-L		follow links
+
+	globbing
+		-g '<pat>'
+		exlcude '!<pat>'
+
+Replace text in results
+	--replace/-r	
+	--only-matching/-o		return only match, not line
+
+	capture groups
+		rg 'my(pat)' <fn> -r 'blah-$1'
+
 
 -l/--files-with-matches
 	show filenames of matches, suppress content

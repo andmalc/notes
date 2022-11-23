@@ -1,0 +1,24 @@
+
+alias dotfiles 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
+
+git clone https://github.com/andmalc/homeconfig
+
+Files within home dir
+
+.conf-git
+	homeconfig repo repository directory 
+
+.gitconfig
+.config/
+	fish
+	nvim
+	ripgrep
+	micro
+	sway
+	tmux
+	waybar
+	.xonshrc
+
+
+
+

@@ -336,8 +336,9 @@ Words
 	*/#	to next/prev word under cursor
 
 Line
-	j/k     up/down
-	+,-	  non blank in column 1 on following/previous line
+	j/k		up/down
+	^/g_		non blank on current line
+	+,-		non blank in column 1 on following/previous line
 
 Sentences etc.
 )(		sentences forward, backward

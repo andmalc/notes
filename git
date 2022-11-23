@@ -144,9 +144,10 @@ log {{{2
 
 ls-files {{{2
 
-    Shows tracked files 
+Shows tracked files
+Defaults to current directory
 
-    --abbrv --stage/-s     Show index with abbreviated object name
+--abbrv --stage/-s     Show index with abbreviated object name
 
 other info {{{2
 
