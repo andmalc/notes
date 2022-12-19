@@ -5,13 +5,23 @@ https://fishshell.com/docs/current/interactive.html#shared-bindings
 `eval (ssh-agent -c)`
 
 Kill ring
-	Ctrl K	kill to line end
-	Ctrl Y	restore line
-	Alt Y		restores more from history
+	Ctrl k	kill to line end
+	Ctrl u	kill to line beginning
+	Ctrl y	restore line
+	Alt Y		restores more from history (?)
 
 Alt-s		prepend sudo
 Alt-up	search hist for token under cursor
 Alt-.		insert-last arg
+
+^e			go to line end - accepts current suggestion 
+			^f does same before suggestion, move car forward otherwise
+
+^n/p		cycle through completion history
+
+^-x		copy whole line to sys clipboard
+^-y		paste from sys clipboard
+
 
 
 # History {{{1
@@ -182,10 +192,11 @@ Exit status of last command $status
 
 Arguments: $argv list
 
-Combiners (And, Or, Not) {{{1
+Logic (And, Or, Not) {{{1
 
-&&, ||, !
-and, or, not - job modifiers - have lower precedence
+Operators
+	&&, ||, !
+	and, or, not - job modifiers - have lower precedence
 
 short circuit - do 2 only if 1 succeeds
     cmd1; and cmd2

@@ -1,3 +1,5 @@
+Locate and browse files
+
 
 whatis database		Short description of commands - must know command name
 whereis			Search for command, not just on path
@@ -146,13 +148,17 @@ fd <pattern> <path>
 	-I		include ignored files
 
 
-
-
-
 fzf  {{{1
 
-command-line fuzzy finder written in Go
+Interactive file finder
 https://github.com/junegunn/fzf
+
+Output to standard out, e.g. 
+	to pager
+	generate file name args to a command
+		mv (fzf) newdir 
+		vi (fzf)
+
 
 Options
     -q  query mode - use with search operators
@@ -161,7 +167,28 @@ Options
     -i  cases insensitive
     -e  exact match
 
-New Keybindings installed with Fisher from https://github.com/jethrokuan/fzf
+Extended Search Mode
+    'word1 word2'   filter on both words
+    'word           exact match
+
+history | fzf > .config/fish/config.fish
+history | fzf | fish
+
+Preview files
+    fzf --preview='head -10 {+}'
+	or with bat pager
+	fzf --preview 'bat --color=always {}'
+
+	Fish config: 
+	FZF_DEFAULT_OPTS=--preview 'bat --color=always {}'
+
+
+Use fd-find instead of stock find as default search app
+
+Fish config
+	FZF_DEFAULT_COMMAND=fd --type f
+
+Fish keybindings plugin ttps://github.com/jethrokuan/fzf
 	Find X      Ctrl f
 	Search hist     Ctrl r
 	Cd into sub dirs    Alt o
@@ -169,23 +196,11 @@ New Keybindings installed with Fisher from https://github.com/jethrokuan/fzf
 	Edit            Ctrl o
     xdg-open app    Ctrl g
 
-Search after command
-	Zsh
-		less notes/**<Tab>
-	Fish shell
-		Control T to launch.  Last token is root dir for search
-		less notes<ctrl-t>
+brood {{{1
 
+File browser
 
-Preview files
-    fzf --preview='head -10 {+}'
-
-Extended Search Mode
-    'word1 word2'   filter on both words
-    'word           exact match
-
-
-history | fzf > .config/fish/config.fish
-history | fzf | fish
+https://dystroy.org/broot/install/
+Install with Cargo
 
 

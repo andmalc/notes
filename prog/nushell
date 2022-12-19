@@ -8,10 +8,23 @@ help commands  | find insert
 
 Files {{{1
 
+Globbing: ?, * or ** for recursive
+
 ls		table: files in dir
 open <filename>
 
+Format conversion
 open <filename> | to <fmt>	# convert to fmt
+open --raw freq.ods | from ods | get Sheet1 | headers
+
+Operators {{{1
+
+|	pipe
+><	greater/less than
+
+Iterators {{{1
+
+echo [1 2 3 4] | each -n  {|it| echo $it}
 
 
 Selecting data {{{1

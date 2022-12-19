@@ -181,6 +181,9 @@ wipe partition table: mklablel msdos | gpt
 Filesystems {{{1
 FS Info {{{2
 
+Show just FS type
+	findmnt -no FSTYPE <mnt point>
+
 Filesystems by device & mount points
 
 df -Th
@@ -307,6 +310,9 @@ btrfs {{{2
 
 Layout ideas:
 https://btrfs.wiki.kernel.org/index.php/SysadminGuide
+
+12/22
+https://fedoramagazine.org/working-with-btrfs-subvolumes/
 
 btrfs filesystem 
     label
