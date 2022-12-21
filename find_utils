@@ -1,12 +1,138 @@
 Locate and browse files
 
-
 whatis database		Short description of commands - must know command name
 whereis			Search for command, not just on path
 which or type		Show full path of first matching command in path
 
+bat {{{1
 
-Find {{{1
+pager
+
+
+fd {{{1
+
+https://github.com/sharkdp/fd#how-to-use
+pkg: fd-find
+
+fd <pattern> <path>
+	finds files and directories matching pattern in any portion of path or filename
+	caes insensitive by default
+
+	.		match all in path
+	-p		match against full path
+				fd -p  'notes/.*/fedora'
+
+	-g		globbing instead of regex
+			globbing syntax: https://docs.rs/globset/latest/globset/#syntax
+				fd -p -g  '**/fedora'
+
+	-e		file extension
+
+	-E/--exclude	
+			exclude pat
+			takes glob arg
+				fd -E '*.bak'
+
+	-x / --exec	pipe results to cmd
+				runs each result separately (in parallel). 
+				fd -e zip -x unzip
+
+				fd -e jpg -x convert {} {.}.png
+					{} is placeholder for result
+
+	-X/--exec-batch
+			run external cmd once with all results as args (xargs not needed)
+			fd . -X rg <pat> 
+
+	-H		include hidden files
+	-I		include ignored files
+
+
+fzf  {{{1
+
+Interactive file finder
+https://github.com/junegunn/fzf
+
+Output to standard out, e.g. 
+	to pager
+	generate file name args to a command
+		mv (fzf) newdir 
+		vi (fzf)
+
+
+Options
+    -q  query mode - use with search operators
+    -f  filter - same as query but non-interactive
+    -m  multi select with Shfit Tab
+    -i  cases insensitive
+    -e  exact match
+
+Extended Search Mode
+    'word1 word2'   filter on both words
+    'word           exact match
+
+history | fzf > .config/fish/config.fish
+history | fzf | fish
+
+Preview files
+    fzf --preview='head -10 {+}'
+	or with bat pager
+	fzf --preview 'bat --color=always {}'
+
+	Fish config: 
+	FZF_DEFAULT_OPTS=--preview 'bat --color=always {}'
+
+
+Use fd-find instead of stock find as default search app
+
+Fish config
+	FZF_DEFAULT_COMMAND=fd --type f
+
+Fish keybindings plugin ttps://github.com/jethrokuan/fzf
+	Find X      Ctrl f
+	Search hist     Ctrl r
+	Cd into sub dirs    Alt o
+	Cd into hidden dirs    Alt Shift o
+	Edit            Ctrl o
+    xdg-open app    Ctrl g
+
+broot {{{1
+
+https://dystroy.org/broot/install/
+Install with Cargo or download binary
+
+Startup
+	-w		whale mode - shows disk usage
+	-i		show hidden
+	-d		show dates
+	-p		permissions
+	-s		file sizes
+
+	Or toggle above in browser - see Help
+
+File browser
+
+Page selected file or open panel showing selected dir
+	ctrl+right 
+
+Open selected file or cd into selected dir
+	Alt Enter
+	:cd
+
+Multi select file using Staging
+	C-g selected file to add to staged list
+	focus stating area panel
+	do file mngment action
+
+Quit or close panel		C-w
+Switch to panel			C-arrow
+
+Grep	c/<pat>
+
+
+Old {{{1
+
+Find {{{2
 
 find [pathnames] [conditions]
 
@@ -103,104 +229,9 @@ command) arg
 
 
 
-Locate {{{1	
+Locate {{{2	
 
 Match filename patterns:  if pat contains no metacharacters, pat can match any part of filename.
 
 Try also: 'slocate' (?)
-
-fd {{{1
-
-https://github.com/sharkdp/fd#how-to-use
-pkg: fd-find
-
-fd <pattern> <path>
-	finds files and directories matching pattern in any portion of path or filename
-	caes insensitive by default
-
-	.		match all in path
-	-p		match against full path
-				fd -p  'notes/.*/fedora'
-
-	-g		globbing instead of regex
-			globbing syntax: https://docs.rs/globset/latest/globset/#syntax
-				fd -p -g  '**/fedora'
-
-	-e		file extension
-
-	-E/--exclude	
-			exclude pat
-			takes glob arg
-				fd -E '*.bak'
-
-	-x / --exec	pipe results to cmd
-				runs each result separately (in parallel). 
-				fd -e zip -x unzip
-
-				fd -e jpg -x convert {} {.}.png
-					{} is placeholder for result
-
-	-X/--exec-batch
-			run external cmd once with all results as args (xargs not needed)
-			fd . -X rg <pat> 
-
-	-H		include hidden files
-	-I		include ignored files
-
-
-fzf  {{{1
-
-Interactive file finder
-https://github.com/junegunn/fzf
-
-Output to standard out, e.g. 
-	to pager
-	generate file name args to a command
-		mv (fzf) newdir 
-		vi (fzf)
-
-
-Options
-    -q  query mode - use with search operators
-    -f  filter - same as query but non-interactive
-    -m  multi select with Shfit Tab
-    -i  cases insensitive
-    -e  exact match
-
-Extended Search Mode
-    'word1 word2'   filter on both words
-    'word           exact match
-
-history | fzf > .config/fish/config.fish
-history | fzf | fish
-
-Preview files
-    fzf --preview='head -10 {+}'
-	or with bat pager
-	fzf --preview 'bat --color=always {}'
-
-	Fish config: 
-	FZF_DEFAULT_OPTS=--preview 'bat --color=always {}'
-
-
-Use fd-find instead of stock find as default search app
-
-Fish config
-	FZF_DEFAULT_COMMAND=fd --type f
-
-Fish keybindings plugin ttps://github.com/jethrokuan/fzf
-	Find X      Ctrl f
-	Search hist     Ctrl r
-	Cd into sub dirs    Alt o
-	Cd into hidden dirs    Alt Shift o
-	Edit            Ctrl o
-    xdg-open app    Ctrl g
-
-brood {{{1
-
-File browser
-
-https://dystroy.org/broot/install/
-Install with Cargo
-
 

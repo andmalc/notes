@@ -179,18 +179,15 @@ abbr -a	add
 # Alias {{{1
 
 function that wraps a command
-
-    function <alias name>
-        <alias command>
-    end
-
-Create alias=name           alias [--save]
-
-Exit status of last command $status
-    0 = true, 1 = false
+alias
+	no-arg	list saved aliases
+	-s		save
 
 
-Arguments: $argv list
+ function <alias name>
+	  <alias command>
+ end
+
 
 Logic (And, Or, Not) {{{1
 
@@ -274,6 +271,10 @@ Show function location      -D <func name>
 Show source     functions <func name>
 
 Arguments: $argv list
+
+Exit status of last command $status
+    0 = true, 1 = false
+
 
 Parameter Expansion {{{2
 

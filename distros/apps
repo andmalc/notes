@@ -11,8 +11,9 @@ Files: Find, List, Search, Paging
 	fzf
 	fd-find
 	bat
-	exa - ls alternative, file manage features
+	exa - simple ls alternative
 	ranger - three panel text file manager
+	broot - full featured file manager
 
 Grepping
 	ripgrep
@@ -23,7 +24,6 @@ Git browsing
 Dev
 	visidata
 	nushell / nu (cargo, prerequisite openssl-devel)
-
 
 Disk space usage
     Files/dirs
