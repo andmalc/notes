@@ -1,0 +1,64 @@
+Space menu
+	file picker			f
+	window sub			w/C-w
+	buffers				b
+	
+
+Go To - g
+	line beginning		h
+	beginning non-blank	s
+	line end			l
+	buffer next/prev	n/p
+
+Vertical movement, scrolling, searching - z
+	Pg down/up			C-f/b
+		
+	
+Selecting movements
+	inner word			eb/be
+	find/till char X 	f/tX
+	to end of line		t<ret>
+
+	Whole line.			x 
+	Repeat to select next line			
+	including ws(?)		X
+	line space trimmed	x_
+
+	Extend selection	v
+
+Editing
+	delete				d
+	delete to end		vgld or t<ret>d
+	Undo/redo			u/U
+
+	Join lines			Alt-Shift-j
+
+	Indent line			</>
+	
+Insert mode editing - Emacs bindings
+ 	Delete word right	A-Del
+
+Clipboard
+	Paste after/before 	p/P
+	
+
+Jumplist
+	Save				s
+	Forward/Back		C-i/o
+	Show list			Sp-j
+
+Command prompt
+	Word-wise move		C-arrows
+	Delete word right 	C-Del
+	
+	
+	sdfdsf
+		asdfdsf asdfedfs ab fghi   
+		adsfdsf
+			sadfsdf
+			
+
+
+Config
+	https://github.com/LGUG2Z/helix-vim/blob/master/config.toml
+	
