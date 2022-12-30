@@ -1,33 +1,39 @@
-
-
 Console {{{1
 
-git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf tig visidata
+git neovim fish tmux mlocate ncdu stow exa ccrypt duf visidata bat
+kitty kitty-terminfo kitty-fish-integration
 
+Editors
+	helix - add Copr  dnf copr enable varlad/helix
+	
 
-Cargo install
-	nu | nushell
-	du-dust - show disk space
+Files: Find, List, Search, Paging
+	fzf
+	fd-find
+	bat
+	exa - simple ls alternative
+	ranger - three panel text file manager
+	broot - full featured file manager
 
-Ranger console file manager
-http://ranger.nongnu.org/
+Grepping
+	ripgrep
+
+Git browsing
+	tig
+
+Dev
+	visidata
+	nushell / nu (cargo, prerequisite openssl-devel)
 
 Disk space usage
     Files/dirs
         ncdu
         nnn
+		duf
 		du-dust - install with cargo
 
-    Partitions/disks
-        pydf
-
-
-Find and Search
-	fzf
-	ripgrep
-	fd-find
-
-
+Partitions/disks
+	pydf
 
 
 Tmux {{{1

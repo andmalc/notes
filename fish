@@ -5,13 +5,23 @@ https://fishshell.com/docs/current/interactive.html#shared-bindings
 `eval (ssh-agent -c)`
 
 Kill ring
-	Ctrl K	kill to line end
-	Ctrl Y	restore line
-	Alt Y		restores more from history
+	Ctrl k	kill to line end
+	Ctrl u	kill to line beginning
+	Ctrl y	restore line
+	Alt Y		restores more from history (?)
 
 Alt-s		prepend sudo
 Alt-up	search hist for token under cursor
 Alt-.		insert-last arg
+
+^e			go to line end - accepts current suggestion 
+			^f does same before suggestion, move car forward otherwise
+
+^n/p		cycle through completion history
+
+^-x		copy whole line to sys clipboard
+^-y		paste from sys clipboard
+
 
 
 # History {{{1
@@ -169,23 +179,21 @@ abbr -a	add
 # Alias {{{1
 
 function that wraps a command
-
-    function <alias name>
-        <alias command>
-    end
-
-Create alias=name           alias [--save]
-
-Exit status of last command $status
-    0 = true, 1 = false
+alias
+	no-arg	list saved aliases
+	-s		save
 
 
-Arguments: $argv list
+ function <alias name>
+	  <alias command>
+ end
 
-Combiners (And, Or, Not) {{{1
 
-&&, ||, !
-and, or, not - job modifiers - have lower precedence
+Logic (And, Or, Not) {{{1
+
+Operators
+	&&, ||, !
+	and, or, not - job modifiers - have lower precedence
 
 short circuit - do 2 only if 1 succeeds
     cmd1; and cmd2
@@ -263,6 +271,10 @@ Show function location      -D <func name>
 Show source     functions <func name>
 
 Arguments: $argv list
+
+Exit status of last command $status
+    0 = true, 1 = false
+
 
 Parameter Expansion {{{2
 
