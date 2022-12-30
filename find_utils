@@ -153,6 +153,7 @@ fzf  {{{1
 
 command-line fuzzy finder written in Go
 https://github.com/junegunn/fzf
+https://www.redhat.com/sysadmin/fzf-linux-fuzzy-finder
 
 Options
     -q  query mode - use with search operators

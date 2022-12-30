@@ -4,6 +4,7 @@ Console {{{1
 
 git neovim fish tmux mlocate ncdu stow ranger exa ccrypt duf tig visidata
 
+
 Cargo install
 	nu | nushell
 	du-dust - show disk space
@@ -13,7 +14,7 @@ http://ranger.nongnu.org/
 
 Disk space usage
     Files/dirs
-        ncdu 
+        ncdu
         nnn
 		du-dust - install with cargo
 
