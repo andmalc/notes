@@ -101,7 +101,7 @@ broot {{{1
 https://dystroy.org/broot/install/
 Install with Cargo or download binary
 
-Startup
+Startup - br
 	-w		whale mode - shows disk usage
 	-i		show hidden
 	-d		show dates
