@@ -131,7 +131,6 @@ Grep	c/<pat>
 
 
 Old {{{1
-
 Find {{{2
 
 find [pathnames] [conditions]
@@ -235,3 +234,4 @@ Match filename patterns:  if pat contains no metacharacters, pat can match any p
 
 Try also: 'slocate' (?)
 
+<<<<<<< HEAD

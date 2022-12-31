@@ -3,11 +3,11 @@ Home dir source control setup
 Doc: https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 
 mkdir .conf-git
-git clone --separate-git-dir=.conf-git  git@github.com:andmalc/homeconfig.git gittmp
+git clone --separate-git-dir=.git-conf git@github.com:andmalc/homeconfig.git gittmp
 rsync -r -v --exclude '.git' gittmp/ $HOME
 rm -r gittmp
 
-abbr conf 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
+abbr conf 'git --git-dir=$HOME/.git-conf --work-tree=$HOME'
 conf remote set-url origin git@github.com:andmalc/homeconfig.git
 
 Clone other repos
@@ -30,26 +30,27 @@ Fish shell {{{1
 Run using fish installed by os package manager:
     
 
-	Abbr for home dir git repo
-		 abbr conf 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
+Abbr for home dir git repo
+	 abbr conf 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
 
-    Set variables
-        fish_add_path ~/.local/bin
-        fisher_path /home/andmalc/config/dotfiles/fish/.config/fish/fisher
+Set variables
+	fish_add_path ~/.local/bin
+	fisher_path /home/andmalc/config/dotfiles/fish/.config/fish/fisher
 
-    fisher
-        curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-        fisher config in fish config dir
-        plugins installed in .local/share/fisher
-        run fisher update to initialize or re-link packages
+fisher
+	curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+	fisher config in fish config dir
+	plugins installed in .local/share/fisher
+	run fisher update to initialize or re-link packages
 
-    pkgs installed
-        fzf keybindings: jethrokuan/fzf
-        kennethreitz/fish-pipenv
-        oh-my-fish/plugin-bang-bang
+pkgs installed
+	fzf keybindings: jethrokuan/fzf
+	kennethreitz/fish-pipenv
+	oh-my-fish/plugin-bang-bang
+	danhper/fish-ssh-agent
 
-        #Spacefish prompt
-        https://github.com/matchai/spacefish
+	#Spacefish prompt
+	https://github.com/matchai/spacefish
 
 Fish installed by Nix
 	fisher install https://github.com/lilyball/nix-env.fish
@@ -63,6 +64,8 @@ Tmux {{{1
 
 
 Nvim {{{1
+
+Create ~tmp/nvimswap for swap file location
 
 Vim-Plug 
     https://github.com/junegunn/vim-plug
