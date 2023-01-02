@@ -117,7 +117,7 @@ Array
 set myarray a b c
 echo $myarray[1]
 
-# Variables {{{1
+ Variables {{{1
 
 https://fishshell.com/docs/current/#variables
 
@@ -143,9 +143,8 @@ set
 		-gx exported global 
 			use for environment vars in cofig.fish
 
-	var name but not value
-		show var value
-
+	-S --show
+		
 	no var or value
 		list all vars or limit to var type with scope option
 		e.g. show exported global    -xg
