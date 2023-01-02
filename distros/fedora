@@ -274,7 +274,8 @@ gsettings set org.gnome.desktop.background primary-color '#HEX'
 
 
 Dnf {{{1
-dnf commands {{{2
+
+General {{{2
 
 Dnf <options> <command> <args eg. package spec>
     
@@ -293,102 +294,99 @@ Options:
         --enablerepo=updates-testing fish
     --disable <repo>
 
-Sub Commands
+Commands {{{2
     
-    autoclean   remove orphans
+autoclean   remove orphans
 
-    history <cmd> <event ID>
-        list (default cmd)
-        undo, redo
-        1..20   show last 20 events
-
-    info [installed | available]   
-		shows pkg details
-    
-    in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
-        if /path/file given, acts like provides and installs pkg that provides file
-
-    list | ls [installed | available | recent] [<pkg spec>]
-        shows name, version, repo, install status
-        no pkg summary
-        if no arg, lists installed then avail packages
-        does not sync metadata
-        see also repoquery plugin
-    
-	search | se <name or words from description>
-		result sectioned by closeness of match
-		no installation info
-
-    
-    provides | wp [installed | available] <file name, cmd, or description keywords>
-		shows pkg (installed or not) owning file
-
-    repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
-        search repos packages or files matching provided file or command 
-        default output is pkg name and version 
-		Faster than 'dnf provides'
-	
-	e.g
-		dnf repoquery '*/locate' #full path matching pat
-		dnf repoquery --installed kitty\* #pkg name pattern 
-
-
-		Query options - set what info displayed about each pkg
-			-l <pkg name>   list files in package
-			--depends
-			-i              info
-			--provides      pkgs providing service/cmd
-			--recommends
-			--requires <pkg>  #  show package dependencies (required by this pkg)
-
-        Select options - limit output set 
-			--installed
-			--repo <repoid>
-			--file/-f   list packages providing a file
-			--upgrades  # pkgs providing upgrades to existing
-
-			Capability arg, e.g. webserver
-			--whatdepends <capability> # pkgs that depend on this one
-			--whatprovides <capability>
-				same as 'dnf provides'?
-			--whatrecommends <capability>
-			--whatrequires <capability>  # pkgs requiring this one
-			--whatsuggests <capability>
-
-			Show recursive dependencies
-				dnf repoquery --requires nginx --resolve --recursive
-
-		Output group names:
-			--groupmember list groups containing spec
-   
-
-    
-    upgrade <pkg spec>
-    up|update      is alias to upgrade
-    upgrade-minimal
-        Updates each package to the latest version that provides 
-        bugfix, enhancement or fix for security issue 
-
-
-Package Groups
-    group info, list, install 
-    group name
-        case insensitive
-        format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
-
-    Show packages in a group
-        group info 'Basic Desktop'
-
-
-History
-    list
-        recent			recently added packages
-        upgrade <pkg>       avail upgrades for pkg
-        userinstalled       manually installed pkgs
+history
+	list [<pkg>] (default cmd)
+	undo, redo
+	1..20   show last 20 events
+	upgrade <pkg>       avail upgrades for pkg
+	userinstalled       manually installed pkgs
     undo
     rollback
 
-dnf examples {{{2
+info [installed | available]   
+	shows pkg details
+
+in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
+	if /path/file given, acts like provides and installs pkg that provides file
+
+list | ls [installed | available | recent] [<pkg spec>]
+	shows name, version, repo, install status
+	no pkg summary
+	if no arg, lists installed then avail packages
+	does not sync metadata
+	see also repoquery plugin
+
+search | se <name or words from description>
+	result sectioned by closeness of match
+	no installation info
+
+
+provides | wp [installed | available] <file name, cmd, or description keywords>
+	shows pkg (installed or not) owning file
+
+repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
+	search repos packages or files matching provided file or command 
+	default output is pkg name and version 
+	Faster than 'dnf provides'
+
+e.g
+	dnf repoquery '*/locate' #full path matching pat
+	dnf repoquery --installed kitty\* #pkg name pattern 
+
+
+	Query options - set what info displayed about each pkg
+		-l <pkg name>   list files in package
+		--depends
+		-i              info
+		--provides      pkgs providing service/cmd
+		--recommends
+		--requires <pkg>  #  show package dependencies (required by this pkg)
+
+	Select options - limit output set 
+		--installed
+		--repo <repoid>
+		--file/-f   list packages providing a file
+		--upgrades  # pkgs providing upgrades to existing
+
+		Capability arg, e.g. webserver
+		--whatdepends <capability> # pkgs that depend on this one
+		--whatprovides <capability>
+			same as 'dnf provides'?
+		--whatrecommends <capability>
+		--whatrequires <capability>  # pkgs requiring this one
+		--whatsuggests <capability>
+
+		Show recursive dependencies
+			dnf repoquery --requires nginx --resolve --recursive
+
+	Output group names:
+		--groupmember list groups containing spec
+
+
+
+upgrade <pkg spec>
+up|update      is alias to upgrade
+upgrade-minimal
+	Updates each package to the latest version that provides 
+	bugfix, enhancement or fix for security issue 
+
+
+Package Groups {{{2
+
+group info, list, install 
+group name
+	case insensitive
+	format: 'Fedora Blah' fedora-blah @fedora-blah (don't need 'group' in cmd)
+
+Show packages in a group
+	group info 'Basic Desktop'
+
+
+Examples {{{2
 
 Find package name from file
 	dnf wp <any file in package>

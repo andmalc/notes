@@ -1,11 +1,19 @@
+Docs:
+	https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 
-alias dotfiles 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
+alias dotfiles='git --git-dir=$HOME/.git-conf --work-tree=$HOME'
 
-git clone https://github.com/andmalc/homeconfig
+dotfiles git clone https://github.com/andmalc/homeconfig
+
+
+dotfiles config status.showUntrackedFiles no
+dotfiles remote set-url origin git@github.com:andmalc/homeconfig.git
+
 
 Files within home dir
 
-.conf-git
+.git-conf
+	$GITDIR - alternate location
 	homeconfig repo repository directory 
 
 .gitconfig

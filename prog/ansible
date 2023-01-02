@@ -3,19 +3,28 @@ ansible <hostname or address pattern> -m <module> -a <args>
 
 Options
     -m <mod>    module name
-    -i <fn>     hosts file
+    -i <fn>     inventory file
     -a          args for module
     -l <host>   limit to one host
     
-    -vv     verbose
-    -vvv    extra verbose for ssh issues
+    -vv			verbose
+    -vvv		extra verbose for ssh issues
 
-    --check check playbook syntax
+    --check		check playbook syntax
 
-   --become-user otheruser [--ask-become-pass]
+	-b/--become	become root
+	--become-user otheruser [--ask-become-pass]
 
-   connect as root then become user andmalc 
-        -u root -b --become-user andmalc
+	e.g.
+	connect as root then become user andmalc 
+		-u root -b --become-user andmalc
+	
+	run command (default module)
+		[-m command] -a <cmd>
+	
+	quotes to execute command with args as single string
+		-a "blahcmd arg arg"
+
 
 ansible-playbook 
     --syntax-check
@@ -38,11 +47,11 @@ Modules
     setup   gather info 
             args: filter=<key>
 
-
-
     dnf     Fedora
             args: dnf: name=httpd state=latest
 
+	package	Install package
+			args: name=<pkg>
 
 Local actions
     playbook:
