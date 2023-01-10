@@ -107,6 +107,11 @@ Fzf
         ./.fzf/install 
         decline keybindings setup.  Allow fisher package to handle this.
 
+Nushell
+	wget https://github.com/nushell/nushell/releases/download/0.72.0/nu-0.72.0-x86_64-unknown-linux-gnu.tar.gz
+
+
+
 
 Nix {{{1
 
