@@ -1,35 +1,51 @@
-Space menu
-	file picker			f
-	window sub			w/C-w
-	buffers				b
-	
+Select first, then verb/action
 
-Go To - g
-	line beginning		h
-	beginning non-blank	s
-	line end			l
-	buffer next/prev	n/p
 
-Vertical movement, scrolling, searching - z
-	Pg down/up			C-f/b
+Minor modes - prefix to command
+	g					go to
+	v					select
+	:					command
+	<space>
+		file picker			f
+		window sub			w/C-w
+		buffers				b
+
+
+	Go To - g
+		line beginning		h
+		beginning non-blank	s
+		line end			l
+		buffer next/prev	n/p
+
+		window top			t
+		
+	Vertical movement, scrolling, searching - z
+		Pg down/up			C-f/b
 		
 	
 Selecting movements
-	inner word			eb/be
+	forward to beginning of next word		w
+	forward to end of current word			e
+	backward to beginning of current word	b
 	find/till char X 	f/tX
-	to end of line		t<ret>
 
 	Whole line.			x 
-	Repeat to select next line			
 	including ws(?)		X
+	Repeat to select next line			
 	line space trimmed	x_
+	to end of line		t<ret> / gl
 
 	Extend selection	v
 
 Editing
-	delete				d
-	delete to end		vgld or t<ret>d
+	insert/append before/after selection	i/a
+	insert/append at non-ws beginning/end of line	I/A
+
+	delete selection	d
+
 	Undo/redo			u/U
+
+	new line below/above	o/O
 
 	Join lines			Alt-Shift-j
 
@@ -39,8 +55,12 @@ Insert mode editing - Emacs bindings
  	Delete word right	A-Del
 
 Clipboard
-	Paste after/before 	p/P
-	
+	Copy				<sp> c
+	Paste after/before 	<sp> p/P
+
+From Normal mode
+	Insert below		o
+
 
 Jumplist
 	Save				s

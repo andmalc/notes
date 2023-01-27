@@ -81,3 +81,10 @@ Change root password
 systemctl-nspawn -bD <path to container>
 
 
+Fix Gnome Software not showing apps
+Kill GS in System Monitor
+rm -rf ~/.cache/gnome-software
+rpm-ostree cleanup --repomd
+rpm-ostree refresh-md
+
+
