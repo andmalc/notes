@@ -1,0 +1,36 @@
+
+
+Pages {{{1
+
+Create 
+	[[name]]
+	#name	- tag format for metadata
+	#[[name name]] - multi word tag name
+
+	Create in Search bar (Ctrl k) but better to use links because creates an entry point.
+
+
+Links {{{1
+
+External	[label](<url>)
+
+Page		[label]([[<page name>]])
+
+Block		((block ID or search))	
+			[label](((<block ID or search>)))
+			Click & hold on bullet, Alt, drag and drop
+
+Embedds		{{embed ((ID or search))}}
+			right click on bullet, select embed
+			shortcode: /block embed
+
+Open with cursor within 			Ctrl + o
+Open in Sidebar: Shift click
+
+Iterface {{{1
+
+Command list		/
+Abbreviations & templates	<
+Search for templates		<<
+
+
