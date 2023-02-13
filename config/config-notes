@@ -1,13 +1,28 @@
 
 Home dir source control setup
-Doc: https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+Doc: 
+	https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+	https://www.atlassian.com/git/tutorials/dotfiles	
 
-mkdir .conf-git
-git clone --separate-git-dir=.git-conf git@github.com:andmalc/homeconfig.git gittmp
-rsync -r -v --exclude '.git' gittmp/ $HOME
-rm -r gittmp
+1.	Create Git bare repo in ~/.conf-git
+		git init --bare $HOME/.conf-git
 
-abbr conf 'git --git-dir=$HOME/.git-conf --work-tree=$HOME'
+2.	Create command alias to run instead of git to avoid interacting with normal repos
+		abbr conf 'git --git-dir=$HOME/.git-conf --work-tree=$HOME'
+
+3.	Config git to hide untracked files
+		conf --local status.showUntrackedFiles no
+
+4.	Populate $HOME.
+
+Method 1
+	git clone --separate-git-dir=.git-conf git@github.com:andmalc/homeconfig.git gittmp
+	rsync -r -v --exclude '.git' gittmp/ $HOME
+	rm -r gittmp
+
+Method 2
+	conf checkout <file1> <file2>
+
 conf remote set-url origin git@github.com:andmalc/homeconfig.git
 
 Clone other repos

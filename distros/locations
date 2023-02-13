@@ -8,21 +8,19 @@ Flatpak
 	system apps & runtimes
 		/var/lib/flatpak/app
 		/var/lib/flatpak/runtimes
+		/var/lib/flatpak/exports/share/applications
 
-User data saved in ~/.var/app/
+	user application files
+		.local/share/applications (Same as Gnome/xdg XDG_DATA_HOME)
 
-Firefox profile: 
-	var/home/andmalc/.var/app/org.mozilla.firefox/.mozilla/firefox/<profile dir>
+	user data 
+		~/.var/app/
+		e.g. Firefox profile: 
+			var/home/andmalc/.var/app/org.mozilla.firefox/.mozilla/firefox/<profile dir>
 
 
-Desktop appliction files
-	Flatpak
-		system: /var/lib/flatpak/exports/share/applications
-		user: .local/share/applications (Same as Gnome/xdg)
-
-	Gnome / xdg?
-		desktop files
-			~/.local/share/applications/
+Gnome / xdg? desktop files
+	~/.local/share/applications/
 
 Environment Variables
 	/etc/environment
@@ -47,5 +45,9 @@ XDG dirs
 		not set on Fedora WS or SB
 		maybe not relevant to flatpaks as per app location is $HOME/.var/app/*/cache
 
+	XDG_CONFIG_DIR
+
+	XDG_DATA_DIR
+		user application files
 
 
