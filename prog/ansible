@@ -60,3 +60,7 @@ Local actions
         local_action: command arg arg
 
 
+
+Ansible in Toolbox
+	/etc/locale.conf  LANG="en_US.UTF-8"
+	sudo dnf -y install glibc-langpack-en

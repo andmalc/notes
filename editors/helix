@@ -36,6 +36,7 @@ Selecting movements
 	to end of line		t<ret> / gl
 
 	Extend selection	v
+	Collapse selection	;
 
 Editing
 	insert/append before/after selection	i/a

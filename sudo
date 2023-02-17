@@ -1,6 +1,3 @@
-Docs
-	http://www.aplawrence.com/Basics/sudo.html
-	Why to always use sudo and disable root: http://manpages.ubuntu.com/manpages/trusty/man8/sudo_root.8.html
 
 sudo 
 	-i	root shell (preferred over sudo su as root account can be disabled)
@@ -8,6 +5,15 @@ sudo
     -l list allowed commands
 	-H	set HOME to home of target user (default root)
 		avoids overwriting files in HOME of calling user
+
+Editor for sudo
+	sudoers
+		Defaults env_keep += "SUDO_EDITOR"
+	may need to logout
+	shell
+		set -x SUDO_EDITOR nivm
+
+	This also works for systemctl editing and SYSTEMD_EDITOR var
 
 manage PATH
 	Add path to secure_path in sudoers

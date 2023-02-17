@@ -139,6 +139,8 @@ set
 		  treat as path var
 		  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
 
+	-e --erase
+	
 	-q --query <var> ...
 		return status = 0 if var initialized, 1 for each not
 		set -q var (not $var)
@@ -147,7 +149,7 @@ set
 		default scope is local and exported to child processes
 
 	scope options
-		-g  global outside block.  This is default outside function or block
+		-g  global, unexported (default)
 		-U Universal - saved in fish_variables file
 		-l  local within current block and children but not child functions
 		-gx exported global 

@@ -1,11 +1,20 @@
 
-Docs
-	O'Reilly book
-		http://www.unix.org.ua/orelly/unix/sedawk/index.htm
+Alternative sed: sd https://github.com/chmln/sd
 
-    Processing a csv file
-        https://blog.theodo.fr/2018/03/regex-warrior/
 
+Docs {{{1
+
+O'Reilly book
+	http://www.unix.org.ua/orelly/unix/sedawk/index.htm
+
+Processing a csv file
+	https://blog.theodo.fr/2018/03/regex-warrior/
+
+2020
+https://www.digitalocean.com/community/tutorials/intermediate-sed-manipulating-streams-of-text-in-a-linux-environment
+
+
+Intro {{{1
 
 Basic sed operatation: 
 	"s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file>.
@@ -21,9 +30,11 @@ options:
 
 
 OPTIONS
+
+	no arg	all lines output including non-matched
+
 	-n	Suppresses auto output of input lines.  
-		Each instruction intended to produce output must include a 'p' command, e.g.
-			s/a/b/p
+		Each instruction intended to produce output must include a 'p' command e.g. s/a/b/p
 
 	-e		multiple instructions follow
 				sed -e 's/a/b/' -e 's/c/d/' file	
@@ -50,6 +61,7 @@ line addressing - limits affected line to matchin lines
 
 Line selection 
 
+	s/.*/				whole line
 	/reg/s/lhs/rhs/		For first line matching reg, sub lhs for rhs
 	g/reg/s/lhs/rhs/	For all lines matching reg, sub lhs for rhs
 	/reg/s//rhs/		reg and lhs are the same
@@ -58,53 +70,54 @@ Global
 	before line selection pattern - select all matching lines
 	after substition pattern - replace all occurences on line
 
-
-Old {{{1
-
-COMMAND FORMAT
-
-Under Windows, pats including a < or > must be double quoted
-
-statement separators 
-	may be any character although slashes in pats must still be escaped.
-	Alternative Separator syntax	 \%reg%
+Flags {{{1
 
 Case insensitive flag:	I	eg /reg/pI
 
-metacharacters
 
-	Sed & Awk differences:
-		Sed: ^ and & are metachars only at start and end of a regex.  
-		Awk: ^ and & are metachars everywhere unless escaped.
 
-	Test sed output:
-		Run 'diff' on input & output files to see changes 
+Metacharacters {{{1
 
-	basic
-		.	any char except newline
-			awk: can include newline
+Sed & Awk differences:
+	Sed: ^ and & are metachars only at start and end of a regex.  
+	Awk: ^ and & are metachars everywhere unless escaped.
 
-		^/$	first/last char in line
-			awk: first/last char in string
-			python: in multiline mode, also matches after new line
+basic
+	.	any char except newline
+		awk: can include newline
 
-	extended (awk and egrep)
-		+	one or more of precedding
-		?	zero or one "
-		|	alternation (either preceeding or following match)
-		{n}, {n,}, {n,m}
-			exactly, at least, between n & m chars
-			basic - escape braces
+	^/$	first/last char in line
+		awk: first/last char in string
+		python: in multiline mode, also matches after new line
+
+extended (awk and egrep)
+	+	one or more of precedding
+	?	zero or one "
+	|	alternation (either preceeding or following match)
+	{n}, {n,}, {n,m}
+		exactly, at least, between n & m chars
+		basic - escape braces
+
+character classes
+	^	reverse match when in 1st position
+	\	escape any special character (awk only)
+	-	indictes a range when not in 1st or last position
+
 	
-	character classes
-		^	reverse match when in 1st position
-		\	escape any special character (awk only)
-		-	indictes a range when not in 1st or last position
+replacement metacharacters
+	&		Extent of pattern (not line that was matched)
+			s/.*/xxxx&/		input line with four x at beginning
 
-		
-	replacement metacharacters
-		\		Newline.  Must be last char in line.  See O'Reilley  p 83
-		&		Extent of pattern (not line that was matched)
+	\		Newline.  Must be last char in line.  See O'Reilley  p 83
+
+Grouping {{{1
+
+s/\(.*\)/xxx\1xxx/
+
+Misc {{{1
+
+Test sed output:
+	Run 'diff' on input & output files to see changes 
 
 
 vim: ts=4

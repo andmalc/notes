@@ -1,14 +1,26 @@
-Troubleshooting
-https://freedesktop.org/wiki/Software/systemd/Debugging/
+=== Troubleshooting
+https://freedesktop.org/wiki/Software/systemd/Debugging[Debugging]
 
-Tutorial with live system in browser
-	https://systemd-by-example.com/
+https://systemd-by-example.com[Tutorial with live system in browse]
 
-Show monitored services, sorted by system, client slices, shows PIDs
-    systemctl [--user] status
+[source]
+====
+Show monitored services, sorted by system, client slices, shows PIDs 
+
+systemctl [--user] status
+
+
 
 List or search installed units & status
-	list-unit-files [--user] [<pat>]
+
+
+[horizontal, width="40%"]
+Label::
+lst-unit-files [--user] [<pat>]
+blah
++
+blah
+
 
 systemctl list-jobs
     list jobs that did not complete on boot

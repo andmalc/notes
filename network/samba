@@ -1,0 +1,37 @@
+https://docs.fedoraproject.org/en-US/quick-docs/samba/
+https://fedoramagazine.org/fedora-32-simple-local-file-sharing-with-samba/
+https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Standalone_Server#Introduction
+
+
+Pkgs: samba, samba-client
+
+Enable service
+	sudo systemctl enable smb --now
+
+Firewall
+	sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-service=samba
+	sudo firewall-cmd --reload
+
+Users
+	Samba user must be a system user and be allowed access by filesystem permissions
+
+	sudo smbpasswd  -a andmalc
+
+Config
+	/etc/samba/smb.conf
+
+
+	After changes
+		sudo systemctl restart smb
+
+selinux
+	sudo  semanage fcontext -a -t samba_share_t "/srv/samba/guest(/.*)?"
+	sudo restorecon -R ~/share
+
+
+Testing
+	List shares
+		smbclient -L  <share name //<host>/<share> >
+
+
+

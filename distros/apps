@@ -10,13 +10,20 @@ Editors
 Files: Find, List, Search, Paging
 	fzf
 	fd-find
-	bat
 	exa - simple ls alternative
 	ranger - three panel text file manager
 	broot - full featured file manager
+			install from Copr petersen/broot 
+	plocate - https://plocate.sesse.net/
 
-Grepping
+Grep
 	ripgrep
+
+Awk/Cut
+	choose - https://github.com/theryangeary/choose
+	
+Sed
+	sd - install with dnf or cargo
 
 Git browsing
 	tig
@@ -24,6 +31,9 @@ Git browsing
 Dev
 	visidata
 	nushell / nu (cargo, prerequisite openssl-devel)
+
+	httpie - API testing - https://httpie.io/
+
 
 Disk space usage
     Files/dirs
@@ -34,6 +44,11 @@ Disk space usage
 
 Partitions/disks
 	pydf
+
+Misc:
+	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
+	bat - cat alternative
+
 
 
 Tmux {{{1

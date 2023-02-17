@@ -1,8 +1,9 @@
 
-Home dir source control setup
+Home dir source control {{{1
+
 Doc: https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 
-mkdir .conf-git
+mkdir .git-conf
 git clone --separate-git-dir=.git-conf git@github.com:andmalc/homeconfig.git gittmp
 rsync -r -v --exclude '.git' gittmp/ $HOME
 rm -r gittmp
@@ -29,19 +30,21 @@ dotfiles/environment/.config/environment.d/10-xdg.conf
 Fish shell {{{1
 Run using fish installed by os package manager:
     
-
 Abbr for home dir git repo
 	 abbr conf 'git --git-dir=$HOME/.conf-git --work-tree=$HOME'
 
 Set variables
 	fish_add_path ~/.local/bin
-	fisher_path /home/andmalc/config/dotfiles/fish/.config/fish/fisher
 
-fisher
-	curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-	fisher config in fish config dir
-	plugins installed in .local/share/fisher
-	run fisher update to initialize or re-link packages
+Fisher
+
+	fisher command and its plugins to install in .local/share/fisher
+	set in config.fish:
+		fisher_path /home/andmalc/.config/fish/fish/fisher
+	
+	Install
+		curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+		fisher update to install plugins in fish_plugins.
 
 pkgs installed
 	fzf keybindings: jethrokuan/fzf
@@ -138,11 +141,6 @@ Python {{{1
 
 Pip is pre-installed on Fedora
 
-Ansible {{{1
 
-
-Ansible in Toolbox
-	/etc/locale.conf  LANG="en_US.UTF-8"
-	sudo dnf -y install glibc-langpack-en
 
 

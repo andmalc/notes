@@ -1,16 +1,24 @@
 
-Silverblue 
+Silverblue {{{1 
 	packages to install in overlay
 		fish kitty kitty-terminfo
  
-Toolbox
-	Fish shell as default
-		env SHELL=/var/home/andmalc/.nix-profile/bin/fish toolbox enter
 
-	Cannot set locale error
-		Install in toolbox: glibc-langpack-en
+Flatpak {{{1
 
+Flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+If configured but disabled
+	flatpak remote-modify --enable flathub
+
+Firefox Flatpak
+	kb shortcut to run in new window
+	   Settings/Keyboard/Customize Shortcuts
+	   Launchers - disable Launch web browser
+	   Custom Shortcuts - add Firefox 'flatpak run org.mozilla.firefox --new-window'
+
+Gnome {{{1
 
 Default Gnome user folders - remove
 	 .config/user-dirs.dirs
@@ -23,33 +31,34 @@ Default Gnome user folders - remove
 		XDG_VIDEOS_DIR="$HOME/"
 		XDG_DESKTOP_DIR="$HOME"
 	run  xdg-user-dirs-update and delete unwanted dirs
-
-	
-Flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-If configured but disabled
-	flatpak remote-modify --enable flathub
-
-
-Firefox Flatpak
-	kb shortcut to run in new window
-	   Settings/Keyboard/Customize Shortcuts
-	   Launchers - disable Launch web browser
-	   Custom Shortcuts - add Firefox 'flatpak run org.mozilla.firefox --new-window'
-
 Gnome Tweaks
       Windows
 	Focus on Hover
 	Raise on Hover
 
+System {{{1
 
 Power 
 	tuned
 		systemctl enable tuned
 		tuned-adm profile powersave
 
-Networking
+DNF automatic
+https://dnf.readthedocs.io/en/latest/automatic.html
+
+
+Enable standard timer.  Config file determines action
+	systemctl enable --now dnf-automatic.timer
+
+	or enable specific timer to override
+	systemctl enable --now dnf-automatic-notifyonly.timer
+
+
+	
+
+
+Networking {{{1
+
     RHEL 8 networking docs: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/index
 
     nmtui 
@@ -65,7 +74,8 @@ Networking
 			wakeonlan <MAC address of server>
 
 
-DNS
+DNS {{{1
+
 	manual set DNS server
 	Two methods:
 
@@ -76,7 +86,8 @@ DNS
 		set global server in /etc/systemd/resolved.conf
 
 
-Server setup
+Server setup {{{1
+
 
 	Cockpit
 		pkg name: cockpit
