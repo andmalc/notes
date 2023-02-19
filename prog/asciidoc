@@ -1,0 +1,135 @@
+
+Element Attributes {{{1
+
+Apply to inline & individual block elements
+
+Types
+- positional (value only)
+- named (key/value)
+
+Reserved attributes
+- core set: shared by all blocks & some inline elements, e.g. id, role, title
+- additional used by some elements, e.g. source block has lang attr.
+
+Typical element attr uses: define el ID, enable or configure its features, apply user-defined info, apply roles
+
+Attr Lists:
+
+List format:
+	positional,named="value",etc.
+
+Location
+	line of text above start of block
+
+syntax
+	block:  enclosed in [ ] 
+	macro: name::target[first-positional,second-positional,named="value of named"]
+	formatted text: [#idname.rolename]*text with id and role*
+
+
+Formatting {{{1
+
+Hard return: "+" at line end
+
+Monospaced text
+	shorthand: `text`
+
+Text Span
+- use role to format inline text
+- indicate: single or double hashes `[.underline]#underline me#`
+
+
+Blocks {{{1
+
+Indicate using delimiters
+
+Listing blocks
+- preformatted text <pre>
+- good for computer code
+ - usually styled with grey background
+ Indicate:
+        set 'listing' style on block within attribute list
+        enclose within '----'
+        single line: begin with one or more spaces
+
+Literal blocks
+- background optionally styled
+Indicate:
+    set 'literal' style
+    enclose with '....'
+    single line: begin with one or more spaces
+
+Example block
+- styled background + caption above
+Indicate:
+    enclose within "===="
+    caption line starts with period
+    caption prefixed with "Example #" - override with [caption=""] attribute above
+
+Open blocks
+- indicate:
+    enclose within "--"
+- can use to include text within a list:
+
+        * list item
+        +
+        --
+        include::shared-content.adoc[]
+        --
+- enclose a nested list
+Enclose in open block - https://docs.asciidoctor.org/asciidoc/latest/lists/continuation/#multiline-principal-text
+
+Passthroughs
+
+- indicate: `++++`
+
+Lists {{{1
+
+bulleted, numbered, labeled, callouts
+
+Bulleted
+- indicate with one to five dashs or asterisks
+
+Numbered
+- indicate with number 1. or just period or roman numeral + ")"
+
+Labelled
+- indicate with term + "::"
+- following para is indented
+- [horizontal] attribute above for hanging indent, ie label and first para of list text on same line
+
+List continuation - make following blocks part of list
+indicate with newline starting with +
+not needed when changing list types, e.g. numbered to bulleted
+
+Separating Lists:
+
+https://docs.asciidoctor.org/asciidoc/latest/lists/separating/
+
+End of list marker: `\\-`
+
+
+Nesting lists:
+
+https://docs.asciidoctor.org/asciidoc/latest/lists/continuation/#ancestor-list-continuation
+
+Directives {{{1
+
+Include
+  include::shared-content.adoc[]
+
+
+
+Cross-references {{{1
+    target
+        ID of section, heading, blocks, or inline anchors
+            anchor IDs are auto-generated for section titles: _section_title
+            before title: [#myid]
+
+    syntax:
+        full version (usually for interdoc refs).  File extension is optional:
+            xref:filename.adoc#_ref_id[Reftext]
+        shorthand
+            <<anchor ID,reftext>>
+            <<filename#anchor ID,reftext>>
+
