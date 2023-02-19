@@ -1,6 +1,11 @@
 Packages to install
 
-fedora-toolbox fish fzf git neovim python3-neovim util-linux-user vim
+fish fzf git neovim python3-neovim util-linux-user vim
+dnf-automatic
+kitty
+gnome-tweaks
+kitty-terminfo
+
 
 
 Registry

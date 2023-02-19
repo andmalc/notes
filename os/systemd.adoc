@@ -1,15 +1,23 @@
-=== Troubleshooting
-https://freedesktop.org/wiki/Software/systemd/Debugging[Debugging]
+= Systemd
+:hardbreaks-option:
 
-https://systemd-by-example.com[Tutorial with live system in browse]
+
+=== Troubleshooting
+
+Resources::
+
+https://freedesktop.org/wiki/Software/systemd/Debugging[Debugging] +
+https://systemd-by-example.com[Tutorial with live system in browse] 
 
 [source]
+
 ====
 Show monitored services, sorted by system, client slices, shows PIDs 
 
 systemctl [--user] status
+====
 
-
+`blahmono`
 
 List or search installed units & status
 

@@ -31,8 +31,19 @@ Formatting {{{1
 
 Hard return: "+" at line end
 
-Monospaced text
-	shorthand: `text`
+
+From outer to innermost:
+
+	Monospaced text
+		shorthand: `text`, ``text``
+		literal codespan/monospace (to escape special chars) `+text*text+` 
+
+	Bold
+		*text*, **text** 
+
+	Italic
+		_text_, __text__
+
 
 Text Span
 - use role to format inline text

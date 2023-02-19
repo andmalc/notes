@@ -24,7 +24,11 @@ Gnome / xdg? desktop files
 
 Environment Variables
 	/etc/environment
+		traditional location, common to all distros
+	.profile
+		sourced by most login managers or by a bash login shell
 	.config/environment/xxx.conf (not read by ssh session)
+		Systemd addition?
 
 
 $WAYLAND_DISPLAY
