@@ -320,9 +320,11 @@ list | ls [installed | available | recent] [<pkg spec>]
 	does not sync metadata
 	see also repoquery plugin
 
-search | se <name or words from description>
-	result sectioned by closeness of match
-	no installation info
+search | se [--all | all] <name or glob>
+	packages matching any pattern
+	result sectioned by closeness of match (closest at end?)
+	no installation info.  Use list instead
+	'all' searches name & description
 
 
 provides | wp [installed | available] <file name, cmd, or description keywords>
@@ -330,7 +332,7 @@ provides | wp [installed | available] <file name, cmd, or description keywords>
 
 repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	search repos packages or files matching provided file or command 
-	default output is pkg name and version 
+	no arg output is repo name, pkg name and version 
 	Faster than 'dnf provides'
 
 e.g

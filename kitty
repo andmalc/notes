@@ -11,3 +11,17 @@ Test theme
 Add kitty-terminfo to ssh login
 	kitty +kitten ssh myserver
 
+Interactive Config
+
+Kitty Shell
+Enter kitty terminal with "kitty @"
+	get-colors
+	set-colors foreground=x background=y
+	exit - exit terminal and save
+	goto-layout
+	set-window-title
+
+Command
+	kitty @ <cmd>
+
+

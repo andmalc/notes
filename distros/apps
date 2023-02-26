@@ -48,6 +48,9 @@ Partitions/disks
 Misc:
 	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
 	bat - cat alternative
+	Zellij - tmux alt.  Install with cargo 
+	btop - top alternative
+
 
 
 

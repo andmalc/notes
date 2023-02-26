@@ -1,0 +1,16 @@
+
+Cosign 
+	wget "https://github.com/sigstore/cosign/releases/download/v1.6.0/cosign-1.6.0.x86_64.rpm"
+	rpm -ivh cosign-1.6.0.x86_64.rpm
+
+
+Run Podman within toolbox
+	enable socket on host
+		systemctl --user enable --now podman.sock
+	run podman with --remote
+
+	SELinux error when running container
+		restorecon -R ~/.local/share/containers/storage/overlay*
+
+
+

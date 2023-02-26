@@ -1,6 +1,6 @@
+Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
 
-
-# Podman {{{1
+Podman {{{1
 
 Examples 
 	https://www.mankier.com/1/podman-run#Examples
@@ -15,7 +15,7 @@ Perist container after logout
     Also allows sudo with rootless container
 
 
-## Images {{{2
+Images {{{2
 
 images
 	lists images
@@ -47,7 +47,7 @@ subcommand image
 
 
 
-### Image storage {{{3
+Image storage {{{3
 
 Default repository
 /var/lib/containers/storage
@@ -66,7 +66,7 @@ Push to Docker.io
     buildah push echo docker.io/andmalc/echo:blog
 
 
-## Containers {{{2
+Containers {{{2
 
 attach
     attach to running container
@@ -107,14 +107,11 @@ top
     show processes running within container
 
 
-## run {{{2
-
-[man](https://github.com/containers/libpod/blob/master/docs/podman-run.1.md)
-
+run {{{3
+https://github.com/containers/libpod/blob/master/docs/podman-run.1.md
 
 run command in a new container 
-	`run <container> <options> -- <cmd>`
-
+run <container> <options> -- <cmd> 
 
 Options
 
@@ -145,11 +142,11 @@ in production
     runc - lightweight universal run time container,
     containerd - complete container lifecycle runtime, uses runc
     CRI-O 
-%%%%
 
 
 
-## Info {{{2
+
+Info {{{2
 
 info 
     Display system info
@@ -169,12 +166,12 @@ ports <cont>
 top <container id>
     show process info: USER, Process ID, Parent Process ID
 
-# Buildah {{{1
+Buildah {{{1
 
 https://github.com/projectatomic/buildah
 buildah <cmd> <options> <container ID>
 
-## config {{{2
+config {{{2
 
 https://github.com/projectatomic/buildah/blob/master/docs/buildah-config.md
 
@@ -192,7 +189,7 @@ config <options> <container>
 --workingdir
     
 
-## copy {{{2
+copy {{{2
 
 Copy file into container
 buildah copy <options> <container> SRC [[...] DEST]
@@ -203,13 +200,13 @@ Options
 Example
     buildah copy --chown myuser:mygroup containerID '/myapp/app.conf' '/myapp/app.conf'
 
-## commit {{{2
+commit {{{2
 
 Saves working container to image available to run by podman or runc
 
 commit <container> <image>
 
-## from
+from {{{2
 
 https://github.com/projectatomic/buildah/blob/master/docs/buildah-from.md
 
@@ -223,19 +220,19 @@ Options
 Example
     container=$(buildah from fedora)
 
-## run
+run {{{2
 
 Run command in container 
     run <container> [<cmd>]
 
 Buildah run does not execute entrypoint
 
-## mount
+mount {{{2
 
 <container ID>  mounts root fs of container, returns mnt point
 <no args>       lists mounts
 
-## Buildah Examples {{{2
+Buildah Examples {{{2
 
 Install package in container
     buildah run $contaidner -- dnf -y install java
@@ -249,53 +246,46 @@ buildah run -v /var/roothome:/root:rslave fedora-working-container bash
     -b <bundle dir - default current>
 
 
-# Toolbox {{{1
-
-Install on Ubuntu & other distros: distrobox
+Toolbox {{{1
 
 create 
 	Create custom container.  Name is same as image plus image tag if exists
-	
-	toolbox create --image <image ID or name> <new container name>
 	-d/--distro	+ -r/--release
 		specify distro to use, otherwise default's to host's
 	-i/--image
 		specify image to use
 
+		toolbox create --image <image ID or name> <new container name>
 
 list [-c/--containers | -i/--images]
 	lists containers & images
 
-Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
-
-# Distrobox {{{1
+Distrobox {{{1
 
 Run command
 flatpak run io.github.luca.distrobox enter  fed36-distrobox
 
+Image Registries {{{1
 
-# Misc {{{1
+Fedora Registry
+https://registry.fedoraproject.org/
 
-Image Registries
+Topics {{{1
+Filesystem issues {{{2
 
-	Fedora Registry
-	https://registry.fedoraproject.org/
+Mount host dir into container
+chcon -Rt svirt_sandbox_file_t <dir>
+    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
-Filesystem issues 
+Permissions issue fix:
+    chcon -R -h -t container_file_t /var/roothome
 
-	Mount host dir into container
-	chcon -Rt svirt_sandbox_file_t <dir>
-	    --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
-
-	Permissions issue fix:
-	    chcon -R -h -t container_file_t /var/roothome
-
-	Share local files with containers
-	sudo chcon -R -h -t container_file_t /srv
-	buildah run -v /srv:/srv:rslave fedora-working-container bash
+Share local files with containers
+sudo chcon -R -h -t container_file_t /srv
+buildah run -v /srv:/srv:rslave fedora-working-container bash
 
 
-Running a server
+Running a server {{{2
 
 Pull image.
 Inspect to show metadata

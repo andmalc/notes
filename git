@@ -227,6 +227,7 @@ no arg
 	
 --hard [<commit>]
 	Unstages all and reverts changes to working tree
+	staged changes also lost
 	Tree is reverted to HEAD
 
 --soft HEAD~1

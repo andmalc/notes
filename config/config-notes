@@ -129,32 +129,16 @@ Nushell
 	wget https://github.com/nushell/nushell/releases/download/0.72.0/nu-0.72.0-x86_64-unknown-linux-gnu.tar.gz
 
 
-
-
-Nix {{{1
-
-Install under Bash
-	curl -L https://nixos.org/nix/install | sh
-	Source
-		source $HOME/.nix-profile/etc/profile.d/nix.sh
-	Add above to .bashrc
-
-	Set following environment under under Crostini
-		XDG_DATA_DIRS=%h/.nix-profile/share:%h/.local/share:/usr/local/share:/usr/share
-		PATH=%h/.nix-profile/bin
-
-		mkdir -p ~/.config/systemd/user	
-		stow -t ~/.config/systemd/user nix-systemd-user
-	Or
-		systemctl --user edit cros-garcon.service
-	
-	Nix install under Fish??
-	Can try this sh <(curl -L https://nixos.org/nix/install) 
+Starship prompt
+	https://starship.rs/
+	Install with Cargo
+	Config is ~/.config/starship.toml
 
 
 Python {{{1
 
 Pip is pre-installed on Fedora
+
 
 
 
