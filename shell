@@ -91,10 +91,8 @@ Running Processes
 		echo thing is a word |
 		sed 's/word/wordzzz/'
 
-    Subshell
-        cmd_output=$(COMMANDS)
+Job Control {{{2
 
-Job Control
 	%n	refer to job by name or number
 	%-	previous job
 	%+	current job (in jobs list)
@@ -133,15 +131,6 @@ Job Control
 		-u	show UID transitions
 
 
-Subshells:
-	All but end of a chain of pipes run in subshells.
-	cOde inside a '()' or `cmd`, including substitutions: [$=<>](cmd)
-	Backgrounded or suspended/resumed processes 
-
-	In subshell - does not affect main shell:
-	(cd /usr; ls) > file
-
-
 Running Commands
 	sh [cmd]	Run a script without having to change its access mode
 
@@ -153,6 +142,48 @@ Environment
         cat /proc/PID/environ  | tr '\0' '\n'
 
 
+
+Subshells {{{2
+
+Commands enclosed within parentheses are run in a subshell
+Created by running a shell script
+All but end of a chain of pipes run in subshells.
+code inside a '()' or `cmd`, including substitutions: [$=<>](cmd)
+Make variables known to subshells with export command
+
+Backgrounded or suspended/resumed processes 
+
+In subshell - does not affect main shell:
+(cd /usr; ls) > file
+
+cmd_output=$(COMMANDS)
+
+(ls)    #return value 1 or 0
+$(ls)   #returns list of files
+
+Examples of using return value
+# 
+if grep someuser /etc/passwd ; then
+    # do something
+fi
+
+# pipe in subshell
+if ( w | grep someuser | grep sqlplus ) ; then
+    # someuser is logged in and running sqlplus
+fi
+
+Command substitution {{{3
+
+type of subshell
+output of a command replaces the command itself
+creates child process whose standard output is piped back into shell
+    $(cmd)
+    `cmd` - obsolete format
+
+$(<file)
+	outputs lines in file
+
+    vi $(fgrep -l malloc *.c)
 
 Misc {{{1
 
@@ -175,22 +206,8 @@ Semicolon - command delimiter
 
 Braces, Parentheses, Brackets {{{1
 Parentheses {{{2
-Executes contents in subshell {{{3
-like ``
 
-(ls)    #return value 1 or 0
-$(ls)   #returns list of files
-
-Examples of using return value
-# 
-if grep someuser /etc/passwd ; then
-    # do something
-fi
-
-# pipe in subshell
-if ( w | grep someuser | grep sqlplus ) ; then
-    # someuser is logged in and running sqlplus
-fi
+Executes contents in subshell
 
 Other {{{3
 
@@ -233,14 +250,6 @@ Never quote a glob or regular expression
 
 
 
-
-Command substitution {{{1
-
-Creates child process whose standard output is piped back into shell
-    $(cmd)
-    `cmd` - obsolete format
-
-    vi $(fgrep -l malloc *.c)
 
 Completion & Expansion {{{1
 

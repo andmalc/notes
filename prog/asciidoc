@@ -11,20 +11,46 @@ Reserved attributes
 - core set: shared by all blocks & some inline elements, e.g. id, role, title
 - additional used by some elements, e.g. source block has lang attr.
 
-Typical element attr uses: define el ID, enable or configure its features, apply user-defined info, apply roles
+Typical element attr uses: define ID, enable or configure its features, apply user-defined info, apply roles
 
 Attr Lists:
 
 List format:
 	positional,named="value",etc.
+	[first-positional,second-positional,named="value of named"]
 
 Location
 	line of text above start of block
 
 syntax
 	block:  enclosed in [ ] 
-	macro: name::target[first-positional,second-positional,named="value of named"]
+	macro: name::target[attr1,att2]
+
 	formatted text: [#idname.rolename]*text with id and role*
+
+Block IDs {{{2
+
+indicate:
+	shorthand:	[id=my-id]
+	longhand:	[#my-id]
+	inline:		[#my-id]#Blah blah#
+	legacy syntax:	[[my-id]]
+
+if period in ID use long-hand syntax
+
+Directly follows style name if used in attr list
+	[quote#my-id]
+
+Roles {{{2
+
+Indicate:
+	shorthand: .
+
+Options {{{2
+
+Indicate:
+	shorthand: %
+
 
 
 Formatting {{{1
@@ -54,21 +80,46 @@ Blocks {{{1
 
 Indicate using delimiters
 
+Block styles
+	indicate as an attr
+		[listing]
+		blah blah
+
+
+Block titles {{{2
+
+Indicate:
+	single dot immediately before text
+
+Location:
+	own line above attr list, opening delimiter, or content
+
+
+Block types {{{2
+https://docs.asciidoctor.org/asciidoc/latest/blocks/build-basic-block/
+
+Undelimited blocks, e.g. ordinary paragraph
+	No indication
+	Content must be contiguous - empty line starts a new block
+	Can still add a title or attr list
+
+
+Literal blocks
+- background optionally styled
+- Indicate:
+	set 'literal' style
+	enclose with '....'
+	single line: begin with one or more spaces.  Spaces do not show in output
+
+
 Listing blocks
 - preformatted text <pre>
 - good for computer code
  - usually styled with grey background
  Indicate:
-        set 'listing' style on block within attribute list
         enclose within '----'
+        set 'listing' style on block within attribute list
         single line: begin with one or more spaces
-
-Literal blocks
-- background optionally styled
-Indicate:
-    set 'literal' style
-    enclose with '....'
-    single line: begin with one or more spaces
 
 Example block
 - styled background + caption above
@@ -91,8 +142,9 @@ Open blocks
 Enclose in open block - https://docs.asciidoctor.org/asciidoc/latest/lists/continuation/#multiline-principal-text
 
 Passthroughs
+- Unprocessed content that is sent directly to the output
+- indicate: `++++` or [pass]
 
-- indicate: `++++`
 
 Lists {{{1
 
@@ -143,4 +195,17 @@ Cross-references {{{1
         shorthand
             <<anchor ID,reftext>>
             <<filename#anchor ID,reftext>>
+
+Macros {{{1
+
+Types:
+	block - two colons ::
+	inline - one colon :
+
+Images {{{2
+
+Block image macro example: 
+.A mountain sunset 
+[#img-sunset,link=https://www.flickr.com/photos/javh/5448336655] 
+image::sunset.jpg[Sunset,200,100]
 

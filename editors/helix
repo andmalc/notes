@@ -2,7 +2,6 @@ Select first, then verb/action
 
 
 Minor modes - prefix to command
-	g					go to
 	v					select
 	:					command
 	<space>
@@ -11,14 +10,19 @@ Minor modes - prefix to command
 		buffers				b
 
 
-	Go To - g
+	Go To Mode - g
 		line beginning		h
 		beginning non-blank	s
 		line end			l
 		buffer next/prev	n/p
 
 		window top			t
-		
+
+	Match mode - m
+		surround word with quotes - miwm"
+
+	View mode - z
+	
 	Vertical movement, scrolling, searching - z
 		Pg down/up			C-f/b
 		
@@ -43,6 +47,7 @@ Editing
 	insert/append at non-ws beginning/end of line	I/A
 
 	delete selection	d
+	change selection	c
 
 	Undo/redo			u/U
 

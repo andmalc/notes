@@ -260,6 +260,14 @@ create
 list [-c/--containers | -i/--images]
 	lists containers & images
 
+Show container's start command
+	podman inspect --format "{{.Config.Cmd}}"
+
+Toolbox executable is mounted from host into container then is run to initialize it.
+	toolbox --log-level debug init-container
+
+
+
 Distrobox {{{1
 
 Run command
