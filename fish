@@ -21,6 +21,7 @@ Kill ring
 	Alt d		kill next word, repeat for additional path segments
 	Ctrl w	same for prev. word or segment
 	Alt BS	same as Ctrl w
+	-			remove whole path segment ?????
 
 Misc
 	Alt-s		prepend sudo
