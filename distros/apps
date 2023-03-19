@@ -15,6 +15,8 @@ Files: Find, List, Search, Paging
 	broot - full featured file manager
 			install from Copr petersen/broot 
 	plocate - https://plocate.sesse.net/
+	bat - cat alternative.  
+	delta - diff alternative.  Pkg delta-git
 
 Grep
 	ripgrep
@@ -27,6 +29,8 @@ Sed
 
 Git browsing
 	tig
+	also delta for diff 
+
 
 Dev
 	visidata
@@ -38,6 +42,11 @@ Dev
 		needs `systemctl --user start podman.socket`
 
 
+Misc:
+	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
+	Zellij - tmux alt. - add Copr  dnf copr enable varlad/helix - same repo for helix
+	btop - top alternative
+
 
 Disk space usage
     Files/dirs
@@ -48,12 +57,6 @@ Disk space usage
 
 Partitions/disks
 	pydf
-
-Misc:
-	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
-	bat - cat alternative
-	Zellij - tmux alt. - add Copr  dnf copr enable varlad/helix - same repo for helix
-	btop - top alternative
 
 
 
