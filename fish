@@ -4,24 +4,57 @@ https://fishshell.com/docs/current/interactive.html#shared-bindings
 
 `eval (ssh-agent -c)`
 
+Ctrl d	delete char righ
+Alt l/r	move one word, stopping at punc or path segment.
+Ctrl l/r	move one word, 
+Shift l/r	move one word, skip ove r punctuation and whole paths, accept one big word of suggestion.
+
+
 Kill ring
+	Ctrl y	restore
+
+	Kill by line:
 	Ctrl k	kill to line end
 	Ctrl u	kill to line beginning
-	Ctrl y	restore line
-	Alt Y		restores more from history (?)
 
-Alt-s		prepend sudo
-Alt-up	search hist for token under cursor
-Alt-.		insert-last arg
+	Kill by word:
+	Alt d		kill next word, repeat for additional path segments
+	Ctrl w	same for prev. word or segment
+	Alt BS	same as Ctrl w
+	-			remove whole path segment ?????
 
-^e			go to line end - accepts current suggestion 
-			^f does same before suggestion, move car forward otherwise
+Misc
+	Alt-s		prepend sudo
+	Alt e/v	edit command line
+	Alt h		man page for current cmd
+	Alt l		ls current dir or dir under cursor
+	Alt o		page file under cursor
+	Alt p		page output of cmd under cursor
+	Alt-.		insert-last arg
 
-^n/p		cycle through completion history
+^e			go to line end, accepts any suggestion 
+^f			moves 1 char forward, also accepts suggestion
+^h			backspace
+
+History:
+	Command lines:
+	^n/p		cycle through completion history
+	u/d		search for cmd containing string under cursor
+	Alt u/d	history search for words under and to left of cursor
+	ctrl r	history search
+
+	Directories:
+	dirh		dir history
+	cdh		select dir to change to
+	nextd/prevd	forward back - (Alt l/r)
+
+
 
 ^-x		copy whole line to sys clipboard
 ^-y		paste from sys clipboard
 
+Not working:
+	Alt-up	search hist for token under cursor
 
 
 # History {{{1

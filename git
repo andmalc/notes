@@ -103,11 +103,11 @@ Diff {{{2
 
 Changes to file contents
 
-no arg		changed files vs. index
---cached/staged <HEAD or cid	
+no arg	changed files vs. index
+--cached/staged <HEAD or cid>	
 		changes in index relative to cid, defaults to HEAD
-HEAD        	changed or staged vs. current commit
-cid cid         changes to tracked + newly tracked vs. cid
+HEAD   	changed or staged vs. current commit
+cid cid changes to tracked + newly tracked vs. cid
 
 diff for single file
 	[arg]	-- <filename> 
@@ -117,6 +117,13 @@ diff against remote file
 	origin/master:path/path/<filename> -- <filename>
 	@{upstream} <filename>
 
+Diff Format:
+	--- a/<original version>
+	--- b/<changed version>
+	<chunk header> e.g @@ -0,0 +1,2 @@
+		shows starting line of change and how many for original & changed versions
+
+	
 
 log {{{2
 
@@ -166,12 +173,14 @@ grep
 
 Add & Commit {{{1
 
-
 add <path spec>
     -A/--all   updates index to match entire working tree. Includes untracked files.
     -n  dry run
     -i  interactive
+		diff shows staged changes only
+		update: stages changes
 		https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging
+	-p	patch - interactively shows diff 
 
 commit 
     -v	show diff in commit message
@@ -221,6 +230,8 @@ no arg
 
 <file>
 	Unstages file
+
+-p	interactively unstage by line
 
 --mixed
 	Reset Index but not working tree

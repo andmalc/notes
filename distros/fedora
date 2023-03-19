@@ -399,6 +399,8 @@ List files in package
 	dnf rq -l <pkg name> => lists all files in pkg
 
 
+Show which packages require installed one specified 
+	dnf rq  --installed --whatrequires <pkg>
 
 RPM {{{2
 

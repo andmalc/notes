@@ -36,6 +36,10 @@ Dev
 
 	httpie - API testing - https://httpie.io/
 
+	podman-tui
+		needs `systemctl --user start podman.socket`
+
+
 
 Disk space usage
     Files/dirs
@@ -50,11 +54,7 @@ Partitions/disks
 Misc:
 	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
 	bat - cat alternative
-	
-	Zellij - tmux alt.  
-		Install with cargo 
-		or dnf copr enable varlad/zellij 
-
+	Zellij - tmux alt. - add Copr  dnf copr enable varlad/helix - same repo for helix
 	btop - top alternative
 
 

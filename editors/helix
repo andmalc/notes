@@ -2,7 +2,6 @@ Select first, then verb/action
 
 
 Minor modes - prefix to command
-	g					go to
 	v					select
 	:					command
 	<space>
@@ -11,29 +10,36 @@ Minor modes - prefix to command
 		buffers				b
 
 
-	Go To - g
+	Go To Mode - g
 		line beginning		h
 		beginning non-blank	s
 		line end			l
 		buffer next/prev	n/p
 
 		window top			t
-		
+
+	Match mode - m
+		surround word with quotes - miwm"
+
+	View mode - z
+	
 	Vertical movement, scrolling, searching - z
 		Pg down/up			C-f/b
 		
 	
-Selecting movements
-	forward to beginning of next word		w
-	forward to end of current word			e
-	backward to beginning of current word	b
-	find/till char X 	f/tX
+Selecting 
+	movements
+		forward to beginning of next word		w
+		forward to end of current word			e
+		backward to beginning of current word	b
+		find/till char X 	f/tX
 
 	Whole line.			x 
 	including ws(?)		X
 	Repeat to select next line			
 	line space trimmed	x_
 	to end of line		t<ret> / gl
+	whole doc			%
 
 	Extend selection	v
 	Collapse selection	;
@@ -43,6 +49,7 @@ Editing
 	insert/append at non-ws beginning/end of line	I/A
 
 	delete selection	d
+	change selection	c
 
 	Undo/redo			u/U
 
@@ -56,12 +63,18 @@ Insert mode editing - Emacs bindings
  	Delete word right	A-Del
 
 Clipboard
-	Copy				<sp> c
+	Copy				y
 	Paste after/before 	<sp> p/P
 
 From Normal mode
 	Insert below		o
 
+Search
+	search selected		s + <regex search term> + Enter to create multi-curosor for each match
+
+Multi-Cursor
+	remove				,
+	
 
 Jumplist
 	Save				s
@@ -71,6 +84,11 @@ Jumplist
 Command prompt
 	Word-wise move		C-arrows
 	Delete word right 	C-Del
+
+
+Windows
+	vs					vertical split
+	
 	
 	
 	sdfdsf
