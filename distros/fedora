@@ -85,6 +85,7 @@ Change user group
 
 Change shell
 	chsh -s <shell path>
+	pkg: util-linux-user
 	usermod -s <shell path> username
 
 

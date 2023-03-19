@@ -66,7 +66,8 @@ Reset
 Config user
     Rename fedora user for ID 1000
     Shell:
-        Chmod not installed but can do: sudo usermod -s yourshell yourlogin
+		chsh: pkg: util-linux-user
+        usermod -s yourshell yourlogin
 
     Need selinux policy update to ssh in as user?
 

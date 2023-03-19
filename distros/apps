@@ -15,9 +15,11 @@ Files: Find, List, Search, Paging
 	broot - full featured file manager
 			install from Copr petersen/broot 
 	plocate - https://plocate.sesse.net/
+	bat		less or cat alternative
 
 Grep
-	ripgrep
+	ripgrep | rg
+ 	ugrep | ug
 
 Awk/Cut
 	choose - https://github.com/theryangeary/choose
@@ -48,7 +50,11 @@ Partitions/disks
 Misc:
 	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
 	bat - cat alternative
-	Zellij - tmux alt.  Install with cargo 
+	
+	Zellij - tmux alt.  
+		Install with cargo 
+		or dnf copr enable varlad/zellij 
+
 	btop - top alternative
 
 
@@ -96,6 +102,7 @@ Debian: python3-neovim
 Graphical Editors
 
 Oni - neovim 
+
 https://github.com/extr0py/oni
 
 Atom
