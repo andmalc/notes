@@ -19,7 +19,8 @@ Files: Find, List, Search, Paging
 	delta - diff alternative.  Pkg delta-git
 
 Grep
-	ripgrep
+	ripgrep | rg
+ 	ugrep | ug
 
 Awk/Cut
 	choose - https://github.com/theryangeary/choose
@@ -103,6 +104,7 @@ Debian: python3-neovim
 Graphical Editors
 
 Oni - neovim 
+
 https://github.com/extr0py/oni
 
 Atom

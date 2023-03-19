@@ -1,3 +1,18 @@
+Initial {{{1
+
+Log into Firefox account
+Log into BW extention
+Download ssh id-ecdsa, move to .ssh dir
+
+Packages: fish, 
+
+Set fish as default shell
+
+Toolbox
+
+chezmoi
+	sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+
 
 Home dir source control {{{1
 
@@ -5,8 +20,8 @@ Doc:
 	https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 	https://www.atlassian.com/git/tutorials/dotfiles	
 
-1.	Create Git bare repo in ~/.conf-git
-		git init --bare $HOME/.conf-git
+1.	Create Git bare repo in ~/.git-conf
+		git init --bare $HOME/.git-conf
 
 2.	Create command alias to run instead of git to avoid interacting with normal repos
 		abbr conf 'git --git-dir=$HOME/.git-conf --work-tree=$HOME'
