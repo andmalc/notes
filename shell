@@ -143,13 +143,17 @@ Environment
 
 
 
-Subshells {{{2
+Subprocesses and subshells {{{2
 
-Commands enclosed within parentheses are run in a subshell
-Created by running a shell script
+External commands fork a subprocess, shell built-ins do not
+
+Subshell
+Is a child process launched by a shell or script.
+Is a separate instance of command processor
+Commands enclosed within parentheses are run in a subshell whether direct in shell or from within a script
+
 All but end of a chain of pipes run in subshells.
 code inside a '()' or `cmd`, including substitutions: [$=<>](cmd)
-Make variables known to subshells with export command
 
 Backgrounded or suspended/resumed processes 
 
@@ -171,6 +175,41 @@ fi
 if ( w | grep someuser | grep sqlplus ) ; then
     # someuser is logged in and running sqlplus
 fi
+
+Variables {{{1
+
+Variables
+	Exporting
+		provides copy of shell var to child process environment, not current environment
+		not necessary for shell builts-ins, e.g. not necessary to export CDPATH as cd is a built-in
+
+Scope
+	Local: within the function, block of code, or subshell within which it is defined
+	Global: entire script in which var is defined
+
+Environment vs. Shell
+	Environment vars
+		control the behavior of programs and libraries
+		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME and is present in the environments of commands
+
+	Example
+		Env var: $HOME
+		Shell var: ~
+		$HOME works in a cmd alias but tilda doesn't
+
+Showing vars
+	echo var		shows shell vars
+	printenv var	shows environment vars
+
+Modify command env
+	env var=value cmd
+
+assignment - no spaces before or after =
+    a=1 
+
+delimit variable name with curly braces {}
+
+Sourcing a file adds its variables to current
 
 Command substitution {{{3
 
@@ -296,36 +335,6 @@ Rename files
 	${<pat>} is a shell variable alteration/substitution/expansion  pattern
 	e.g.
 		echo ${foo#*.} removes file name extention from $foo
-
-Variables {{{1
-
-Environment vs. Shell
-	Environment vars
-		control the behavior of programs and libraries
-		normally auto imported by shell, e.g. HOME env var is available in shell as $HOME and is present in the environments of commands
-
-	Example
-		Env var: $HOME
-		Shell var: ~
-		$HOME works in a cmd alias but tilda doesn't
-
-Exporting
-	provides copy of shell var to child process environment, not current environment
-	not necessary for shell builts-ins, e.g. not necessary to export CDPATH as cd is a built-in
-
-Showing vars
-	echo var		shows shell vars
-	printenv var	shows environment vars
-
-Modify command env
-	env var=value cmd
-
-assignment - no spaces before or after =
-    a=1 
-
-delimit variable name with curly braces {}
-
-Sourcing a file adds its variables to current
 
 Conditional Expressions {{{1
 

@@ -16,7 +16,7 @@ Files: Find, List, Search, Paging
 			install from Copr petersen/broot 
 	plocate - https://plocate.sesse.net/
 	bat - cat alternative.  
-	delta - diff alternative.  Pkg delta-git
+	delta - diff alternative.  Pkg git-delta
 
 Grep
 	ripgrep | rg
@@ -41,6 +41,9 @@ Dev
 
 	podman-tui
 		needs `systemctl --user start podman.socket`
+
+	ptpython
+		Python repl
 
 
 Misc:

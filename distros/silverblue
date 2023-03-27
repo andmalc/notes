@@ -29,10 +29,12 @@ rpm-ostree install [-A (apply-live)
 rpm-ostree apply-live
 rpm-ostree uninstall 
 
+List packages in commit
+	rpm-ostree db list <commit> 
+
 
 Remove package in base install
-
-rpm-ostree override remove 
+	rpm-ostree override remove 
 
 
 Sytem upgrade

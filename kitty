@@ -20,8 +20,10 @@ Enter kitty terminal with "kitty @"
 	exit - exit terminal and save
 	goto-layout
 	set-window-title
+	set-font-size <num, 0 for default, +/- num>
 
 Command
+	kitty @ --help		list of commands
 	kitty @ <cmd>
 
 

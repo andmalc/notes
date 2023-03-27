@@ -1,0 +1,10 @@
+
+ zellij action | ac
+	new-tab --name xxx
+	edit-scrollback
+	edit <file>
+	rename-pane
+
+
+Copy on select - default on
+
