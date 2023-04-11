@@ -26,6 +26,9 @@ remote-add <options> <repo file or URL>
 
 	flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 
+remote-ls
+	list packages on remote
+
 Update Gnome Software after adding a remote
 	flatpak update --appstream
 

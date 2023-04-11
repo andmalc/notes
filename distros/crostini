@@ -13,7 +13,6 @@ Management
 	Start and log in to termina default vm.
 	vmc list - shows VMs, termina is defualt.
 	vmc start termina - starts and connects to termina
-	vmc destroy <vm>
 
 	vsh termina - connect to vm, use lxc
 
@@ -24,6 +23,11 @@ Containers
 
 	lxc list
 		shows containers
+	lxc remote list
+		list remote image sources
+	lxc launch images:fedora/37 f37
+		download and start image
+
 	lxc start <container>
 		if doesn't work, logout and run 'vmc container termina penguin'
 
@@ -31,51 +35,21 @@ Login to container
 	lxc exec arch -- bash - get shell
 	lxc console <container> - login to user
 
+
+Available container images
+https://linuxcontainers.org/lxd/introduction/
+
+
+Wifi Fedora How-To
+https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
+
+
+Cros Guest Tools
+https://copr.fedorainfracloud.org/coprs/leo/cros-guest-tools
+
+
 Flatpak error 'Can't mount proc on /newroot/proc'
 	from termina prompt
 		`lxc config set penguin security.nesting true`
 		`lxc restart penguin`
-
-Replace default Debian container
-	lxc stop --force f37
-	lxd stop --force penguin
-	lxc rename penguin debian
-	lxc rename f37 penguin
-	lxc start penguin
-
-
-lxd
-    manage application containers
-    https://linuxcontainers.org/lxd/introduction/
-
-
-image server site
-    https://us.images.linuxcontainers.org/
-
-New distro images can be created either with vmc or with lxd
-    https://gist.github.com/rstacruz/aeb2273d19e5f5ffbe27a973cb82717f
-    https://wiki.archlinux.org/title/Chrome_OS_devices/Crostini#Create_the_container
-
-vmc container termina f37  https://us.lxd.images.canonical.com fedora/37
-
-Cros Guest Tools
-
-[copr:copr.fedorainfracloud.org:mbkulik:cros-guest-tools]
-
-Add repo: 
-
-[copr:copr.fedorainfracloud.org:leo:cros-guest-tools]
-name=Copr repo for cros-guest-tools owned by leo
-baseurl=https://download.copr.fedorainfracloud.org/results/leo/cros-guest-tools/fedora-$releasever-$basearch/
-type=rpm-md
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://download.copr.fedorainfracloud.org/results/leo/cros-guest-tools/pubkey.gpg
-repo_gpgcheck=0
-enabled=1
-enabled_metadata=1
-
- dnf copr enable leo/cros-guest-tools
-
-install cros-guest-tools
 
