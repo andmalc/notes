@@ -6,7 +6,29 @@ jo - command line app, formats input as json
 
 jq
     transform structured data 
-    https://stedolan.github.io/jq/
+	https://stedolan.github.io/jq/manual/
+
+	specifying object
+		.["foo"]		long form, use if key contains special chars
+		.foo			shorthand version
+
+		indexes:
+			if applied to list, returns list items
+			if applied to objects, returns obj values
+		.[]			all items
+		.[0:4]		slice of items
+		.[-1]		last item
+	
+	nested objs
+		.obj1[1],obj2	obj2 within second item of obj1
+		 '. | .obj'		ojb anywhere
+
+	Examples:
+		Value of 'url' from first item
+		curl https://api.github.com/repos/andmalc/notes/commits |  jq '.[0].url'
+
+		Value of url within top level owner obj
+		curl https://api.github.com/repos/andmalc/notes |  jq '.owner | .url'
 
 Python glom for nested data like json
 https://github.com/mahmoud/glom

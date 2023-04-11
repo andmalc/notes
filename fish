@@ -167,47 +167,45 @@ https://fishshell.com/docs/current/#variables
 set
  set <options> <var name> <value>
 
-	 -a --append
-	 --path
-		  treat as path var
-		  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
+scope options
+	-g		global, unexported (default)
+	-U		Universal - saved in fish_variables file
+	-l		local within current block and children but not child functions
+	-x		exported 
+			default scope is local and exported to child processes
+	-gx	exported global 
+			use for environment vars in cofig.fish
 
+other options
+	-a --append
 	-e --erase
-	
+
 	-q --query <var> ...
 		return status = 0 if var initialized, 1 for each not
 		set -q var (not $var)
-
-	-x  exported 
-		default scope is local and exported to child processes
-
-	scope options
-		-g  global, unexported (default)
-		-U Universal - saved in fish_variables file
-		-l  local within current block and children but not child functions
-		-gx exported global 
-			use for environment vars in cofig.fish
+ --path
+	  treat as path var
+	  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
 
 	-S --show
 		
 	no var or value
 		list all vars or limit to var type with scope option
 		e.g. show exported global    -xg
-        
+	  
 
 # Abbreviations {{{1
 
-word that expands to a phrase
-are universal variables saved in .config/fish/fish_variables 
+word that expands to a phrase when Space pressed
 
-abbr -a	add
-    -U  universal auto-saved in config (default)
+abbr 
+	-a	add / save in .config/fish/fish_variables 
     -g  global 
-				current session but not saved
-				use in config.fish
+				current session scope
+				use in config.fish, e.g. abbr --add --global gpl 'git pull'
 	-r	rename
 	-e	erase
-	-s	show
+	-s	show (default)
 
 
 # Alias {{{1

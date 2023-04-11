@@ -240,6 +240,7 @@ no arg
 	Unstages all and reverts changes to working tree
 	staged changes also lost
 	Tree is reverted to HEAD
+	No effect on untracked files
 
 --soft HEAD~1
 	Commit is removed from branch
@@ -313,9 +314,9 @@ branch
 
 
 Set upstream branch
-    branch --set-upstream-to=origin/master
-    branch -b <branchname> --track origin/<remote b name>
-    push --set-upstream origin gh-pages (confirmed works)
+    push --set-upstream origin gh-pages
+    ?	branch --set-upstream-to=origin/master
+    ?	branch -b <branchname> --track origin/<remote b name>
 
 Change remote branch name or create (?)
     git push origin <branch>
