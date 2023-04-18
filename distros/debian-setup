@@ -335,6 +335,10 @@ Alsa
 	t/s http://alsa.opensrc.org/index.php/FAQ#How_can_I_check_whether_ALSA_works.3F            
 
 network {{{1
+
+ip command in iprout2 pkg
+
+
 Interface config {{{2
 
 As of Stretch

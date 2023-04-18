@@ -1,6 +1,12 @@
 
 Commands
+	init
+		initialize repo storage
+		not needed if specified existing GH repo during install
 	status
 	diff
 	apply
 	cd
+
+Repo stored at  ~/.local/share/chezmoi
+
