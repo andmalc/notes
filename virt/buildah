@@ -1,5 +1,44 @@
 Backup toolbox: https://fedoramagazine.org/backup-and-restore-toolboxes-with-podman/
 
+Default rootless container storage: "$HOME/.local/share/containers/storage"
+Default rooted:  /var/lib/containers/storage
+Set by storage.conf file. Default location: /usr/share/containers/storage.conf
+Local override:  $HOME/.config/containers/storage.conf 
+
+Terms {{{1
+Images {{{2
+
+Composed of a bundle of layers vs. LXD images which are unlayered
+Needed layers pulled from repository
+Used as mount points when creating containers
+
+Containers {{{2
+
+States: rest or running
+
+Privilages:
+	rootless containers will never have more privileges than the user that launched them.
+
+Starting container:
+	Container Engine unpacks files & metadate, hands off to kernel
+	kernel API call initiates isolation via kernel namespaces & mounts copy of files
+
+	kernel namespace
+		created for a process by the clone() call
+		isolates hostname, IP address, filesystem mount points, process id etc.
+		container processe make system call but from within namespace
+
+
+
+Image Registries {{{1
+
+Fedora Registry
+https://registry.fedoraproject.org/
+
+Toolbox alternative distros
+https://github.com/toolbx-images/images
+
+
 Podman {{{1
 
 Examples 
@@ -312,11 +351,6 @@ Distrobox {{{1
 
 Run command
 flatpak run io.github.luca.distrobox enter  fed36-distrobox
-
-Image Registries {{{1
-
-Fedora Registry
-https://registry.fedoraproject.org/
 
 Topics {{{1
 Filesystem issues {{{2

@@ -1,5 +1,8 @@
 
 Commands
+	init
+		initialize repo storage
+		not needed if specified existing GH repo during install
 	status
 	cd
 
@@ -20,4 +23,5 @@ Preview then apply changes from remote
 	chezmoi git pull -- --autostash --rebase && chezmoi diff
 	chezmoi apply
 
+Repo stored at  ~/.local/share/chezmoi
 
