@@ -8,21 +8,32 @@ jq
     transform structured data 
 	https://stedolan.github.io/jq/manual/
 
-	specifying object
+	Generic Object Index
 		.["foo"]		long form, use if key contains special chars
+	Object Identifier-Index
 		.foo			shorthand version
 
 		indexes:
 			if applied to list, returns list items
 			if applied to objects, returns obj values
-		.[]			all items
+
+	array value iterator	.[] 
+		- all values within preceeding
+		- causes each of the keys to be emitted separately (looped through,
+		  effectively) and passed to subsequent filters.
+
+
+		.[]			
 		.[0:4]		slice of items
 		.[-1]		last item
+		.[].foo		all foo values within array
+		.foo[]		all array items within foo
 	
 	nested objs
 		.obj1[1],obj2	obj2 within second item of obj1
 		 '. | .obj'		ojb anywhere
 
+	object values as an 
 	Examples:
 		Value of 'url' from first item
 		curl https://api.github.com/repos/andmalc/notes/commits |  jq '.[0].url'

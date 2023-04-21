@@ -9,7 +9,7 @@ Editors
 
 Files: Find, List, Search, Paging
 	fzf
-	fd-find
+	fd-find - alpine pkg fd
 	exa - simple ls alternative
 	ranger - three panel text file manager
 	broot - full featured file manager

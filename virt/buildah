@@ -14,6 +14,8 @@ Perist container after logout
     Use loginctl enable-linger for this
     Also allows sudo with rootless container
 
+Image vs Container
+	Container is an image with a writable layer added
 
 Images {{{2
 
@@ -71,11 +73,18 @@ Containers {{{2
 attach
     attach to running container
 
-commit
+commit 
+	save updated container to new image
+	[options] <containerID> <new image repo/name:tag>
     create new image from changed container
+	default repo is 'localhost'
+	options
+		--change/-c		change config	
+
 
 create 
-    create but do not start container
+    create container from image but do not start
+	podman container create --detach --tty --interactive --name Ubuntu ubuntu:20.04 /usr/bin/bash
 
 diff
     inspect changes in container filesystem
@@ -83,6 +92,7 @@ diff
 exec
     run command in a container
 		exec -it <ID> bash
+		podman exec --interactive --tty Ubuntu /usr/bin/bash
 
 export
     Export container fs to tar archive
@@ -99,9 +109,22 @@ mount
 rm
 	remove
 
+save
+	save image to archive file
+		podman container commit -p distrobox_name image_name_you_choose
+		podman save image_name_you_choose:latest | gzip > image_name_you_choose.tar.gz
+		podman load < image_name_you_choose.tar.gz
+
 start
     start stopped container
     cannot add command or change configuration
+
+tag
+	Add an additional name to a local image
+	creates duplicate entry in image list with different name
+	default tag (after the :) is 'latest'
+	<image ID> <name:tag>
+	
 
 top 
     show processes running within container
@@ -267,6 +290,23 @@ Toolbox executable is mounted from host into container then is run to initialize
 	toolbox --log-level debug init-container
 
 
+Dockerfile to create Toolbox compatible image for Debian {{{2
+
+ROM docker.io/library/debian:testing
+
+LABEL com.github.containers.toolbox="true" \
+      com.github.debarshiray.toolbox="true"
+
+RUN apt-get update && \
+    apt-get -y install sudo libcap2-bin fish  kitty-terminfo tmux  && \
+    apt-get clean
+
+RUN sed -i -e 's/ ALL$/ NOPASSWD:ALL/' /etc/sudoers
+
+RUN touch /etc/localtime
+RUN echo VARIANT_ID=container >> /etc/os-release
+
+CMD /bin/fish
 
 Distrobox {{{1
 

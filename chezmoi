@@ -1,6 +1,23 @@
 
 Commands
 	status
-	diff
-	apply
 	cd
+
+	add - add file from home dir to source
+	edit [--apply] - edit file in source
+
+Change commands - compare working copy to home dir
+	status - what changes would be made by apply
+	unmanaged
+	diff - shows changes to be made to home dir
+	apply - updates home dir from source
+	update - pulls changes from remote and applies
+
+	remove - remove file from home dir & source
+	forget - remove file from source
+
+Preview then apply changes from remote
+	chezmoi git pull -- --autostash --rebase && chezmoi diff
+	chezmoi apply
+
+

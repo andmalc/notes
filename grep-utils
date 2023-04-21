@@ -31,22 +31,42 @@ Match whole words, print each on separate line
 
 Ripgrep {{{1
 
-File arg
-	defaults to recursive starting at current dir
+Defaults:
+	recursive starting at current dir
+	case sensitive
+	patterns are regexes
 
-	ignores:
+	file ignores:
 		hidden files
 		files matched by globs in gitignore, .ignore, and .rgignore files
 		symbolic links
+		patterns in .rgignore
 
-	override ignores
-		-.		search hidden
-		--no-ignore	
-		--follow/-L		follow links
+Options {{{2
+	
+override file ignores
+	-.		search hidden
+	--no-ignore	
+	--follow/-L		follow links
 
-	globbing
-		-g '<pat>'
-		exlcude '!<pat>'
+case-insensitive	-i
+pat is string literal	-F
+no line numbers		- (?)
+show filenames only		-l/--files-with-matches
+
+filter on 
+	file type	-t
+	glob pattern -g '<pat>' 
+	exclude glob '!<pat>'
+
+
+Context show
+	-C #		# lines of surrounding context
+	-B/-A #		lines before/after or both, e.g. -B 2 -A 1 
+
+
+Multiple matches
+	rg 'png$|jpg$'
 
 Replace text in results
 	--replace/-r	
@@ -55,9 +75,6 @@ Replace text in results
 	capture groups
 		rg 'my(pat)' <fn> -r 'blah-$1'
 
-
--l/--files-with-matches
-	show filenames of matches, suppress content
 
 Pipe to cmd
 	rg pat | xargs cmd
