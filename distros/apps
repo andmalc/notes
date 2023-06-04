@@ -21,6 +21,9 @@ Files: Find, List, Search, Paging
 Grep
 	ripgrep | rg
  	ugrep | ug
+	gret - regext grep with tree output
+		https://github.com/4imothy/gret
+
 
 Awk/Cut
 	choose - https://github.com/theryangeary/choose

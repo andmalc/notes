@@ -5,6 +5,10 @@ Default rooted:  /var/lib/containers/storage
 Set by storage.conf file. Default location: /usr/share/containers/storage.conf
 Local override:  $HOME/.config/containers/storage.conf 
 
+Temporary container
+	podman run --rm -it fedora
+
+
 Terms {{{1
 Images {{{2
 
