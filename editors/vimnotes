@@ -28,8 +28,8 @@ set/setlocal - sets options
 	no-arg	shows non-default settings
 	all		shows all settings in categories
 	var=val	set value
-	var=+val	append val
-	var?		show value
+	var+=val	append val
+	var?		how value
 	var&		reset to default
 
 let -
@@ -260,18 +260,24 @@ Tabs
 Edit Modes {{{1
 Normal mode {{{2
 
-Enter Insert mode
-	i/a		Insert before/after cursor
-	I/A		Insert before first non-blank in line/end of line
-	o			Open line below
-	O			Open line above
-   gi       go to last edit and insert
-	gI			insert text at column 1
-	cc/C		change whole line/to end of line
+c			 change text on line.  Type . to stop replacing
+co[py]		
+:t			synonym for copy.
+			  copy to below the line given by {address}.  
+d x [n]		delete [n] lines into register x.
+								  Specifier for n can be in before or after position.
+m[ove] {address}		
+			  move the lines to below the line given by {address}.
+pu[t] [x]	put the text [from register x]
+r<char>	replace char
+r<CR>		insert line break
 
-Edit & remain in Normal mode
-	r<char>	replace char
-	r<CR>		insert line break
+		
+	
+y[ank] [x]	yank [range] lines [into register x].
+y[ank] [x] {count}
+			 yank {count} lines, starting with last line number
+				  in [range] (default: current line [into register x].
 
 Repeat last edit: .
 
@@ -280,6 +286,19 @@ Repeat change on multi lines (e.g. commenting all)
 2. I  (Insert mode from start of line)
 3. Make change
 4. Esc
+
+Normal mode edit then enter Insert mode {{{2
+
+	i/a		Insert before/after cursor
+	I/A		Insert before first non-blank in line/end of line
+	o			Open line below
+	O			Open line above
+   gi       go to last edit and insert
+	gI			insert text at column 1
+	cc/C		change whole line/to end of line
+	[n]s		subsitute [n] letters then edit
+	[n]S		substitue linewise
+
 
 Edit with markers {{{2
 
@@ -474,7 +493,7 @@ show registers
 
 names
 	register name prefix: "
-	"	current contents of 'unnamed register' - use for ex commands?
+	"	anonymous register
 	+	clipboard  
             used by modern apps for cut/copy/paste ops selection behavior.
             main paste register.  Not used by xterms
@@ -504,73 +523,6 @@ previous insertions
   c-a (?)
 previous insertions, exit Insert mode
   c-2 / c-@
-
-assign to a register (help 'let-@')
-   let @a=" ... " 
-
-execute contents of register
-		@<reg name>
-
-paste last ex command
-    ":p
-
-edit register
-		"ap
-		<edit lines>
-		"ad
-
-
-Cmd mode register
-		:'a,'bs/thing/ThinG/
-
-	Insert (paste) register n
-		C-R"n
-		C-R C-A/C-W             insert word/Word under cursor
-	let @a=" ... " - assign to a register (help 'let-@')
-
-insert text from buffer or register into cmd or search
-		  ^R commands
-
-Registers {{{1
-
-names
-	register name prefix: "
-	+     clipboard  
-            used by modern apps for cut/copy/paste ops selection behavior.
-            main paste register.  Not used by xterms
-	"      current contents of 'unnamed register' - use for ex commands?
-	*      X-Primary register, stores current selection (CUT BUFFER0 of 8)
-            use for transfer to/from xterm
-	:      last executed cmd
-
-Normal mode syntax for using register as target of y or d or as source
-		{Visual}"n[ydp]{motion}
-				y`a				copy text from mark a to line before current line
-				"ayy	copy line into register a
-				"ad`a	cut text from mark a to current position into register a
-				"aA				Append text to buffer a
-
-copy/paste to/from reg
-		"<reg>y/Y
-				yank selected text/lines
-		"<reg>p/P 
-				paste reg contents before/after cursor
-		"<reg>gp/gP 
-				as above, cursor left after text
-
-Insert register contents
-   after/before cursor        "xp|P 
-   leave cursor after text    "xgp|P
-   at last change             c-r<reg>
-   C-R C-A/C-W				insert word/Word under cursor (?)
-
-previous insertions
-  c-a (?)
-previous insertions, exit Insert mode
-  c-2 / c-@
-
-show
-		:reg
 
 assign to a register (help 'let-@')
    let @a=" ... " 
@@ -699,6 +651,18 @@ Ex output to buffer
    "aP
 
    redir >file
+
+substitute
+        :%s/\s\+$//e
+        :%s to run :substitute over the range %, which is the entire buffer.
+       \s t match all whitespace characters.
+        \+ to repeat them 1 or more times.
+        $ to anchor at the end of the line.
+        The e flag to not give an error if there is no match 
+            (i.e. the file is already without trailing whitespace).
+        &		repeat last substitution
+
+
 Line Addressing and searching in Ex mode {{{2
 
 http://vimregex.com/
@@ -731,33 +695,6 @@ Search for a pattern.  Refer to pattern in following substitude command
 :s//\r&/g
 
 
-
-Commands {{{2
-
-y[ank] [x]	yank [range] lines [into register x].
-y[ank] [x] {count}
-			 yank {count} lines, starting with last line number
-				  in [range] (default: current line [into register x].
-co[py] {address}		
-:t			synonym for copy.
-			  copy to below the line given by {address}.  
-m[ove] {address}		
-			  move the lines to below the line given by {address}.
-d [x]		 delete range lines into register x
-c			 change text on line.  Type . to stop replacing
-pu[t] [x]	put the text [from register x]
-d x [n]		delete [n] lines into register x.
-								  Specifier for n can be in before or after position.
-s   substitute
-    example
-        :%s/\s\+$//e
-        :%s to run :substitute over the range %, which is the entire buffer.
-        \s t match all whitespace characters.
-        \+ to repeat them 1 or more times.
-        $ to anchor at the end of the line.
-        The e flag to not give an error if there is no match 
-            (i.e. the file is already without trailing whitespace).
-        &		repeat last substitution
 
 Ex Examples {{{1
 
@@ -907,4 +844,4 @@ Display:
 
 
 
-vim:ts=3 sw=3 sts=3 fdm=marker
+vim:fdm=marker

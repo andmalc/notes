@@ -8,3 +8,11 @@
 
 Copy on select - default on
 
+Keyboard
+	Tab switch
+		Ctrl-t to enter Tab mode
+		j/k		switch tabs
+
+
+Panes
+	Alt PageUp/Down		cycle between layouts

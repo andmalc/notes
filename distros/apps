@@ -48,6 +48,10 @@ Dev
 	ptpython
 		Python repl
 
+	try - run a command and inspect its effects before changing your live system
+		https://github.com/binpash/try
+		install: $ git clone https://github.com/binpash/try.git
+
 
 Misc:
 	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
