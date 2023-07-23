@@ -184,9 +184,6 @@ Options
 -d  run as daemon
 --hostname
 --tt
---volume value, -v value
-    mount a host location into the container 
-
 --rm=true
 
 --runtime path  
@@ -196,12 +193,14 @@ Options
     Ports by default not accessible, must bind with -p 
     -p <host port>:<container port>
 
--v
-    bind mount volume
+--volume value, -v value
+    mount a host location into the container 
     hostdir:containerdir:options
 
     Options:
-        default rw
+	Z	SELinux label to allow this container to write
+
+	-v (pwd)/hostdir:/mnt/containerdir:Z
 
 
 in production
@@ -357,18 +356,24 @@ Run command
 flatpak run io.github.luca.distrobox enter  fed36-distrobox
 
 Topics {{{1
-Filesystem issues {{{2
+
+User Namespaces
+	default: user running container is mapped to root
+	view  namespace mapping table in container at /proc/self/uid_map
+
+	-u user option: set user ID in container
+	--userns=keep-id option: maintain same user ID 
 
 Mount host dir into container
-chcon -Rt svirt_sandbox_file_t <dir>
     --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
-Permissions issue fix:
-    chcon -R -h -t container_file_t /var/roothome
+	mounted volumns always owned by root unless --userns=keep-id used.
+	if container user ID is not root, must user podman unshare to change mount ownership
+	https://www.tutorialworks.com/podman-rootless-volumes/
+		podman run --user 200 ....
+		podman unshare chown 200:200 -R /mnt
 
-Share local files with containers
-sudo chcon -R -h -t container_file_t /srv
-buildah run -v /srv:/srv:rslave fedora-working-container bash
+
 
 
 Running a server {{{2

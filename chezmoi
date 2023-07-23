@@ -1,6 +1,11 @@
 Docs
 	https://fedoramagazine.org/take-back-your-dotfiles-with-chezmoi/
 
+Install
+	From existing repo
+		sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply andmalc
+
+
 Commands
 	init
 		initialize repo storage

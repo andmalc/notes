@@ -1,5 +1,14 @@
 Terms  {{{1
 
+libvirt uses:
+	KVM		virtualize cpu and RAM
+	Qemu	emulation of motherboard, storage, sound card, virtual GPU etc
+			for cpus without virtualization support can also emulate cpu but will be slow
+
+Boxes:		libvit unprivilaged user (aka 'session') mode.
+			searches images for lib-virt locations.
+
+
 OVMF
     UEFI firmware for vms
 
