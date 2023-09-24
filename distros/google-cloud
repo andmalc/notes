@@ -11,24 +11,11 @@ config
 	show config
 		gcloud config configurations list
 
+Compute {{{1
 
 Compute instances
     gcloud compute instances list
     gcloud compute instances start <instance>
-
-ssh
-	add instance to ~/.ssh/config
-		gcloud compute config-ssh
-
-    gcloud compute ssh
-    gcloud compute scp <local file> <instance:><path>
-
-
-Cloudshell
-    gcloud cloud-shell ssh
-    gcloud cloud-shell get-mount-command <mnt point>
-        show mount command for sshfs mount
-
 
 Copy files
     gcloud compute copy-files myapp.aci coreos:~ 
@@ -45,5 +32,39 @@ snappy-test \
 --image ubuntu-core-devel-v20141215 \
 --metadata-from-file user-data=cloud.cfg
 
+ssh
+	add instance to ~/.ssh/config
+		gcloud compute config-ssh
+
+    gcloud compute ssh
+    gcloud compute scp <local file> <instance:><path>
+
+
+Cloudshell  {{{1 
+
+gcloud cloud-shell ssh
+gcloud cloud-shell get-mount-command <mnt point>
+	show mount command for sshfs mount
+
+
+
+Storage {{{1
+
+gcloud storage <cmd>
+
+Files syntax 
+	local file		file://<path>/<fn>
+	file in bucket gs://mybucket/fn
+
+Commands:
+
+	Folders aka buckets
+		buckets create gs://mybucket/xxxx
+	
+	Copying (incl. upload & download)
+		cp 
+
+	List
+		ls
 
 

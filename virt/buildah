@@ -5,6 +5,10 @@ Default rooted:  /var/lib/containers/storage
 Set by storage.conf file. Default location: /usr/share/containers/storage.conf
 Local override:  $HOME/.config/containers/storage.conf 
 
+Temporary container
+	podman run --rm -it fedora
+
+
 Terms {{{1
 Images {{{2
 
@@ -53,6 +57,8 @@ Perist container after logout
     Use loginctl enable-linger for this
     Also allows sudo with rootless container
 
+Image vs Container
+	Container is an image with a writable layer added
 
 Images {{{2
 
@@ -110,11 +116,18 @@ Containers {{{2
 attach
     attach to running container
 
-commit
+commit 
+	save updated container to new image
+	[options] <containerID> <new image repo/name:tag>
     create new image from changed container
+	default repo is 'localhost'
+	options
+		--change/-c		change config	
+
 
 create 
-    create but do not start container
+    create container from image but do not start
+	podman container create --detach --tty --interactive --name Ubuntu ubuntu:20.04 /usr/bin/bash
 
 diff
     inspect changes in container filesystem
@@ -122,6 +135,7 @@ diff
 exec
     run command in a container
 		exec -it <ID> bash
+		podman exec --interactive --tty Ubuntu /usr/bin/bash
 
 export
     Export container fs to tar archive
@@ -138,9 +152,22 @@ mount
 rm
 	remove
 
+save
+	save image to archive file
+		podman container commit -p distrobox_name image_name_you_choose
+		podman save image_name_you_choose:latest | gzip > image_name_you_choose.tar.gz
+		podman load < image_name_you_choose.tar.gz
+
 start
     start stopped container
     cannot add command or change configuration
+
+tag
+	Add an additional name to a local image
+	creates duplicate entry in image list with different name
+	default tag (after the :) is 'latest'
+	<image ID> <name:tag>
+	
 
 top 
     show processes running within container
@@ -157,9 +184,6 @@ Options
 -d  run as daemon
 --hostname
 --tt
---volume value, -v value
-    mount a host location into the container 
-
 --rm=true
 
 --runtime path  
@@ -169,12 +193,14 @@ Options
     Ports by default not accessible, must bind with -p 
     -p <host port>:<container port>
 
--v
-    bind mount volume
+--volume value, -v value
+    mount a host location into the container 
     hostdir:containerdir:options
 
     Options:
-        default rw
+	Z	SELinux label to allow this container to write
+
+	-v (pwd)/hostdir:/mnt/containerdir:Z
 
 
 in production
@@ -306,6 +332,23 @@ Toolbox executable is mounted from host into container then is run to initialize
 	toolbox --log-level debug init-container
 
 
+Dockerfile to create Toolbox compatible image for Debian {{{2
+
+ROM docker.io/library/debian:testing
+
+LABEL com.github.containers.toolbox="true" \
+      com.github.debarshiray.toolbox="true"
+
+RUN apt-get update && \
+    apt-get -y install sudo libcap2-bin fish  kitty-terminfo tmux  && \
+    apt-get clean
+
+RUN sed -i -e 's/ ALL$/ NOPASSWD:ALL/' /etc/sudoers
+
+RUN touch /etc/localtime
+RUN echo VARIANT_ID=container >> /etc/os-release
+
+CMD /bin/fish
 
 Distrobox {{{1
 
@@ -313,18 +356,24 @@ Run command
 flatpak run io.github.luca.distrobox enter  fed36-distrobox
 
 Topics {{{1
-Filesystem issues {{{2
+
+User Namespaces
+	default: user running container is mapped to root
+	view  namespace mapping table in container at /proc/self/uid_map
+
+	-u user option: set user ID in container
+	--userns=keep-id option: maintain same user ID 
 
 Mount host dir into container
-chcon -Rt svirt_sandbox_file_t <dir>
     --volume/-v <host-dir>:<container-dir>:<options> (:Z,:z etc.)
 
-Permissions issue fix:
-    chcon -R -h -t container_file_t /var/roothome
+	mounted volumns always owned by root unless --userns=keep-id used.
+	if container user ID is not root, must user podman unshare to change mount ownership
+	https://www.tutorialworks.com/podman-rootless-volumes/
+		podman run --user 200 ....
+		podman unshare chown 200:200 -R /mnt
 
-Share local files with containers
-sudo chcon -R -h -t container_file_t /srv
-buildah run -v /srv:/srv:rslave fedora-working-container bash
+
 
 
 Running a server {{{2

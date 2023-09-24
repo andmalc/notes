@@ -9,7 +9,7 @@ Editors
 
 Files: Find, List, Search, Paging
 	fzf
-	fd-find
+	fd-find - alpine pkg fd
 	exa - simple ls alternative
 	ranger - three panel text file manager
 	broot - full featured file manager
@@ -21,6 +21,9 @@ Files: Find, List, Search, Paging
 Grep
 	ripgrep | rg
  	ugrep | ug
+	gret - regext grep with tree output
+		https://github.com/4imothy/gret
+
 
 Awk/Cut
 	choose - https://github.com/theryangeary/choose
@@ -44,6 +47,10 @@ Dev
 
 	ptpython
 		Python repl
+
+	try - run a command and inspect its effects before changing your live system
+		https://github.com/binpash/try
+		install: $ git clone https://github.com/binpash/try.git
 
 
 Misc:

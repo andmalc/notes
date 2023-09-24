@@ -1,28 +1,39 @@
 json {{{1
 
-jo - command line app, formats input as json
-    https://github.com/jpmens/jo
+jo	format input as json
+	https://github.com/jpmens/jo
     
 
 jq
     transform structured data 
 	https://stedolan.github.io/jq/manual/
 
-	specifying object
+	Generic Object Index
 		.["foo"]		long form, use if key contains special chars
+	Object Identifier-Index
 		.foo			shorthand version
 
-		indexes:
-			if applied to list, returns list items
-			if applied to objects, returns obj values
-		.[]			all items
+	array value iterator	.[] 
+		if applied to list, returns list items
+		if applied to objects, returns obj values
+		- causes each of the keys to be emitted separately (looped through,
+		  effectively) and passed to subsequent filters.
+		
+
+		.[]			items in array	
 		.[0:4]		slice of items
 		.[-1]		last item
-	
+		.[].foo		all foo values of ojbects within array
+		.foo[]		all array items within foo
+
+	Plus operator +
+		Join multiple filter outputs into single string
+
 	nested objs
 		.obj1[1],obj2	obj2 within second item of obj1
 		 '. | .obj'		ojb anywhere
 
+	object values as an 
 	Examples:
 		Value of 'url' from first item
 		curl https://api.github.com/repos/andmalc/notes/commits |  jq '.[0].url'
