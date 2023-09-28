@@ -5,9 +5,12 @@ libvirt uses:
 	Qemu	emulation of motherboard, storage, sound card, virtual GPU etc
 			for cpus without virtualization support can also emulate cpu but will be slow
 
-Boxes:		libvit unprivilaged user (aka 'session') mode.
-			searches images for lib-virt locations.
-
+Boxes:		libvit unprivilaged user (aka 'session') mode so kvm or libvirt group membership not needed
+		uses dedicated libvirt storage pool as shown by virsh pool-list.
+		searches images for lib-virt locations + 
+		system install: ~/.local/share/gnome-boxes/images
+		flatpak install: ~/.var/app/org.gnome.Boxes/data/gnome-boxes/images
+		if storage on btrfs fs, exclude storage from snapshots: jwillikers.com/gnome-boxes-on-btrfs
 
 OVMF
     UEFI firmware for vms
