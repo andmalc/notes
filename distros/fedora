@@ -49,6 +49,11 @@ Install into mounted partition
 dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
 install bootloader ?
 
+Fedora upgrade {{{1
+
+fedora-upgrade --upgrade-to=39
+
+
 Free up space {{{1
 
 Packages to remove
@@ -70,6 +75,10 @@ Enable graphical session
 	systemctl set-default graphical.target
 
 Environment vars in ~/.config/environment.d
+
+Visudo editor
+	Add to sudoers Defaults env_keep += "EDITOR"
+	Run visudo as sudo -E svisudo
 
 
 Users {{{1
