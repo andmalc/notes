@@ -81,6 +81,18 @@ Visudo editor
 	Run visudo as sudo -E svisudo
 
 
+gpg
+    ensure pinentry installed
+    set home dir:
+         set -x --path GNUPGHOME ~/.config/gnupg
+
+wl-clipboard  - clipbord tool for Wayland
+    https://github.com/bugaevc/wl-clipboard
+
+Yubikey/U2F support
+	pam-2uf u2f-hidraw-policy
+
+
 Users {{{1
 
 Show user info
@@ -239,33 +251,10 @@ gsettings list-recursively  | grep touchpad
 
 Packages {{{1
 
-
 dnf group install  "C Development Tools and Libraries"
-
-gpg
-    ensure pinentry installed
-    set home dir:
-         set -x --path GNUPGHOME ~/.config/gnupg
-
 
 
 Desktop {{{1
-
-wl-clipboard  - clipbord tool for Wayland
-    https://github.com/bugaevc/wl-clipboard
-
-Keyboard driven browser: qutebrowser
-
-Gnome Settings pkg: gnome-control-center
-
-Yubikey/U2F support
-pam-2uf u2f-hidraw-policy
-
-android-tools for adb, fastboot
-
-Firefox H.264 coded support
-RPMFusion repo
-ffmpeg-libs and compat-ffmpeg
 
 Fonts:
 Monospaced:
@@ -275,12 +264,17 @@ Monospaced:
 mozilla-fira-mono-fonts
 dejavu-sans-mono-fonts
 
+Gnome {{{2
+
+Gnome Settings pkg: gnome-control-center
+
 Tap to click
 sudo gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
 
 Solid backgrond color
 gsettings set org.gnome.desktop.background picture-options 'none'
 gsettings set org.gnome.desktop.background primary-color '#HEX'
+
 
 
 Dnf {{{1
