@@ -20,6 +20,21 @@ Firefox Flatpak
 
 Gnome {{{1
 
+Install Gnome from minimal OS:
+
+sudo dnf install -y \
+    gnome-shell \
+    gnome-backgrounds desktop-backgrounds-gnome \
+    gnome-console \
+    gnome-software \
+    gnome-tweaks \
+    gnome-system-monitor \
+    gnome-disk-utility \
+    nautilus \
+    @fonts \
+    cups
+
+
 Default Gnome user folders - remove
 	 .config/user-dirs.dirs
 		XDG_DOWNLOAD_DIR="$HOME/Downloads"
