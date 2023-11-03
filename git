@@ -195,6 +195,8 @@ Remotes {{{1
     clone		create local repo, remote tracking branch auto-created
 	u origi		push to upgream 
     set-url <name> <new URL>
+				change remote URL
+				git remote set-url origin git@github.com:andmalc/dotfiles.git
     push <repo> upload changes to remote.  Default repo is origin
                 <local branch name>:<remote name>
 

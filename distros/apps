@@ -35,6 +35,8 @@ Git browsing
 	tig
 	also delta for diff 
 
+	eget - install binary from GH repo
+		https://github.com/zyedidia/eget
 
 Dev
 	visidata
@@ -55,7 +57,9 @@ Dev
 
 Misc:
 	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
-	Zellij - tmux alt. - add Copr  dnf copr enable varlad/zellij - same repo for helix
+	Zellij - tmux alt. 
+	- https://github.com/zellij-org/zellij
+	- add Copr  dnf copr enable zellij-org/zellij - same repo for helix
 	btop - top alternative
 
 

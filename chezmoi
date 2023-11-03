@@ -13,13 +13,20 @@ Commands
 	status
 	cd
 
-	add - add file from home dir to source
+	add - 
+		add file from home dir to source
+		if file already in source, updates it
+
 	edit [--apply] - edit file in source
 
 Change commands - compare working copy to home dir
 	status - what changes would be made by apply
 	unmanaged
-	diff - shows changes to be made to home dir
+
+	diff [--pager less] 
+		shows changes to be made to home dir
+		diff is how local file will be updated by source
+	
 	apply - updates home dir from source
 	update - pulls changes from remote and applies
 
