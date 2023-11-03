@@ -46,6 +46,7 @@ Default Gnome user folders - remove
 		XDG_VIDEOS_DIR="$HOME/"
 		XDG_DESKTOP_DIR="$HOME"
 	run  xdg-user-dirs-update and delete unwanted dirs
+
 Gnome Tweaks
       Windows
 	Focus on Hover
