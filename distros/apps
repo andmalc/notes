@@ -16,11 +16,20 @@ Files: Find, List, Search, Paging
 			install from Copr petersen/broot 
 	plocate - https://plocate.sesse.net/
 	bat - cat alternative.  
+		https://github.com/sharkdp/bat
+		dnf install
+		Show git diffs -d
 	delta - diff alternative.  Pkg git-delta
+
+	check out:
+		riff - git diff pager
+			https://github.com/walles/riff
 
 Grep
 	ripgrep | rg
  	ugrep | ug
+		https://github.com/Genivia/ugrep
+		dnf install
 	gret - regext grep with tree output
 		https://github.com/4imothy/gret
 

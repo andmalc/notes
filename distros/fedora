@@ -395,8 +395,8 @@ Show packages in a group
 Examples {{{2
 
 Find package name from file
-	dnf wp <any file in package>
-	dnf rq  <any file in package>
+	dnf wp <any file in package #faster, more info displayed, globbing file name not needed
+	dnf rq  --file/-f <any file in package>
 
 List files in package
 	dnf rq -l <pkg name> => lists all files in pkg

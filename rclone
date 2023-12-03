@@ -2,21 +2,55 @@
 Basic syntax
 Syntax: [options] subcommand <parameters> <parameters...>
 
+options
+	-P/--progress
+	--dry-run
+	-i/--interactive
 
- ls and lsl recurse by default - use --max-depth 1 to stop the recursion.
- lsd,lsf,lsjson do not recurse by default - use -R to make them recurse.
+subcommands
+	config
+		reconnect
 
-GDrive - https://rclone.org/drive/
+	ls subs
+		ls and lsl recurse by default - use --max-depth 1 to stop the recursion.
+
+		lsl
+			example output
+			-1 2023-05-03 14:00:46.696000000 Montreal/HM Montreal Assess 11 9 65 .docx
+
+		lsd,lsf,lsjson
+			do not recurse by default - use -R to make them recurse.
+		
+		lsjson
+			with recursion
+				rclone -v --drive-impersonate foo@example.com lsjson "<drive config name>:<pat>" -R 
+
+			Parse with jq
+				cat artproj-files.json | jq '.[]| .ID + .Path'
+
+	copy
+	move
+	listremotes
+
+parameters
+	paths: spaces in path - surround with single quotes
+
+	remotes
+		follow configured remote name with a colon
+
+		GDrive - https://rclone.org/drive/
+
+	filtering
+		-include "{*.docx,*.pdf}"
 	
-Json output 
-	with recursion
-		rclone -v --drive-impersonate foo@example.com lsjson "<drive config name>:<pat>" -R 
 
-	Parse with jq
-		cat artproj-files.json | jq '.[]| .ID + .Path'
 
-lsl
-	example output
-	 -1 2023-05-03 14:00:46.696000000 Montreal/HM Montreal Assess 11 9 65 .docx
 
+GDrive remote setup
+	from rclone config
+	type of storage: 18
+	client ID: leave blank
+	scope: 1 (full) or 2 (readonly)
+	service account: blank
+	advanced config: no
 
