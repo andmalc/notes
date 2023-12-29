@@ -5,7 +5,11 @@ kitty kitty-terminfo kitty-fish-integration
 
 Editors
 	helix - add Copr  dnf copr enable varlad/helix
-	
+
+Shells
+	fish
+	elvish -Fedora golang-github-elves-elvish.
+
 
 Files: Find, List, Search, Paging
 	fzf
@@ -38,7 +42,9 @@ Awk/Cut
 	choose - https://github.com/theryangeary/choose
 	
 Sed
-	sd - install with dnf or cargo
+	sd - https://github.com/chmln/sd
+		install with cargo, eget
+		dnf pkg sd is older version
 
 Git browsing
 	tig

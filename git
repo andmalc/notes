@@ -193,15 +193,16 @@ Remotes {{{1
     -v          show origin details
     add         <remote add <name> <url>
     clone		create local repo, remote tracking branch auto-created
-	u origi		push to upgream 
-    set-url <name> <new URL>
-				change remote URL
-				git remote set-url origin git@github.com:andmalc/dotfiles.git
+	push origin		push to upgream (?)
     push <repo> upload changes to remote.  Default repo is origin
                 <local branch name>:<remote name>
 
-Set new remote
+Add new remote
      remote add upstream https://github.com/octocat/Spoon-Knife.git
+
+Change remote 
+	set-url <name> <new URL>
+		git remote set-url origin git@github.com:andmalc/dotfiles.git
 
 Specify remote while pushing
 	git push -u origin master

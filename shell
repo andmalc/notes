@@ -1,3 +1,10 @@
+Tasks {{{1
+
+Find files and take action on each
+	Better to use find cmd piped to xargs vs find --name --print bc xargs can be used with any command that generates file path args
+	https://stackoverflow.com/questions/18302856/removing-files-interactively-with-find-and-xargs/42119953#42119953
+	
+
 Line editing {{{1
 
 ^l	clear screen
@@ -34,6 +41,7 @@ Line Editor Key Bindings
 	history
 		^r	search past history
 			repeat for additional matches
+
 
 
 
@@ -226,6 +234,12 @@ $(<file)
 
 Misc {{{1
 
+Xargs
+	converts standard ouput of a command to argument of another.
+	For commands that can't use standard input as an arg 
+	For interactive commands use -o (--open-tty) arg
+
+	grep -l <pat> | xargs -o rm -i
 
 Move files except for <pat>
 	ls | grep -v <pat> | xargs mv -t @

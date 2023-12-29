@@ -16,6 +16,10 @@ Everything
 		Gnome & Firefox < 2G
 		Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
 
+Clear disk space
+	journalctl --vacuum-time=2d
+	dnf system-upgrade clean
+
 
 Silverblue  - approx 9GB
 Fedora IoT <4G
