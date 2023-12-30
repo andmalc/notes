@@ -54,3 +54,33 @@ Disable
    systemctl mask pulseaudio --user
 
 
+Pipewire {{{1
+PipeWire is a server and API for handling multimedia on Linux
+https://github.com/mikeroyal/PipeWire-Guide
+
+Commands:
+	pw-top
+	pw-cli
+		ls Node		- list nodes
+	pw-record
+		--target <source input>
+
+
+Config using WirePlumber
+
+Commands:
+	wpctl
+		status
+		inspect
+		set-default
+
+
+Also, PulseAudio tools are compatible with PW.
+	pactl
+		fedora pkg: pulseaudio-utils
+		pactl list sources short => shows target arg for pw-record
+	pamixer
+	pauvcontrol
+		fedora pkg: pavucontrol
+		GUI for volume control etc.
+	
