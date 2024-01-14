@@ -1,34 +1,52 @@
 
-Element Attributes {{{1
+# Asciidoc Notes
 
-Apply to inline & individual block elements
+## Doc Structure {{{1
 
-Types
-- positional (value only)
-- named (key/value)
+Doc is top level block containing a sequence of blocks, an optional preamble, and an optional non-block header containing metadata attributes.
 
-Reserved attributes
-- core set: shared by all blocks & some inline elements, e.g. id, role, title
-- additional used by some elements, e.g. source block has lang attr.
+## Elements aka Block Types {{{1
 
-Typical element attr uses: define ID, enable or configure its features, apply user-defined info, apply roles
+Elements are a hierarchy of types, where one element may be a specialization of a family of elements.
 
-Attr Lists:
+Element Types:
+* Position:
+** Block - stacked vetically
+** Inline - span of content
+*** Found in:
+**** a block
+**** a block attribute (e.g. block title
 
-List format:
-	positional,named="value",etc.
-	[first-positional,second-positional,named="value of named"]
+//-
 
-Location
-	line of text above start of block
 
-syntax
-	block:  enclosed in [ ] 
-	macro: name::target[attr1,att2]
+# Delimited Blocks {{{1
 
-	formatted text: [#idname.rolename]*text with id and role*
+Defined using structural containers, which are the fixed set of recognized block enclosures in the AsciiDoc syntax.
 
-Block IDs {{{2
+Indicate using delimiters aka fences - four or more repeating characters on a line by themselves to mark the boundary of the block. The one exception is the open block, which only requires two - repeating characters.  Deliminators follow metadata.
+
+
+----
+:description: This doc's purpose is XXX.
+----
+
+
+Block styles
+	indicate as an attr
+		[listing]
+		blah blah
+
+
+## Block titles {{{2
+
+Indicate:
+	single dot immediately before text
+
+Location:
+	own line above attr list, opening delimiter, or content
+
+## Block IDs {{{2
 
 indicate:
 	shorthand:	[id=my-id]
@@ -40,60 +58,6 @@ if period in ID use long-hand syntax
 
 Directly follows style name if used in attr list
 	[quote#my-id]
-
-Roles {{{2
-
-Indicate:
-	shorthand: .
-
-Options {{{2
-
-Indicate:
-	shorthand: %
-
-
-
-Formatting {{{1
-
-Hard return: "+" at line end
-
-
-From outer to innermost:
-
-	Monospaced text
-		shorthand: `text`, ``text``
-		literal codespan/monospace (to escape special chars) `+text*text+` 
-
-	Bold
-		*text*, **text** 
-
-	Italic
-		_text_, __text__
-
-
-Text Span
-- use role to format inline text
-- indicate: single or double hashes `[.underline]#underline me#`
-
-
-Blocks {{{1
-
-Indicate using delimiters
-
-Block styles
-	indicate as an attr
-		[listing]
-		blah blah
-
-
-Block titles {{{2
-
-Indicate:
-	single dot immediately before text
-
-Location:
-	own line above attr list, opening delimiter, or content
-
 
 Block types {{{2
 https://docs.asciidoctor.org/asciidoc/latest/blocks/build-basic-block/
@@ -146,12 +110,81 @@ Passthroughs
 - indicate: `++++` or [pass]
 
 
-Lists {{{1
+
+## Attributes {{{1
+----
+:myvar: value here.
+----
+
+Value is: {myvar}.
+
+- positional (value only)
+- named (key/value)
+
+Reserved attributes
+- core set: shared by all blocks & some inline elements, e.g. id, role, title
+- additional used by some elements, e.g. source block has lang attr.
+
+Typical element attr uses: define ID, enable or configure its features, apply user-defined info, apply roles
+
+
+Attr Lists:
+
+List format:
+	positional,named="value",etc.
+	[first-positional,second-positional,named="value of named"]
+
+Location
+	line of text above start of block
+
+syntax
+	block:  enclosed in [ ]
+	macro: name::target[attr1,att2]
+
+	formatted text: [#idname.rolename]*text with id and role*
+
+## Roles {{{2
+
+Indicate:
+	shorthand: .
+
+Options {{{2
+
+Indicate:
+	shorthand: %
+
+
+
+# Formatting {{{1
+
+Hard return: "+" at line end
+
+
+From outer to innermost:
+
+	Monospaced text
+		shorthand: `text`, ``text``
+		literal codespan/monospace (to escape special chars) `+text*text+` 
+
+	Bold
+		*text*, **text** 
+
+	Italic
+		_text_, __text__
+
+
+Text Span
+- use role to format inline text
+- indicate: single or double hashes `[.underline]#underline me#`
+
+
+
+# Lists {{{1
 
 bulleted, numbered, labeled, callouts
 
 Bulleted
-- indicate with one to five dashs or asterisks
+- indicate with one to five dashs or asterisks. Asterisks preferred for nested lists.
 
 Numbered
 - indicate with number 1. or just period or roman numeral + ")"
@@ -169,7 +202,7 @@ Separating Lists:
 
 https://docs.asciidoctor.org/asciidoc/latest/lists/separating/
 
-End of list marker: `\\-`
+End of list marker: `//-`
 
 
 Nesting lists:
@@ -196,13 +229,13 @@ Cross-references {{{1
             <<anchor ID,reftext>>
             <<filename#anchor ID,reftext>>
 
-Macros {{{1
+# Macros {{{1
 
 Types:
 	block - two colons ::
 	inline - one colon :
 
-Images {{{2
+## Images {{{2
 
 Block image macro example: 
 .A mountain sunset 

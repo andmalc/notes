@@ -81,6 +81,23 @@ Pipe to cmd
 
 Alternatives {{{1
 
+ug {{{2
+https://ugrep.com/
+Fedora pkg ugrep
+ug <pat> <file>
+Default: outputs matching line with match in red
+
+Options
+	-C#		# lines of context (or B before or A after)
+	-j		smart ignore case (ignore case if pat is lower case)
+	-l		list matching files
+	-Q		interactive TUI
+	-v		invert match
+	-w		whole word
+	-y		output whole file if matched
+	-% "pat pat"	regex patterns on same line
+
+
 ack, ag
 
 

@@ -1,10 +1,11 @@
 json {{{1
 
+jo {{{2
 jo	format input as json
 	https://github.com/jpmens/jo
     
 
-jq
+jq {{{2
     transform structured data 
 	https://stedolan.github.io/jq/manual/
 
@@ -44,6 +45,15 @@ jq
 Python glom for nested data like json
 https://github.com/mahmoud/glom
 
+jc {{{2
+
+Interpret command command outputs to json
+
+Elvish from-json built-in {{{2
+
+Nushell 'from json' builtin {{{2
+
+Oil  json read builtin {{{2
 
 yaml {{{1
 

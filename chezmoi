@@ -28,7 +28,7 @@ Change commands - compare working copy to home dir
 		diff is how local file will be updated by source
 	
 	apply - updates home dir from source
-	update - pulls changes from remote and applies
+	update - pull changes from remote and apply
 
 	remove - remove file from home dir & source
 	forget - remove file from source

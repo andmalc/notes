@@ -8,3 +8,14 @@ wget [OPTIONS] [URL]
 
 -c [file]   Resume an interrupted file download (must be supported by server)
 -t [#]      Retry failed download # times
+
+
+--transform
+	sed expression to rename output file
+	https://www.gnu.org/software/tar/manual/html_section/transform.html
+
+Pipe out
+	unlike curl, wget does not output to STDOUT by default
+	use:  wget -O - <url> or curl -s -L <url>
+
+

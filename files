@@ -1,5 +1,8 @@
 Listing {{{1
 
+show full path of fn or dir
+	readlink -e <fn>
+
 ls {{{2
 
 Options
@@ -11,8 +14,6 @@ Options
 Tips
     ls -RC  recursive in columns 
     ls -AFC - Show types, hidden but not ./.., in columns
-
-
 
 Attributes {{{1
 

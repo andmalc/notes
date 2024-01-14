@@ -59,6 +59,7 @@ Startup & Settings {{{1
 -u vimrc
 - Start vim initializing with vimrc (no other vimrc is used)
 - Default vimrc may be in /usr/local/share/vim
+- -u NORC to disable all config
 
 Save current settings in a exrc file:
 	:mk(exrc)
@@ -260,14 +261,15 @@ Tabs
 Edit Modes {{{1
 Normal mode {{{2
 
-c			 change text on line.  Type . to stop replacing
+r			change character
+c			change line of text.  Type . to stop replacing
 co[py]		
 :t			synonym for copy.
-			  copy to below the line given by {address}.  
+			copy to below the line given by {address}.  
 d x [n]		delete [n] lines into register x.
 								  Specifier for n can be in before or after position.
 m[ove] {address}		
-			  move the lines to below the line given by {address}.
+			move the lines to below the line given by {address}.
 pu[t] [x]	put the text [from register x]
 r<char>	replace char
 r<CR>		insert line break

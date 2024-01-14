@@ -96,6 +96,8 @@ wl-clipboard  - clipbord tool for Wayland
 Yubikey/U2F support
 	pam-2uf u2f-hidraw-policy
 
+Ibus shorcut (Super + period) disable: ibus-setup
+
 
 Users {{{1
 
@@ -110,7 +112,11 @@ Change user group
 
 Change shell
 	chsh -s <shell path>
-	pkg: util-linux-user
+		sudo chsh -s /usr/bin/fish
+
+	lchsh <user> - said more secure than chsh
+	
+	not installed by default: pkg: util-linux-user
 	usermod -s <shell path> username
 
 
@@ -279,10 +285,12 @@ Solid backgrond color
 gsettings set org.gnome.desktop.background picture-options 'none'
 gsettings set org.gnome.desktop.background primary-color '#HEX'
 
+Wayland {{{2
+
+Restart Wayland from cmd:   fuser -k $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY
 
 
 Dnf {{{1
-
 General {{{2
 
 Dnf <options> <command> <args eg. package spec>
@@ -336,18 +344,16 @@ search | se [--all | all] <name or glob>
 
 
 provides | wp [installed | available] <file name, cmd, or description keywords>
-	shows pkg (installed or not) owning file
+	shows extended info - all pkg versions and related pkgs
+
 
 repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	search repos packages or files matching provided file or command 
 	no arg output is repo name, pkg name and version 
 	Faster than 'dnf provides'
 
-e.g
-	dnf repoquery '*/locate' #full path matching pat
-	dnf repoquery --installed kitty\* #pkg name pattern 
 
-
+	Options {{{2
 	Query options - set what info displayed about each pkg
 		-l <pkg name>   list files in package
 		--depends
@@ -377,6 +383,9 @@ e.g
 		--groupmember list groups containing spec
 
 
+	Examples {{{2
+	dnf repoquery --installed kitty\* #pkg name pattern 
+	dnf rq -f \*<filename pat> #find package(s) by file
 
 upgrade <pkg spec>
 up|update      is alias to upgrade
@@ -396,7 +405,7 @@ Show packages in a group
 	group info 'Basic Desktop'
 
 
-Examples {{{2
+Dnf Examples {{{2
 
 Find package name from file
 	dnf wp <any file in package #faster, more info displayed, globbing file name not needed
@@ -409,14 +418,37 @@ List files in package
 Show which packages require installed one specified 
 	dnf rq  --installed --whatrequires <pkg>
 
-RPM {{{2
+Cache management {{{2
+
+    autoremove  uninstall orphan pkgs
+    clean all   clear package cache
+
+Run dnf without checking cache: -C --cacheonly
+
+Plugins {{{2
+http://dnf-plugins-core.readthedocs.org/en/latest/index.html
+
+    provides <path to fn>
+        shows which packages provide a file 
+        can use glob instead of exact path
+            dnf provides '*/semanage'
+
+     dnf-plugin-system-upgrade
+        upgrde to new o/s version
+
+
+rpm file - install dependencies
+yum --nogpgcheck localinstall <pkg file>
+or maybe dnf install <pkg file>
+
+RPM {{{1
 
 Show package of file
     rpm -qf <path> => package name
 List files in package
     rpm -ql <pkg>
 
-Repos {{{2
+Repos {{{1
 
 Repo files in /etc/yum.d
     fedora-release-rawhide
@@ -434,27 +466,6 @@ repoinfo - more detail than repolist
 repolist [enabled | disabled | --all ]
     list repo details
 
-Other {{{2
-
-    autoremove  uninstall orphan pkgs
-    clean all   clear package cache
-
-Plugins
-http://dnf-plugins-core.readthedocs.org/en/latest/index.html
-
-    provides <path to fn>
-        shows which packages provide a file 
-        can use glob instead of exact path
-            dnf provides '*/semanage'
-
-     dnf-plugin-system-upgrade
-        upgrde to new o/s version
-
-
-rpm file - install dependencies
-yum --nogpgcheck localinstall <pkg file>
-or maybe dnf install <pkg file>
-
 Release management {{{2
 
 
@@ -470,7 +481,6 @@ disable testing/rawhide repos
 dnf distro-sync
 
 Old {{{1
-
 CPU frequency control
 https://dunterov.github.io/cpu-freq/
 	Install kernel-tools

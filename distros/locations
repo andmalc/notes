@@ -5,13 +5,19 @@ Systemd services
 
 
 Flatpak
-	system apps & runtimes
+	apps & runtimes
 		/var/lib/flatpak/app
 		/var/lib/flatpak/runtimes
-		/var/lib/flatpak/exports/share/applications
+		.local/share/flatpak/app
+	
+	application binaries - script or symlink to binary (script?) in <app runtime>/export/bin
+		.local/share/flatpak/exports/bin
+		.local/share/flatpak/app/<app name>/current/active/export/share/applications/
 
-	user application files
-		.local/share/applications (Same as Gnome/xdg XDG_DATA_HOME)
+	desktop files
+		/var/lib/flatpak/exports/share/applications
+		symlinks: ~/.local/share/flatpak/exports/share/applications/
+		target: <app>/current/active/export/share/applications/
 
 	user data 
 		~/.var/app/
