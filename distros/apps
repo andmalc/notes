@@ -28,6 +28,10 @@ Files: Find, List, Search, Paging
 	check out:
 		riff - git diff pager
 			https://github.com/walles/riff
+	duf	- disk space
+		simplified:
+			duf -hide-fs devtmpfs,tmpfs,efivarfs
+
 
 Grep
 	ripgrep | rg

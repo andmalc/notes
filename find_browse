@@ -4,6 +4,9 @@ whatis database		Short description of commands - must know command name
 whereis			Search for command, not just on path
 which or type		Show full path of first matching command in path
 
+show full path of fn or dir
+	readlink -e <fn>
+
 bat {{{1
 
 pager
@@ -59,6 +62,8 @@ Output to standard out, e.g.
 		mv (fzf) newdir 
 		vi (fzf)
 
+    vim (fzf --height 40%) - fish
+    vim $(fzf --height 40%) - zsh
 
 Options
     -q  query mode - use with search operators

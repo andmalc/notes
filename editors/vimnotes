@@ -829,8 +829,10 @@ Start with no config:
     vim -u NONE
 
 Show 
-	Scripts called on startup     scriptnames
+	where an option was set:
+		:verbose set ft?
 
+	Scripts called on startup     scriptnames
 
    set verbose=9
    set verbosefile=~/tmp/vim_startup.txt

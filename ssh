@@ -185,8 +185,11 @@ sshfs
 sudo sshfs {{user id}}@{{server}}:{{remote share}} {{local mount point}} \
 -o idmap=user -o allow_other -o uid={{local user id}} -o gid={{local group id}}
 
+Auto reconnect
+	-o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 
+
 fstab entry:
-sshfs#btd: /home/andmalc/mnt/btd fuse uid=1000,gid=1000,user 0 0
+	sshfs#btd: /home/andmalc/mnt/btd fuse uid=1000,gid=1000,user 0 0
 
 rssh
 	scp/sftp only access

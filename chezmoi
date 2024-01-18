@@ -14,10 +14,13 @@ Commands
 	cd
 
 	add - 
-		add file from home dir to source
+		add file from home dir to source but does not add it as a tracked file in repo
 		if file already in source, updates it
 
 	edit [--apply] - edit file in source
+
+	re-add	-	add modified files in home to source
+	merge <fn>
 
 Change commands - compare working copy to home dir
 	status - what changes would be made by apply

@@ -109,15 +109,3 @@ Update symbolic links: https://opensource.com/article/21/11/update-linux-file-sy
 	ln -vfns <target> <link>
 
 
-Utilities {{{1
-
-fzf
-    vim (fzf --height 40%) - fish
-    vim $(fzf --height 40%) - zsh
-
-exa
-    ls replacement
-
-
-
-

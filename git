@@ -418,6 +418,11 @@ Merge conficts
         https://rtcamp.com/tutorials/git/git-resolve-merge-conflicts/
         - find files: grep -lr '<<<<<<<' . 
 
+	keep whole file in local commit
+		checkout --ours <path>		
+		merge --strategy=ours origin/HEAD
+
+
     Files deleted/renamed
         Maintain deleted: readd and redelete
         Maintain 
@@ -425,7 +430,6 @@ Merge conficts
 	merge --abort	abandon merge - what happens to uncommited changes?
 	merge -Xignore-all-space or -Xignore-space-change - ignore ws changes
 
-	checkout --ours <path>		keep whole file in local commit
 
 Buffer names
 	show with: ls-files -s

@@ -169,8 +169,11 @@ set
 
 scope options
 	-g		global, unexported (default)
-	-U		Universal - saved in fish_variables file
+	-U		Universal - Immediately available to all sessions. Saved in fish_variables file
 	-l		local within current block and children but not child functions
+	-f		current function
+
+how vars operate
 	-x		exported 
 			default scope is local and exported to child processes
 	-gx	exported global 
@@ -179,15 +182,17 @@ scope options
 other options
 	-a --append
 	-e --erase
+	--path
+	  treat as path var
+	  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
+
 
 	-q --query <var> ...
 		return status = 0 if var initialized, 1 for each not
 		set -q var (not $var)
- --path
-	  treat as path var
-	  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
-
 	-S --show
+		show var value and status
+		set -S <string><TAB>	- shows vars with <string> in name or value
 		
 	no var or value
 		list all vars or limit to var type with scope option
@@ -215,11 +220,11 @@ alias
 	no-arg	list saved aliases
 	-s		save
 
+alias [-s] name 'cmd arg arg'
 
  function <alias name>
 	  <alias command>
  end
-
 
 Logic (And, Or, Not) {{{1
 
@@ -396,6 +401,12 @@ FZF
 
 Plugins {{{2
 
+In use {{{3
+
+https://github.com/danhper/fish-fastdir
+
+Not in use {{{3
+
 Virtual Env helper
 https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell
 
@@ -404,7 +415,6 @@ Spacefish shell prompt
 
 Nix plugin
     https://github.com/lilyball/nix-env.fish
-
 
 Bang Bang
     https://github.com/oh-my-fish/plugin-bang-bang
