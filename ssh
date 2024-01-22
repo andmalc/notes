@@ -1,4 +1,4 @@
-Troubleshoot connecting:
+Troubleshoot connecting {{{1
 
 https://docs.digitalocean.com/products/droplets/resources/troubleshooting-ssh
 
@@ -12,26 +12,12 @@ host user account dir
 	authorized_keys file wrong permissions: should be 600
 
 
-Google Cloud 
-    instance with OS Login
-        username is username_gmail_com
-
 # Gloud with OS Login enabled
 # username andmalc_gmail_com
 # run to see which keys in account profile: gcloud compute os-login describe-profile
 # https://cloud.google.com/compute/docs/instances/ssh
 # https://cloud.google.com/compute/docs/instances/managing-instance-access#add_oslogin_keys
 ~
-
-Web-based command line
-	http://code.google.com/p/shellinabox/
-
-https://stribika.github.io/2015/01/04/secure-secure-shell.html
-https://blog.g3rt.nl/upgrade-your-ssh-keys.html
-
-Reverse ssh tunnel
-autossh -M 10900 -fN -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "PasswordAuthentication=no" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R 42222:localhost:22 home
-
 
 Change port on Fedora/Centos
     semanage port -a -t ssh_port_t -p tcp 2292
@@ -141,6 +127,29 @@ LocalForward 2001 localhost:143
 Server sshd_config
 AllowTcpForwarding yes
 
+sshfs {{{1
+
+Options
+	allow_other		allow other users to access mounnt point
+	default_permissions		?
+	identityfile	give absolute path
+	reconnect		maybe causing issues with suspend
+
+sudo sshfs {{user id}}@{{server}}:{{remote share}} {{local mount point}} \
+-o idmap=user -o allow_other -o uid={{local user id}} -o gid={{local group id}}
+
+
+fstab entry:
+andmalc@andmalc-gce.duckdns.org: /var/home/andmalc/mnt/f39gce fuse.sshfs  x-systemd.automount,x-systemd.idle-timeout=120s,IdentityFile=/var/home/andmalc/.ssh/id_ecdsa,_netdev,allow_other 0 0
+
+
+Auto reconnect
+	-o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 
+
+Systemd troubleshoot
+	systemctl status var-home-andmalc-mnt-f39gce.mount
+
+
 Docs {{{1
 
 Run remote Python script.  Note strong quotes to protect $HOME.
@@ -180,23 +189,6 @@ sftp
 	login to remote host
 		sftp -oPort=2222 localhost 
 	
-sshfs
-	mount
-sudo sshfs {{user id}}@{{server}}:{{remote share}} {{local mount point}} \
--o idmap=user -o allow_other -o uid={{local user id}} -o gid={{local group id}}
-
-Auto reconnect
-	-o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 
-
-fstab entry:
-	sshfs#btd: /home/andmalc/mnt/btd fuse uid=1000,gid=1000,user 0 0
-
-rssh
-	scp/sftp only access
-
-bgtunnel
-    Python util for forwarding SSH connections to localhost
-
 techniques {{{1
 
 bypass fw by running on SSL handshake port 443

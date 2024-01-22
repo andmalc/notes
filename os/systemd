@@ -1,8 +1,6 @@
-Troubleshooting
-https://freedesktop.org/wiki/Software/systemd/Debugging/
+Troubleshooting {{{1
 
-Tutorial with live system in browser
-	https://systemd-by-example.com/
+https://freedesktop.org/wiki/Software/systemd/Debugging/
 
 Show monitored services, sorted by system, client slices, shows PIDs
     systemctl [--user] status
@@ -35,6 +33,7 @@ Show active control groups
 
 Find PIDs   ps -aux
 
+systemctl daemon-reload
 
 User Info
     Show display manager, window manager, Wayland/X, units in user session, log
@@ -434,4 +433,9 @@ modern dm's will recognise .desktop files at usr/share/wayland-sessions/
 Systemd-boot {{{1
 
 See notes/boot
+
+Guides {{{1
+
+Tutorial with live system in browser
+	https://systemd-by-example.com/
 

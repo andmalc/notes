@@ -1,72 +1,75 @@
 
-https://developerlife.com/2021/01/19/fish-scripting-manual/
-https://fishshell.com/docs/current/interactive.html#shared-bindings
-
 `eval (ssh-agent -c)`
 
-Ctrl d	delete char righ
-Alt l/r	move one word, stopping at punc or path segment.
-Ctrl l/r	move one word, 
-Shift l/r	move one word, skip ove r punctuation and whole paths, accept one big word of suggestion.
+Interactive {{{1
 
+Movement {{{2
 
-Kill ring
-	Ctrl y	restore
-
-	Kill by line:
-	Ctrl k	kill to line end
-	Ctrl u	kill to line beginning
-
-	Kill by word:
-	Alt d		kill next word, repeat for additional path segments
-	Ctrl w	same for prev. word or segment
-	Alt BS	same as Ctrl w
-	-			remove whole path segment ?????
-
-Misc
-	Alt-s		prepend sudo
-	Alt e/v	edit command line
-	Alt h		man page for current cmd
-	Alt l		ls current dir or dir under cursor
-	Alt o		page file under cursor
-	Alt p		page output of cmd under cursor
-	Alt-.		insert-last arg
-
-^e			go to line end, accepts any suggestion 
-^f			moves 1 char forward, also accepts suggestion
+^b/^f		move one char back/forward
+^d			delete char righ
+^e			go to line end
 ^h			backspace
+Ctrl l/r	move one word 
+Alt arrows/f	word forward
+Shift l/r	move Word, skip punctuation and whole paths
 
-History:
-	Command lines:
-	^n/p		cycle through completion history
-	u/d		search for cmd containing string under cursor
-	Alt u/d	history search for words under and to left of cursor
-	ctrl r	history search
+Autosuggestion {{{2
 
-	Directories:
-	dirh		dir history
-	cdh		select dir to change to
-	nextd/prevd	forward back - (Alt l/r)
+r-arrow, ^f		accept all 
 
+Completion {{{2
 
+tab/shift-tab/^i/arrows
+	display & choose completions
+
+Misc {{{2
+
+Alt-s		prepend sudo
+Alt e/v	edit command line
+Alt h		man page for current cmd
+Alt l		ls current dir or dir under cursor
+Alt o		page file under cursor
+Alt p		page output of cmd under cursor
+Alt-.		insert-last arg
+Alt Enter	insert newline
+Alt BS	delete previous word
+
+^l			clear screen
 
 ^-x		copy whole line to sys clipboard
 ^-y		paste from sys clipboard
 
-Not working:
-	Alt-up	search hist for token under cursor
+Kill ring
+	^k			kill to line end
+	^w	q		kill prev. word or segment
+	Alt d		kill next word
+	^y			restore
+	^u			kill to line beginning
+
+Clipboard
+	^x			copy line to clipboard
+	^v			paste (s^v Zellij)
+
+Delete (not Kill)
+	Alt BS	delete previous word
 
 
-# History {{{1
+History {{{1
 
-Insert previous last arg: Alt up
+^r			recent history search
+			repeat for older, ^s for newer
+			supports subsequence matches (i.e. mutiple terms)
+Alt /		history search 
+Alt u/d	enhanced searh - how?	
+^n/p u/d-arrows 
+	search cmd history for entered string
 
-History file location: ~/.local/share/fish/fish_history
+Directory cd history
+	dirh		dir history
+	cdh		select dir to change to
+	nextd/prevd	forward back - (Alt l/r)
 
-History
-    <term>+ Alt u/d     search history for term in command
-
-history - shows events newest first
+history management
 	clear
 		delete all
 	delete <contains pat>
@@ -76,11 +79,12 @@ history - shows events newest first
 	options
 		 --reverse - oldest first
 
-	history sessions
-		set -x fish_history "session_name"
-		set -x fish_history default (i.e. "fish")
+	preceed line with space to avoid saving to history
 
-    cdh                 dir history list
+history sessions
+	set -x fish_history "session_name"
+	set -x fish_history default (i.e. "fish")
+
 
 
 # Config {{{1
@@ -410,9 +414,6 @@ Not in use {{{3
 Virtual Env helper
 https://riptutorial.com/python/example/9956/using-virtualenv-with-fish-shell
 
-Spacefish shell prompt
-	https://github.com/matchai/spacefish/
-
 Nix plugin
     https://github.com/lilyball/nix-env.fish
 
@@ -426,3 +427,18 @@ https://github.com/farzadghanei/fishion
 
 
 vim:ts=3 sw=3 sts=3 fdm=marker
+
+Fish_config {{{1
+
+fish_config prompt
+	show
+	choose no-arg or <prompt name>
+
+	
+fish_config theme
+	choose none		- disable all colors
+	show				- show all themes
+
+Spacefish shell prompt
+	https://github.com/matchai/spacefish/
+

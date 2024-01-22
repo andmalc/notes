@@ -11,6 +11,12 @@ bat {{{1
 
 pager
 
+Options
+	-d/--diff	show Git diff
+	--list-themes 
+	--theme=gruvbox-light
+	--style plain
+
 
 fd {{{1
 
