@@ -13,6 +13,7 @@ options
 	-v  exclude match
     -o  print only matched part of line, matches on separate lines
 	-E, --extended-regexp
+	-P Perl compat regexs - enables look ahead 
 	--exclude-dir= 
 		--exclude-dir={.mozilla,.var,.local}
 
@@ -27,7 +28,7 @@ excluding files under zsh
 Match whole words, print each on separate line
     grep -oE '\w+' 
 
-
+Extract text based on Perl compat regexes	-P
 
 Ripgrep {{{1
 

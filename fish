@@ -53,12 +53,11 @@ Clipboard
 Delete (not Kill)
 	Alt BS	delete previous word
 
-
 History {{{1
 
 ^r			recent history search
 			repeat for older, ^s for newer
-			supports subsequence matches (i.e. mutiple terms)
+			supports subsequence matches (i.e. mutiple terms) - space between terms not needed
 Alt /		history search 
 Alt u/d	enhanced searh - how?	
 ^n/p u/d-arrows 
@@ -94,9 +93,6 @@ PATH
 
 	fish_add_path in config
 	https://fishshell.com/docs/current/cmds/fish_add_path.html
-
-fish_prompt function
-	https://fishshell.com/docs/current/cmds/fish_prompt.html#cmd-fish-prompt
 
 
 # Key bindings {{{1
@@ -435,9 +431,13 @@ fish_config prompt
 	choose no-arg or <prompt name>
 
 	
+fish_prompt function
+	https://fishshell.com/docs/current/cmds/fish_prompt.html#cmd-fish-prompt
+
 fish_config theme
-	choose none		- disable all colors
 	show				- show all themes
+	choose None		- disable all colors
+	choose fish default	- track terminal's palatte
 
 Spacefish shell prompt
 	https://github.com/matchai/spacefish/
