@@ -1,4 +1,4 @@
-Console {{{1
+C onsole {{{1
 
 git neovim fish tmux mlocate ncdu stow exa ccrypt duf visidata bat
 kitty kitty-terminfo kitty-fish-integration
@@ -14,7 +14,9 @@ Shells
 Files: Find, List, Search, Paging
 	fzf
 	fd-find - alpine pkg fd
-	exa - simple ls alternative
+	exa -simple ls alternative
+		 abbr exa-tree 'exa -l --group-directories-first --tree'
+
 	ranger - three panel text file manager
 	broot - full featured file manager
 			install from Copr petersen/broot 
@@ -31,7 +33,13 @@ Files: Find, List, Search, Paging
 	duf	- disk space
 		simplified:
 			duf -hide-fs devtmpfs,tmpfs,efivarfs
-
+	
+	file encryption
+		age 
+			https://github.com/FiloSottile/age
+			Fedora pkg age
+			encrypt: age -p fn > outfile
+			Yubikey support https://github.com/str4d/age-plugin-yubikey
 
 Grep
 	ripgrep | rg

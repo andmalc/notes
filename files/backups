@@ -1,4 +1,8 @@
 
+restic
+	Rec on HN 2022
+	https://restic.readthedocs.io/en/latest/
+	restic -r sftp:<backupserver>:<repo> --password-command="pass mybackup" backup <folders_to_backup>
 
 How to back up your Linux desktop without rsync - 9/21
 https://www.redhat.com/sysadmin/backup-Restic?sc_cid=7013a000002pkKgAAI
