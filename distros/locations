@@ -60,4 +60,9 @@ XDG dirs
 	XDG_DATA_DIR
 		user application files
 
+Chrome Web Apps
+	.config/google-chrome/Default ?
+	/var/home/andmalc/.var/app/com.google.Chrome/config/google-chrome/Default
+
+
 

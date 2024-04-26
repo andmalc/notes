@@ -2,14 +2,16 @@ WGET
 
 wget [OPTIONS] [URL]
 
+-c/--continue   Resume an interrupted file download (must be supported by server)
+-r			recursive
 -m          Mirror site
 -m -L       Mirror site, copy only relative links
 -N          Don't download if timestamp of local file matches. (matched timestamp also indicates entire file is downloaded)
-
--c [file]   Resume an interrupted file download (must be supported by server)
 -t [#]      Retry failed download # times
 
-
+--output-document <fn>
+	output to fn
+	
 --transform
 	sed expression to rename output file
 	https://www.gnu.org/software/tar/manual/html_section/transform.html
