@@ -1,5 +1,10 @@
 Unable to unmount a filesystem: use fuser -v to show what is using it.
 
+exFAT filesystem 
+- best for generic usb stick
+- create with mkfs.exfat
+- fs type is Microsoft Basic Data
+
 
 General {{{1
 
@@ -71,8 +76,8 @@ Largely not used under Linux except:
     protect Linux partitions from Windows or Mac installers
 
 
-Gdisk partition codes
-https://sourceforge.net/p/gptfdisk/code/ci/master/tree/parttypes.cc#l337
+Gdisk partition codes (Really just identify intended use of partition)
+	0x07	MS Basic Data - best generic type (including exFAT, NTFS)
     8300    Linux filesystem (generic type)
     EF00    ESP 
     8302    Home
