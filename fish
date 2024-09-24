@@ -1,3 +1,5 @@
+Glob with inverted match
+rm -r (string match -v '*.micro' *)
 
 `eval (ssh-agent -c)`
 

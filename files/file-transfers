@@ -1,4 +1,4 @@
-WGET
+## wget
 
 wget [OPTIONS] [URL]
 
@@ -7,11 +7,11 @@ wget [OPTIONS] [URL]
 -m          Mirror site
 -m -L       Mirror site, copy only relative links
 -N          Don't download if timestamp of local file matches. (matched timestamp also indicates entire file is downloaded)
+-O/--output-document <fn>
+	output to fn
 -t [#]      Retry failed download # times
 
---output-document <fn>
-	output to fn
-	
+
 --transform
 	sed expression to rename output file
 	https://www.gnu.org/software/tar/manual/html_section/transform.html
@@ -19,5 +19,12 @@ wget [OPTIONS] [URL]
 Pipe out
 	unlike curl, wget does not output to STDOUT by default
 	use:  wget -O - <url> or curl -s -L <url>
+
+
+## Curl
+
+Options
+	-O	save file with name on server
+	-o <fn>	save file as fn
 
 

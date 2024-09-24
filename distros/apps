@@ -1,4 +1,4 @@
-C onsole {{{1
+Console {{{1
 
 git neovim fish tmux mlocate ncdu stow exa ccrypt duf visidata bat
 kitty kitty-terminfo kitty-fish-integration
@@ -11,35 +11,43 @@ Shells
 	elvish -Fedora golang-github-elves-elvish.
 
 
-Files: Find, List, Search, Paging
-	fzf
-	fd-find - alpine pkg fd
-	exa -simple ls alternative
-		 abbr exa-tree 'exa -l --group-directories-first --tree'
+Files: Find, List, Search, Paging {{{2
 
-	ranger - three panel text file manager
-	broot - full featured file manager
-			install from Copr petersen/broot 
-	plocate - https://plocate.sesse.net/
+fzf
+fd-find - alpine pkg fd
+exa -simple ls alternative
+	 abbr exa-tree 'exa -l --group-directories-first --tree'
+
+ranger - three panel text file manager
+broot - full featured file manager
+		install from Copr petersen/broot 
+plocate - https://plocate.sesse.net/
+check out:
+	riff - git diff pager
+		https://github.com/walles/riff
+duf	- disk space
+	simplified:
+		duf -hide-fs devtmpfs,tmpfs,efivarfs
+	
+Disk space usage
+    Files/dirs
+        ncdu
+        nnn
+		duf
+		du-dust - install with cargo
+
+Partitions/disks
+	pydf
+
+
+Paging
 	bat - cat alternative.  
 		https://github.com/sharkdp/bat
 		dnf install
 		Show git diffs -d
 	delta - diff alternative.  Pkg git-delta
 
-	check out:
-		riff - git diff pager
-			https://github.com/walles/riff
-	duf	- disk space
-		simplified:
-			duf -hide-fs devtmpfs,tmpfs,efivarfs
-	
-	file encryption
-		age 
-			https://github.com/FiloSottile/age
-			Fedora pkg age
-			encrypt: age -p fn > outfile
-			Yubikey support https://github.com/str4d/age-plugin-yubikey
+File search and extract {{{2
 
 Grep
 	ripgrep | rg
@@ -65,41 +73,31 @@ Git browsing
 	eget - install binary from GH repo
 		https://github.com/zyedidia/eget
 
-Dev
-	visidata
-	nushell / nu (cargo, prerequisite openssl-devel)
+Dev {{{2
 
-	httpie - API testing - https://httpie.io/
+visidata
+nushell / nu (cargo, prerequisite openssl-devel)
 
-	podman-tui
-		needs `systemctl --user start podman.socket`
+httpie - API testing - https://httpie.io/
 
-	ptpython
-		Python repl
+ptpython
+	Python repl
 
-	try - run a command and inspect its effects before changing your live system
-		https://github.com/binpash/try
-		install: $ git clone https://github.com/binpash/try.git
+System & commands {{{2
 
+podman-tui
+	needs `systemctl --user start podman.socket`
 
-Misc:
-	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
-	Zellij - tmux alt. 
-	- https://github.com/zellij-org/zellij
-	- add Copr  dnf copr enable zellij-org/zellij - same repo for helix
-	btop - top alternative
+btop - top alternative
+
+try - run a command and inspect its effects before changing your live system
+	https://github.com/binpash/try
+	install: $ git clone https://github.com/binpash/try.git
 
 
-Disk space usage
-    Files/dirs
-        ncdu
-        nnn
-		duf
-		du-dust - install with cargo
-
-Partitions/disks
-	pydf
-
+Zellij - tmux alt. 
+- https://github.com/zellij-org/zellij
+- add Copr  dnf copr enable zellij-org/zellij - same repo for helix
 
 
 
@@ -179,6 +177,13 @@ Network {{{1
 nftables simple firewall
 
 Security {{{1
+
+file encryption
+		age 
+			https://github.com/FiloSottile/age
+			Fedora pkg age
+			encrypt: age -p fn > outfile
+			Yubikey support https://github.com/str4d/age-plugin-yubikey
 
 
 Yubikey

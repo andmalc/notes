@@ -14,9 +14,12 @@ pager
 Options
 	-d/--diff	show Git diff
 	--list-themes 
+	--list-languages
 	--theme=gruvbox-light
 	--style plain
 
+Page fd output
+	fd -X bat
 
 fd {{{1
 
@@ -245,4 +248,3 @@ Match filename patterns:  if pat contains no metacharacters, pat can match any p
 
 Try also: 'slocate' (?)
 
-<<<<<<< HEAD

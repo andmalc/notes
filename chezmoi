@@ -1,40 +1,45 @@
 Docs
+	https://www.chezmoi.io/user-guide/frequently-asked-questions/usage/
 	https://fedoramagazine.org/take-back-your-dotfiles-with-chezmoi/
 
 Install
 	From existing repo
 		sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply andmalc
 
+Terms
+	Destination	- managed directory, usually HOME
+	Target - file, directory, or link in the Destination.
+	Source directory - chemoi git repo location
+	Working tree - files in Source
 
 Commands
 	init
 		initialize repo storage
 		not needed if specified existing GH repo during install
-	status
-	cd
 
+Within Home dir
 	add - 
-		add file from home dir to source but does not add it as a tracked file in repo
+		add file from home dir to source but not change the repo
 		if file already in source, updates it
-
-	edit [--apply] - edit file in source
-
+	cd
 	re-add	-	add modified files in home to source
+	edit-config
 	merge <fn>
+	managed		show files managed
 
-Change commands - compare working copy to home dir
-	status - what changes would be made by apply
-	unmanaged
-
+Within Source
+	apply - updates home dir from source
 	diff [--pager less] 
 		shows changes to be made to home dir
 		diff is how local file will be updated by source
-	
-	apply - updates home dir from source
+	edit [--apply] - edit file in source
+	forget - remove file from source
+	status - what changes would be made by apply	
 	update - pull changes from remote and apply
 
-	remove - remove file from home dir & source
-	forget - remove file from source
+
+remove - remove file from home dir & source
+
 
 Preview then apply changes from remote
 	chezmoi git pull -- --autostash --rebase && chezmoi diff
