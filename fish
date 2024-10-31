@@ -1,6 +1,4 @@
-Glob with inverted match
-rm -r (string match -v '*.micro' *)
-
+Glob with inverted 
 `eval (ssh-agent -c)`
 
 Interactive {{{1

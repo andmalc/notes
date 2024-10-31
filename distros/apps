@@ -17,17 +17,10 @@ fzf
 fd-find - alpine pkg fd
 exa -simple ls alternative
 	 abbr exa-tree 'exa -l --group-directories-first --tree'
-
 ranger - three panel text file manager
 broot - full featured file manager
 		install from Copr petersen/broot 
 plocate - https://plocate.sesse.net/
-check out:
-	riff - git diff pager
-		https://github.com/walles/riff
-duf	- disk space
-	simplified:
-		duf -hide-fs devtmpfs,tmpfs,efivarfs
 	
 Disk space usage
     Files/dirs
@@ -35,17 +28,26 @@ Disk space usage
         nnn
 		duf
 		du-dust - install with cargo
+	duf	- disk space
+		simplified:
+			duf -hide-fs devtmpfs,tmpfs,efivarfs
 
 Partitions/disks
 	pydf
-
 
 Paging
 	bat - cat alternative.  
 		https://github.com/sharkdp/bat
 		dnf install
 		Show git diffs -d
+
+	batextras https://github.com/eth-p/bat-extras/tree/master?tab=readme-ov-file
+		batgrep, batman, batpipe, batdiff
+
 	delta - diff alternative.  Pkg git-delta
+
+	riff - git diff pager
+		https://github.com/walles/riff
 
 File search and extract {{{2
 
@@ -76,7 +78,7 @@ Git browsing
 Dev {{{2
 
 visidata
-nushell / nu (cargo, prerequisite openssl-devel)
+nushell / Fedora pkg nu
 
 httpie - API testing - https://httpie.io/
 
