@@ -10,32 +10,21 @@ Shells
 	fish
 	elvish -Fedora golang-github-elves-elvish.
 
-
-Files: Find, List, Search, Paging {{{2
-
-fzf
-fd-find - alpine pkg fd
+Files {{{1
+List {{{2
 exa -simple ls alternative
 	 abbr exa-tree 'exa -l --group-directories-first --tree'
 ranger - three panel text file manager
 broot - full featured file manager
 		install from Copr petersen/broot 
+
+
+Find {{{2
+fzf
+fd-find - alpine pkg fd
 plocate - https://plocate.sesse.net/
-	
-Disk space usage
-    Files/dirs
-        ncdu
-        nnn
-		duf
-		du-dust - install with cargo
-	duf	- disk space
-		simplified:
-			duf -hide-fs devtmpfs,tmpfs,efivarfs
 
-Partitions/disks
-	pydf
-
-Paging
+Paging {{{2
 	bat - cat alternative.  
 		https://github.com/sharkdp/bat
 		dnf install
@@ -68,6 +57,19 @@ Sed
 		install with cargo, eget
 		dnf pkg sd is older version
 
+Disk {{{2
+Disk space usage
+    Files/dirs
+        ncdu
+        nnn
+		duf
+		du-dust - install with cargo
+	duf	- disk space
+		simplified:
+			duf -hide-fs devtmpfs,tmpfs,efivarfs
+
+Partitions/disks
+	pydf
 Git browsing
 	tig
 	also delta for diff 
@@ -101,9 +103,7 @@ Zellij - tmux alt.
 - https://github.com/zellij-org/zellij
 - add Copr  dnf copr enable zellij-org/zellij - same repo for helix
 
-
-
-Tmux {{{1
+Tmux
 
 Plugins via Tmux Plugin Manager
 https://github.com/tmux-plugins/tpm
@@ -115,92 +115,4 @@ Tmux Yank
     copy to cliboard
     https://github.com/tmux-plugins/tmux-yank
 
-
-Graphical utility {{{1
-
-Tilix, formally Terminix - GTK3 terminal emulator
-F25: need Copr repo: dnf copr enable heikoada/terminix
-
-
-Plugin Managers {{{2
-
-Vim-plug
-https://github.com/junegunn/vim-plug
-
-
-Plugins {{{2
-
-vim-AutoClose       closes brackets
-Closetag            closes HTML tags
-Vim-MatchIt         jump between matching HTML tags
-emmet.vim           expands HTML tag abrieviations 
-
-
-Editors {{{1
-
-neovim / nvim
-Debian: python3-neovim
-
-
-Graphical Editors
-
-Oni - neovim 
-
-https://github.com/extr0py/oni
-
-Atom
-Developed by GitHub
-Based on Electron
-Packages: remote-edit2, nitrogen
-
-Geany http://www.geany.org/
-Minimal GTK 3 editor
-Install with DNF
-
-
-Desktop {{{1
-
-Firefox
-	Flatpak profile dir
-		~/.var/app/org.mozilla.firefox/.mozilla
-
-PDF Viewers
-    qpdfview - tabbed, annnotations
-    MuPDF
-
-
-Nativefier - web app => electron app
-https://github.com/jiahaog/nativefier
-npm install nativefier [-g]
-    w/o -g installs into current dir 
-
-Network {{{1
-
-nftables simple firewall
-
-Security {{{1
-
-file encryption
-		age 
-			https://github.com/FiloSottile/age
-			Fedora pkg age
-			encrypt: age -p fn > outfile
-			Yubikey support https://github.com/str4d/age-plugin-yubikey
-
-
-Yubikey
-
-Install Fedora packages: pam_yubico u2f-hidraw-policy
-udevadm trigger
-
-
-Package management {{{1
-
-Nix package manager
-https://nixos.org/nix/
-https://nixos.org/nix/manual/#ch-basic-package-mgmt
-nix-channel --update
-nix-env -qa #list packages or query by regex
-nix-env -qas # package installation status
-nix-env -u # upgrade all
 
