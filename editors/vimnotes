@@ -57,9 +57,10 @@ variables
 Startup & Settings {{{1
 
 -u vimrc
-- Start vim initializing with vimrc (no other vimrc is used)
-- Default vimrc may be in /usr/local/share/vim
-- -u NORC to disable all config
+	Start vim initializing with vimrc (no other vimrc is used)
+	Default vimrc may be in /usr/local/share/vim
+	-u NORC to disable all config
+	-u NONE
 
 Save current settings in a exrc file:
 	:mk(exrc)

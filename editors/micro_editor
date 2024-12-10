@@ -13,6 +13,7 @@ Options
 diffgutter
 paste and smartpaste
 colorschemes
+	set colorscheme darcula
 
 
 Pipes
@@ -27,3 +28,13 @@ Regex capture groups are now supported in the replace command. Examples:
 > replace "(?P<group>foo)" "$group-bar"
 > replace "(?P<group>foo)" "$group-bar"
 > replace "(?P<key>\w+):\s+(?P<value>\w+)$" "$key=$value"
+
+Recommended colourshemes
+	monokai (also the default colorscheme)
+	zenburn
+	gruvbox
+	darcula
+	twilight
+	railscast
+	bubblegum (light theme)
+	

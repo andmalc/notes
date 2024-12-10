@@ -1,6 +1,20 @@
 Report bugs: https://pagure.io/teamsilverblue/issues
 
-User data saved in ~/.var/app
+Sandbox permissions {{{1
+https://docs.flatpak.org/en/latest/sandbox-permissions.html
+
+Two dirs writable by default
+	App's user data: ~/.var/app
+	Runtime dir: $XDG_RUNTIME_DIR (/run/user/<user id>)
+
+persist=path option 
+	- can be used to map paths from the user’s home directory into the sandbox filesystem and that do not need to be visible. 
+	- this makes it possible to avoid configuring access to the entire home directory, and can be useful for applications that hardcode file paths in ~/.
+	- eg. ~/.mozilla => ~/.var/app/mozilla
+
+filesystem=path optio
+	-  is for granting access to stuff that is either outside the user's home directory or they do need to see in their file manager, like ~/Documents
+
 
 Firefox profile: 
 	var/home/andmalc/.var/app/org.mozilla.firefox/.mozilla/firefox/<profile dir>

@@ -97,6 +97,8 @@ http://blog.oddbit.com/2011/05/08/converting-openssh-public-keys/
 	In place conversion of existing ECDSA private key
 	ssh-keygen -p -m PEM -N "" -f id_ecdsa
 
+	In place conversion of existing ECDSA private key
+        ssh-keygen -p -m PEM -N "" -f id_ecdsa
 
 escapes {{{1
 

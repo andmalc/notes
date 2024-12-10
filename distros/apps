@@ -10,28 +10,35 @@ Shells
 	fish
 	elvish -Fedora golang-github-elves-elvish.
 
+Files {{{1
+List {{{2
+exa -simple ls alternative
+	 abbr exa-tree 'exa -l --group-directories-first --tree'
+ranger - three panel text file manager
+broot - full featured file manager
+		install from Copr petersen/broot 
 
-Files: Find, List, Search, Paging
-	fzf
-	fd-find - alpine pkg fd
-	exa - simple ls alternative
-	ranger - three panel text file manager
-	broot - full featured file manager
-			install from Copr petersen/broot 
-	plocate - https://plocate.sesse.net/
+
+Find {{{2
+fzf
+fd-find - alpine pkg fd
+plocate - https://plocate.sesse.net/
+
+Paging {{{2
 	bat - cat alternative.  
 		https://github.com/sharkdp/bat
 		dnf install
 		Show git diffs -d
+
+	batextras https://github.com/eth-p/bat-extras/tree/master?tab=readme-ov-file
+		batgrep, batman, batpipe, batdiff
+
 	delta - diff alternative.  Pkg git-delta
 
-	check out:
-		riff - git diff pager
-			https://github.com/walles/riff
-	duf	- disk space
-		simplified:
-			duf -hide-fs devtmpfs,tmpfs,efivarfs
+	riff - git diff pager
+		https://github.com/walles/riff
 
+File search and extract {{{2
 
 Grep
 	ripgrep | rg
@@ -50,6 +57,19 @@ Sed
 		install with cargo, eget
 		dnf pkg sd is older version
 
+Disk {{{2
+Disk space usage
+    Files/dirs
+        ncdu
+        nnn
+		duf
+		du-dust - install with cargo
+	duf	- disk space
+		simplified:
+			duf -hide-fs devtmpfs,tmpfs,efivarfs
+
+Partitions/disks
+	pydf
 Git browsing
 	tig
 	also delta for diff 
@@ -57,45 +77,33 @@ Git browsing
 	eget - install binary from GH repo
 		https://github.com/zyedidia/eget
 
-Dev
-	visidata
-	nushell / nu (cargo, prerequisite openssl-devel)
+Dev {{{2
 
-	httpie - API testing - https://httpie.io/
+visidata
+nushell / Fedora pkg nu
 
-	podman-tui
-		needs `systemctl --user start podman.socket`
+httpie - API testing - https://httpie.io/
 
-	ptpython
-		Python repl
+ptpython
+	Python repl
 
-	try - run a command and inspect its effects before changing your live system
-		https://github.com/binpash/try
-		install: $ git clone https://github.com/binpash/try.git
+System & commands {{{2
 
+podman-tui
+	needs `systemctl --user start podman.socket`
 
-Misc:
-	More tools: https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
-	Zellij - tmux alt. 
-	- https://github.com/zellij-org/zellij
-	- add Copr  dnf copr enable zellij-org/zellij - same repo for helix
-	btop - top alternative
+btop - top alternative
+
+try - run a command and inspect its effects before changing your live system
+	https://github.com/binpash/try
+	install: $ git clone https://github.com/binpash/try.git
 
 
-Disk space usage
-    Files/dirs
-        ncdu
-        nnn
-		duf
-		du-dust - install with cargo
+Zellij - tmux alt. 
+- https://github.com/zellij-org/zellij
+- add Copr  dnf copr enable zellij-org/zellij - same repo for helix
 
-Partitions/disks
-	pydf
-
-
-
-
-Tmux {{{1
+Tmux
 
 Plugins via Tmux Plugin Manager
 https://github.com/tmux-plugins/tpm
@@ -107,85 +115,4 @@ Tmux Yank
     copy to cliboard
     https://github.com/tmux-plugins/tmux-yank
 
-
-Graphical utility {{{1
-
-Tilix, formally Terminix - GTK3 terminal emulator
-F25: need Copr repo: dnf copr enable heikoada/terminix
-
-
-Plugin Managers {{{2
-
-Vim-plug
-https://github.com/junegunn/vim-plug
-
-
-Plugins {{{2
-
-vim-AutoClose       closes brackets
-Closetag            closes HTML tags
-Vim-MatchIt         jump between matching HTML tags
-emmet.vim           expands HTML tag abrieviations 
-
-
-Editors {{{1
-
-neovim / nvim
-Debian: python3-neovim
-
-
-Graphical Editors
-
-Oni - neovim 
-
-https://github.com/extr0py/oni
-
-Atom
-Developed by GitHub
-Based on Electron
-Packages: remote-edit2, nitrogen
-
-Geany http://www.geany.org/
-Minimal GTK 3 editor
-Install with DNF
-
-
-Desktop {{{1
-
-Firefox
-	Flatpak profile dir
-		~/.var/app/org.mozilla.firefox/.mozilla
-
-PDF Viewers
-    qpdfview - tabbed, annnotations
-    MuPDF
-
-
-Nativefier - web app => electron app
-https://github.com/jiahaog/nativefier
-npm install nativefier [-g]
-    w/o -g installs into current dir 
-
-Network {{{1
-
-nftables simple firewall
-
-Security {{{1
-
-
-Yubikey
-
-Install Fedora packages: pam_yubico u2f-hidraw-policy
-udevadm trigger
-
-
-Package management {{{1
-
-Nix package manager
-https://nixos.org/nix/
-https://nixos.org/nix/manual/#ch-basic-package-mgmt
-nix-channel --update
-nix-env -qa #list packages or query by regex
-nix-env -qas # package installation status
-nix-env -u # upgrade all
 

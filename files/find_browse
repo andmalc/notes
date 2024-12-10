@@ -9,21 +9,24 @@ show full path of fn or dir
 
 bat {{{1
 
-pager
+Auto pages
 
 Options
 	-d/--diff	show Git diff
 	--list-themes 
+	--list-languages
 	--theme=gruvbox-light
 	--style plain
 
+Page fd output
+	fd -X bat
 
 fd {{{1
 
 https://github.com/sharkdp/fd#how-to-use
 pkg: fd-find
 
-fd <pattern> <path>
+fd <regex pattern> <path>
 	finds files and directories matching pattern in any portion of path or filename
 	caes insensitive by default
 
@@ -52,6 +55,7 @@ fd <pattern> <path>
 	-X/--exec-batch
 			run external cmd once with all results as args (xargs not needed)
 			fd . -X rg <pat> 
+			fd --glob '*.md' notes/ -X bat
 
 	-H		include hidden files
 	-I		include ignored files
@@ -245,4 +249,3 @@ Match filename patterns:  if pat contains no metacharacters, pat can match any p
 
 Try also: 'slocate' (?)
 
-<<<<<<< HEAD

@@ -1,12 +1,14 @@
-WGET
+## wget
 
 wget [OPTIONS] [URL]
 
+-c/--continue   Resume an interrupted file download (must be supported by server)
+-r			recursive
 -m          Mirror site
 -m -L       Mirror site, copy only relative links
 -N          Don't download if timestamp of local file matches. (matched timestamp also indicates entire file is downloaded)
-
--c [file]   Resume an interrupted file download (must be supported by server)
+-O/--output-document <fn>
+	output to fn
 -t [#]      Retry failed download # times
 
 
@@ -17,5 +19,12 @@ wget [OPTIONS] [URL]
 Pipe out
 	unlike curl, wget does not output to STDOUT by default
 	use:  wget -O - <url> or curl -s -L <url>
+
+
+## Curl
+
+Options
+	-O	save file with name on server
+	-o <fn>	save file as fn
 
 
