@@ -29,4 +29,5 @@ Kitty Shell
 		kitty @ --help		list of commands
 		kitty @ <cmd>
 
-
+Hints
+	Ctrl+Shift+e - highlights URLs in text.  Click with mouse to open
