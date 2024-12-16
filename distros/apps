@@ -1,7 +1,6 @@
 Console {{{1
 
-git neovim fish tmux mlocate ncdu stow exa ccrypt duf visidata bat
-kitty kitty-terminfo kitty-fish-integration
+neovim fish just zellij  ncdu exa duf bat kitty kitty-terminfo fedora-repoquery\*
 
 Editors
 	helix - add Copr  dnf copr enable varlad/helix

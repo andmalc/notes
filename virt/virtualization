@@ -71,6 +71,14 @@ libguestfs
 
 libvirt {{{1
 
+New 2024:
+
+Specify location of the base image qcow2 file with new backing_store option.  Causes a new copy-on-write clone of the base image to be created in ~/.local/share/libvirt/images with its name = the --name arg.
+
+	https://fedoraproject.org/wiki/QA:Local_cloud_testing_with_virt-install
+	--disk=size=10,backing_store="/home/andmalc/Downloads/cloud.qcow2"
+
+
 Overview 
 https://www.redhat.com/sysadmin/build-lab-quickly
 

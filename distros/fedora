@@ -352,6 +352,10 @@ repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	no arg output is repo name, pkg name and version 
 	Faster than 'dnf provides'
 
+fedora-repoquery package - new util, faster 
+fedora-repoquery-short - frpq alias
+Usage examples: https://github.com/juhp/fedora-repoquery#readme
+
 
 	Options {{{2
 	Query options - set what info displayed about each pkg
@@ -417,6 +421,8 @@ List files in package
 
 Show which packages require installed one specified 
 	dnf rq  --installed --whatrequires <pkg>
+	fedora-repoquery -- --whatrequires pandoc  ('--' needed if release arg ommited)
+
 
 Cache management {{{2
 
