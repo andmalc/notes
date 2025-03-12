@@ -2,21 +2,13 @@
 Config
 
 
-Plugins {{{1
 
-Vim-Plug {{{2
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-Reload .vimrc and :PlugInstall
+Vim-Plug {{{1
+https://github.com/junegunn/vim-plug
 
-init.vim
-    call plug#begin()
-    Plugins here
-    call plug#end()
-
-Flatpak install
-    curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    init.vim in ~/.var/app/io.neovim.nvim/config/nvim/
-
+Install:
+	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	In nvim: reload .vimrc and :PlugInstall
 
 
 

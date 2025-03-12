@@ -7,9 +7,10 @@ Install
 		sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply andmalc
 
 Terms
-	Destination	- managed directory, usually HOME
-	Target - file, directory, or link in the Destination.
-	Source directory - chemoi git repo location
+	Destination directory - a managed directory, usually in HOME
+	Target - a file, directory, or link in the Destination.
+	source state - declares the desired state of your home directory
+	Source directory - chemoi git repo location,  By default it is ~/.local/share/chezmoi.
 	Working tree - files in Source
 
 Commands
@@ -28,13 +29,15 @@ Within Home dir
 	managed		show files managed
 
 Within Source
-	apply - updates home dir from source
+	apply 
+		- updates home dir from source
+		- --source-path - Specify targets by source path, rather than target path. This is useful after editing
 	diff [--pager less] 
 		shows changes to be made to home dir
 		diff is how local file will be updated by source
 	edit [--apply] - edit file in source
 	forget - remove file from source
-	status - what changes would be made by apply	
+	status - what changes would be made from Source to Destination
 	update - pull changes from remote and apply
 
 

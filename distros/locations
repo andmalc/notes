@@ -5,18 +5,20 @@ Systemd services
 
 
 Flatpak
-	apps & runtimes
+	apps & runtime code
+		.local/share/flatpak/app
 		/var/lib/flatpak/app
 		/var/lib/flatpak/runtimes
-		.local/share/flatpak/app
 	
 	application binaries - script or symlink to binary (script?) in <app runtime>/export/bin
 		.local/share/flatpak/exports/bin
 		.local/share/flatpak/app/<app name>/current/active/export/share/applications/
+		/var/lib/flatpak/exports/bin
 
 	desktop files
+		.local/share/applications - includes browser-created web app desktop files
 		/var/lib/flatpak/exports/share/applications
-		symlinks: ~/.local/share/flatpak/exports/share/applications/
+		symlinks: ~/.local/share/flatpak/exports/share/applications (?)
 		target: <app>/current/active/export/share/applications/
 
 	user data 
@@ -48,17 +50,36 @@ XDG dirs
 	set with xdg-user-dirs-update -set <dir, e.g. DOWNLOAD>
 		list of valid dir names in man page
 
-	$XDG_RUNTIME_DIR
+	XDG_DATA_HOME
+		base directory relative to which user-specific data files should be stored
+		$HOME/.local/share/.
+
+	XDG_DATA_DIRS
+		preference-ordered set of base directories, separated by colons (':'), to search for data files in addition to the XDG_DATA_HOME base directory. 
+		If not set or empty, assumed to be /usr/local/share/:/usr/share/.
+
+	XDG_CONFIG_HOME
+		The base directory relative to which user-specific configuration files should be stored. 
+		If not set, or empty, assumed to be $HOME/.config/.
+
+	XDG_CONFIG_DIRS
+		The preference-ordered set of base directories, separated by colons (':'), to search for configuration files in addition to the XDG_CONFIG_HOME base directory. 
+		If not set or empty, assumed to be /etc/xdg/.
+
+	XDG_STATE_HOME
+		the base directory relative to which user-specific state files should be stored, containing data that should persist between (application) restarts, but that is not important or portable enough to the user that it should be stored in XDG_DATA_HOME. 
+		If not set, or empty, assumed to be $HOME/.local/state/.
+
+	XDG_RUNTIME_DIR
+		the base directory relative to which user-specific non-essential runtime files and other file objects (such as sockets, named pipes, ...) should be stored. The directory MUST be owned by the user, who MUST be the only one having read and write access to it; its permissions MUST be 0700.
 		/run/user/<user id>
 
 	$XDG_CACHE_HOME
+		the base directory relative to which user-specific non-essential data files should be stored. 
+		If not set or empty, assumed to be $HOME/.cache/.
 		not set on Fedora WS or SB
 		maybe not relevant to flatpaks as per app location is $HOME/.var/app/*/cache
 
-	XDG_CONFIG_DIR
-
-	XDG_DATA_DIR
-		user application files
 
 Chrome Web Apps
 	.config/google-chrome/Default ?

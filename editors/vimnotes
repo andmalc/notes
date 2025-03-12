@@ -2,6 +2,8 @@ Copy selected text to file
    1. Select text in visual mode
    2. :'<,'>!tee out.txt
 
+Insert dashes and tab at line beginning for four lines
+	:,+3s/^/--\t
 
 Commands {{{1
 
