@@ -357,34 +357,38 @@ fedora-repoquery-short - frpq alias
 Usage examples: https://github.com/juhp/fedora-repoquery#readme
 
 
-	Options {{{2
-	Query options - set what info displayed about each pkg
-		-l <pkg name>   list files in package
-		--depends
-		-i              info
-		--provides      pkgs providing service/cmd
-		--recommends
-		--requires <pkg>  #  show package dependencies (required by this pkg)
+Options {{{2
 
-	Select options - limit output set 
-		--installed
-		--repo <repoid>
-		--file/-f   list packages providing a file
-		--upgrades  # pkgs providing upgrades to existing
+Install options
+	--setopt=install_weak_deps=False	# don't install weak dependencies
 
-		Capability arg, e.g. webserver
-		--whatdepends <capability> # pkgs that depend on this one
-		--whatprovides <capability>
-			same as 'dnf provides'?
-		--whatrecommends <capability>
-		--whatrequires <capability>  # pkgs requiring this one
-		--whatsuggests <capability>
+Query options - set what info displayed about each pkg
+	-l <pkg name>   list files in package
+	--depends
+	-i              info
+	--provides      pkgs providing service/cmd
+	--recommends
+	--requires <pkg>  #  show package dependencies (required by this pkg)
 
-		Show recursive dependencies
-			dnf repoquery --requires nginx --resolve --recursive
+Select options - limit output set 
+	--installed
+	--repo <repoid>
+	--file/-f   list packages providing a file
+	--upgrades  # pkgs providing upgrades to existing
 
-	Output group names:
-		--groupmember list groups containing spec
+	Capability arg, e.g. webserver
+	--whatdepends <capability> # pkgs that depend on this one
+	--whatprovides <capability>
+		same as 'dnf provides'?
+	--whatrecommends <capability>
+	--whatrequires <capability>  # pkgs requiring this one
+	--whatsuggests <capability>
+
+	Show recursive dependencies
+		dnf repoquery --requires nginx --resolve --recursive
+
+Output group names:
+	--groupmember list groups containing spec
 
 
 	Examples {{{2
