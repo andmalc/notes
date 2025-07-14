@@ -11,9 +11,13 @@ Shells
 
 Files {{{1
 List {{{2
-exa -simple ls alternative
-	 abbr exa-tree 'exa -l --group-directories-first --tree'
+
+eza - simple ls alternative
+	eza-community/eza
+	abbr eza-tree 'exa -l --group-directories-first --tree'
+
 ranger - three panel text file manager
+
 broot - full featured file manager
 		install from Copr petersen/broot 
 
@@ -56,7 +60,7 @@ Sed
 		install with cargo, eget
 		dnf pkg sd is older version
 
-Disk {{{2
+Storage {{{1
 Disk space usage
     Files/dirs
         ncdu
@@ -69,14 +73,14 @@ Disk space usage
 
 Partitions/disks
 	pydf
-Git browsing
-	tig
-	also delta for diff 
-
 	eget - install binary from GH repo
 		https://github.com/zyedidia/eget
+	dysk - df alternative
+		https://github.com/Canop/dysk
+		Install from Debian pkg, Fedora sudo dnf copr enable fernando-debian/dysk
+	
 
-Dev {{{2
+Dev {{{1
 
 visidata
 nushell / Fedora pkg nu
@@ -86,10 +90,17 @@ httpie - API testing - https://httpie.io/
 ptpython
 	Python repl
 
-System & commands {{{2
+Git browsing
+	tig
+	also delta for diff 
+
+System & commands {{{1
 
 podman-tui
 	needs `systemctl --user start podman.socket`
+
+Systemd manager tui
+	https://github.com/matheus-git/systemd-manager-tui
 
 btop - top alternative
 
@@ -101,17 +112,5 @@ try - run a command and inspect its effects before changing your live system
 Zellij - tmux alt. 
 - https://github.com/zellij-org/zellij
 - add Copr  dnf copr enable zellij-org/zellij - same repo for helix
-
-Tmux
-
-Plugins via Tmux Plugin Manager
-https://github.com/tmux-plugins/tpm
-Clone to ~/.tmux/plugins/tpm, linked to submodule in term 
-/home/andmalc/config/term/tpm
-Fetch & source plugins listed in .tmux.conf with Prefix + I
-
-Tmux Yank
-    copy to cliboard
-    https://github.com/tmux-plugins/tmux-yank
 
 

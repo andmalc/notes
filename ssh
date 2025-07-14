@@ -147,6 +147,8 @@ sudo sshfs {{user id}}@{{server}}:{{remote share}} {{local mount point}} \
 fstab entry:
 andmalc@andmalc-gce.duckdns.org: /var/home/andmalc/mnt/f39gce fuse.sshfs  x-systemd.automount,x-systemd.idle-timeout=120s,IdentityFile=/var/home/andmalc/.ssh/id_ecdsa,_netdev,allow_other 0 0
 
+andmalc@andmalc-gce.duckdns.org: /home/andmalc/mnt/debian-gce fuse.sshfs  x-systemd.automount,x-systemd.idle-timeout=120s,IdentityFile=/home/andmalc/.ssh/id_ed25519,_netdev,allow_other 0 0
+
 
 Auto reconnect
 	-o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 
