@@ -16,7 +16,7 @@ aptitude {{{1
 				or dpkg --xtract <pkg> <dir>
 	options
 		--purge-unused - remove no longer required packages
-		-R - without recommendeds 
+		--no-install-recommends - without recommendeds 
 	shortcuts in interactive mode
 		C - show package changelog
 		l - limit display based on search pattern
