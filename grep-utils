@@ -12,12 +12,14 @@ options
     -r	recursive - search subdirectories
 	-v  exclude match
     -o  print only matched part of line, matches on separate lines
+	-P Perl compat regexs - enables look ahead and capture groups
 	-E, --extended-regexp
-	-P Perl compat regexs - enables look ahead 
 	--exclude-dir= 
 		--exclude-dir={.mozilla,.var,.local}
 
 Tips 
+
+-P version preferred
 
 Exclude blank lines and comments 
 grep  "^[^# "]
@@ -27,8 +29,6 @@ excluding files under zsh
 
 Match whole words, print each on separate line
     grep -oE '\w+' 
-
-Extract text based on Perl compat regexes	-P
 
 Ripgrep {{{1
 
@@ -42,6 +42,12 @@ Defaults:
 		files matched by globs in gitignore, .ignore, and .rgignore files
 		symbolic links
 		patterns in .rgignore
+Options
+	-r	replace capture group
+
+		example using tcpdump output:
+		rg -e '^(?grp1>[^ ]+) IP\w? (?<grp2>\S+)'  -r 'F[$grp1]F S[$grp2]S' test.txt
+		rg -e '^(?grp1>[^ ]+) IP\w? (?<grp2>\S+)'  -r 'F[$1]F S[$2]S' test.txt
 
 Options {{{2
 	

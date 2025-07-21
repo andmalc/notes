@@ -9,6 +9,9 @@ Shells
 	fish
 	elvish -Fedora golang-github-elves-elvish.
 
+tldr help
+	Debian pkg: tealdeer
+
 Files {{{1
 List {{{2
 

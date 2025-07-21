@@ -1,5 +1,3 @@
-For novices: https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud
-
 Pro Git by Scott Chachon - https://git-scm.com/book/en/v2
 
 Fugitive http://flaviusim.com/blog/how-to-do-a-git-merge-with-vim/
@@ -100,6 +98,7 @@ Shows changes to tracked files and presence of untracked files in working dir
 	Green is staged
 
 Diff {{{2
+https://git-scm.com/docs/git-diff
 
 Changes to file contents
 
