@@ -351,10 +351,11 @@ repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	search repos packages or files matching provided file or command 
 	no arg output is repo name, pkg name and version 
 	Faster than 'dnf provides'
+	Pipe to grep for regex pattern matching:  dnf rq | grep "^nu-.*"
 
-fedora-repoquery package - new util, faster 
-fedora-repoquery-short - frpq alias
-Usage examples: https://github.com/juhp/fedora-repoquery#readme
+	fedora-repoquery package - new util, faster, more intelligent searching - priorities matching patterns at start of package name 
+	fedora-repoquery-short - frpq alias
+	Usage examples: https://github.com/juhp/fedora-repoquery#readme
 
 
 Options {{{2
