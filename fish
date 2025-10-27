@@ -5,13 +5,13 @@ Interactive {{{1
 
 Movement {{{2
 
-^b/^f		move one char back/forward
-^d			delete char righ
-^e			go to line end
-^h			backspace
-Ctrl l/r	move one word 
-Alt arrows/f	word forward
-Shift l/r	move Word, skip punctuation and whole paths
+^b/^f		move char back/forward
+^a/^e		go to line beginning/end
+Ctrl l/r	move by word
+Alt l/r		move by fish token
+Shift l/r	move by word, skip punctuation and whole paths
+^h/^d		delete char left/right
+^U			delete to line beginning
 
 Autosuggestion {{{2
 
