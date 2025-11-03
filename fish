@@ -1,3 +1,8 @@
+Fish learning todo:
+	https://fishshell.com/docs/current/interactive.html#killring
+
+
+
 Glob with inverted 
 `eval (ssh-agent -c)`
 
