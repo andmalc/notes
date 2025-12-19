@@ -13,6 +13,10 @@ Sockets
 
 System Info utils {{{1
 
+
+inxi -system info, rec on Rddit
+
+
 conky
 	shows memory, cpu, filesystem usage
 

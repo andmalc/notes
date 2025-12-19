@@ -1,6 +1,9 @@
 https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos-7
 https://fedoraproject.org/wiki/FirewallD#Dynamic_firewall_with_Firewall
 
+Config GUI: firewall-config
+Basic status: firewall-cmd --list-all
+
 Design {{{1
 
 firewall-cmd or firewall-config (graphical) 

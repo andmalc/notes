@@ -161,6 +161,12 @@ netcat {{{1
 	client: nc <host> <port>
 	scan: nc -vz <host> <port or port range>
 
+ncat {{{1
+
+Fedora pkg nmap-ncat
+Developed by netcat project
+
+
 
 Other {{{1
 

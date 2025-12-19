@@ -116,4 +116,7 @@ Zellij - tmux alt.
 - https://github.com/zellij-org/zellij
 - add Copr  dnf copr enable zellij-org/zellij - same repo for helix
 
+Hardware support {{{1
+
+Solaar flatpak for Logitech mouse support
 

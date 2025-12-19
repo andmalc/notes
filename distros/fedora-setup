@@ -104,6 +104,9 @@ DNS {{{1
 
 Server setup {{{1
 
+dnf group info headless-management
+	installs Cockpit with common modules
+
 
 	Cockpit
 		pkg name: cockpit
