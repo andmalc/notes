@@ -310,6 +310,41 @@ Options:
         --enablerepo=updates-testing fish
     --disable <repo>
 
+Options {{{2
+
+Install options
+	--setopt=install_weak_deps=False	# don't install weak dependencies
+
+Query options - set what info displayed about each pkg
+	-l <pkg name>   list files in package
+	--depends
+	-i              info
+	--provides      pkgs providing service/cmd
+	--recommends
+	--requires <pkg>  #  show package dependencies (required by this pkg)
+
+Select options - limit output set 
+	--installed
+	--repo <repoid>
+	--file/-f   list packages providing a file
+	--upgrades  # pkgs providing upgrades to existing
+	--userinstalled
+
+	Capability arg, e.g. webserver
+	--whatdepends <capability> # pkgs that depend on this one
+	--whatprovides <capability>
+		same as 'dnf provides'?
+	--whatrecommends <capability>
+	--whatrequires <capability>  # pkgs requiring this one
+	--whatsuggests <capability>
+
+	Show recursive dependencies
+		dnf repoquery --requires nginx --resolve --recursive
+
+Output group names:
+	--groupmember list groups containing spec
+
+
 Commands {{{2
     
 autoclean   remove orphans
@@ -343,53 +378,19 @@ search | se [--all | all] <name or glob>
 	'all' searches name & description
 
 
-provides | wp [installed | available] <file name, cmd, or description keywords>
-	shows extended info - all pkg versions and related pkgs
+provides [installed | available] <file name, cmd, or description keywords>
+	Like rq but also shows repo name. Otherwise use rq.
 
 
 repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
-	search repos packages or files matching provided file or command 
+	search repos for packages or files matching provided file or command 
 	no arg output is repo name, pkg name and version 
 	Faster than 'dnf provides'
-	Pipe to grep for regex pattern matching:  dnf rq | grep "^nu-.*"
+	Pipe to grep for regex pattern matching:  dnf rq | grep "^nu-.*" | xargs dnf rq --available
 
 	fedora-repoquery package - new util, faster, more intelligent searching - priorities matching patterns at start of package name 
 	fedora-repoquery-short - frpq alias
 	Usage examples: https://github.com/juhp/fedora-repoquery#readme
-
-
-Options {{{2
-
-Install options
-	--setopt=install_weak_deps=False	# don't install weak dependencies
-
-Query options - set what info displayed about each pkg
-	-l <pkg name>   list files in package
-	--depends
-	-i              info
-	--provides      pkgs providing service/cmd
-	--recommends
-	--requires <pkg>  #  show package dependencies (required by this pkg)
-
-Select options - limit output set 
-	--installed
-	--repo <repoid>
-	--file/-f   list packages providing a file
-	--upgrades  # pkgs providing upgrades to existing
-
-	Capability arg, e.g. webserver
-	--whatdepends <capability> # pkgs that depend on this one
-	--whatprovides <capability>
-		same as 'dnf provides'?
-	--whatrecommends <capability>
-	--whatrequires <capability>  # pkgs requiring this one
-	--whatsuggests <capability>
-
-	Show recursive dependencies
-		dnf repoquery --requires nginx --resolve --recursive
-
-Output group names:
-	--groupmember list groups containing spec
 
 
 	Examples {{{2
