@@ -1,12 +1,11 @@
-# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
 Console switch on Thinkpad: Fn + Ctrl + Alt + #
 
-Install options & disk space {{{1
 
-Fedora 35 {{{2
+# Install options & disk space {{{1
 
-standard install: disk size 3.5G but almost 8G after update
+Standard install: disk size 3.5G but almost 8G after update
+
 Everything 
 	"Minimal Install" with Admin tools & Standard selected = 900M
 	gnome-shell (basic Gnome w/o apps)  = 730M
@@ -16,10 +15,6 @@ Everything
 		Gnome & Firefox < 2G
 		Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
 
-Clear disk space
-	journalctl --vacuum-time=2d
-	dnf system-upgrade clean
-
 
 Silverblue  - approx 9GB
 Fedora IoT <4G
@@ -27,38 +22,49 @@ Fedora IoT <4G
 Installation groups
 	basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
     
-Pop_OS 21.10 {{{2
-
-5.7GB with Freedesktop flatpak runtime and removing libreoffice
-
-Used after 1 year
-	/	13.5G
-	/home	11.5G
-	/boot/efi	300M
-
-
+dnf group install  "C Development Tools and Libraries"
 
 sway + Gnome Terminal + gdm ?
 Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
 
-Boot and EFI partition sizes {{{2
+## Boot and EFI partition sizes {{{2
 
 Fedora
 	/boot	300M, 150M on Silverblue
 	/efi	<20M
 
-Alternate install {{{2
+## Alternate install {{{2
+
 
 Install into mounted partition
 dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
 install bootloader ?
 
-Fedora upgrade {{{1
 
-fedora-upgrade --upgrade-to=39
+## Setup new VPS {{{2
+
+Have root password
+scp id_ecdsa and id_ecdsa.pub to root home dir on server.
+ssh into server as root.
+Create .ssh dir
+Move in id* files, chmod dir 500 and files 400.
+Copy id_ecdsa.pub to authorized_keys
+
+Create andmalc user with useradd -G wheel
+Visudo and enable passwordless sudo for wheel
+
+Copy .ssh dir to andmalc
+If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
+
+sudo dnf install -y git stow micro tmux fish vim 
+
+eval `ssh-agent`
+ssh-add .ssh/id_ecdsa
+
+git clone --recursive git@github.com:andmalc/config.git
 
 
-Free up space {{{1
+## Free up space {{{2
 
 Packages to remove
 	libreoffice\* (700M)
@@ -71,8 +77,11 @@ Locales
 Clear dnf cache in /var/cache/PackageKit
     pkcon refresh force
 
+Clear disk space
+	journalctl --vacuum-time=2d
+	dnf system-upgrade clean
 
-Config {{{1
+# Config {{{1
 
 Enable graphical session
 	systemctl enable gdm.service
@@ -98,8 +107,9 @@ Yubikey/U2F support
 
 Ibus shorcut (Super + period) disable: ibus-setup
 
+## Admin {{{2
 
-Users {{{1
+## Users {{{2
 
 Show user info
     lslogins
@@ -122,36 +132,7 @@ Change shell
 
 adm for journalctl 
 
-Setup new VPS {{{1
-
-Have root password
-scp id_ecdsa and id_ecdsa.pub to root home dir on server.
-ssh into server as root.
-Create .ssh dir
-Move in id* files, chmod dir 500 and files 400.
-Copy id_ecdsa.pub to authorized_keys
-
-Create andmalc user with useradd -G wheel
-Visudo and enable passwordless sudo for wheel
-
-Copy .ssh dir to andmalc
-If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
-
-sudo dnf install -y git stow micro tmux fish vim 
-# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
-
-eval `ssh-agent`
-ssh-add .ssh/id_ecdsa
-
-git clone --recursive git@github.com:andmalc/config.git
-
-
-
-
-Home Dir {{{1
-
-
-git clone git@github.com:andmalc/config.git
+## Home Dir {{{2
 
 Fedora setup Ansible Playbook
 https://github.com/flavienbonvin/ansible-fedora-configuration
@@ -192,18 +173,17 @@ Tmux
 While running, Leader + I to install plugins
 
 
-SSH config {{{3
+## SSH config {{{2
 
 SSH dir
 - mod 700
 - authorized_keys file
 
-
 ssh-agent + ed25519 keys:
 https://eklitzke.org/using-ssh-agent-and-ed25519-keys-on-gnome
 
 
-System config {{{2
+## System config {{{2
 
 Locale
     localectl 
@@ -239,13 +219,12 @@ DNS with systemd-resolved
 	symlinmk /etc/resolve.conf to /run/systemd/resolve/stub-resolv.conf
 	verify with resolvectl status
 
-Hardware config {{{2
+## Hardware config {{{2
 
 tuned - power management
 Add to profile conf
 [disk]
 alpm=min-power
-
 
 Input devices: keyboard, mouse, touchpad via Libinput
 https://www.mankier.com/4/libinput#Note
@@ -257,22 +236,7 @@ xinput --list
 xinput list-props <device #>
 gsettings list-recursively  | grep touchpad
 
-
-
-Packages {{{1
-
-dnf group install  "C Development Tools and Libraries"
-
-
 Desktop {{{1
-
-Fonts:
-Monospaced:
-* hack-fonts
-* levien-inconsolata-fonts
-* adobe-source-code-pro-fonts
-mozilla-fira-mono-fonts
-dejavu-sans-mono-fonts
 
 Gnome {{{2
 
@@ -290,8 +254,8 @@ Wayland {{{2
 Restart Wayland from cmd:   fuser -k $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY
 
 
-Dnf {{{1
-General {{{2
+# Dnf {{{1
+## General {{{2
 
 Dnf <options> <command> <args eg. package spec>
     
@@ -310,7 +274,7 @@ Options:
         --enablerepo=updates-testing fish
     --disable <repo>
 
-Commands {{{2
+## Commands {{{2
     
 autoclean   remove orphans
 
@@ -358,7 +322,7 @@ repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	Usage examples: https://github.com/juhp/fedora-repoquery#readme
 
 
-Options {{{2
+## Options {{{2
 
 Install options
 	--setopt=install_weak_deps=False	# don't install weak dependencies
@@ -403,7 +367,7 @@ upgrade-minimal
 	bugfix, enhancement or fix for security issue 
 
 
-Package Groups {{{2
+## Package Groups {{{2
 
 group info, list, install 
 group name
@@ -429,14 +393,15 @@ Show which packages require installed one specified
 	fedora-repoquery -- --whatrequires pandoc  ('--' needed if release arg ommited)
 
 
-Cache management {{{2
+## Cache management {{{2
 
     autoremove  uninstall orphan pkgs
     clean all   clear package cache
 
 Run dnf without checking cache: -C --cacheonly
 
-Plugins {{{2
+## Plugins {{{2
+
 http://dnf-plugins-core.readthedocs.org/en/latest/index.html
 
     provides <path to fn>
@@ -452,14 +417,14 @@ rpm file - install dependencies
 yum --nogpgcheck localinstall <pkg file>
 or maybe dnf install <pkg file>
 
-RPM {{{1
+## RPM {{{2
 
 Show package of file
     rpm -qf <path> => package name
 List files in package
     rpm -ql <pkg>
 
-Repos {{{1
+## Repos {{{2
 
 Repo files in /etc/yum.d
     fedora-release-rawhide
@@ -477,7 +442,7 @@ repoinfo - more detail than repolist
 repolist [enabled | disabled | --all ]
     list repo details
 
-Release management {{{2
+## Release management {{{2
 
 
 Install from specific release: 
@@ -491,9 +456,4 @@ Return to stable:
 disable testing/rawhide repos
 dnf distro-sync
 
-Old {{{1
-CPU frequency control
-https://dunterov.github.io/cpu-freq/
-	Install kernel-tools
-	Show available governors
-		cpupower frequency-info --governors
+#vim:fileencoding=utf-8:ft=conf:foldmethod=marker
