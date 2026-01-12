@@ -307,15 +307,15 @@ search | se [--all | all] <name or glob>
 	'all' searches name & description
 
 
-provides | wp [installed | available] <file name, cmd, or description keywords>
-	shows extended info - all pkg versions and related pkgs
+provides [installed | available] <file name, cmd, or description keywords>
+	Like rq but also shows repo name. Otherwise use rq.
 
 
 repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
-	search repos packages or files matching provided file or command 
+	search repos for packages or files matching provided file or command 
 	no arg output is repo name, pkg name and version 
 	Faster than 'dnf provides'
-	Pipe to grep for regex pattern matching:  dnf rq | grep "^nu-.*"
+	Pipe to grep for regex pattern matching:  dnf rq | grep "^nu-.*" | xargs dnf rq --available
 
 	fedora-repoquery package - new util, faster, more intelligent searching - priorities matching patterns at start of package name 
 	fedora-repoquery-short - frpq alias
