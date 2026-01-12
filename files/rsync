@@ -53,7 +53,7 @@ Args
 -u      update - don't overwrite newer files
 -z      Compress before sending (don't both on fast network)
 -P		= --partial + --progress
--R      Relative paths - whole source path created on target dir
+-R      Relative paths - whole source path created on target dir - equivalent to cp --parents
 -vv		very verbose
 --modify-window=N  Timestamp window (in seconds)
 --delete    Delete files not in source
