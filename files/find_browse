@@ -7,20 +7,6 @@ which or type		Show full path of first matching command in path
 show full path of fn or dir
 	readlink -e <fn>
 
-bat {{{1
-
-Auto pages
-
-Options
-	-d/--diff	show Git diff
-	--list-themes 
-	--list-languages
-	--theme=gruvbox-light
-	--style plain
-
-Page fd output
-	fd -X bat
-
 fd {{{1
 
 https://github.com/sharkdp/fd#how-to-use
@@ -60,6 +46,9 @@ fd <regex pattern> <path>
 	-H		include hidden files
 	-I		include ignored files
 
+Examples
+	Find files modified within four months
+		fd --type f --changed-within 4m  
 
 fzf  {{{1
 
@@ -111,6 +100,20 @@ Fish keybindings plugin ttps://github.com/jethrokuan/fzf
 	Edit            Ctrl o
     xdg-open app    Ctrl g
 
+bat {{{1
+
+Auto pages
+
+Options
+	-d/--diff	show Git diff
+	--list-themes 
+	--list-languages
+	--theme=gruvbox-light
+	--style plain
+
+Page fd output
+	fd -X bat
+
 broot {{{1
 
 https://dystroy.org/broot/install/
@@ -145,8 +148,7 @@ Switch to panel			C-arrow
 Grep	c/<pat>
 
 
-Old {{{1
-Find {{{2
+find {{{1
 
 find [pathnames] [conditions]
 
@@ -173,6 +175,7 @@ Time specifcation
     -   less than
 
 	Examples:
+		find . -type f -mtime -120 #4 months
 		find -mtime 7 - modified seven days ago
 		find -mtime -1 - modified within last day 
             also: -mtime 0
@@ -243,6 +246,7 @@ command) arg
 
 
 
+Old {{{1
 Locate {{{2	
 
 Match filename patterns:  if pat contains no metacharacters, pat can match any part of filename.
