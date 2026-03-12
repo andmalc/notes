@@ -102,6 +102,8 @@ https://git-scm.com/docs/git-diff
 
 Changes to file contents
 
+General: how is second arg changed vs. the first arg
+
 no arg	changed files vs. index
 --cached/staged <HEAD or cid>	
 		changes in index relative to cid, defaults to HEAD
@@ -114,7 +116,7 @@ diff for single file
 diff against remote file
 	origin/master -- <filename>
 	origin/master:path/path/<filename> -- <filename>
-	@{upstream} <filename>
+	@{upstream} or @{u} <filename>
 
 Diff Format:
 	--- a/<original version>
@@ -174,10 +176,10 @@ Add & Commit {{{1
 
 add <path spec>
     -A/--all   updates index to match entire working tree. Includes untracked files.
+	-u	update: stages changes for existing files only
     -n  dry run
     -i  interactive
 		diff shows staged changes only
-		update: stages changes
 		https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging
 	-p	patch - interactively shows diff 
 

@@ -6,6 +6,7 @@ Insert dashes and tab at line beginning for four lines
 	:,+3s/^/--\t
 
 Commands {{{1
+# Commands
 
 Edit command layout. [] indicates optional
     [count] {operator} {[count] motion|text object}
@@ -16,6 +17,7 @@ Edit tips:
 
 
 Help {{{1
+# Help
 
 Jump
     C + ]/o     follow links forward/back
@@ -24,6 +26,7 @@ Jump
 
 
 Variables {{{1
+# Variables
 
 
 set/setlocal - sets options
@@ -57,6 +60,7 @@ variables
 		set option local & global 
 
 Startup & Settings {{{1
+# Startup & Settings
 
 -u vimrc
 	Start vim initializing with vimrc (no other vimrc is used)
@@ -92,6 +96,7 @@ Modeline
             /* vim:set ai et sts=2 sw=2 tw=80: */   #this format when comment needs closing 
 
 Interface settings {{{1
+# Interface settings
 
 Cursorline
    Highlights or underlines current line
@@ -127,6 +132,7 @@ Relative line numbering
     set rnu 
 
 Files/Buffers {{{1
+# Files/Buffers
 
 Opening, Closing, & Saving
 cd -	cd to previous directory
@@ -192,6 +198,7 @@ eol styles
 		also: cygwin/utils u2d & d2u
 
 Windows & Tabs {{{1
+# Windows & Tabs
 
 vertical = sideways
 horizontal = top to bottom
@@ -263,6 +270,8 @@ Tabs
         
 Edit Modes {{{1
 Normal mode {{{2
+# Edit Modes
+## Normal mode
 
 r			change character
 c			change line of text.  Type . to stop replacing
@@ -293,6 +302,7 @@ Repeat change on multi lines (e.g. commenting all)
 4. Esc
 
 Normal mode edit then enter Insert mode {{{2
+## Normal mode edit then enter Insert mode
 
 	i/a		Insert before/after cursor
 	I/A		Insert before first non-blank in line/end of line
@@ -306,6 +316,7 @@ Normal mode edit then enter Insert mode {{{2
 
 
 Edit with markers {{{2
+## Edit with markers
 
 i<marker>
 	Edit within markers
@@ -319,6 +330,7 @@ t<marker>
 
 
 Insert mode {{{2
+## Insert mode
 
 To normal mode from insert
     c-[, c-c
