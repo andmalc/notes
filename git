@@ -102,7 +102,10 @@ https://git-scm.com/docs/git-diff
 
 Changes to file contents
 
-General: how is second arg changed vs. the first arg
+How the second file (new) compares to the first (old)
+Format implies we are working on the second file and comparing to an original file the first.
+Plus means second has newer content, not in first
+Minus means first has content not in second
 
 no arg	changed files vs. index
 --cached/staged <HEAD or cid>	
