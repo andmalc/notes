@@ -189,9 +189,7 @@ add <path spec>
 commit 
     -v	show diff in commit message
 
-    -a  commits all staged and changed tracked files including deletes
-        bypasses staging, untracked files excluded
-                
+    -a  stages and commits all changed tracked files including deletes
 
 Remotes {{{1
     -v          show origin details

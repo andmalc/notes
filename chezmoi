@@ -31,17 +31,16 @@ Within Home dir
 Within Source
 	apply 
 		- updates home dir from source
+		- shows changes that would be made by apply
 		- --source-path - Specify targets by source path, rather than target path. This is useful after editing
 	diff [--pager less] 
 		shows changes to be made to home dir
 		diff is how local file will be updated by source
 	edit [--apply] - edit file in source
+	destroy - remove file from home and source
 	forget - remove file from source
 	status - what changes would be made from Source to Destination
 	update - pull changes from remote and apply
-
-
-remove - remove file from home dir & source
 
 
 Preview then apply changes from remote
