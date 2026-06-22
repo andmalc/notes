@@ -101,19 +101,21 @@ Nodejs {{{1
 Install with a package manager
 https://nodejs.org/en/download/package-manager/
 
-Install version 6
-	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+Default package location: /usr/lib/node_modules/
+Local location when using NVM (Node Version Manager):  ~/.nvm/versions/node/<version>/lib/node_modules
+Local executables: ~/.nvm/versions/node/<version>/bin/
 
-Install with nvm
-https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-8
+Show root location: npm root -g
+Show executable location: npm bin -g
 
-Install with nodeenv using pip
-https://pypi.python.org/pypi/nodeenv
-	pip install nodeenv
-	workon env
-	nodeenv -p
+Fish shell compatible version of NVM:  
+	fisher install jorgebucaran/nvm.fish
 
-Tools {{{1
+Install node
+	nvm install latest
+	Is installed to ~/.local/share/nvm/v26.3.1/bin/node
+	Symlink to .local/bin
 
-Bower package management
-npm install -g bower
+
+
+
