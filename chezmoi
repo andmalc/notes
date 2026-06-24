@@ -27,6 +27,7 @@ Within Home dir
 	edit-config
 	merge <fn>
 	managed		show files managed
+	status - shows modified files in Destination, update these to Source with re-add
 
 Within Source
 	apply 
@@ -34,12 +35,11 @@ Within Source
 		- shows changes that would be made by apply
 		- --source-path - Specify targets by source path, rather than target path. This is useful after editing
 	diff [--pager less] 
-		shows changes to be made to home dir
-		diff is how local file will be updated by source
+		diff is how local files would be updated by apply command
+		red lines in diff show lines that would be replaced
 	edit [--apply] - edit file in source
 	destroy - remove file from home and source
 	forget - remove file from source
-	status - what changes would be made from Source to Destination
 	update - pull changes from remote and apply
 
 

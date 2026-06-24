@@ -10,11 +10,8 @@ Terms {{{1
 Repo is set of the current and past commits
 
 Staging Index 
-    composed by git add/git read-tree
+    updated by add command
     staging area for new commit and becomes the new commit
-    created at checkout, updated by add command
-    includes snapshot of all files, not just staged.
-    new blob created for added/modified files 
 
 Commit:
     pointer to a top level tree obj created by snapshotting Index 
@@ -26,18 +23,18 @@ Commit:
 Commit ID
     SHA-1 checksum of the commit’s contents
 
-    relative references to a commit ID: ~#
+Refs
+	Types
+		Simple - points to commit ID
+		Symbolic - points to another ref
+    
+	Relative references to a commit ID: ~#
         ~1  one commit before current
 
-
-Refs
-    Simple - points to commit ID
-    Symbolic - points to another ref
 
 Branch
     movable pointer (simple ref) to tip (newest) commit of collection of commits
     branch moved forward on each commit
-
     Master      default name of first branch
 
 Tags
@@ -77,8 +74,7 @@ full SHA-1 object name {{{2
 Symbolic Reference name {{{2
 
 HEAD        
-    Normally symbolic ref to /refs/heads/<branch name> which normally refers to 
-        tip (last commit) of current local branch.  
+    Normally symbolic ref to /refs/heads/<branch name> which normally refers to tip (last commit) of current local branch.  
     This defines which branch is on
     When committing, HEAD is set as parent commit
     If earlier commit checked out, is hard link to commit ID.
@@ -97,29 +93,8 @@ Shows changes to tracked files and presence of untracked files in working dir
 	Red is changed or untracked
 	Green is staged
 
-Diff {{{2
+Diff {{{1
 https://git-scm.com/docs/git-diff
-
-Changes to file contents
-
-How the second file (new) compares to the first (old)
-Format implies we are working on the second file and comparing to an original file the first.
-Plus means second has newer content, not in first
-Minus means first has content not in second
-
-no arg	changed files vs. index
---cached/staged <HEAD or cid>	
-		changes in index relative to cid, defaults to HEAD
-HEAD   	changed or staged vs. current commit
-cid cid changes to tracked + newly tracked vs. cid
-
-diff for single file
-	[arg]	-- <filename> 
-
-diff against remote file
-	origin/master -- <filename>
-	origin/master:path/path/<filename> -- <filename>
-	@{upstream} or @{u} <filename>
 
 Diff Format:
 	--- a/<original version>
@@ -127,9 +102,37 @@ Diff Format:
 	<chunk header> e.g @@ -0,0 +1,2 @@
 		shows starting line of change and how many for original & changed versions
 
-	
+No arg - shows how unstaged files are changed vs. index
 
-log {{{2
+Args
+	<filename> - diff for this file
+	HEAD
+		changed or staged vs. current commit
+		if changes in both working tree & index, wt version is shown
+
+	--cached/staged <HEAD or cid>	
+			changes in index relative to cid, defaults to HEAD
+	--name-only - skips diff details
+
+
+Vs. other versions of same branch or file
+
+Compares second file (new) to the first (old)
+Format implies we are working on the second file and showing how it will be changed. 
+Plus means content to be added to second
+Minus means content to be removed
+
+Remote
+		origin - compares local changed or staged files vs. origin
+		origin -- <filename>
+		main..origin -- <fn> - how main differs from origin/remote
+		@{upstream} or @{u} <filename>
+
+View local and remote activity with Tig
+	tig origin/main
+
+
+log {{{1
 
     Commit history 
     current branch including ancestors from other branches
@@ -153,14 +156,14 @@ log {{{2
 
 	 --decorate --graph --oneline --all
 
-ls-files {{{2
+ls-files {{{1
 
 Shows tracked files
 Defaults to current directory
 
 --abbrv --stage/-s     Show index with abbreviated object name
 
-other info {{{2
+other info {{{1
 
 ls-remote
     show remote commit
@@ -178,7 +181,7 @@ grep
 Add & Commit {{{1
 
 add <path spec>
-    -A/--all   updates index to match entire working tree. Includes untracked files.
+    -A/--all/.   updates index to match entire working tree. Includes untracked files.
 	-u	update: stages changes for existing files only
     -n  dry run
     -i  interactive
@@ -188,8 +191,8 @@ add <path spec>
 
 commit 
     -v	show diff in commit message
-
     -a  stages and commits all changed tracked files including deletes
+
 
 Remotes {{{1
     -v          show origin details
@@ -200,7 +203,8 @@ Remotes {{{1
                 <local branch name>:<remote name>
 
 Add new remote
-     remote add upstream https://github.com/octocat/Spoon-Knife.git
+	remote add origin https://github.com/octocat/Spoon-Knife.git
+	fetch (creates remote tracking branch origin/main
 
 Change remote 
 	set-url <name> <new URL>
@@ -215,6 +219,7 @@ Example: create new repo with remote at BB
 	git add . 
 	git commit -m 'comment'
 	git remote add bb ssh://git@bitbucket.org/andmalc/work.git
+	git fetch
 	git push --all bb # pushes up the repo and its refs for the first time
 
 	git commit -a  #all changes in working directory
@@ -222,10 +227,16 @@ Example: create new repo with remote at BB
 
 Reverting / Resetting {{{1
 
-https://www.atlassian.com/git/tutorials/undoing-changes
+Restore file from previous commit
+	 git checkout HEAD@{1} -- README.md
 
+Restore {{{2
 
-Reset {{{2
+restore
+	<no arg> - discard unstaged changes (like checkout)
+	--staged <fn> - unstage changes
+
+Reset - advanced tool for whole commits {{{2
 
 https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
 
@@ -320,8 +331,7 @@ branch
 
 Set upstream branch
     push --set-upstream origin gh-pages
-    ?	branch --set-upstream-to=origin/master
-    ?	branch -b <branchname> --track origin/<remote b name>
+    branch --set-upstream-to=origin/master main  
 
 Change remote branch name or create (?)
     git push origin <branch>
@@ -417,13 +427,15 @@ Merge pull request on GitHub
 
 Merge conficts
     Edited files
-        https://rtcamp.com/tutorials/git/git-resolve-merge-conflicts/
         - find files: grep -lr '<<<<<<<' . 
 
 	keep whole file in local commit
-		checkout --ours <path>		
-		merge --strategy=ours origin/HEAD
+		merge -s ours <fn>
+		merge --stategy=ours origin/HEAD
 
+	Always choose local version for whole branch
+		git fetch orgin
+		git merge -Xours origin/main
 
     Files deleted/renamed
         Maintain deleted: readd and redelete
