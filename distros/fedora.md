@@ -6,11 +6,21 @@ Console switch on Thinkpad: Fn + Ctrl + Alt + #
 
 Standard install: disk size 3.5G but almost 8G after update
 
-Everything 
-	"Minimal Install" with Admin tools & Standard selected = 900M
-	gnome-shell (basic Gnome w/o apps)  = 730M
-	gdm - pulls in Gmome Control Centre + power management ? = 300M
-	Sway 280M
+"Minimal Install" with Admin tools & Standard selected = 900M
+    download
+        Everything iso from https://fedoraproject.org/misc/
+    packages
+        gnome-shell (basic Gnome w/o apps)  = 730M
+        gdm - pulls in Gmome Control Centre + power management ? = 300M
+        A terminal: kitty or ptyxis (gnome-terminal)
+        spice-vdagent - needed for full screen and better resolution in Gnome Boxes
+    config
+        systemctl enable gdm
+        sudo systemctl set-default graphical.target
+        sudo systemctl isolate graphical.target
+
+
+    Sway 280M
 	Total install with 
 		Gnome & Firefox < 2G
 		Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
@@ -86,6 +96,7 @@ Clear disk space
 Enable graphical session
 	systemctl enable gdm.service
 	systemctl set-default graphical.target
+	systemctl isolate graphical.target
 
 Environment vars in ~/.config/environment.d
 
@@ -287,8 +298,8 @@ history
     undo
     rollback
 
-info [installed | available]   
-	shows pkg details
+info [--installed | --available]   
+	shows pkg details, multi-line format
 
 in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
 	if /path/file given, acts like provides and installs pkg that provides file

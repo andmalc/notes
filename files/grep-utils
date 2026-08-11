@@ -86,9 +86,8 @@ Replace text in results
 Pipe to cmd
 	rg pat | xargs cmd
 
-Alternatives {{{1
 
-ug {{{2
+ug {{{1
 https://ugrep.com/
 Fedora pkg ugrep
 ug <pat> <file>
@@ -98,12 +97,64 @@ Options
 	-C#		# lines of context (or B before or A after)
 	-j		smart ignore case (ignore case if pat is lower case)
 	-l		list matching files
+	-r		recursive 
 	-Q		interactive TUI
 	-v		invert match
 	-w		whole word
 	-y		output whole file if matched
 	-% "pat pat"	regex patterns on same line
 
+
+  ### 2. Controlling Recursion Depth
+
+  If you want to limit how deep  ugrep  traverses the directory tree, you have multiple options:
+
+  • Using shorthand depth flags ( -1  to  -9 ):
+  You can specify a number to restrict recursion to a maximum depth. For example, to search only 2 levels deep:
+    ugrep -2 "pattern" /path/to/directory
+    (Note:  -1  searches only the top-level files in the specified path without recursing into subdirectories).
+  • Using explicit depth ranges ( -m ):
+  Use  -m MIN,MAX  or  -m -MAX  to control depth:
+    # Search between 3 and 5 levels deep
+    ugrep -m 3,5 "pattern" /path/to/directory
+
+    # Search up to a maximum of 4 levels deep
+    ugrep -m -4 "pattern" /path/to/directory
+
+  ──────
+  ### 3. Including, Excluding, and Ignoring Files
+
+  You can restrict which files or directories  ugrep  scans during recursion using glob patterns:
+
+  • Include only certain files ( -g  or  --include ):
+    # Search only within Python (.py) and Markdown (.md) files
+    ugrep -r -g "*.py,*.md" "pattern" .
+
+  • Exclude specific files or directories ( --exclude  and  --exclude-dir ):
+    # Exclude all .log files and skip the "node_modules" folder
+    ugrep -r --exclude="*.log" --exclude-dir="node_modules" "pattern" .
+
+  • Gitignore-style rules ( --ignore-files ):
+  Automatically respect  .gitignore  rules (which is great for skipping build folders like  .git ,  dist , or  node_modules ):
+    ugrep -r --ignore-files "pattern" .
+
+  ──────
+  ### 4. Searching Hidden Files and Compressed Archives
+
+  • Include hidden files/directories ( -.  or  --hidden ):
+  By default,  ugrep  skips hidden files and directories (those starting with a dot  . ). Use  -.  to search them:
+    ugrep -r -. "pattern" .
+
+  • Recursively search inside archives ( -z ):
+  To search inside compressed files (like  .zip ,  .tar.gz ,  .jar , etc.) found during the recursive directory traversal:
+    ugrep -rz "pattern" .
+    (Use  --zmax=NUM  to control how deep nested archives are unpacked and searched).
+
+
+
+
+
+Alternatives {{{1
 
 ack, ag
 
