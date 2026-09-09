@@ -351,7 +351,7 @@ autoclean   remove orphans
 
 history
 	list [<pkg>] (default cmd)
-	undo, redo
+	undo, redo <transaction ID from history list>
 	1..20   show last 20 events
 	upgrade <pkg>       avail upgrades for pkg
 	userinstalled       manually installed pkgs
@@ -364,7 +364,7 @@ info [installed | available]
 in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
 	if /path/file given, acts like provides and installs pkg that provides file
 
-list | ls [installed | available | recent] [<pkg spec>]
+list | ls [--installed | --available | --recent] [<pkg spec>]
 	shows name, version, repo, install status
 	no pkg summary
 	if no arg, lists installed then avail packages
