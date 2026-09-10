@@ -289,6 +289,8 @@ Options:
     
 autoclean   remove orphans
 
+### Info {{{3
+
 history
 	list [<pkg>] (default cmd)
 	undo, redo
@@ -301,9 +303,6 @@ history
 info [--installed | --available]   
 	shows pkg details, multi-line format
 
-in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
-	if /path/file given, acts like provides and installs pkg that provides file
-
 list | ls [installed | available | recent] [<pkg spec>]
 	shows name, version, repo, install status
 	no pkg summary
@@ -311,17 +310,19 @@ list | ls [installed | available | recent] [<pkg spec>]
 	does not sync metadata
 	see also repoquery plugin
 
+### Locating/Searching {{{3
+
 search | se [--all | all] <name or glob>
 	packages matching any pattern
 	result sectioned by closeness of match (closest at end?)
 	no installation info.  Use list instead
 	'all' searches name & description
 
-
 provides [installed | available] <file name, cmd, or description keywords>
 	Like rq but also shows repo name. Otherwise use rq.
-
-
+    Cmd: no quotes needed
+    File: "*/libssl*"
+    
 repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	search repos for packages or files matching provided file or command 
 	no arg output is repo name, pkg name and version 
@@ -331,6 +332,11 @@ repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 	fedora-repoquery package - new util, faster, more intelligent searching - priorities matching patterns at start of package name 
 	fedora-repoquery-short - frpq alias
 	Usage examples: https://github.com/juhp/fedora-repoquery#readme
+
+### Actions {{{3
+
+in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
+	if /path/file given, acts like provides and installs pkg that provides file
 
 
 ## Options {{{2
