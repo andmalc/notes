@@ -27,8 +27,9 @@ Flatpak
 			var/home/andmalc/.var/app/org.mozilla.firefox/.mozilla/firefox/<profile dir>
 
 
-Gnome / xdg? desktop files
-	~/.local/share/applications/
+Gnome / .desktop files
+	/usr/share/application - default location, file created on installation.
+	~/.local/share/applications/ - for user modified desktop files.
 
 Environment Variables
 	/etc/environment

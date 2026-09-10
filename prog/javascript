@@ -95,32 +95,38 @@ for (var name in names) {
 }
 
 
-
 Nodejs {{{1
+
+Fedora package:  nodejs-np
+Default package location: /usr/lib/node_modules/
+
+REVIEW ACCURACY OF BELOW
 
 Use nvm to install node
 	https://nodejs.org/en/download
 	Download for nvm install on Linux
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
 
-	Fisher package nvm.fish adds path to nvm script at ~/.config/nvm
-
-	wsl Fedora: need to install libatomic
-
+Install node
 	nvm install latest
+	Is installed to ~/.local/share/nvm/v26.3.1/bin/node
+	Symlink to .local/bin
 
-	apps including npm installed in  ~/.local/share/nvm/v26.4.0/lib/node_modules/
-	app shortcuts in ~/.local/share/nvm/v26.4.0/bin
+Local location when using NVM (Node Version Manager):  ~/.nvm/versions/node/<version>/lib/node_modules
+Local executables: ~/.nvm/versions/node/<version>/bin/
 
-	list installed packages: npm list -g
+apps including npm installed in  ~/.local/share/nvm/v26.4.0/lib/node_modules/
+app shortcuts in ~/.local/share/nvm/v26.4.0/bin
 
-Fedora package:  nodejs-np
+Show root location: npm root -g
+Show executable location: npm bin -g
+Locate npm install location: npm config get prefix
+list installed packages: npm list -g
 
-Locate npm install location
-	npm config get prefix
+Fish shell compatible version of NVM:  
+	fisher install jorgebucaran/nvm.fish
+	adds path to nvm script at ~/.config/nvm
 
 
-Tools {{{1
+wsl Fedora: need to install libatomic
 
-Bower package management
-npm install -g bower
