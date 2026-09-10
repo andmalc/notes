@@ -409,9 +409,10 @@ Jumps {{{1
 
 Jump to last edit: ctrl o
 
-Go to newer/older position in jump list. Can use to move between two files or within a file	
-   ^o/^i	
-   g; / g,
+^i/^o	Go to newer/older position in jump list. Can use to move between two files or within a file	
+''		Toggle between current and last jump location
+g,/g;	Go to newer/older edit locations
+'.		Go to last edit location
 
 jump back/forward to last edit 
 jump to last edit & Insert

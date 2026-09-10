@@ -1,18 +1,27 @@
 
- zellij action | ac
-	new-tab --name xxx
-	edit-scrollback
-	edit <file>
-	rename-pane
+Panes
+	Alt n			new pane.  Splits to right or below depending
+
+	In Pane mode:
+		Alt arrows		move between panes
+		Alt PageUp/Down		cycle between layouts (?)
+
+Tabs
+	Alt l/r				move between tabs
+	In Tab mode:
+		l/r or j/k		move between tabs
+
+Session
+	In Session mode:
+		e		edit scrollback in EDITOR
+
+
+Commands
+	ls			list sessions
+	a|attach	attach to session
+	a -c name	create and attach to session name
 
 
 Copy on select - default on
 
-Keyboard
-	Tab switch
-		Ctrl-t to enter Tab mode
-		j/k		switch tabs
 
-
-Panes
-	Alt PageUp/Down		cycle between layouts
