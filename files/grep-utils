@@ -51,15 +51,15 @@ Options
 
 Options {{{2
 	
-override file ignores
-	-.		search hidden
-	--no-ignore	
-	--follow/-L		follow links
+	show filenames only		-l/--files-with-matches
+	follow links			--follow/-L
+	case-insensitive		-i
+	pat is string literal	-F
+	no line numbers		- (?)
 
-case-insensitive	-i
-pat is string literal	-F
-no line numbers		- (?)
-show filenames only		-l/--files-with-matches
+	override file ignores
+		-.		search hidden
+		--no-ignore	
 
 filter on 
 	file type	-t

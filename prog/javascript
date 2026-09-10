@@ -98,20 +98,27 @@ for (var name in names) {
 
 Nodejs {{{1
 
-Install with a package manager
-https://nodejs.org/en/download/package-manager/
+Use nvm to install node
+	https://nodejs.org/en/download
+	Download for nvm install on Linux
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
 
-Install version 6
-	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+	Fisher package nvm.fish adds path to nvm script at ~/.config/nvm
 
-Install with nvm
-https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-8
+	wsl Fedora: need to install libatomic
 
-Install with nodeenv using pip
-https://pypi.python.org/pypi/nodeenv
-	pip install nodeenv
-	workon env
-	nodeenv -p
+	nvm install latest
+
+	apps including npm installed in  ~/.local/share/nvm/v26.4.0/lib/node_modules/
+	app shortcuts in ~/.local/share/nvm/v26.4.0/bin
+
+	list installed packages: npm list -g
+
+Fedora package:  nodejs-np
+
+Locate npm install location
+	npm config get prefix
+
 
 Tools {{{1
 
