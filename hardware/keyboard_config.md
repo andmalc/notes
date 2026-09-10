@@ -1,11 +1,11 @@
 
 Config keyboard and kbmaps
-https://docs.fedoraproject.org/en-US/fedora/rawhide/system-administrators-guide/basic-system-configuration/System_Locale_and_Keyboard_Configuration/
-https://wiki.archlinux.org/index.php/Linux_console/Keyboard_configuration
-https://blog.stigok.com/2020/10/27/from-x11-xmodmap-to-wayland-xkb-custom-keyboard-layout.html
-https://wiki.archlinux.org/title/Sway#Keymap
-https://github.com/swaywm/sway/wiki/Shortcut-handling
-https://sw.kovidgoyal.net/kitty/faq.html#how-can-i-assign-a-single-global-shortcut-to-bring-up-the-kitty-terminal
+- https://docs.fedoraproject.org/en-US/fedora/rawhide/system-administrators-guide/basic-system-configuration/System_Locale_and_Keyboard_Configuration/
+- https://wiki.archlinux.org/index.php/Linux_console/Keyboard_configuration
+- https://blog.stigok.com/2020/10/27/from-x11-xmodmap-to-wayland-xkb-custom-keyboard-layout.html
+- https://wiki.archlinux.org/title/Sway#Keymap
+- https://github.com/swaywm/sway/wiki/Shortcut-handling
+- https://sw.kovidgoyal.net/kitty/faq.html#how-can-i-assign-a-single-global-shortcut-to-bring-up-the-kitty-terminal
 
 Utils 
 

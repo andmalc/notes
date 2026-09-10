@@ -57,6 +57,7 @@ origin
     Can then c/o with 'co <name>'.  Remote is 'upstream'
     origin/master = refs/remotes/origin/master
 
+	Alternate specs for origin: origin/main, @{upstream}, {u}, main..origin
 
 Remote 
     like a bookmark for a repository
@@ -102,31 +103,30 @@ Diff Format:
 	<chunk header> e.g @@ -0,0 +1,2 @@
 		shows starting line of change and how many for original & changed versions
 
-No arg - shows how unstaged files are changed vs. index
-
 Args
-	<filename> - diff for this file
-	HEAD
-		changed or staged vs. current commit
-		if changes in both working tree & index, wt version is shown
+	No arg 
+		implies HEAD is first arg 
+		second are unstaged or staged files aka target files
+		diff indicates how later are changed vs. former
+
+	-- <filename> - specific file
 
 	--cached/staged <HEAD or cid>	
 			changes in index relative to cid, defaults to HEAD
 	--name-only - skips diff details
+	-U<num>		show num lines of context instead of default 3		
 
 
 Vs. other versions of same branch or file
+	Compares second file (new) to the first (old)
+	Format implies we are working on the second file and showing how it will be changed. 
+	Plus means second has added content
+	Minus means content removed
 
-Compares second file (new) to the first (old)
-Format implies we are working on the second file and showing how it will be changed. 
-Plus means content to be added to second
-Minus means content to be removed
-
-Remote
-		origin - compares local changed or staged files vs. origin
-		origin -- <filename>
-		main..origin -- <fn> - how main differs from origin/remote
-		@{upstream} or @{u} <filename>
+Compare local changed or staged files vs. origin
+	origin -- <filename>
+	@{u} -- <filename>
+	
 
 View local and remote activity with Tig
 	tig origin/main
@@ -441,8 +441,10 @@ Merge conficts
         Maintain deleted: readd and redelete
         Maintain 
 
-	merge --abort	abandon merge - what happens to uncommited changes?
-	merge -Xignore-all-space or -Xignore-space-change - ignore ws changes
+Args
+	--abort	 - abandon merge - what happens to uncommited changes?
+	-Xignore-all-space or -Xignore-space-change - ignore ws changes
+	--no-commit - dry run
 
 
 Buffer names

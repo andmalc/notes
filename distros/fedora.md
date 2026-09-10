@@ -287,13 +287,45 @@ Options:
 
 ## Commands {{{2
     
-autoclean   remove orphans
+### Options {{{2
+
+Query options - set what info displayed about each pkg
+	-l <pkg name>   list files in package
+	--depends
+	-i              info
+	--provides      pkgs providing service/cmd
+	--recommends
+	--requires <pkg>  #  show package dependencies (required by this pkg)
+
+Select options - limit output set 
+	--installed
+	--repo <repoid>
+	--file/-f   list packages providing a file
+	--upgrades  # pkgs providing upgrades to existing
+
+	Capability arg, e.g. webserver
+	--whatdepends <capability> # pkgs that depend on this one
+	--whatprovides <capability>
+		same as 'dnf provides'?
+	--whatrecommends <capability>
+	--whatrequires <capability>  # pkgs requiring this one
+	--whatsuggests <capability>
+
+	Show recursive dependencies
+		dnf repoquery --requires nginx --resolve --recursive
+
+Output group names:
+	--groupmember list groups containing spec
+
+Option Examples
+dnf repoquery --installed kitty\* #pkg name pattern 
+dnf rq -f \*<filename pat> #find package(s) by file
 
 ### Info {{{3
 
 history
 	list [<pkg>] (default cmd)
-	undo, redo
+	undo, redo <transaction ID from history list>
 	1..20   show last 20 events
 	upgrade <pkg>       avail upgrades for pkg
 	userinstalled       manually installed pkgs
@@ -303,7 +335,7 @@ history
 info [--installed | --available]   
 	shows pkg details, multi-line format
 
-list | ls [installed | available | recent] [<pkg spec>]
+list | ls [--installed | --available | --recent] [<pkg spec>]
 	shows name, version, repo, install status
 	no pkg summary
 	if no arg, lists installed then avail packages
@@ -335,47 +367,13 @@ repoquery | rq [<select-options>] [<query-options>] [<pkg-spec>]
 
 ### Actions {{{3
 
+autoclean   remove orphans
+
 in|install, reinstall, rm|remove, downgrade <pkg spec> | <provide spec> | <@Group name>
 	if /path/file given, acts like provides and installs pkg that provides file
 
-
-## Options {{{2
-
-Install options
-	--setopt=install_weak_deps=False	# don't install weak dependencies
-
-Query options - set what info displayed about each pkg
-	-l <pkg name>   list files in package
-	--depends
-	-i              info
-	--provides      pkgs providing service/cmd
-	--recommends
-	--requires <pkg>  #  show package dependencies (required by this pkg)
-
-Select options - limit output set 
-	--installed
-	--repo <repoid>
-	--file/-f   list packages providing a file
-	--upgrades  # pkgs providing upgrades to existing
-
-	Capability arg, e.g. webserver
-	--whatdepends <capability> # pkgs that depend on this one
-	--whatprovides <capability>
-		same as 'dnf provides'?
-	--whatrecommends <capability>
-	--whatrequires <capability>  # pkgs requiring this one
-	--whatsuggests <capability>
-
-	Show recursive dependencies
-		dnf repoquery --requires nginx --resolve --recursive
-
-Output group names:
-	--groupmember list groups containing spec
-
-
-	Examples {{{2
-	dnf repoquery --installed kitty\* #pkg name pattern 
-	dnf rq -f \*<filename pat> #find package(s) by file
+    options
+        --setopt=install_weak_deps=False	# don't install weak dependencies
 
 upgrade <pkg spec>
 up|update      is alias to upgrade

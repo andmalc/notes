@@ -178,44 +178,46 @@ https://fishshell.com/docs/current/#variables
 set
  set <options> <var name> <value>
 
-scope options
-	-g		global, unexported (default)
-	-U		Universal - Immediately available to all sessions. Saved in fish_variables file
-	-l		local within current block and children but not child functions
-	-f		current function
-
-how vars operate
-	-x		exported 
-			default scope is local and exported to child processes
-	-gx	exported global 
-			use for environment vars in cofig.fish
-
-other options
-	-a --append
-	-e --erase
-	--path
-	  treat as path var
-	  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
-
-
-	-q --query <var> ...
-		return status = 0 if var initialized, 1 for each not
-		set -q var (not $var)
-	-S --show
-		show var value and status
-		set -S <string><TAB>	- shows vars with <string> in name or value
-		
+Options
 	no var or value
 		list all vars or limit to var type with scope option
 		e.g. show exported global    -xg
 	  
+	scope options
+		-g		global, unexported (default)
+		-U		Universal - Immediately available to all sessions. Saved in fish_variables file
+		-l		local within current block and children but not child functions
+		-f		current function
+
+	how vars operate
+		-x		exported 
+				default scope is local and exported to child processes
+		-gx	exported global 
+				use for environment vars in cofig.fish
+
+	other options
+		-a --append
+		-e --erase
+		--path
+		  treat as path var
+		  set -gx --path XDG_DATA_DIRS ~/.local/share/flatpak/exports/share.....
+
+
+		-q --query <var> ...
+			return status = 0 if var initialized, 1 for each not
+			set -q var (not $var)
+		-S --show
+			show var value and status
+			set -S <string><TAB>	- shows vars with <string> in name or value
+			
 
 # Abbreviations {{{1
 
 word that expands to a phrase when Space pressed
+preferred over aliases
 
 abbr 
-	-a	add / save in .config/fish/fish_variables 
+	-a	add into current session
     -g  global 
 				current session scope
 				use in config.fish, e.g. abbr --add --global gpl 'git pull'
