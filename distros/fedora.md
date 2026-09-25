@@ -4,92 +4,85 @@ Console switch on Thinkpad: Fn + Ctrl + Alt + #
 
 # Install options & disk space {{{1
 
-Standard install: disk size 3.5G but almost 8G after update
+- Standard install: disk size 3.5G but almost 8G after update  
+- "Minimal Install" with Admin tools & Standard selected = 900M
+- Sway 280M
+- Gnome & Firefox < 2G
+- Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
+- Silverblue  - approx 9GB
+- Fedora IoT <4G
 
-"Minimal Install" with Admin tools & Standard selected = 900M
-    download
-        Everything iso from https://fedoraproject.org/misc/
-    packages
-        gnome-shell (basic Gnome w/o apps)  = 730M
-        gdm - pulls in Gmome Control Centre + power management ? = 300M
-        A terminal: kitty or ptyxis (gnome-terminal)
-        spice-vdagent - needed for full screen and better resolution in Gnome Boxes
-    config
-        systemctl enable gdm
-        sudo systemctl set-default graphical.target
-        sudo systemctl isolate graphical.target
+Minimal with tiling wm
+- sway + Gnome Terminal + gdm ?
+- Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
 
+Sources
+  
+- Everything iso from https://fedoraproject.org/misc/  
+   
+* Packages
+  - gnome-shell (basic Gnome w/o apps)  = 730M  
+  - gdm - pulls in Gmome Control Centre + power management ? = 300M  
+  - A terminal: kitty or ptyxis (gnome-terminal)  
+  - spice-vdagent - needed for full screen and better resolution in Gnome Boxes  
 
-    Sway 280M
-	Total install with 
-		Gnome & Firefox < 2G
-		Gnome & Firefox flatpak (org.fedoraproject.Platform runtime)  3.2G
-
-
-Silverblue  - approx 9GB
-Fedora IoT <4G
-
-Installation groups
-	basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
+* Installation groups
+  - Install with `dnf group install`  
+  - C Development Tools and Libraries
+  - basic-desktop-environment - installs Awesome, Blackbox, Ratpoison, and XMona
     
-dnf group install  "C Development Tools and Libraries"
-
-sway + Gnome Terminal + gdm ?
-Minimal needs wpa_supplicant + NetworkManager-wifi rpms for wireless
-
 ## Boot and EFI partition sizes {{{2
 
 Fedora
-	/boot	300M, 150M on Silverblue
-	/efi	<20M
+  - /boot	300M, 150M on Silverblue
+  - /efi	<20M
 
 ## Alternate install {{{2
 
-
 Install into mounted partition
-dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
-install bootloader ?
+  - dnf --installroot=/mnt/drive --releasever=28 install basesystem passwd systemd dnf
+  - install bootloader ?
 
 
 ## Setup new VPS {{{2
 
-Have root password
-scp id_ecdsa and id_ecdsa.pub to root home dir on server.
-ssh into server as root.
-Create .ssh dir
-Move in id* files, chmod dir 500 and files 400.
-Copy id_ecdsa.pub to authorized_keys
+  - Have root password
+  - scp id_ecdsa and id_ecdsa.pub to root home dir on server.
+  - ssh into server as root.
+  - Create .ssh dir
+  - Move in id* files, chmod dir 500 and files 400.
+  - Copy id_ecdsa.pub to authorized_keys
+  - 
+  - Create andmalc user with useradd -G wheel
+  - Visudo and enable passwordless sudo for wheel
 
-Create andmalc user with useradd -G wheel
-Visudo and enable passwordless sudo for wheel
+  - Copy .ssh dir to andmalc.  
+    If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
 
-Copy .ssh dir to andmalc
-If necessary, fix permissions and restorecon -R -v /andmalc/.ssh
+  - sudo dnf install -y git stow micro tmux fish vim 
 
-sudo dnf install -y git stow micro tmux fish vim 
+  - git clone --recursive git@github.com:andmalc/config.git
 
-eval `ssh-agent`
-ssh-add .ssh/id_ecdsa
-
-git clone --recursive git@github.com:andmalc/config.git
+> eval `ssh-agent`  
+> ssh-add .ssh/id_ecdsa
 
 
 ## Free up space {{{2
 
-Packages to remove
-	libreoffice\* (700M)
-	cups-client (removes all printing)
+* Packages to remove  
+  -	libreoffice\* (700M)
+  -	cups-client (removes all printing)
 
-Locales
-    localectl - verify is en_US
-    delete all folders in /usr/share/locale except for en_US
+* Locales
+  - localectl - verify is en_US
+  - delete all folders in /usr/share/locale except for en_US
 
-Clear dnf cache in /var/cache/PackageKit
-    pkcon refresh force
+* Clear dnf cache in /var/cache/PackageKit
+  - pkcon refresh force
 
-Clear disk space
-	journalctl --vacuum-time=2d
-	dnf system-upgrade clean
+* Clear disk space
+  - journalctl --vacuum-time=2d
+  - dnf system-upgrade clean
 
 # Config {{{1
 
@@ -287,7 +280,7 @@ Options:
 
 ## Commands {{{2
     
-### Options {{{2
+### Options {{{3
 
 Query options - set what info displayed about each pkg
 	-l <pkg name>   list files in package
@@ -382,7 +375,7 @@ upgrade-minimal
 	bugfix, enhancement or fix for security issue 
 
 
-## Package Groups {{{2
+### Package Groups {{{3
 
 group info, list, install 
 group name
@@ -393,7 +386,7 @@ Show packages in a group
 	group info 'Basic Desktop'
 
 
-Dnf Examples {{{2
+### Dnf Examples {{{3
 
 Find package name from file
 	dnf wp <any file in package #faster, more info displayed, globbing file name not needed

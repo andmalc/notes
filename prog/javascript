@@ -97,7 +97,7 @@ for (var name in names) {
 
 Nodejs {{{1
 
-Fedora package:  nodejs-np
+Fedora package:  nodejs
 Default package location: /usr/lib/node_modules/
 
 REVIEW ACCURACY OF BELOW
