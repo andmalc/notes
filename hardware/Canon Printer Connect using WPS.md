@@ -1,6 +1,14 @@
 
 Source: https://share.google/aimode/8eCUvW44Jakr7Su8b
 
+# Sequence
+
+1. Long press on Wireless Select button.  Release when w/l antenna icon on panel flashes.
+2. Press WPS button on router.  Connection is complete when antena icon is steady
+
+https://ij.manual.canon/ij/webmanual/Tutorial/TS3700%20series/EN/TRL/trl-3000-a.html
+
+# About the buttons
 On the Canon PIXMA TS3720, the Wireless Select button and the Wireless Connect button serve completely different purposes for managing your printer's network: [1, 2] 
 ## 1. Wireless Select Button ((p)) / 📱
 
@@ -35,3 +43,4 @@ Are you trying to connect the printer using a smartphone application, or are you
 [5] [https://www.youtube.com](https://www.youtube.com/watch?v=oHnNnReI-JA)
 [6] [https://trueimagetech.com](https://trueimagetech.com/blogs/all/how-to-connect-canon-pixma-ts3522-printer-to-wifi)
 [7] [https://www.youtube.com](https://www.youtube.com/watch?v=MUS2rm3H_LQ)
+

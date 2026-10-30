@@ -19,11 +19,10 @@ Commands
 		not needed if specified existing GH repo during install
 
 Within Home dir
-	add - 
-		add file from home dir to source but not change the repo
+	add -	add file from home dir to source but not change the repo
 		if file already in source, updates it
+	re-add	overwrite modified files in the target from the source
 	cd
-	re-add	-	add modified files in home to source
 	edit-config
 	merge <fn>
 	managed		show files managed

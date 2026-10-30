@@ -1,3 +1,17 @@
+https://support.yubico.com/s/article/Using-Your-YubiKey-with-OpenPGP
+https://www.spletzer.com/2026/04/a-no-nonsense-guide-to-gpg-commit-signing-with-a-yubikey/#step-2-move-the-signing-subkey-to-your-yubikey
+https://gemini.google.com/app/33acb6c40ff6d517
+
+Yubikey defaullt PINs
+PIN:         123456
+Reset code:  NOT SET
+Admin PIN:   12345678
+
+Change PIN commands
+- gpg --change-pin
+- ykman openpgp access change-pin
+
+
 
 Fedora package name: gnupg2
 Requires pinentry

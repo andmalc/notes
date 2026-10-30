@@ -180,6 +180,7 @@ testdisk
 
 Wipe device
     wipefs -a
+    Follow with gdisk -o to clear hidden block signatures that can prevent storage appearing in Fedora installer
 
 wipe partition table: mklablel msdos | gpt
 
